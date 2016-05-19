@@ -5,5 +5,5 @@
 * [Scanning](scanning.md)
    * Scanning
 * [Port Knocking](port_knocking.md)
-* [Binary Exploitation](binary_exploitation.md)
+* [Basics of assembly](binary_exploitation.md)
 
