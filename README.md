@@ -1,3 +1,3 @@
-# My Awesome Book
+# Security
 
-This file file serves as your book's preface, a great place to describe your book's content and ideas.
+My notepad about stuff related to security. Stuff I have come across that I don't feel like googeling again.
