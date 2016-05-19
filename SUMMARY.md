@@ -8,4 +8,5 @@
 * [Basics of assembly](binary_exploitation.md)
 * [Binary Exploitation](binary_exploitation2.md)
 * [Internal Enumeration](internal_enumeration.md)
+* Privilege Escalation
 
