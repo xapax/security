@@ -9,5 +9,5 @@
 * [Binary Exploitation](binary_exploitation2.md)
 * [Internal Enumeration](internal_enumeration.md)
 * [Privilege Escalation](privilege_escalation.md)
-* Reverse-shell
+* [Reverse-shell](reverse-shell.md)
 
