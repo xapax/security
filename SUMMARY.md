@@ -10,5 +10,5 @@
 * [Internal Enumeration](internal_enumeration.md)
 * [Privilege Escalation](privilege_escalation.md)
 * [Reverse-shell](reverse-shell.md)
-* Spawning shells
+* [Spawning shells](spawning_shells.md)
 
