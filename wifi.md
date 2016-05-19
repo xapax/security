@@ -5,7 +5,9 @@ There are quite a few different security mechanism on wifi. And each of them req
 
 
 This is a great guide to the many different ways to hack wifi.
+### Checking what networks are avalible
 
+`sudo iwlist wlan0 scanning` - scans for wifis
 
 ### Hacking WPA2-wifis Using airmon-ng and cowpatty
 What we are going to to here it basically just to record the 4-way handshake and then run a dictionary attack on it. The good part about this strategy is that you wonät have to interfere to much with the network and thereby risk 
@@ -13,4 +15,6 @@ What we are going to to here it basically just to record the 4-way handshake and
 
 
 http://radixcode.com/hackcrack-wifi-password-2015-step-step-tutorial/
+
+
 
