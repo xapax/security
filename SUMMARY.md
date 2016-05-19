@@ -11,5 +11,5 @@
 * [Privilege Escalation](privilege_escalation.md)
 * [Reverse-shell](reverse-shell.md)
 * [Spawning shells](spawning_shells.md)
-* Cracking passwords
+* [Cracking passwords](cracking_passwords.md)
 
