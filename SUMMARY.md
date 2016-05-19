@@ -16,4 +16,5 @@
    * [Persistence](persistence.md)
 * [Network traffic](network_traffic.md)
    * [Arp-spoofing](arp-spoofing.md)
+   * TCP-dumps on pwnd machines
 
