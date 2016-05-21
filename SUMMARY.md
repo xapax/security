@@ -9,6 +9,7 @@
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
    * [Vulnerabilities](vulnerabilities.md)
+   * Exploit examples and tutorials
 * [Internal Enumeration](internal_enumeration.md)
 * [Privilege Escalation](privilege_escalation.md)
 * [Reverse-shell](reverse-shell.md)
