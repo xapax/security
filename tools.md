@@ -19,6 +19,7 @@ example: `objdump -M myProgram` - This is to read the assembly in intel-syntax
  
 `list` - show code if you have compile it with the -g flag
 `list 10` - will show the code around line 10. five lines before, and five lines after.
+`list 1,20` - will list all lines between the numbers.
 
 `disassemble main` - this shows the code in assembly. It is pretty much the same as running objdump.
 
