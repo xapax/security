@@ -8,7 +8,7 @@
 * [Basics of assembly](binary_exploitation.md)
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
-   * Vulnerabilities
+   * [Vulnerabilities](vulnerabilities.md)
 * [Internal Enumeration](internal_enumeration.md)
 * [Privilege Escalation](privilege_escalation.md)
 * [Reverse-shell](reverse-shell.md)
