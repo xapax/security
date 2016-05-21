@@ -73,6 +73,16 @@ That is because the varible is not a pointer (it does not point to an memory-add
 
 `x/i $rip` examine/info instruction pointer register. This command can be used to examine a specifc part of memory. In this example it was the instruct pointer, but it can also be a specific address in memory. 
 
+**Python**
+Python can be quite useful go generate strings as input. Of course this can be done with a lot of other languages. so it would work like this.
+`./myProgram $(python -c 'print "\x41" * 30')`
+This is something I learned a lot earlier. Basically, the `$(python)` creates a shell within our command. And in that shell we run the normal python command. The `-c` flag tells python that we are going to run a command instead of opening up the interactive shell. You can test this in the terminal like this:
+```
+$ python -c 'print "hello" * 100'
+hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello
+```
+
+
 #### GCC
 Compile the program in debugger mode, so that the debugger has access to the code.
 `gcc -g program.c`
