@@ -27,7 +27,29 @@ example: `objdump -M myProgram` - This is to read the assembly in intel-syntax
 `(gdb) i r rip
 rip            0x4004aa	0x4004aa <main+4>
 `
-Which means that rip at this moment is pointing at 0x4004aa. Which means that this is going to be the next instruct that gets executed. 
+Which means that rip at this moment is pointing at 0x4004aa. Which means that this is going to be the next instruct that gets executed.
+
+The strucutre is like this:
+`examine/[format] address`
+`x` - examine. If you at any point want to examine the memory, of a varaible or funciton or something. You can use `x`.
+Format is how you want to display the memory. Here are the following formats:
+```
+    o - octal
+    x - hexadecimal
+    d - decimal
+    u - unsigned decimal
+    t - binary
+    f - floating point
+    a - address
+    c - char
+    s - string
+    i - instruction
+```
+
+Example:
+`x/s myVariable` - This means: examine myVariable, and output the content in that memory in the form of a string.
+Now this does not work for values that does not have a memory address. It will just give you `0x16:	Cannot access memory at address 0x16`
+That is because the varible is not a pointer (it does not point to an memory-address), but instead it is a hardcoded value.
 
 `x/i $rip` examine/info instruction pointer register. This command can be used to examine a specifc part of memory. In this example it was the instruct pointer, but it can also be a specific address in memory. 
 
