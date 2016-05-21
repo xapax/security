@@ -62,6 +62,12 @@ Now we can exit airodump, and we can see that we have a cap-file with the name c
 - `cowpatty -f /usr/share/wordlists/rockyou.txt -r cowpatty-01.cap -s DKT_D24D81`
 Then we just hope for the best.
 
+
+##More
+Kicking other people off the network to capture handshakes faster:
+http://www.aircrack-ng.org/doku.php?id=newbie_guide
+
+http://lewiscomputerhowto.blogspot.cl/2014/06/how-to-hack-wpawpa2-wi-fi-with-kali.html
 http://radixcode.com/hackcrack-wifi-password-2015-step-step-tutorial/
 
 
