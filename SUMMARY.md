@@ -24,5 +24,5 @@
 * [Scripting with python](scripting_with_python.md)
 * [Littearature](littearature.md)
 * [Wifi](wifi.md)
-* Transfering files
+* [Transfering files](transfering_files.md)
 
