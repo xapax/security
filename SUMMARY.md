@@ -26,4 +26,5 @@
 * [Littearature](littearature.md)
 * [Wifi](wifi.md)
 * [Transfering files](transfering_files.md)
+* Tools of the trade
 
