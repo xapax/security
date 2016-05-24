@@ -7,3 +7,5 @@ So what types of vulnerabilites is it that we are looking for? How do they look 
 
 
 
+chrootkit
+
