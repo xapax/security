@@ -1,8 +1,8 @@
 # Summary
 
 * [Introduction](README.md)
-* [Web-scanning](web-scanning.md)
 * [Scanning](scanning.md)
+   * [Web-scanning](web-scanning.md)
    * Scanning
 * [Port Knocking](port_knocking.md)
 * [Basics of assembly](binary_exploitation.md)
