@@ -3,6 +3,7 @@
 * [Introduction](README.md)
 * [Scanning](scanning.md)
    * Scanning
+* Web-scanning
 * [Port Knocking](port_knocking.md)
 * [Basics of assembly](binary_exploitation.md)
 * [Binary Exploitation](binary_exploitation2.md)
@@ -28,5 +29,4 @@
 * [Transfering files](transfering_files.md)
 * [Tools of the trade](tools_of_the_trade.md)
    * Hashcat
-* Web-scanning
 
