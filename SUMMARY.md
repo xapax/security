@@ -3,7 +3,7 @@
 * [Introduction](README.md)
 * [Scanning](scanning.md)
    * [Web-scanning](web-scanning.md)
-   * Scanning
+   * [Scanning](serverscanning.md)
 * [Port Knocking](port_knocking.md)
 * [Basics of assembly](binary_exploitation.md)
 * [Binary Exploitation](binary_exploitation2.md)
