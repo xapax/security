@@ -5,6 +5,8 @@
    * [Web-scanning](web-scanning.md)
    * [Scanning](serverscanning.md)
 * [Port Knocking](port_knocking.md)
+* Web-services
+   * SQL-injections
 * [Basics of assembly](binary_exploitation.md)
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
@@ -29,6 +31,4 @@
 * [Transfering files](transfering_files.md)
 * [Tools of the trade](tools_of_the_trade.md)
    * Hashcat
-* Web-services
-   * SQL-injections
 
