@@ -31,4 +31,5 @@
 * [Transfering files](transfering_files.md)
 * [Tools of the trade](tools_of_the_trade.md)
    * Hashcat
+   * Dictionary Attack -- SSH FTP
 
