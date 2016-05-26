@@ -6,7 +6,7 @@
 * [Port Knocking](port_knocking.md)
 * [Web-services](web-services.md)
    * [Web-scanning](web-scanning.md)
-   * SQL-injections
+   * [SQL-injections](sql-injections.md)
 * [Basics of assembly](binary_exploitation.md)
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
