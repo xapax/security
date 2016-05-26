@@ -30,4 +30,5 @@
 * [Tools of the trade](tools_of_the_trade.md)
    * Hashcat
 * Web-services
+   * SQL-injections
 
