@@ -2,11 +2,11 @@
 
 * [Introduction](README.md)
 * [Scanning](scanning.md)
-   * [Web-scanning](web-scanning.md)
    * [Scanning](serverscanning.md)
 * [Port Knocking](port_knocking.md)
 * Web-services
    * SQL-injections
+* [Web-scanning](web-scanning.md)
 * [Basics of assembly](binary_exploitation.md)
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
