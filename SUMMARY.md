@@ -30,7 +30,7 @@
 * [Littearature](littearature.md)
 * [Wifi](wifi.md)
    * WEP
-   * WPS
+   * [WPS](wps.md)
 * [Transfering files](transfering_files.md)
 * [Tools of the trade](tools_of_the_trade.md)
    * Hashcat
