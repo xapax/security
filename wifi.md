@@ -22,7 +22,7 @@ What we are going to to here it basically just to record the 4-way handshake and
  - `airodump-ng -i mon0`
  - This would output something like this:
 
-```CH 13 ][ Elapsed: 6 s ]
+`CH 13 ][ Elapsed: 6 s ]
 
 BSSID              PWR  Beacons    #Data, #/s  CH  MB   ENC  CIPHER AUTH ESSID
 
@@ -33,7 +33,7 @@ B4:EE:B4:80:76:72  -84        5        0    0   6  54e  WPA2 CCMP   PSK  arrisNe
 BSSID       STATION            PWR   Rate    Lost    Frames Probe
 
 E8:DE:27:31:15:EE  D8:A2:5E:8E:41:75  -57    0e- 1    537     14
-```
+`
 
 So what is all this?
 `BSSID` - This is the mac-address of the access point.
