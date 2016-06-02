@@ -35,5 +35,5 @@
 * [Tools of the trade](tools_of_the_trade.md)
    * Hashcat
    * Dictionary Attack -- SSH FTP
-* Basics of linux
+* [Basics of linux](basics_of_linux.md)
 
