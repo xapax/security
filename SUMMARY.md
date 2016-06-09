@@ -10,6 +10,7 @@
    * [SQL-injections](sql-injections.md)
    * [Cross-site-scripting](cross-site-scripting.md)
    * [Cross Site Request Forgery](cross_site_request_forgery.md)
+   * Subdomain takeover
 * [Basics of assembly](binary_exploitation.md)
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
