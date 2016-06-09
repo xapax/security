@@ -9,3 +9,7 @@ You can use tools as: OWASP ZAP. But that has not been working out too well for 
 You can find the manual by typing: `wfuzz -h`
 
 wfuzz -c -z file,/root/.ZAP/fuzzers/dirbuster/directory-list-2.3-big.txt --sc 200 http://pegasus.dev:8088/FUZZ.php
+
+### CMS-Scanning 
+There are several tools that you can use to scan Content-management-systems for vulnerabilities. These vulnerabilities can be login-bypass, sql-injections, xss, etc.
+wpscan
