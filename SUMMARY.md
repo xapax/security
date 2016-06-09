@@ -23,7 +23,7 @@
 * [Cracking passwords](cracking_passwords.md)
 * Post Exploitation
    * [Persistence](persistence.md)
-* [Network traffic](network_traffic.md)
+* [Network traffic analysis](network_traffic.md)
    * [Arp-spoofing](arp-spoofing.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
    * [Wireshark](wireshark.md)
