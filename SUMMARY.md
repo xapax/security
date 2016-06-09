@@ -8,7 +8,7 @@
 * [Web-services](web-services.md)
    * [Web-scanning](web-scanning.md)
    * [SQL-injections](sql-injections.md)
-   * Cross-site-scripting
+   * [Cross-site-scripting](cross-site-scripting.md)
 * [Basics of assembly](binary_exploitation.md)
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
