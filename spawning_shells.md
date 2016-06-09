@@ -15,7 +15,7 @@ Using python
 ```python -c 'import pty; pty.spawn("/bin/sh")'```
 
 
-`echo os.system('/bin/bash')`
+`echo 'os.system('/bin/bash')'`
 
 `/bin/sh -i`
 
