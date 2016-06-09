@@ -18,3 +18,16 @@ Here are the options:
     -h Displays this help text
 
 If you are wondering how to get the script onto the machine, check out that chapter. https://bobloblaw.gitbooks.io/security/content/transfering_files.html
+
+
+# Manually
+
+If you for whatever reason is not able to run a script and you have to check out stuff manually these might be some stuff worth looking into.
+
+## Communication
+
+### Mail
+
+/var/spool/mail
+
+## Logs
