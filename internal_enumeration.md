@@ -17,4 +17,4 @@ Here are the options:
     -r Enter report name
     -h Displays this help text
 
-If you are wondering how to get the script onto the machine, check out that chapter.
+If you are wondering how to get the script onto the machine, check out that chapter. https://bobloblaw.gitbooks.io/security/content/transfering_files.html
