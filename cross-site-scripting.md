@@ -44,5 +44,11 @@ https://www.npmjs.com/package/helmet
 
 ### Risks for the attacker
 The obvious risk is that the attacker must expose a server. 
-References:
+
+### Tools
+
+#### BeeF XSS
+
+###References:
 http://excess-xss.com/
+
