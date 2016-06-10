@@ -1,7 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
-* [Recon](scanning.md)
+* [Recon phase](scanning.md)
    * Passive information gatherig
    * [Active information gathering](active_information_gathering.md)
 * [Port Knocking](port_knocking.md)
