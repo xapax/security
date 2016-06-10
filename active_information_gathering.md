@@ -3,7 +3,9 @@
 
 ## Find subdomains
 
-This isn't really a sience. Some tools find some stuff, other tools other stuff. So your best bet is to use a few of them together.
+Finding subdomains is fundamental. THe more subdomains you find, the bigger attack surface you have. Which means bigger possibility of success.
+
+This isn't really a science. Some tools find some stuff, other tools other stuff. So your best bet is to use a few of them together.
 
 ### recon-ng
 In order to find subdomains we can use the recon-ng framework. It has the same basic structure as metasploit. You can learn more about this tool in the tools-section.
