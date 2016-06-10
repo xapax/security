@@ -22,6 +22,11 @@ This will give you a vast amount of alternatives.
 
 All these subdomains will be saved in `hosts`, which you can access though: `show hosts`
 
+If some of these subdomains are not given IPs automatically you can just run
+`use recon/hosts-hosts/resolve`
+`run`
+
+And it will resolve all the hosts in the hosts-file. 
 
 ### Pentest-tools
 https://pentest-tools.com/information-gathering/find-subdomains-of-domain
@@ -36,3 +41,7 @@ Now that you have gathered some IP addresses from your subdomain scanning it is 
 
 
 `nmap -vvv -Pn -A -iL listOfIP.txt`
+
+
+## References
+https://high54security.blogspot.cl/2016/01/recon-ng-and-power-to-crawl-trough.html
