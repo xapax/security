@@ -10,6 +10,8 @@ Read through the website. What does it do.
 
 Find as many emails as possible. Are any of those emails in any pwnable databases?
 
+https://haveibeenpwned.com
+
  - Whois enumeration
 
 Who is behind the website etc.
@@ -36,6 +38,12 @@ Example:
 `"I've been * for a heart"`
 This will return answers where * is anything.
 
+## Exclude words
+`-` the dash excludes a specific word
+
+This query searches for pages that used the word bananasplit. 
+`-banana bananasplit`
+
 ### Cached version
 So if a website has been taken down you can still find the cached version, of the last time google visited the site
 
@@ -45,5 +53,8 @@ So if a website has been taken down you can still find the cached version, of th
 Here are some more
 http://www.googleguide.com/advanced_operators_reference.html
 
+http://www.searchcommands.com/
+
+https://support.google.com/websearch/answer/2466433?hl=en
 ## References
 http://www.technicalinfo.net/papers/PassiveInfoPart1.html
