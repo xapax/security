@@ -23,6 +23,29 @@ https://linuxjourney.com/
  2. Text-fu
  - https://linuxjourney.com/lesson/stderr-standard-error-redirect
 
+### Show duplicated lines once
+You have a list of passwords, or ip-addresses or whatever. And you want to remove all duplicates. How do you do it?
+
+
+You have list:
+```aa
+aa
+bb
+bb
+cc```
+
+And you want to see: 
+```
+aa
+bb
+cc
+```
+
+Command:
+`sort file | uniq`
+
+
+
  3. Vim
  - https://linuxjourney.com/lesson/regular-expressions-regex
 
