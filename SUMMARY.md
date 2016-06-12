@@ -38,7 +38,7 @@
 * [Tools of the trade](tools_of_the_trade.md)
    * Hashcat
    * Dictionary Attack -- SSH FTP
-   * recon-ng
+   * [recon-ng](recon-ng.md)
 * [Basics of linux](basics_of_linux.md)
 * [Littearature](littearature.md)
 
