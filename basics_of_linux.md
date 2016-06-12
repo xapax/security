@@ -23,7 +23,7 @@ https://linuxjourney.com/
  2. Text-fu
  - https://linuxjourney.com/lesson/stderr-standard-error-redirect
 
-### Show duplicated lines once
+### Show all lines just once
 You have a list of passwords, or ip-addresses or whatever. And you want to remove all duplicates. How do you do it?
 
 
