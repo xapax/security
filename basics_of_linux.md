@@ -54,7 +54,24 @@ Command:
  5. Permissions
  - https://linuxjourney.com/lesson/file-permissions
 
- 6. Processes
+ ### 6. Processes
+ A important job for a developer and sysadmin is to monitor process. A great way to do that is to use `htop` instead of `top`. The F1-10 keys might trigger OS-events. So you can use the shortcuts instead.  
+ 
+ 
+Shortcut Key	Function Key	Description
+h	                F1       	Invoke htop Help
+S	                F2       	Htop Setup Menu
+/	                F3       	Search for a Process
+I	                F4       	Invert Sort Order
+t	                F5       	Tree View
+>	                F6       	Sort by a column
+[	                F7       	Nice – (change priority)
+]	                F8       	Nice + (change priority)
+k	                F9       	Kill a Process
+q	                F10     	Quit htop
+ 
+ 
+ http://www.thegeekstuff.com/2011/09/linux-htop-examples/
 
  7. Packages
 
