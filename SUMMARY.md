@@ -6,7 +6,7 @@
    * [Active information gathering](active_information_gathering.md)
 * [Port Knocking](port_knocking.md)
 * [Dictionary Attack -- SSH FTP](dictionary_attack_--_ssh_ftp.md)
-* [Web-services](web-services.md)
+* [Web-vulnerabilities](web-services.md)
    * [Web-scanning](web-scanning.md)
    * [SQL-injections](sql-injections.md)
    * [Cross-site-scripting](cross-site-scripting.md)
