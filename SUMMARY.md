@@ -12,7 +12,7 @@
    * [Cross-site-scripting](cross-site-scripting.md)
    * [Cross Site Request Forgery](cross_site_request_forgery.md)
    * [Subdomain takeover](subdomain_takeover.md)
-   * Clickjacking
+   * [Clickjacking](clickjacking.md)
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
    * [Basics of assembly](binary_exploitation.md)
