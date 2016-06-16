@@ -5,6 +5,7 @@
    * [Basics of linux](basics_of_linux.md)
    * [Transfering files](transfering_files.md)
    * [Scripting with python](scripting_with_python.md)
+   * [Reverse-shell](reverse-shell.md)
    * Summary
 * [Recon phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
@@ -30,7 +31,6 @@
    * [Mysql](mysql.md)
    * [Spawning shells](spawning_shells.md)
    * [Examples](examples.md)
-* [Reverse-shell](reverse-shell.md)
 * [Cracking passwords](cracking_passwords.md)
 * Post Exploitation
    * [Persistence](persistence.md)
