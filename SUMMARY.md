@@ -41,7 +41,6 @@
    * [WPS](wps.md)
 * [Tools of the trade](tools_of_the_trade.md)
    * Hashcat
-   * Dictionary Attack -- SSH FTP
    * [recon-ng](recon-ng.md)
 * [Literature](littearature.md)
 
