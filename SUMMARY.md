@@ -8,7 +8,6 @@
    * [Reverse-shell](reverse-shell.md)
    * Tips
    * [Outline of bugbounty/hacking/pentest](outline_of_bugbountyhackingpentest.md)
-       * Tips
 * [Recon phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
    * [Active information gathering](active_information_gathering.md)
