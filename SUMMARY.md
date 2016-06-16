@@ -4,8 +4,8 @@
 * [Recon phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
    * [Active information gathering](active_information_gathering.md)
-* [Port Knocking](port_knocking.md)
 * Server-side vulnerabilities
+   * [Port Knocking](port_knocking.md)
    * [Dictionary Attack -- SSH FTP](dictionary_attack_--_ssh_ftp.md)
    * Summary
 * [Client-side vulnerabilities](web-services.md)
