@@ -6,6 +6,7 @@
    * [Active information gathering](active_information_gathering.md)
 * [Port Knocking](port_knocking.md)
 * [Dictionary Attack -- SSH FTP](dictionary_attack_--_ssh_ftp.md)
+* Server-side vulnerabilities
 * [Client-side vulnerabilities](web-services.md)
    * [Web-scanning](web-scanning.md)
    * [SQL-injections](sql-injections.md)
@@ -42,5 +43,4 @@
    * [recon-ng](recon-ng.md)
 * [Basics of linux](basics_of_linux.md)
 * [Littearature](littearature.md)
-* Server-side vulnerabilities
 
