@@ -34,10 +34,10 @@
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
    * [Wireshark](wireshark.md)
 * [Scripting with python](scripting_with_python.md)
+* [Transfering files](transfering_files.md)
 * [Wifi](wifi.md)
    * WEP
    * [WPS](wps.md)
-* [Transfering files](transfering_files.md)
 * [Tools of the trade](tools_of_the_trade.md)
    * Hashcat
    * Dictionary Attack -- SSH FTP
