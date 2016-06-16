@@ -42,4 +42,5 @@
    * [recon-ng](recon-ng.md)
 * [Basics of linux](basics_of_linux.md)
 * [Littearature](littearature.md)
+* Server-side vulnerabilities
 
