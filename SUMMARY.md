@@ -1,7 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
-* The Basics
+* [The Basics](the_basics.md)
 * [Scripting with python](scripting_with_python.md)
 * [Recon phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
