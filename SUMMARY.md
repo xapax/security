@@ -5,8 +5,8 @@
    * [Passive information gatherig](passive_information_gatherig.md)
    * [Active information gathering](active_information_gathering.md)
 * [Port Knocking](port_knocking.md)
-* [Dictionary Attack -- SSH FTP](dictionary_attack_--_ssh_ftp.md)
 * Server-side vulnerabilities
+* [Dictionary Attack -- SSH FTP](dictionary_attack_--_ssh_ftp.md)
 * [Client-side vulnerabilities](web-services.md)
    * [Web-scanning](web-scanning.md)
    * [SQL-injections](sql-injections.md)
