@@ -1,6 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
+* The Basics
 * [Scripting with python](scripting_with_python.md)
 * [Recon phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
@@ -44,5 +45,4 @@
    * [recon-ng](recon-ng.md)
 * [Basics of linux](basics_of_linux.md)
 * [Littearature](littearature.md)
-* The Basics
 
