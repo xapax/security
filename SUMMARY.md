@@ -1,6 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
+* [Scripting with python](scripting_with_python.md)
 * [Recon phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
    * [Active information gathering](active_information_gathering.md)
@@ -33,7 +34,6 @@
    * [Arp-spoofing](arp-spoofing.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
    * [Wireshark](wireshark.md)
-* [Scripting with python](scripting_with_python.md)
 * [Transfering files](transfering_files.md)
 * [Wifi](wifi.md)
    * WEP
