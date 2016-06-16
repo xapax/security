@@ -43,5 +43,5 @@
    * Hashcat
    * Dictionary Attack -- SSH FTP
    * [recon-ng](recon-ng.md)
-* [Littearature](littearature.md)
+* [Literature](littearature.md)
 
