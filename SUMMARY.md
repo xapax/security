@@ -29,9 +29,9 @@
    * [Mysql](mysql.md)
    * [Spawning shells](spawning_shells.md)
    * [Examples](examples.md)
-* [Cracking passwords](cracking_passwords.md)
 * Post Exploitation
    * [Persistence](persistence.md)
+* [Cracking passwords](cracking_passwords.md)
 * [Network traffic analysis](network_traffic.md)
    * [Arp-spoofing](arp-spoofing.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
