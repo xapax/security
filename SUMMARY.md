@@ -29,7 +29,7 @@
    * [Mysql](mysql.md)
    * [Spawning shells](spawning_shells.md)
    * [Examples](examples.md)
-* Post Exploitation
+* [Post Exploitation](post_exploitation.md)
    * [Persistence](persistence.md)
 * [Cracking passwords](cracking_passwords.md)
 * [Network traffic analysis](network_traffic.md)
