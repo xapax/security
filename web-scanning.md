@@ -1,4 +1,4 @@
-# Web-scanning
+# Find hidden files and directories
 
 Dirbusting, Forced Browse or whatever you like to call it.
 
