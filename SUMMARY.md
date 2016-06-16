@@ -14,7 +14,7 @@
    * [Port Knocking](port_knocking.md)
    * [Dictionary Attack -- SSH FTP](dictionary_attack_--_ssh_ftp.md)
 * [Client-side vulnerabilities](web-services.md)
-   * [Web-scanning](web-scanning.md)
+   * [Hidden files and directories](web-scanning.md)
    * [SQL-injections](sql-injections.md)
    * [Cross-site-scripting](cross-site-scripting.md)
    * [Cross Site Request Forgery](cross_site_request_forgery.md)
