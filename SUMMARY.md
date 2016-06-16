@@ -40,7 +40,7 @@
    * WEP
    * [WPS](wps.md)
 * [Tools of the trade](tools_of_the_trade.md)
-   * Hashcat
+   * [Hashcat](hashcat.md)
    * [recon-ng](recon-ng.md)
 * [Literature](littearature.md)
 
