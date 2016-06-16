@@ -2,11 +2,11 @@
 
 * [Introduction](README.md)
 * [The Basics](the_basics.md)
-   * Tips
    * [Basics of linux](basics_of_linux.md)
    * [Transfering files](transfering_files.md)
    * [Scripting with python](scripting_with_python.md)
    * [Reverse-shell](reverse-shell.md)
+   * Tips
    * [Outline of bugbounty/hacking/pentest](outline_of_bugbountyhackingpentest.md)
 * [Recon phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
