@@ -6,6 +6,7 @@
    * [Transfering files](transfering_files.md)
    * [Scripting with python](scripting_with_python.md)
    * [Reverse-shell](reverse-shell.md)
+   * Outline of bugbounty/hacking/pentest
 * [Recon phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
    * [Active information gathering](active_information_gathering.md)
