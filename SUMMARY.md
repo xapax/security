@@ -2,8 +2,8 @@
 
 * [Introduction](README.md)
 * [The Basics](the_basics.md)
+   * [Scripting with python](scripting_with_python.md)
    * Summary
-* [Scripting with python](scripting_with_python.md)
 * [Recon phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
    * [Active information gathering](active_information_gathering.md)
