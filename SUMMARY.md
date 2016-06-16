@@ -2,6 +2,7 @@
 
 * [Introduction](README.md)
 * [The Basics](the_basics.md)
+   * [Basics of linux](basics_of_linux.md)
    * [Scripting with python](scripting_with_python.md)
    * Summary
 * [Recon phase](scanning.md)
@@ -44,6 +45,5 @@
    * Hashcat
    * Dictionary Attack -- SSH FTP
    * [recon-ng](recon-ng.md)
-* [Basics of linux](basics_of_linux.md)
 * [Littearature](littearature.md)
 
