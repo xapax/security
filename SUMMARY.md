@@ -3,6 +3,7 @@
 * [Introduction](README.md)
 * [The Basics](the_basics.md)
    * [Basics of linux](basics_of_linux.md)
+   * [Transfering files](transfering_files.md)
    * [Scripting with python](scripting_with_python.md)
    * Summary
 * [Recon phase](scanning.md)
@@ -37,7 +38,6 @@
    * [Arp-spoofing](arp-spoofing.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
    * [Wireshark](wireshark.md)
-* [Transfering files](transfering_files.md)
 * [Wifi](wifi.md)
    * WEP
    * [WPS](wps.md)
