@@ -133,6 +133,12 @@ You can also specify a specifc range, like this
 #### Sort out the machines that are up
 So let's say you find that 40 machine exists in that range. We can use grep to output those IP:s.
 
+First let's find the IPs that were online. Ip-range is the output from previous command. You can of course combine them all.
+
+`cat ip-range.txt | grep -B 1 "Host is up"`
+
+Now let's sort out the ips from that file.
+
 `grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' ip-range.txt > onlyIps.txt`
 
 Now you can input all those Ips to nmap and scan them.
