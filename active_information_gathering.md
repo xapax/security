@@ -43,6 +43,16 @@ Now that you have gathered some IP addresses from your subdomain scanning it is 
 
 `nmap -vvv -Pn -A -iL listOfIP.txt`
 
+### Scan an entire IP-range
+You might find that a site has several machines on the same ip-range. You can then use nmap to scan the whole range.
+
+The `-sn` flag stops nmap from running port-scans. So it speeds up the process.
+
+`nmap -vvv -sn 201.210.67.0/24`
+
+You can also specify a specifc range, like this
+
+`nmap -sP 201.210.67.0-100`
 
 ## References
 https://high54security.blogspot.cl/2016/01/recon-ng-and-power-to-crawl-trough.html
