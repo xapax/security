@@ -1,11 +1,20 @@
 # Active information gathering
 
 
+
 ## Find subdomains
 
-Finding subdomains is fundamental. THe more subdomains you find, the bigger attack surface you have. Which means bigger possibility of success.
+Finding subdomains is fundamental. The more subdomains you find, the bigger attack surface you have. Which means bigger possibility of success.
 
 This isn't really a science. Some tools find some stuff, other tools other stuff. So your best bet is to use a few of them together.
+
+But before we begin to look at the specific techniques that exists to find subdomains, lets try to understand what subdomains are and how they work.
+
+AAAA
+CNAME
+SOA
+TXT
+MX
 
 ### recon-ng
 In order to find subdomains we can use the recon-ng framework. It has the same basic structure as metasploit. You can learn more about this tool in the tools-section.
