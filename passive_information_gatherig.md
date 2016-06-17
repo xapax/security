@@ -49,6 +49,15 @@ So if a website has been taken down you can still find the cached version, of th
 
 `cache:website.com`
 
+https://www.blackhat.com/presentations/bh-europe-05/BH_EU_05-Long.pdf
+
+
+## Examples
+
+Find login-pages on sites that use the ending .bo. For bolivia.
+`site:bo inurl:admin.php`
+
+
 ## More
 Here are some more
 http://www.googleguide.com/advanced_operators_reference.html
