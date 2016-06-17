@@ -95,6 +95,14 @@ Nmap has a command to make the output grepable.
 
 `nmap -vvv -p 80 201.210.67.0-100 -oG - | grep 80/open`
 
+## Find interesting files
+
+`site:example.com filetype:pdf`
+
+This can easily be turned into a script that checks for all important filetypes.
+
+
+
 ## References
 https://high54security.blogspot.cl/2016/01/recon-ng-and-power-to-crawl-trough.html
 
