@@ -62,10 +62,13 @@ You also have to look at what kind of system the target has. Some web-apps give 
 1. Check out the homepage
 Often companies brag about their clients. You can use this to guess the subdomains of some clients.
 
-### Pentest-tools
+### Online tools
+
+#### Pentest-tools
 https://pentest-tools.com/information-gathering/find-subdomains-of-domain
 
-
+#### DNSdumpster
+https://dnsdumpster.com/
 
 ## Netdiscover
 
