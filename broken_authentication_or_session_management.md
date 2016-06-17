@@ -12,4 +12,17 @@ The problem here is that the first reset-link should be blocked once the second 
 
 #### Relevant bug bounty reports
 https://hackerone.com/reports/23579
+https://hackerone.com/reports/39203
+https://hackerone.com/reports/23921
 
+### Cookie does not expire
+
+An easy way to test this is by using burp-suite.
+
+1. Open burp-suite
+2. Login to a website you want to test
+3. Intercept the request, anyone will do.
+4. Right click on the request in burp-suite and click on "Send to repeater". Now you have saved that request for later. With the current cookie.
+5. Log out from the website
+6. Go to the Repeater-tab in burp and click on "Go".
+7. Verify that you are redirected to the login.
