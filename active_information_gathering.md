@@ -29,8 +29,18 @@ If some of these subdomains are not given IPs automatically you can just run
 
 And it will resolve all the hosts in the hosts-file. 
 
+
+### Google Dorks
+Using google we can also find subdomains.
+
+This will only give us the subdomains of a site.
+
+`site:msn.com -site:www.msn.com`
+
 ### Pentest-tools
 https://pentest-tools.com/information-gathering/find-subdomains-of-domain
+
+
 
 ## Netdiscover
 
