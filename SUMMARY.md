@@ -22,7 +22,7 @@
    * [Cross Site Request Forgery](cross_site_request_forgery.md)
    * [Subdomain takeover](subdomain_takeover.md)
    * [Clickjacking](clickjacking.md)
-   * Broken authentication or session management
+   * [Broken authentication or session management](broken_authentication_or_session_management.md)
 * [Privilege Escalation](privilege_escalation.md)
    * [Internal Enumeration](internal_enumeration.md)
    * [Mysql](mysql.md)
