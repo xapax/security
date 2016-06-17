@@ -3,7 +3,7 @@
 * [Introduction](README.md)
 * [The Basics](the_basics.md)
    * [Basics of linux](basics_of_linux.md)
-   * Bash-scripting
+   * [Bash-scripting](bash-scripting.md)
    * [Transfering files](transfering_files.md)
    * [Scripting with python](scripting_with_python.md)
    * [Reverse-shell](reverse-shell.md)
