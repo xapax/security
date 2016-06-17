@@ -26,3 +26,7 @@ An easy way to test this is by using burp-suite.
 5. Log out from the website
 6. Go to the Repeater-tab in burp and click on "Go".
 7. Verify that you are redirected to the login.
+
+
+#### Relevant reports on hackerone
+https://hackerone.com/reports/18503
