@@ -51,6 +51,9 @@ This will only give us the subdomains of a site.
 
 `site:msn.com -site:www.msn.com`
 
+`site:*.nextcloud.com`
+
+`site:*.nextcloud.com -site:help.nextcloud.com`
 
 ### subbrute.py
 
@@ -64,12 +67,20 @@ https://github.com/TheRook/subbrute
 I haven't tested this yet.
 https://github.com/guelfoweb/knock
 
+
+### Reverse DNS-lookup
+
+If you manage 
+
 ### Being smart
 
 You also have to look at what kind of system the target has. Some web-apps give their clients their own subdomains. Like github.
 
 1. Check out the homepage
 Often companies brag about their clients. You can use this to guess the subdomains of some clients.
+
+
+
 
 ### Online tools
 
