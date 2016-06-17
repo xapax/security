@@ -6,7 +6,10 @@
 
 Finding subdomains is fundamental. The more subdomains you find, the bigger attack surface you have. Which means bigger possibility of success.
 
-This isn't really a science. Some tools find some stuff, other tools other stuff. So your best bet is to use a few of them together.
+For now this seems to be a very comprehensive list of tools to find subdomains.
+https://blog.bugcrowd.com/discovering-subdomains
+
+This isn't really a science. Some tools find some stuff, other tools other stuff. So your best bet is to use a few of them together. Don't forget to brute-force recursivly!
 
 But before we begin to look at the specific techniques that exists to find subdomains, lets try to understand what subdomains are and how they work.
 
@@ -83,6 +86,16 @@ http://www.intodns.com/
 This tool doesn't enumerate subdomains per se. But it hands of a lot of information about domains.
 http://www.dnsstuff.com/
 
+
+### Brute force dictionaries
+
+If you try to brute force the domains it is a good idea to have a good dictionary. That can be found here:
+
+Bitquark
+https://github.com/bitquark/dnspop
+
+SecList
+https://github.com/danielmiessler/SecLists/tree/master/Discovery/DNS
 ## Netdiscover
 
 netdiscover -r 192.168.1.1/24
@@ -120,5 +133,7 @@ This can easily be turned into a script that checks for all important filetypes.
 
 
 ## References
+
+https://blog.bugcrowd.com/discovering-subdomains
 https://high54security.blogspot.cl/2016/01/recon-ng-and-power-to-crawl-trough.html
 
