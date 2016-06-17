@@ -60,6 +60,10 @@ Find login-pages on sites that use the ending .bo. For bolivia.
 
 ## More
 Here are some more
+
+Great guide for google dorks
+https://www.blackhat.com/presentations/bh-europe-05/BH_EU_05-Long.pdf
+
 http://www.googleguide.com/advanced_operators_reference.html
 
 http://www.searchcommands.com/
