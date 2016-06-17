@@ -53,6 +53,7 @@ This will only give us the subdomains of a site.
 
 `site:*.nextcloud.com`
 
+To exclude a specific subdomain you can do this:
 `site:*.nextcloud.com -site:help.nextcloud.com`
 
 ### subbrute.py
@@ -70,7 +71,7 @@ https://github.com/guelfoweb/knock
 
 ### Reverse DNS-lookup
 
-If you manage 
+If you manage to figure out the IP range that the target owns. 
 
 ### Being smart
 
@@ -128,6 +129,15 @@ The `-sn` flag stops nmap from running port-scans. So it speeds up the process.
 You can also specify a specifc range, like this
 
 `nmap -sP 201.210.67.0-100`
+
+#### Sort out the machines that are up
+So let's say you find that 40 machine exists in that range. We can use grep to output those IP:s.
+
+`grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' ip-range.txt > onlyIps.txt`
+
+Now you can input all those Ips to nmap and scan them.
+
+
 
 #### Scan a range and output if a specific port is open
 
