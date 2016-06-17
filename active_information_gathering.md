@@ -14,7 +14,9 @@ AAAA
 CNAME
 SOA
 TXT
-MX
+#### MX - Mail exchange
+
+https://en.wikipedia.org/wiki/MX_record
 
 ### recon-ng
 In order to find subdomains we can use the recon-ng framework. It has the same basic structure as metasploit. You can learn more about this tool in the tools-section.
@@ -55,6 +57,10 @@ The basic command is like this
 
 https://github.com/TheRook/subbrute
 
+### Knock
+I haven't tested this yet.
+https://github.com/guelfoweb/knock
+
 ### Being smart
 
 You also have to look at what kind of system the target has. Some web-apps give their clients their own subdomains. Like github.
@@ -64,11 +70,18 @@ Often companies brag about their clients. You can use this to guess the subdomai
 
 ### Online tools
 
+#### DNSDumpster
+https://dnsdumpster.com/
+
 #### Pentest-tools
 https://pentest-tools.com/information-gathering/find-subdomains-of-domain
 
-#### DNSdumpster
-https://dnsdumpster.com/
+#### Intodns
+http://www.intodns.com/
+
+#### DNSStuff
+This tool doesn't enumerate subdomains per se. But it hands of a lot of information about domains.
+http://www.dnsstuff.com/
 
 ## Netdiscover
 
