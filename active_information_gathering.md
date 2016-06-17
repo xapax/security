@@ -69,9 +69,6 @@ I haven't tested this yet.
 https://github.com/guelfoweb/knock
 
 
-### Reverse DNS-lookup
-
-If you manage to figure out the IP range that the target owns. 
 
 ### Being smart
 
@@ -80,6 +77,19 @@ You also have to look at what kind of system the target has. Some web-apps give 
 1. Check out the homepage
 Often companies brag about their clients. You can use this to guess the subdomains of some clients.
 
+
+### Reverse DNS-lookup
+
+If you manage to figure out the IP range that the target owns (see section about nmap below). You can see which machines are online. And then you can run a script to find out the domain-addresses of those machines. That way you might find something new.
+
+The text-file onlyIps.txt is a textfile with one IP-address on each line.
+
+`#!/bin/bash
+
+while read p; do
+  echo $p;
+  host  $p
+done <onlyIps.txt`
 
 
 
@@ -108,6 +118,10 @@ https://github.com/bitquark/dnspop
 
 SecList
 https://github.com/danielmiessler/SecLists/tree/master/Discovery/DNS
+
+
+
+
 ## Netdiscover
 
 netdiscover -r 192.168.1.1/24
@@ -142,6 +156,7 @@ Now let's sort out the ips from that file.
 `grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' ip-range.txt > onlyIps.txt`
 
 Now you can input all those Ips to nmap and scan them.
+
 
 
 
