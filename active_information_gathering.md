@@ -91,6 +91,8 @@ while read p; do
   host  $p
 done <onlyIps.txt`
 
+Here are some more tools that can do reverse lookup
+http://www.cyberciti.biz/faq/how-to-test-or-check-reverse-dns/
 
 
 ### Online tools
