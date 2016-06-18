@@ -11,6 +11,10 @@ You can find out the version of the SSH either but scanning it with nmap or by c
 It returnes something like this:
 SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu1
 
+## Port 25 - SMTP
+
+Exploits can be found in metasploit
+
 ## Port 587 - Submission
 
 Outgoing smtp-port
