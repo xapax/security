@@ -14,6 +14,8 @@ SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu1
 ## Port 25 - SMTP
 
 Exploits can be found in metasploit
+And shellshock
+https://www.exploit-db.com/exploits/34896/
 
 ## Port 587 - Submission
 
