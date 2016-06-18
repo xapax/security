@@ -13,7 +13,13 @@ SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu1
 
 ## Port 25 - SMTP
 
-Exploits can be found in metasploit
+Port 25 can be used to enumerate users.
+
+http://www.dummies.com/how-to/content/smtp-hacks-and-how-to-guard-against-them.html
+http://pentestmonkey.net/tools/user-enumeration/smtp-user-enum
+https://pentestlab.wordpress.com/2012/11/20/smtp-user-enumeration/
+
+Exploits can be found in metasploit25 can be quite useful 
 And shellshock
 https://www.exploit-db.com/exploits/34896/
 
