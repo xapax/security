@@ -15,6 +15,25 @@ SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu1
 
 Port 25 can be used to enumerate users.
 
+You can connect to port 25 by using nc. Like this:
+
+It looks like this:
+
+`$ nc 192.168.1.103 25                                                                                                                          130 ↵
+220 metasploitable.localdomain ESMTP Postfix (Ubuntu)
+VRFY root
+252 2.0.0 root
+VRFY roooooot
+550 5.1.1 <roooooot>: Recipient address rejected: User unknown in local recipient table`
+
+Here we have managed to identify the user root. But roooooot was rejected.
+
+
+VRFY, EXPN or RCPT command
+
+Here are the documentations for SMTP
+https://cr.yp.to/smtp/vrfy.html
+
 http://www.dummies.com/how-to/content/smtp-hacks-and-how-to-guard-against-them.html
 http://pentestmonkey.net/tools/user-enumeration/smtp-user-enum
 https://pentestlab.wordpress.com/2012/11/20/smtp-user-enumeration/
