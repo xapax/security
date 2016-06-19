@@ -30,6 +30,8 @@ HELP - Asks for the help screen.
 AUTH - Used to authenticate the client to the server.
 VRFY - Asks the server to verify is the email user's mailbox exists.
 
+
+### Manually
 We can use this service to find out which usernames are in the database. This can be done in the following way.
 
 `$ nc 192.168.1.103 25                                                                               
@@ -43,7 +45,12 @@ Here we have managed to identify the user root. But roooooot was rejected.
 
 VRFY, EXPN or RCPT command
 
-This process can of course be automaized with the kali tool: *smtp-user-enum*. The command will look like this. `-M` for mode. `-U` for userlist. `-t` for target
+### Automitized
+
+This process can of course be automatized
+
+#### smtp-user-enum
+The command will look like this. `-M` for mode. `-U` for userlist. `-t` for target
 
 `$ smtp-user-enum -M VRFY -U /root/sectools/SecLists/Usernames/Names/names.txt -t 192.168.1.103`
 
@@ -68,7 +75,22 @@ Target domain ............
 
 8607 queries in 112 seconds (76.8 queries / sec)
 `
+#### Metasploit
+msfconsole
 
+`msf > use auxiliary/scanner/smtp/smtp_enum 
+msf auxiliary(smtp_enum) > show options
+
+Module options (auxiliary/scanner/smtp/smtp_enum):
+
+   Name       Current Setting                                                Required  Description
+   ----       ---------------                                                --------  -----------
+   RHOSTS                                                                    yes       The target address range or CIDR identifier
+   RPORT      25                                                             yes       The target port
+   THREADS    1                                                              yes       The number of concurrent threads
+   UNIXONLY   true                                                           yes       Skip Microsoft bannered servers when testing unix users
+   USER_FILE  /usr/share/metasploit-framework/data/wordlists/unix_users.txt  yes       The file that contains a list of probable users accounts.
+`
 
 Here are the documentations for SMTP
 https://cr.yp.to/smtp/vrfy.html
