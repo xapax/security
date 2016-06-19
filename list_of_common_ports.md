@@ -78,7 +78,6 @@ Target domain ............
 #### Metasploit
 
 I can also be done using metasploit
-msfconsole
 
 `msf > use auxiliary/scanner/smtp/smtp_enum 
 msf auxiliary(smtp_enum) > show options
