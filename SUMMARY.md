@@ -50,5 +50,6 @@
 * [Tools of the trade](tools_of_the_trade.md)
    * [Hashcat](hashcat.md)
    * [recon-ng](recon-ng.md)
+   * smtp-user-enum
 * [Literature](littearature.md)
 
