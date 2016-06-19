@@ -76,6 +76,8 @@ Target domain ............
 8607 queries in 112 seconds (76.8 queries / sec)
 `
 #### Metasploit
+
+I can also be done using metasploit
 msfconsole
 
 `msf > use auxiliary/scanner/smtp/smtp_enum 
