@@ -30,15 +30,9 @@ HELP - Asks for the help screen.
 AUTH - Used to authenticate the client to the server.
 VRFY - Asks the server to verify is the email user's mailbox exists.
 
+We can use this service to find out which usernames are in the database. This can be done in the following way.
 
-
-Port 25 can be used to enumerate users.
-
-You can connect to port 25 by using nc. Like this:
-
-It looks like this:
-
-`$ nc 192.168.1.103 25                                                                                                                          130 ↵
+`$ nc 192.168.1.103 25                                                                               
 220 metasploitable.localdomain ESMTP Postfix (Ubuntu)
 VRFY root
 252 2.0.0 root
@@ -46,7 +40,6 @@ VRFY roooooot
 550 5.1.1 <roooooot>: Recipient address rejected: User unknown in local recipient table`
 
 Here we have managed to identify the user root. But roooooot was rejected.
-
 
 VRFY, EXPN or RCPT command
 
