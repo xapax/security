@@ -26,6 +26,7 @@
    * [Subdomain takeover](subdomain_takeover.md)
    * [Clickjacking](clickjacking.md)
    * [Broken authentication or session management](broken_authentication_or_session_management.md)
+   * Text-injection
 * [Privilege Escalation](privilege_escalation.md)
    * [Internal Enumeration](internal_enumeration.md)
    * [Mysql](mysql.md)
