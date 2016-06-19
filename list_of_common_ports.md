@@ -43,6 +43,33 @@ Here we have managed to identify the user root. But roooooot was rejected.
 
 VRFY, EXPN or RCPT command
 
+This process can of course be automaized with the kali tool: *smtp-user-enum*. The command will look like this. `-M` for mode. `-U` for userlist. `-t` for target
+
+`$ smtp-user-enum -M VRFY -U /root/sectools/SecLists/Usernames/Names/names.txt -t 192.168.1.103`
+
+`
+Mode ..................... VRFY
+Worker Processes ......... 5
+Usernames file ........... /root/sectools/SecLists/Usernames/Names/names.txt
+Target count ............. 1
+Username count ........... 8607
+Target TCP port .......... 25
+Query timeout ............ 5 secs
+Target domain ............ 
+
+######## Scan started at Sun Jun 19 11:04:59 2016 #########
+192.168.1.103: Bin exists
+192.168.1.103: Irc exists
+192.168.1.103: Mail exists
+192.168.1.103: Man exists
+192.168.1.103: Sys exists
+######## Scan completed at Sun Jun 19 11:06:51 2016 #########
+5 results.
+
+8607 queries in 112 seconds (76.8 queries / sec)
+`
+
+
 Here are the documentations for SMTP
 https://cr.yp.to/smtp/vrfy.html
 
