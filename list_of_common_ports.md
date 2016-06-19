@@ -13,6 +13,25 @@ SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu1
 
 ## Port 25 - SMTP
 
+SMTP is a server to server service. The user receives or sends emails using IMAP or POP3. Those messages are then routed to the SMTP-server which communicates the email to another server.
+The SMTP-server has a database with all emails that can receive or send emails. We can use SMTP to query that database for possible emails. 
+
+Here are the possible commands
+
+HELO - 
+EHLO - Extended SMTP.
+STARTTLS - SMTP communicted over unencrypted protocol. By starting TLS-session we encrypt the traffic.
+RCPT - Address of the recipient.
+DATA - Starts the transfer of the message contents.
+RSET - Used to abort the current email transaction.
+MAIL - Specifies the email address of the sender.
+QUIT - Closes the connection.
+HELP - Asks for the help screen.
+AUTH - Used to authenticate the client to the server.
+VRFY - Asks the server to verify is the email user's mailbox exists.
+
+
+
 Port 25 can be used to enumerate users.
 
 You can connect to port 25 by using nc. Like this:
@@ -34,6 +53,7 @@ VRFY, EXPN or RCPT command
 Here are the documentations for SMTP
 https://cr.yp.to/smtp/vrfy.html
 
+http://null-byte.wonderhowto.com/how-to/hack-like-pro-extract-email-addresses-from-smtp-server-0160814/
 http://www.dummies.com/how-to/content/smtp-hacks-and-how-to-guard-against-them.html
 http://pentestmonkey.net/tools/user-enumeration/smtp-user-enum
 https://pentestlab.wordpress.com/2012/11/20/smtp-user-enumeration/
