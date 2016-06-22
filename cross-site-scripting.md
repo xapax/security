@@ -50,5 +50,7 @@ The obvious risk is that the attacker must expose a server.
 #### BeeF XSS
 
 ###References:
+
+http://brutelogic.com.br/blog/probing-to-find-xss/
 http://excess-xss.com/
 
