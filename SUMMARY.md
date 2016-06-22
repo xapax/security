@@ -27,6 +27,7 @@
    * [Clickjacking](clickjacking.md)
    * [Broken authentication or session management](broken_authentication_or_session_management.md)
    * [Text/content-injection](text-injection.md)
+   * XML External Entity Attack
 * [Privilege Escalation](privilege_escalation.md)
    * [Internal Enumeration](internal_enumeration.md)
    * [Mysql](mysql.md)
