@@ -129,6 +129,16 @@ This tool doesn't enumerate subdomains per se. But it hands of a lot of informat
 http://www.dnsstuff.com/
 
 
+## Bypassing CloudFlare
+
+https://www.ericzhang.me/resolve-cloudflare-ip-leakage/
+
+
+This tool can be used to find old IPs. It could mean that the 
+http://toolbar.netcraft.com/site_report?url=lyst.com
+
+
+
 ### Brute force dictionaries
 
 If you try to brute force the domains it is a good idea to have a good dictionary. That can be found here:
