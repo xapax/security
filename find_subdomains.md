@@ -10,9 +10,11 @@ This isn't really a science. Some tools find some stuff, other tools other stuff
 
 But before we begin to look at the specific techniques that exists to find subdomains, lets try to understand what subdomains are and how they work.
 
-* A - records 
+* A - records
 The A record maps a name to one or more IP addresses, when the IP are known and stable.
 So that would be 123.244.223.222 => example.com
+
+AAAA - points to a IPv6 Record 
 
 * CNAME
 The CNAME record connects a name to another name. An example of that would be:
@@ -24,6 +26,11 @@ Another example is. If you have the domains mail.example.com and webmail.example
 Another typical usage of CNAME is to link www.example.com to example.com
 
 CNAME is quite convenient. Because if you change the A-record. The IP-address, you don't need to change the other subdomains, like ftp.example.com or www.example.com. Since they both point to example.com, which is a A-record and points directly to the IP.
+
+Another note.
+If foo.example.com points to bar.example.com, that mean that bar.example.com is the CNAME (Canonical/real/actual Name) of foo.example.com.
+
+
 
 * Alias
 Kind of like CNAME in that it points to another name, not an IP.
@@ -136,5 +143,9 @@ https://github.com/bitquark/dnspop
 
 SecList
 https://github.com/danielmiessler/SecLists/tree/master/Discovery/DNS
+
+
+References
+https://en.wikipedia.org/wiki/CNAME_record
 
 
