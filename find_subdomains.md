@@ -35,12 +35,7 @@ If foo.example.com points to bar.example.com, that mean that bar.example.com is 
 * Alias
 Kind of like CNAME in that it points to another name, not an IP.
 
-
-AAAA
-CNAME
-SOA
-TXT
-#### MX - Mail exchange
+* MX - Mail exchange
 
 https://en.wikipedia.org/wiki/MX_record
 
