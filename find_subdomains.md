@@ -10,6 +10,15 @@ This isn't really a science. Some tools find some stuff, other tools other stuff
 
 But before we begin to look at the specific techniques that exists to find subdomains, lets try to understand what subdomains are and how they work.
 
+* A - records * 
+The A record maps a name to one or more IP addresses, when the IP are known and stable.
+So that would be 123.244.223.222 => example.com
+
+* CNAME *
+The CNAME record maps a name to another name. It should only be used when there are no other records on that name. An example of that would be:
+www.example.com,CNAME,www.example.com.cdn.cloudflare.net.
+
+
 AAAA
 CNAME
 SOA
