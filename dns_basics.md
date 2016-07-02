@@ -1,6 +1,10 @@
 # DNS Basics
 
 
+This is the best article I have found about how the DNS-system works. Form the highest to the lowest level.
+
+https://www.digitalocean.com/community/tutorials/an-introduction-to-dns-terminology-components-and-concepts
+
 Before we begin to look at the specific techniques that exists to find subdomains, lets try to understand what subdomains are and how they work.
 
 ** A - records **
