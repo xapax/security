@@ -47,6 +47,11 @@ The obvious risk is that the attacker must expose a server.
 
 ### Tools
 
+#### Xssposed
+This is a tool found in recon-ng. It basically just check this (https://www.openbugbounty.org/
+) database to see if anyone has reported a xss for the website.
+
+
 #### BeeF XSS
 
 ###References:
