@@ -15,8 +15,15 @@ The A record maps a name to one or more IP addresses, when the IP are known and 
 So that would be 123.244.223.222 => example.com
 
 * CNAME
-The CNAME record maps a name to another name. It should only be used when there are no other records on that name. An example of that would be:
+The CNAME record connects a name to another name. An example of that would be:
+
 www.example.com,CNAME,www.example.com.cdn.cloudflare.net.
+
+Another example is. If you have the domains mail.example.com and webmail.example.com. You can have webmail.example.com point to mail.example.com. So anyone visiting webmail.example.com will see the same thing as mail.example.com. It will NOT redirect you. Just show you the same content.
+
+Another typical usage of CNAME is to link www.example.com to example.com
+
+CNAME is quite convenient. Because if you change the A-record. The IP-address, you don't need to change the other subdomains, like ftp.example.com or www.example.com. Since they both point to example.com, which is a A-record and points directly to the IP.
 
 * Alias
 Kind of like CNAME in that it points to another name, not an IP.
