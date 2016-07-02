@@ -1,9 +1,10 @@
 # DNS Basics
 
 
-But before we begin to look at the specific techniques that exists to find subdomains, lets try to understand what subdomains are and how they work.
+Before we begin to look at the specific techniques that exists to find subdomains, lets try to understand what subdomains are and how they work.
 
 ** A - records **
+A stands for **address**
 The A record maps a name to one or more IP addresses, when the IP are known and stable.
 So that would be 123.244.223.222 => example.com
 
