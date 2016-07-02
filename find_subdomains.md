@@ -18,6 +18,9 @@ So that would be 123.244.223.222 => example.com
 The CNAME record maps a name to another name. It should only be used when there are no other records on that name. An example of that would be:
 www.example.com,CNAME,www.example.com.cdn.cloudflare.net.
 
+* Alias
+Kind of like CNAME in that it points to another name, not an IP.
+
 
 AAAA
 CNAME
