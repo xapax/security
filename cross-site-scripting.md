@@ -33,6 +33,12 @@ The problem with XSS is that it is a bit hard for the users to protect themselve
 One can always use noscript to block all javascript code. But that pretty much destroys the whole experience with using the internet.
 
 ### Protect your website
+
+There are mainly two ways to protect against ** encoding ** and ** sanitizing **.
+
+#### Encoding
+
+
 Of course the way to protect your website is to sanitize all input. 
 
 You can also set the response-header like this:
@@ -47,9 +53,17 @@ The obvious risk is that the attacker must expose a server.
 
 ### Tools
 
+#### XSSER
+
+This tool tests a lot of 
+
+`xsser --gtk`
+
+
 #### Xssposed
 This is a tool found in recon-ng. It basically just check this (https://www.openbugbounty.org/
 ) database to see if anyone has reported a xss for the website.
+
 
 
 #### BeeF XSS
