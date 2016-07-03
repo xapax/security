@@ -24,7 +24,7 @@
    * [Hidden files and directories](web-scanning.md)
    * [SQL-injections](sql-injections.md)
    * [Cross-site-scripting](cross-site-scripting.md)
-       * Examples
+       * [Examples](examplesXSS.md)
    * [Cross Site Request Forgery](cross_site_request_forgery.md)
    * [Subdomain takeover](subdomain_takeover.md)
    * [Clickjacking](clickjacking.md)
