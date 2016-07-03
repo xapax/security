@@ -22,6 +22,12 @@ This is when the malicious code originates from the websites database. That mean
 2. Reflected
 This is an attack where the script originates from the users request. This might seem a bit illogical, why would a user inject malicious code to himself? Well the code can 
 
+3. DOM based
+DOM-based attacks are when something is injected into javascript on the DOM. So, it does not go by the server. Because the code gets executed in the response.
+Take a search-functionality for example. The users enters a search-parameter that gets sent to the server which might sanitize it or something. In the response the found search-items are sent, but not the search-query. But on the webpage the search query is exposed. "You searched for X" is shown. That is because it gets the search parameter from the url-parameter. By using `document.location.href` for example.
+
+
+
 ### How does it really work?
 Let's look at a practical example.
 
