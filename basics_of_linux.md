@@ -18,7 +18,11 @@ https://linuxjourney.com/
  - find
  This must be by far one of the most useful programs. But I tend to always forget how it works.
  
+ A. Add binary to the path file
+ Show the current path-variable
+ `echo $PATH`
  
+ Add new 
  
  2. Text-fu
  - https://linuxjourney.com/lesson/stderr-standard-error-redirect
