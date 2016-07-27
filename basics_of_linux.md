@@ -48,6 +48,7 @@ cc
 Command:
 `sort file | uniq`
 
+`cat filename | sort -u > newFileName`
 
 
  3. Vim
