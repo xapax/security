@@ -4,7 +4,9 @@
 ## Zines
 
 
-2600: The Hacker Quarterly
+###2600: The Hacker Quarterly
+https://www.2600.com/
+
 
 ### Go null yourself
 http://web.textfiles.com/ezines/GONULLYOURSELF/gonullyourself1.txt
