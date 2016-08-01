@@ -81,6 +81,7 @@ q	                F10     	Quit htop
  7. Packages
 sudo apt-get install
 
+
 If you onyl have a .deb file you do this to install form the terminal:
 `sudo dpkg -i /path/to/deb/file`
 
