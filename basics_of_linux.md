@@ -78,7 +78,7 @@ q	                F10     	Quit htop
  
  http://www.thegeekstuff.com/2011/09/linux-htop-examples/
 
- 7. Packages
+## 7. Packages
 sudo apt-get install
 
 
