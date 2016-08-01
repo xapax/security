@@ -7,3 +7,5 @@ This is constant work in progress. If you read about a vulnerability that you wa
 
 Here is an example of such a search:
 `site:hackerone.com sql-injection`
+
+Fix
