@@ -79,15 +79,21 @@ q	                F10     	Quit htop
  http://www.thegeekstuff.com/2011/09/linux-htop-examples/
 
 ## 7. Packages
-sudo apt-get install
 
+
+### Install package
+sudo apt-get install
 
 If you onyl have a .deb file you do this to install form the terminal:
 `sudo dpkg -i /path/to/deb/file`
 
 `sudo apt-get install -f`
 
-
+### Remove packages
+This can be tricky. First find the package
+`dpkg --list`
+Then you find it in your list.
+`sudo apt-get --purge remove nameOfProgram`
 
  8. Devices
 
