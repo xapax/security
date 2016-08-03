@@ -95,6 +95,9 @@ This can be tricky. First find the package
 Then you find it in your list.
 `sudo apt-get --purge remove nameOfProgram`
 
+When you remove some package it might have requires some other dependencies. To remove those you run
+`sudo apt-get autoremove`
+
  8. Devices
 
  9. The Filesystem
