@@ -42,6 +42,9 @@ print req.status_code
 print req.text
 ```
 
+Here is the documentation
+http://docs.python-requests.org/en/master/user/quickstart/
+
 ## Read and write to files
 Many times we want to read through files and do stuff do it. This can of course be done using bash but we can also do it in python.
 
