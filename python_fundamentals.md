@@ -2,6 +2,15 @@
 
 ## Array/list
 
+my_list = [1,"string",3,4,5]
+for item in my_list:
+    print item
+
+**Append/push to list**
+my_list.append("addMe")
+
+
+
 ## Modules
 
 Always good to modularize your code.
