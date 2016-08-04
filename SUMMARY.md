@@ -6,6 +6,7 @@
    * [Bash-scripting](bash-scripting.md)
    * [Transfering files](transfering_files.md)
    * [Scripting with python](scripting_with_python.md)
+       * Python fundamentals
    * [Reverse-shell](reverse-shell.md)
    * [Outline of bugbounty/hacking/pentest](outline_of_bugbountyhackingpentest.md)
    * [General tips](general_tips.md)
