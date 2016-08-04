@@ -45,3 +45,10 @@ print req.text
 ## Read and write to files
 Many times we want to read through files and do stuff do it. This can of course be done using bash but we can also do it in python.
 
+```python
+file_open = open("readme.txt", "r")
+for line in file_open:
+    print line.strip("\n")
+    if line.strip("\n") == "rad 4":
+        print "last line"
+```
