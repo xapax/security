@@ -49,6 +49,12 @@ Nmap has a command to make the output grepable.
 
 `nmap -vvv -p 80 201.210.67.0-100 -oG - | grep 80/open`
 
+## Nikto
+
+Nikto is a good tool.
+
+`nikto -host 192.168.1.101`
+
 ## Find interesting files
 
 `site:example.com filetype:pdf`
