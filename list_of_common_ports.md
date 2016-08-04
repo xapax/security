@@ -18,6 +18,7 @@ The SMTP-server has a database with all emails that can receive or send emails. 
 
 Here are the possible commands
 
+```
 HELO - 
 EHLO - Extended SMTP.
 STARTTLS - SMTP communicted over unencrypted protocol. By starting TLS-session we encrypt the traffic.
@@ -29,32 +30,35 @@ QUIT - Closes the connection.
 HELP - Asks for the help screen.
 AUTH - Used to authenticate the client to the server.
 VRFY - Asks the server to verify is the email user's mailbox exists.
-
+```
 
 ### Manually
 We can use this service to find out which usernames are in the database. This can be done in the following way.
 
-`$ nc 192.168.1.103 25                                                                               
+```
+$ nc 192.168.1.103 25                                                                               
 220 metasploitable.localdomain ESMTP Postfix (Ubuntu)
 VRFY root
 252 2.0.0 root
 VRFY roooooot
-550 5.1.1 <roooooot>: Recipient address rejected: User unknown in local recipient table`
+550 5.1.1 <roooooot>: Recipient address rejected: User unknown in local recipient table
+```
 
 Here we have managed to identify the user root. But roooooot was rejected.
 
 VRFY, EXPN or RCPT command
 
-### Automitized
+### Automatized
 
 This process can of course be automatized
 
 #### smtp-user-enum
 The command will look like this. `-M` for mode. `-U` for userlist. `-t` for target
 
-`$ smtp-user-enum -M VRFY -U /root/sectools/SecLists/Usernames/Names/names.txt -t 192.168.1.103`
-
-`
+```
+$ smtp-user-enum -M VRFY -U /root/sectools/SecLists/Usernames/Names/names.txt -t 192.168.1.103
+```
+```
 Mode ..................... VRFY
 Worker Processes ......... 5
 Usernames file ........... /root/sectools/SecLists/Usernames/Names/names.txt
@@ -74,12 +78,14 @@ Target domain ............
 5 results.
 
 8607 queries in 112 seconds (76.8 queries / sec)
-`
+```
+
 #### Metasploit
 
 I can also be done using metasploit
 
-`msf > use auxiliary/scanner/smtp/smtp_enum 
+```
+msf > use auxiliary/scanner/smtp/smtp_enum 
 msf auxiliary(smtp_enum) > show options
 
 Module options (auxiliary/scanner/smtp/smtp_enum):
@@ -91,7 +97,7 @@ Module options (auxiliary/scanner/smtp/smtp_enum):
    THREADS    1                                                              yes       The number of concurrent threads
    UNIXONLY   true                                                           yes       Skip Microsoft bannered servers when testing unix users
    USER_FILE  /usr/share/metasploit-framework/data/wordlists/unix_users.txt  yes       The file that contains a list of probable users accounts.
-`
+```
 
 Here are the documentations for SMTP
 https://cr.yp.to/smtp/vrfy.html
