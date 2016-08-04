@@ -15,6 +15,7 @@
        * [Find Subdomains](find_subdomains.md)
            * [DNS Basics](dns_basics.md)
            * [Finding subdomains](finding_subdomains.md)
+       * CMS Scanning
 * Server-side vulnerabilities
    * [Port Knocking](port_knocking.md)
    * [Dictionary Attack -- SSH FTP](dictionary_attack_--_ssh_ftp.md)
