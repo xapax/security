@@ -7,7 +7,7 @@
    * [Transfering files](transfering_files.md)
    * [Scripting with python](scripting_with_python.md)
        * [Python fundamentals](python_fundamentals.md)
-       * Connections
+       * [Connections](connections.md)
    * [Reverse-shell](reverse-shell.md)
    * [Outline of bugbounty/hacking/pentest](outline_of_bugbountyhackingpentest.md)
    * [General tips](general_tips.md)
