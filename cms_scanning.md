@@ -2,7 +2,7 @@
 
 
 
-`sudo wpscan -u http://cybear32c.lab/ --random-agent`
+`sudo wpscan -u http://cybear32c.lab`
 
 If you hit a 403. That is, the request if forbidden for some reason.
 Read more here: https://en.wikipedia.org/wiki/HTTP_403
