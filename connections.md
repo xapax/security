@@ -41,3 +41,7 @@ req = requests.get("http://site.com", headers=headers)
 print req.status_code
 print req.text
 ```
+
+## Read and write to files
+Many times we want to read through files and do stuff do it. This can of course be done using bash but we can also do it in python.
+
