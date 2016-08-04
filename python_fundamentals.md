@@ -20,3 +20,12 @@ import module1
 total = module1.addNumbers(1,2)
 print total
 ```
+
+
+## Pip - package management
+
+Install pip
+`sudo apt-get install python-pip`
+
+To install package
+`pip install package`
