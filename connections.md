@@ -42,6 +42,12 @@ print req.status_code
 print req.text
 ```
 
+If you need to add an action to your request you do the following
+```python
+values = {'action' : 'whatever'}
+req = requests.get("http://site.com", data=values, headers=headers)
+```
+
 Here is the documentation
 http://docs.python-requests.org/en/master/user/quickstart/
 
