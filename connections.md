@@ -61,3 +61,7 @@ for line in file_open:
     if line.strip("\n") == "rad 4":
         print "last line"
 ```
+
+
+## Client/Server using sockets
+http://programmers.stackexchange.com/questions/171734/difference-between-a-socket-and-a-port
