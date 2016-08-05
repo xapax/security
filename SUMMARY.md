@@ -1,8 +1,8 @@
 # Summary
 
 * [Introduction](README.md)
-   * Password cracking
-       * Generate custom wordlist
+* Password cracking
+   * Generate custom wordlist
 * [The Basics](the_basics.md)
    * [Basics of linux](basics_of_linux.md)
    * [Bash-scripting](bash-scripting.md)
