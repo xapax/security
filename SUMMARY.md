@@ -2,7 +2,7 @@
 
 * [Introduction](README.md)
 * Password cracking
-   * Generate custom wordlist
+   * [Generate custom wordlist](generate_custom_wordlist.md)
 * [The Basics](the_basics.md)
    * [Basics of linux](basics_of_linux.md)
    * [Bash-scripting](bash-scripting.md)
