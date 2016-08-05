@@ -12,6 +12,7 @@
    * [Outline of bugbounty/hacking/pentest](outline_of_bugbountyhackingpentest.md)
    * [General tips](general_tips.md)
    * Networking
+       * networking
 * [Recon phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
    * [Active information gathering](active_information_gathering.md)
