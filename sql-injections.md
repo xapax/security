@@ -1,8 +1,14 @@
 # SQL-injections
 
 
+## SQLmap
 
 Sqlmap is a great tool to perform sqlinjections.
+
+
+### Use proxy
+
+
 
 Here is a tutorial on how to make sql-injections with post-requests.
 
@@ -44,6 +50,8 @@ or true--
 ") or ("x")=("x
 ")) or (("x"))=(("x
 ```
+
+
 
 
 ## References
