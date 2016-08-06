@@ -66,6 +66,6 @@
    * [Hashcat](hashcat.md)
    * [recon-ng](recon-ng.md)
    * [smtp-user-enum](smtp-user-enum.md)
-   * wget
+   * [wget](wget.md)
 * [Literature](littearature.md)
 
