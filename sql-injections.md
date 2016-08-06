@@ -8,6 +8,14 @@ Sqlmap is a great tool to perform sqlinjections.
 
 ### Use proxy
 
+```
+--proxy="http://192.2.2.2.2:1111"
+```
+
+**Proxy credencials**
+```
+--proxy-cred="username:password"
+```
 
 
 Here is a tutorial on how to make sql-injections with post-requests.
