@@ -4,7 +4,7 @@
 * Password cracking
    * [Cracking passwords](cracking_passwords.md)
    * [Generate custom wordlist](generate_custom_wordlist.md)
-   * Identify hash and crack it
+   * [Identify hash and crack it](identify_hash_and_crack_it.md)
 * [The Basics](the_basics.md)
    * [Basics of linux](basics_of_linux.md)
    * [Bash-scripting](bash-scripting.md)
