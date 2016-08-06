@@ -2,6 +2,7 @@
 
 * [Introduction](README.md)
 * Password cracking
+   * [Cracking passwords](cracking_passwords.md)
    * [Generate custom wordlist](generate_custom_wordlist.md)
 * [The Basics](the_basics.md)
    * [Basics of linux](basics_of_linux.md)
@@ -46,7 +47,6 @@
    * [Spawning shells](spawning_shells.md)
    * [Examples](examples.md)
 * [Post Exploitation](post_exploitation.md)
-   * [Cracking passwords](cracking_passwords.md)
    * [Persistence](persistence.md)
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
