@@ -38,7 +38,7 @@
    * [XML External Entity Attack](xml_external_entity_attack.md)
    * [Dictionary Attacks](dictionary_attacks.md)
    * [Heartbleed](heartbleed.md)
-   * WAF - Web application firewall
+   * [WAF - Web application firewall](waf_-_web_application_firewall.md)
 * [Privilege Escalation](privilege_escalation.md)
    * [Internal Enumeration](internal_enumeration.md)
    * [Mysql](mysql.md)
