@@ -4,7 +4,8 @@
 ## SQLmap
 
 Sqlmap is a great tool to perform sqlinjections.
-
+Here is the manual.
+https://github.com/sqlmapproject/sqlmap/wiki/Usage
 
 ### Use proxy
 
