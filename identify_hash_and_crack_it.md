@@ -12,3 +12,23 @@ In kali we can use:
 hash-identifier 
 ```
 And then just input the hash
+
+## Cracking the hash
+
+Okay so now we know what hash it is, let's get cracking. We are going to use hashcat.
+
+Look for the specific type of hash you want to crack in the list produced by the following command:
+```
+hashcat --help
+```
+
+My hash was a Apache md5, so I will use the corresponding code for it, `1600`
+
+`-a 0` - straight
+`-o found.txt` - where the cracked hash outputs
+`admin.hash" - the hash you want to crack.
+`/usr/share/hashcat/rules/rockyou-30000.rule` - the wordlist we use
+
+```
+hashcat -m 11 -a 0 -o found.txt admin.hash /usr/share/hashcat/rules/rockyou-30000.rule
+```
