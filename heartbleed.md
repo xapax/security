@@ -1,6 +1,14 @@
 # Heartbleed
 
+
+OpenSSL 1.0.1 through 1.0.1f (inclusive) are vulnerable
+OpenSSL 1.0.1g is NOT vulnerable
+OpenSSL 1.0.0 branch is NOT vulnerable
+OpenSSL 0.9.8 branch is NOT vulnerable
+
 First we need to investigate if the https-page is vulnerable to [heartbleed](http://heartbleed.com/)
+
+
 
 We can do that the following way.
 
@@ -23,4 +31,4 @@ set verbose true
 run
 ```
 
-
+Now you have a flow of random data, some of it might be of interest to you.
