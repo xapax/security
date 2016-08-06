@@ -111,6 +111,11 @@ Exploits can be found in metasploit25 can be quite useful
 And shellshock
 https://www.exploit-db.com/exploits/34896/
 
+## Port 443 - HTTPS
+
+Okay this is only here as a reminder to always check for SSL-vulnerabilities such as heartbleed. Search for heartbleed in this book to find out how to exploit it.
+
+
 ## Port 587 - Submission
 
 Outgoing smtp-port
