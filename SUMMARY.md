@@ -1,10 +1,6 @@
 # Summary
 
 * [Introduction](README.md)
-* Password cracking
-   * [Cracking passwords](cracking_passwords.md)
-   * [Generate custom wordlist](generate_custom_wordlist.md)
-   * [Identify hash and crack it](identify_hash_and_crack_it.md)
 * [The Basics](the_basics.md)
    * [Basics of linux](basics_of_linux.md)
    * [Bash-scripting](bash-scripting.md)
@@ -49,6 +45,10 @@
    * [Examples](examples.md)
 * [Post Exploitation](post_exploitation.md)
    * [Persistence](persistence.md)
+* Password cracking
+   * [Cracking passwords](cracking_passwords.md)
+   * [Generate custom wordlist](generate_custom_wordlist.md)
+   * [Identify hash and crack it](identify_hash_and_crack_it.md)
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
    * [Basics of assembly](binary_exploitation.md)
