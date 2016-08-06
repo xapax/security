@@ -1,6 +1,7 @@
 # WAF - Web application firewall
 
 
+One of the first things we should do when starting to poke on a website is see what WAF it has.
 
 ## Identify the WAF
 
