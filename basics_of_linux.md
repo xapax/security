@@ -36,7 +36,8 @@ You have list:
 aa
 bb
 bb
-cc```
+cc
+```
 
 And you want to see: 
 ```
@@ -46,7 +47,10 @@ cc
 ```
 
 Command:
-`sort file | uniq`
+
+```
+sort file | uniq
+```
 
 `cat filename | sort -u > newFileName`
 
@@ -54,9 +58,36 @@ Command:
  3. Vim
  - https://linuxjourney.com/lesson/regular-expressions-regex
 
- 4. User management
+## 4. User management
 
- 5. Permissions
+To add a user we write:
+```
+adduser NameOfUser
+```
+
+To add user to sudo-group
+```
+adduser NameOfUser sudo
+```
+
+Check which users are in the sudo group
+```
+cat /etc/group | grep sudo 
+```
+
+Switch user in terminal
+```
+su NameOfUser
+```
+
+Remove/delete user
+```
+sudo userdel NameOfUser
+```
+
+## 5. Permissions
+
+
  - https://linuxjourney.com/lesson/file-permissions
 
  ### 6. Processes
