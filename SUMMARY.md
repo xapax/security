@@ -21,6 +21,7 @@
            * [Finding subdomains](finding_subdomains.md)
        * [CMS Scanning](cms_scanning.md)
 * Vulnerability analysis
+   * test
 * Server-side vulnerabilities
    * [Port Knocking](port_knocking.md)
    * [Dictionary Attack -- SSH FTP](dictionary_attack_--_ssh_ftp.md)
