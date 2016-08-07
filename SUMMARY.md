@@ -40,7 +40,6 @@
        * [XML External Entity Attack](xml_external_entity_attack.md)
        * [Dictionary Attacks](dictionary_attacks.md)
        * [Heartbleed](heartbleed.md)
-   * test
 * [Privilege Escalation](privilege_escalation.md)
    * [Internal Enumeration](internal_enumeration.md)
    * [Mysql](mysql.md)
