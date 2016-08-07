@@ -61,8 +61,8 @@ Command:
 
  ### 6. Processes
  A important job for a developer and sysadmin is to monitor process. A great way to do that is to use `htop` instead of `top`. The F1-10 keys might trigger OS-events. So you can use the shortcuts instead.  
- 
- 
+
+``` 
 Shortcut Key	Function Key	Description
 h	                F1       	Invoke htop Help
 S	                F2       	Htop Setup Menu
@@ -75,8 +75,11 @@ t	                F5       	Tree View
 k	                F9       	Kill a Process
 q	                F10     	Quit htop
  
- 
- http://www.thegeekstuff.com/2011/09/linux-htop-examples/
+ ```
+
+http://www.thegeekstuff.com/2011/09/linux-htop-examples/
+
+##
 
 ## 7. Packages
 
@@ -111,10 +114,17 @@ When you remove some package it might have requires some other dependencies. To 
  13. Process utilization
 
  14. Logging
+
  15. network sharing
+
  16. Network basics
+
  17. Subnetting
+
  18. Routing
+
  19. Network config
+
  20. Troubleshooting
+
  21. DNS
