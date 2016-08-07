@@ -20,6 +20,7 @@
            * [DNS Basics](dns_basics.md)
            * [Finding subdomains](finding_subdomains.md)
        * [CMS Scanning](cms_scanning.md)
+* Vulnerability analysis
 * Server-side vulnerabilities
    * [Port Knocking](port_knocking.md)
    * [Dictionary Attack -- SSH FTP](dictionary_attack_--_ssh_ftp.md)
@@ -68,5 +69,4 @@
    * [smtp-user-enum](smtp-user-enum.md)
    * [wget](wget.md)
 * [Literature](littearature.md)
-* Vulnerability analysis
 
