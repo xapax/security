@@ -68,6 +68,6 @@
    * [recon-ng](recon-ng.md)
    * [smtp-user-enum](smtp-user-enum.md)
    * [wget](wget.md)
-   * Netcat
+   * [Netcat](netcat.md)
 * [Literature](littearature.md)
 
