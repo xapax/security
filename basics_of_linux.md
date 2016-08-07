@@ -87,6 +87,18 @@ sudo userdel NameOfUser
 
 ## 5. Permissions
 
+```
+ls -la
+```
+Shows all the files and directories and their permission settings.
+
+```
+drwxrwxrwt 2 root root 4,0K ago  3 17:33 myfile
+```
+
+Here we have 10 letters in the beginning. The first one `d` shows that it is a directory.
+The next three letters are `r`for read, `w` for write and `x` for execute. The first three belong to the owner, the second three to the group, and the last three to alla users.
+
 
  - https://linuxjourney.com/lesson/file-permissions
 
