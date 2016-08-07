@@ -2,19 +2,31 @@
 
 https://linuxjourney.com/
 
-1. Basic commands
+## 1. Basic commands
  - pwd
+ Print working directory
  - cd
+ Change directory
  - ls
+ list
  - touch
+ Create a new file
  - file 
+ Show info about file
  - cat
+ Output file.
  - less
+Output file but thest little bit at a time
  - cp
- - mkdir 
+Copy
+ - mkdir
+Make directory 
  - rm
+Remove
  - rmdir
+Remove directory
  - history
+Show commands history
  - find
  This must be by far one of the most useful programs. But I tend to always forget how it works.
  
@@ -24,7 +36,7 @@ https://linuxjourney.com/
  
  Add new 
  
- 2. Text-fu
+## 2. Text-fu
  - https://linuxjourney.com/lesson/stderr-standard-error-redirect
 
 ### Show all lines just once
@@ -144,30 +156,47 @@ Then you find it in your list.
 When you remove some package it might have requires some other dependencies. To remove those you run
 `sudo apt-get autoremove`
 
- 8. Devices
+## 8. Cronjobs
 
- 9. The Filesystem
+There are two ways to configure cronjobs. The first one is by putting scripts in the following folders.
+```
+/etc/cron.daily
+/etc/cron.hourly
+/etc/cron.weekly
+/etc/cron.monthly
+```
 
- 10. Boot the system
+The second way is ti write the command in the crontab
 
- 11. Kernel
+```
+crontab -l #list cronjobs
+crontab -e # Edit or create new cronjobs
+```
 
- 12. Init
+## 8. Devices
 
- 13. Process utilization
+## 9. The Filesystem
 
- 14. Logging
+## 10. Boot the system
 
- 15. network sharing
+## 11. Kernel
 
- 16. Network basics
+## 12. Init
 
- 17. Subnetting
+## 13. Process utilization
 
- 18. Routing
+## 14. Logging
 
- 19. Network config
+## 15. network sharing
 
- 20. Troubleshooting
+## 16. Network basics
 
- 21. DNS
+## 17. Subnetting
+
+## 18. Routing
+
+## 19. Network config
+
+## 20. Troubleshooting
+
+## 21. DNS
