@@ -13,7 +13,7 @@
    * [General tips](general_tips.md)
    * [Networking](networking.md)
        * networking
-* [Recon phase](scanning.md)
+* [Recon/information gathering phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
    * [Active information gathering](active_information_gathering.md)
        * [Find Subdomains](find_subdomains.md)
