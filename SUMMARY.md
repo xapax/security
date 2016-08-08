@@ -71,6 +71,6 @@
    * [smtp-user-enum](smtp-user-enum.md)
    * [wget](wget.md)
    * [Netcat](netcat.md)
-   * Metasploit
+   * [Metasploit](metasploit.md)
 * [Literature](littearature.md)
 
