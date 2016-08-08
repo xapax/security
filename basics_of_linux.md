@@ -3,32 +3,48 @@
 https://linuxjourney.com/
 
 ## 1. Basic commands
- - pwd
+**pwd**
  Print working directory
- - cd
+**cd**
  Change directory
- - ls
+**ls**
  list
- - touch
+**touch**
  Create a new file
- - file 
+**file** 
  Show info about file
- - cat
+**cat**
  Output file.
- - less
+**less**
 Output file but thest little bit at a time
- - cp
+**cp**
 Copy
- - mkdir
+**mkdir**
 Make directory 
- - rm
+**rm**
 Remove
- - rmdir
+**rmdir**
 Remove directory
- - history
+**history**
 Show commands history
- - find
+ **find**
  This must be by far one of the most useful programs. But I tend to always forget how it works.
+ 
+ **cut**
+ This is a useful command to cut in text. 
+  
+ Let's say that we have the following text, and we want to cut out the ip-address. 
+
+```
+64 bytes from 192.168.0.1: icmp_req=1 ttl=255 time=4.86 ms
+```
+
+```
+ cut -d" " -f4
+ ```
+ 
+ `-d` stands for delimiter. and `-f` for field.  
+
  
  A. Add binary to the path file
  Show the current path-variable
