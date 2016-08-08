@@ -20,3 +20,11 @@ if [ "$1" == "" ]; then
 echo "This happens"
 fi
 ```
+
+### Command line arguments
+
+Command line arguments are represented like this
+```
+$1
+```
+This is the first command line argument.
