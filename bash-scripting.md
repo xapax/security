@@ -13,11 +13,19 @@ while read p; do
 done <onlyIps.txt
 ```
 
+### For-loops
+
+```
+for ((i = 0; i < 10; i++)); do
+    echo $i
+done
+```
+
 ### If statement
 
 ```
 if [ "$1" == "" ]; then
-echo "This happens"
+    echo "This happens"
 fi
 ```
 
