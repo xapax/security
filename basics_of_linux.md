@@ -3,34 +3,34 @@
 https://linuxjourney.com/
 
 ## 1. Basic commands
-**pwd**
+### pwd
  Print working directory
-**cd**
+### cd
  Change directory
-**ls**
+### ls
  list
-**touch**
+### touch
  Create a new file
-**file** 
+### file 
  Show info about file
-**cat**
+### cat
  Output file.
-**less**
+### less
 Output file but thest little bit at a time
-**cp**
+### cp
 Copy
-**mkdir**
+### mkdir
 Make directory 
-**rm**
+### rm
 Remove
-**rmdir**
+### rmdir
 Remove directory
-**history**
+### history
 Show commands history
- **find**
- This must be by far one of the most useful programs. But I tend to always forget how it works.
+### find
+This must be by far one of the most useful programs. But I tend to always forget how it works.
  
- **cut**
+### cut
  This is a useful command to cut in text. 
   
  Let's say that we have the following text, and we want to cut out the ip-address. 
@@ -45,6 +45,7 @@ Show commands history
  
  `-d` stands for delimiter. and `-f` for field.  
 
+**sed**
  
  A. Add binary to the path file
  Show the current path-variable
@@ -60,7 +61,8 @@ You have a list of passwords, or ip-addresses or whatever. And you want to remov
 
 
 You have list:
-```aa
+```
+aa
 aa
 bb
 bb
@@ -131,7 +133,7 @@ The next three letters are `r`for read, `w` for write and `x` for execute. The f
  - https://linuxjourney.com/lesson/file-permissions
 
  ### 6. Processes
- A important job for a developer and sysadmin is to monitor process. A great way to do that is to use `htop` instead of `top`. The F1-10 keys might trigger OS-events. So you can use the shortcuts instead.  
+A important job for a developer and sysadmin is to monitor process. A great way to do that is to use `htop` instead of `top`. The F1-10 keys might trigger OS-events. So you can use the shortcuts instead.  
 
 ``` 
 Shortcut Key	Function Key	Description
@@ -150,27 +152,38 @@ q	                F10     	Quit htop
 
 http://www.thegeekstuff.com/2011/09/linux-htop-examples/
 
-##
 
 ## 7. Packages
 
 
 ### Install package
+```
 sudo apt-get install
+```
 
-If you onyl have a .deb file you do this to install form the terminal:
-`sudo dpkg -i /path/to/deb/file`
+If you only have a .deb file you do this to install from the terminal:
+```
+sudo dpkg -i /path/to/deb/file
+```
 
-`sudo apt-get install -f`
+```
+sudo apt-get install -f
+```
 
 ### Remove packages
 This can be tricky. First find the package
-`dpkg --list`
+```
+dpkg --list
+```
 Then you find it in your list.
-`sudo apt-get --purge remove nameOfProgram`
+```
+sudo apt-get --purge remove nameOfProgram
+```
 
 When you remove some package it might have requires some other dependencies. To remove those you run
-`sudo apt-get autoremove`
+```
+sudo apt-get autoremove
+```
 
 ## 8. Cronjobs
 
