@@ -21,6 +21,16 @@ echo "This happens"
 fi
 ```
 
+### If/Else
+
+```
+if [ "$1" == "" ]; then
+echo "This happens"
+else
+echo "Something else happens"
+fi
+```
+
 ### Command line arguments
 
 Command line arguments are represented like this
