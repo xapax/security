@@ -1,7 +1,6 @@
 # Summary
 
 * [Introduction](README.md)
-   * Exploiting
 * [The Basics](the_basics.md)
    * [Basics of linux](basics_of_linux.md)
    * [Bash-scripting](bash-scripting.md)
@@ -41,6 +40,7 @@
        * [XML External Entity Attack](xml_external_entity_attack.md)
        * [Dictionary Attacks](dictionary_attacks.md)
        * [Heartbleed](heartbleed.md)
+* Exploiting
 * [Post Exploitation](post_exploitation.md)
    * [Privilege Escalation](privilege_escalation.md)
        * [Internal Enumeration](internal_enumeration.md)
