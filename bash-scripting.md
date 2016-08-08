@@ -4,8 +4,19 @@
 
 This script will iterate over a file and echo out every single line
 
-`#!/bin/bash
+
+```bash
+#!/bin/bash
 
 while read p; do
   echo  $p
-done <onlyIps.txt`
+done <onlyIps.txt
+```
+
+### If statement
+
+```
+if [ "$1" == "" ]; then
+echo "This happens"
+fi
+```
