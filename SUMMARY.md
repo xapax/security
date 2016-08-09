@@ -42,7 +42,7 @@
        * [Dictionary Attacks](dictionary_attacks.md)
        * [Heartbleed](heartbleed.md)
 * [Exploiting](exploiting.md)
-   * Msfconsole
+   * [Msfconsole](msfconsole.md)
    * Refe
 * [Post Exploitation](post_exploitation.md)
    * [Privilege Escalation](privilege_escalation.md)
