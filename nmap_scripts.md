@@ -21,3 +21,11 @@ To find the "man"-pages, the info about a script we write:
 ```
 nmap -script-help http-vuln-cve2013-0156.nse
 ```
+
+## Basics
+
+Run the default scripts
+
+```
+nmap -sC example.com
+```
