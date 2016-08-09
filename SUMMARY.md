@@ -44,6 +44,7 @@
 * [Exploiting](exploiting.md)
    * [Metasploit](msfconsole.md)
    * Refe
+   * Msfvenom
 * [Post Exploitation](post_exploitation.md)
    * [Privilege Escalation](privilege_escalation.md)
        * [Internal Enumeration](internal_enumeration.md)
