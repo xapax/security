@@ -158,6 +158,25 @@ http://www.thegeekstuff.com/2011/09/linux-htop-examples/
 
 ## 7. Packages
 
+## Organizing your $path variable
+
+I am talking about debian/ubuntu here. On other systems I don't know.
+
+You can define your path in `/etc/environment`. If you don't have it you can create it and add the path like this:
+```
+source /etc/environment && export PATH
+```
+If you are using zsh (which you should) you have to add it here
+
+```
+sudo vim /etc/zsh/zshenv
+```
+And add this line somewhere:
+
+```
+source /etc/environment
+```
+
 
 ### Install package
 ```
@@ -188,9 +207,18 @@ When you remove some package it might have requires some other dependencies. To 
 sudo apt-get autoremove
 ```
 
-### Where to put packages
+### Installing custom packages
 
-If you download a package that is not in the official repository you can put the binary in `/opt`
+If you download a package that is not in the official repository you can put the binary in `/opt`. That is good place to put your binaries.
+
+Now you need to add that path to your path-variable. Remember how we set that in `/etc/environment`. So now open up that file and add `/opt` to it, so i looks like this.
+
+```
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt"
+```
+
+I always add custom binaries last. That means that if we have to binaries with the same name the machine will first select the original binary. This way you won't have to fear screwing up, by accidentally creating a new `ls` binary for example.
+
 
 ## 8. Cronjobs
 
