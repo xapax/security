@@ -6,7 +6,7 @@ Finding subdomains is fundamental. The more subdomains you find, the bigger atta
 For now this seems to be a very comprehensive list of tools to find subdomains.
 https://blog.bugcrowd.com/discovering-subdomains
 
-This isn't really a science. Some tools find some stuff, other tools other stuff. So your best bet is to use a few of them together. Don't forget to brute-force recursivly!
+This isn't really a science. Some tools find some stuff, other tools other stuff. So your best bet is to use a few of them together. Don't forget to brute-force recursively!
 
 
 ### recon-ng
