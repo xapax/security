@@ -12,8 +12,26 @@ The service you want to hack might have specific password rules. Must contain ce
 
 
 
-## References
-http://null-byte.wonderhowto.com/how-to/hack-like-pro-crack-passwords-part-4-creating-custom-wordlist-with-crunch-0156817/
 
 
 ## Combine a small/semi-small dict with a custom
+
+## Built dictionary from html
+
+You can build a dictionary from a html-page.
+
+```
+curl http://example.com > example.txt
+```
+
+Then run:
+
+```
+html2dic example.txt
+```
+
+Then you should probably remove duplicates.
+
+
+## References
+http://null-byte.wonderhowto.com/how-to/hack-like-pro-crack-passwords-part-4-creating-custom-wordlist-with-crunch-0156817/
