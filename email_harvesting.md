@@ -4,6 +4,10 @@
 
 ## Email Harvesting
 
+theharvester - I have not had luck with this
+```
+theharvester -d example.com -l 500 -b all
+```
 
 ## Check if emails have been pwned before
 
