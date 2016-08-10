@@ -45,6 +45,7 @@
        * [XML External Entity Attack](xml_external_entity_attack.md)
        * [Dictionary Attacks](dictionary_attacks.md)
        * [Heartbleed](heartbleed.md)
+   * Automated Vulnerability Scanners
 * [Exploiting](exploiting.md)
    * [Metasploit](msfconsole.md)
    * [Msfvenom](msfvenom.md)
