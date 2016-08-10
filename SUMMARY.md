@@ -21,6 +21,7 @@
            * [Finding subdomains](finding_subdomains.md)
        * [CMS Scanning](cms_scanning.md)
        * [Nmap scripts](nmap_scripts.md)
+       * DNS Zone Transfer Attack
 * [Vulnerability analysis](vulnerability_analysi1s.md)
    * Server-side vulnerabilities
        * [Port Knocking](port_knocking.md)
