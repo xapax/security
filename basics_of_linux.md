@@ -135,7 +135,7 @@ The next three letters are `r`for read, `w` for write and `x` for execute. The f
 
  - https://linuxjourney.com/lesson/file-permissions
 
- ### 6. Processes
+## 6. Processes
 A important job for a developer and sysadmin is to monitor process. A great way to do that is to use `htop` instead of `top`. The F1-10 keys might trigger OS-events. So you can use the shortcuts instead.  
 
 ``` 
@@ -187,6 +187,10 @@ When you remove some package it might have requires some other dependencies. To 
 ```
 sudo apt-get autoremove
 ```
+
+### Where to put packages
+
+If you download a package that is not in the official repository you can put the binary in `/opt`
 
 ## 8. Cronjobs
 
