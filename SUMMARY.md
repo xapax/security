@@ -26,7 +26,7 @@
        * DNS Zone Transfer Attack
        * [Port Scanning](port_scanning.md)
 * [Vulnerability analysis](vulnerability_analysi1s.md)
-   * Automated Vulnerability Scanners
+   * [Automated Vulnerability Scanners](automated_vulnerability_scanners.md)
    * Server-side vulnerabilities
        * [Port Knocking](port_knocking.md)
        * [Dictionary Attack -- SSH FTP](dictionary_attack_--_ssh_ftp.md)
