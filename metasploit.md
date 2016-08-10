@@ -14,3 +14,9 @@ You can either find modules right in metasplot, or on their website: http://www.
 ```
 msfcli
 ```
+
+### Update metasploit
+
+```
+msfupdate
+```
