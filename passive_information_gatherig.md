@@ -6,11 +6,6 @@ It is passive in the meaning that it doesn't directly send packets to the servic
  - Web information
 Read through the website. What does it do.
 
- - Email Harvesting
-
-Find as many emails as possible. Are any of those emails in any pwnable databases?
-
-https://haveibeenpwned.com
 
  - Whois enumeration
 
