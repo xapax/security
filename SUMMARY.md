@@ -26,6 +26,7 @@
        * DNS Zone Transfer Attack
        * [Port Scanning](port_scanning.md)
 * [Vulnerability analysis](vulnerability_analysi1s.md)
+   * Automated Vulnerability Scanners
    * Server-side vulnerabilities
        * [Port Knocking](port_knocking.md)
        * [Dictionary Attack -- SSH FTP](dictionary_attack_--_ssh_ftp.md)
@@ -45,7 +46,6 @@
        * [XML External Entity Attack](xml_external_entity_attack.md)
        * [Dictionary Attacks](dictionary_attacks.md)
        * [Heartbleed](heartbleed.md)
-   * Automated Vulnerability Scanners
 * [Exploiting](exploiting.md)
    * [Metasploit](msfconsole.md)
    * [Msfvenom](msfvenom.md)
