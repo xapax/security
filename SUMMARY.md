@@ -19,6 +19,7 @@
        * [Find Subdomains](find_subdomains.md)
            * [DNS Basics](dns_basics.md)
            * [Finding subdomains](finding_subdomains.md)
+           * DNS Zone Transfer Attack
        * [CMS Scanning](cms_scanning.md)
        * [Nmap scripts](nmap_scripts.md)
        * DNS Zone Transfer Attack
