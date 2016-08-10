@@ -4,6 +4,13 @@ Okay, so you have failed to discover any vulnerabilites in the system you are at
 
 With msfvenom we are able to create exploits that we can send to the target, and trick the target to click it. The program will then call our machine.
 
+## Basics
+
+List exploits
+```
+msfvenom -l
+`` `
+
 ## Create exploit
 
 Here we create a program that will call the attacker machine.
