@@ -15,7 +15,8 @@ machine2 send a syn-ack packet to machine1
 machine1 sends a ack packet to machine2.
 ```
 
-If machine1 omits the last ack packet the connection is not made.
+If machine2 responds with a syn-ack we know that that port is open. This is basically what nmap does when it scans for a port.
+If machine1 omits the last ack packet the connection is not made. This can be a way to make less noise. 
 
 ```
 nmap -vvv -Pn -A -iL listOfIP.txt
