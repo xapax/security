@@ -22,6 +22,14 @@ If machine1 omits the last ack packet the connection is not made. This can be a 
 nmap -vvv -Pn -A -iL listOfIP.txt
 ```
 
+If we do not want to create a connection we can add the `-sS` flag
+
+#### Output scan to a textfile
+
+```
+-o nameOfFile
+```
+
 ### Scan an entire IP-range
 You might find that a site has several machines on the same ip-range. You can then use nmap to scan the whole range.
 
