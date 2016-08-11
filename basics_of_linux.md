@@ -9,6 +9,13 @@ https://linuxjourney.com/
  Change directory
 ### ls
  list
+ 
+ Sort list by time. -time -reverse
+
+ ```
+ ls -ltr
+ ```
+ 
 ### touch
  Create a new file
 ### file 
