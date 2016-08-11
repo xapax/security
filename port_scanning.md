@@ -32,6 +32,12 @@ If we do not want to create a connection we can add the `-sS` flag
 -oN nameOfFile
 ```
 
+#### UDP scan
+
+```
+-sU
+```
+
 ### Scan an entire IP-range
 You might find that a site has several machines on the same ip-range. You can then use nmap to scan the whole range.
 
