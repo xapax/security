@@ -22,6 +22,8 @@ If machine1 omits the last ack packet the connection is not made. This can be a 
 nmap -vvv -Pn -A -iL listOfIP.txt
 ```
 
+#### Stealthy
+
 If we do not want to create a connection we can add the `-sS` flag
 
 #### Output scan to a textfile
