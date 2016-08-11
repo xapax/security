@@ -27,7 +27,7 @@ If we do not want to create a connection we can add the `-sS` flag
 #### Output scan to a textfile
 
 ```
--o nameOfFile
+-oN nameOfFile
 ```
 
 ### Scan an entire IP-range
