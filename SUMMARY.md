@@ -33,7 +33,7 @@
        * [SMTP - Extract emails](smtp_-_extract_emails.md)
        * [List of common ports](list_of_common_ports.md)
        * FTP
-       * Passwords
+       * [Passwords](passwords.md)
    * [Client-side vulnerabilities](web-services.md)
        * [WAF - Web application firewall](waf_-_web_application_firewall.md)
        * [Hidden files and directories](web-scanning.md)
