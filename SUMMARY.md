@@ -2,6 +2,7 @@
 
 * [Introduction](README.md)
 * [The Basics](the_basics.md)
+   * [Example of company architecture](example_of_company_architecture.md)
    * [Basics of linux](basics_of_linux.md)
    * [Bash-scripting](bash-scripting.md)
    * [Transfering files](transfering_files.md)
@@ -13,7 +14,6 @@
    * [General tips](general_tips.md)
    * [Networking](networking.md)
        * networking
-   * [Example of company architecture](example_of_company_architecture.md)
 * [Recon/information gathering phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
        * [Email Harvesting](email_harvesting.md)
