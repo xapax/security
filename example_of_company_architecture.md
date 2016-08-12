@@ -1,0 +1,2 @@
+# Example of company architecture
+
