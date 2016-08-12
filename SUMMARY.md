@@ -47,7 +47,7 @@
        * [XML External Entity Attack](xml_external_entity_attack.md)
        * [Dictionary Attacks](dictionary_attacks.md)
        * [Heartbleed](heartbleed.md)
-       * Exposed Version Control
+       * [Exposed Version Control](exposed_version_control.md)
 * [Exploiting](exploiting.md)
    * [Metasploit](msfconsole.md)
    * [Msfvenom](msfvenom.md)
