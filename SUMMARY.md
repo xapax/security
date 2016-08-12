@@ -13,6 +13,7 @@
    * [General tips](general_tips.md)
    * [Networking](networking.md)
        * networking
+   * Example of company architecture
 * [Recon/information gathering phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
        * [Email Harvesting](email_harvesting.md)
