@@ -10,7 +10,6 @@
    * [Transfering files](transfering_files.md)
    * [Reverse-shell](reverse-shell.md)
    * [Example of company architecture](example_of_company_architecture.md)
-   * [Outline of bugbounty/hacking/pentest](outline_of_bugbountyhackingpentest.md)
    * [General tips](general_tips.md)
    * [Networking](networking.md)
        * networking
