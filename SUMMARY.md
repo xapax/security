@@ -2,7 +2,6 @@
 
 * [Introduction](README.md)
 * [The Basics](the_basics.md)
-   * [Example of company architecture](example_of_company_architecture.md)
    * [Basics of linux](basics_of_linux.md)
    * [Bash-scripting](bash-scripting.md)
    * [Scripting with python](scripting_with_python.md)
@@ -10,6 +9,7 @@
        * [Useful scripts](connections.md)
    * [Transfering files](transfering_files.md)
    * [Reverse-shell](reverse-shell.md)
+   * [Example of company architecture](example_of_company_architecture.md)
    * [Outline of bugbounty/hacking/pentest](outline_of_bugbountyhackingpentest.md)
    * [General tips](general_tips.md)
    * [Networking](networking.md)
