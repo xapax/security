@@ -74,7 +74,7 @@
    * [Arp-spoofing](arp-spoofing.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
    * [Wireshark](wireshark.md)
-   * DNS-spoofing
+   * [DNS-spoofing](dns-spoofing.md)
 * [Wifi](wifi.md)
    * WEP
    * [WPS](wps.md)
