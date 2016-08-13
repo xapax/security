@@ -72,7 +72,7 @@
    * [Exploit examples and tutorials](exploit_examples_and_tutorials.md)
 * [Network traffic analysis](network_traffic.md)
    * [Arp-spoofing](arp-spoofing.md)
-       * SSL-strip
+       * [SSL-strip](ssl-strip.md)
    * [DNS-spoofing](dns-spoofing.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
    * [Wireshark](wireshark.md)
