@@ -5,3 +5,9 @@
 ```
 set
 ```
+
+## Xampp default folder
+
+```
+:C\xampp/htdocs
+```
