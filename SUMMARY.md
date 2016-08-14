@@ -3,7 +3,7 @@
 * [Introduction](README.md)
 * [The Basics](the_basics.md)
    * [Basics of linux](basics_of_linux.md)
-   * Basics of windows
+   * [Basics of windows](basics_of_windows.md)
    * [Bash-scripting](bash-scripting.md)
    * [Scripting with python](scripting_with_python.md)
        * [Python fundamentals](python_fundamentals.md)
