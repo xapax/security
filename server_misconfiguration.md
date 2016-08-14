@@ -14,3 +14,9 @@ Username: **wampp**
 Password: **xampp**
 
 Then use **put** and **get** to upload and download. With this you can of course upload a shell that gives you better access.
+
+If you are looking for live examples just google this:
+
+```
+inurl:webdav site:com.mx
+```
