@@ -3,6 +3,7 @@
 * [Introduction](README.md)
 * [The Basics](the_basics.md)
    * [Basics of linux](basics_of_linux.md)
+   * Basics of windows
    * [Bash-scripting](bash-scripting.md)
    * [Scripting with python](scripting_with_python.md)
        * [Python fundamentals](python_fundamentals.md)
@@ -13,7 +14,6 @@
    * [Networking](networking.md)
        * networking
    * [General tips](general_tips.md)
-   * Basics of windows
 * [Recon/information gathering phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
        * [Email Harvesting](email_harvesting.md)
