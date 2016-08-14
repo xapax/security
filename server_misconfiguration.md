@@ -13,3 +13,4 @@ The default username and passwords are
 Username: **wampp**
 Password: **xampp**
 
+Then use **put** and **get** to upload and download. With this you can of course upload a shell that gives you better access.
