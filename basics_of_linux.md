@@ -248,6 +248,22 @@ crontab -e # Edit or create new cronjobs
 
 ## 9. The Filesystem
 
+### Mount
+
+So everything on the linux-filesystem belongs to some part of the filesystem-tree. So if we plug in some device we need to mount it to the filesystem. That pretty much means that we need to connect it to the filesystem. Mount is like another word for connect.
+
+So if you want to connect a CD-rom or USB to your machine. You need to mount it to a specific path on the filesystem.
+
+So if you plug in the usb it might be accessible at `/dev/usb`. But that it not enough for you to be able to browse the usb content. You need to mount it. You do this by writing
+
+```
+mount /dev/usb /media/usb
+```
+Or whereever you want to mount it.
+
+So when you click on Eject or Safetly remove you are just unmounting. 
+
+
 ## 10. Boot the system
 
 ## 11. Kernel
