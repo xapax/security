@@ -16,7 +16,7 @@ The service you want to hack might have specific password rules. Must contain ce
 
 ## Combine a small/semi-small dict with a custom
 
-## Built dictionary from html
+## Html2dic - Build dictionary from html
 
 You can build a dictionary from a html-page.
 
@@ -32,6 +32,12 @@ html2dic example.txt
 
 Then you should probably remove duplicates.
 
+
+## Cewl - Spider and build dictionary
+
+```
+cewl -w createWordlist.txt -d 1 https://www.example.com 
+```
 
 ## References
 http://null-byte.wonderhowto.com/how-to/hack-like-pro-crack-passwords-part-4-creating-custom-wordlist-with-crunch-0156817/
