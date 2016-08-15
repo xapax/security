@@ -13,6 +13,12 @@ The "man"-pages in windows is simply:
 help dir
 ```
 
+### Show hidden files
+
+```
+dir /A
+```
+
 ## Xampp default folder
 
 ```
