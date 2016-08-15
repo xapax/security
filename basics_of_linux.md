@@ -263,6 +263,8 @@ Or whereever you want to mount it.
 
 So when you click on Eject or Safetly remove you are just unmounting. 
 
+Knowing how to mount and unmount might be useful if you want to get access to a remote NFS-directory. You will need to mount it to your filesystem to be able to browse it.
+
 
 ## 10. Boot the system
 
