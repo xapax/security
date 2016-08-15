@@ -19,6 +19,12 @@ help dir
 dir /A
 ```
 
+### Print out file content, like cat
+
+```
+type file.txt
+```
+
 ## Xampp default folder
 
 ```
