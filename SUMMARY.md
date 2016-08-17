@@ -55,6 +55,7 @@
        * [Nosql-injections](nosql-injections.md)
 * [Exploiting](exploiting.md)
    * [Metasploit](msfconsole.md)
+       * Creating malicious files
    * [Msfvenom](msfvenom.md)
    * Refe
    * [Social Engineering - Phishing](social_engineering_-_phishing.md)
