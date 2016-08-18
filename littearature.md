@@ -15,3 +15,8 @@ http://web.textfiles.com/ezines/GONULLYOURSELF/gonullyourself1.txt
 The good:
 
 The bad:
+
+### Hacking with Kali
+https://archive.org/stream/HackingWithKali/Hacking%20with%20Kali_djvu.txt
+
+### Weidman - Pentest
