@@ -43,3 +43,11 @@ mount -t ntfs /dev/sda1 /media/windows
 `-t`means type, and refers to the filesystem-type. And we choose ntfs which is the windows-filesystem.
 
 Now you can access all the files from the harddrive in `/media/windows`
+
+## Umount the disk
+
+Notice that is is **umount** and not unmount.
+
+```
+umount /media/windows
+```
