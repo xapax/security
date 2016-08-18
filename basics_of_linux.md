@@ -246,6 +246,13 @@ crontab -e # Edit or create new cronjobs
 
 ## 8. Devices
 
+List all devices
+
+```
+fdisk -l
+```
+
+
 ## 9. The Filesystem
 
 ### Mount
