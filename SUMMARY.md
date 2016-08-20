@@ -18,6 +18,7 @@
    * [Passive information gatherig](passive_information_gatherig.md)
        * [Email Harvesting](email_harvesting.md)
    * [Active information gathering](active_information_gathering.md)
+       * [Port Scanning](port_scanning.md)
        * [Find Subdomains](find_subdomains.md)
            * [DNS Basics](dns_basics.md)
            * [Finding subdomains](finding_subdomains.md)
@@ -25,7 +26,6 @@
        * [CMS Scanning](cms_scanning.md)
        * [Nmap scripts](nmap_scripts.md)
        * DNS Zone Transfer Attack
-       * [Port Scanning](port_scanning.md)
        * [enum4linux](enum4linux.md)
 * [Vulnerability analysis](vulnerability_analysi1s.md)
    * [Automated Vulnerability Scanners](automated_vulnerability_scanners.md)
