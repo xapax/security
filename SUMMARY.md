@@ -60,13 +60,13 @@
    * Refe
    * [Social Engineering - Phishing](social_engineering_-_phishing.md)
 * [Post Exploitation](post_exploitation.md)
+   * Getting meterpreter shell
    * [Spawning shells](spawning_shells.md)
    * [Privilege Escalation](privilege_escalation.md)
        * [Internal Enumeration](internal_enumeration.md)
        * [Mysql](mysql.md)
        * [Examples](examples.md)
    * [Persistence](persistence.md)
-   * Getting meterpreter shell
 * Password cracking
    * [Cracking passwords](cracking_passwords.md)
    * [Generate custom wordlist](generate_custom_wordlist.md)
