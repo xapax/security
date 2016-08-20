@@ -18,10 +18,17 @@ You can find the manual by typing: `wfuzz -h`
 
 wfuzz -c -z file,/root/.ZAP/fuzzers/dirbuster/directory-list-2.3-big.txt --sc 200 http://pegasus.dev:8088/FUZZ.php
 
-### Dirbuster
+### Dirb
 This is a really easy tool to use:
 
 `dirb http://target.com`
+
+### Dirbuster
+
+It is a GUI
+You start it with `dirbuster` from the terminal
+
+
 
 ## WAF - Web application firewall
 
