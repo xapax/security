@@ -28,6 +28,7 @@ If you for whatever reason is not able to run a script and you have to check out
 
 ### Mail
 
+```
 /var/spool/mail
-
+```
 ## Logs
