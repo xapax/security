@@ -64,9 +64,9 @@
    * [Privilege Escalation](privilege_escalation.md)
        * [Internal Enumeration](internal_enumeration.md)
        * [Mysql](mysql.md)
-       * [Spawning shells](spawning_shells.md)
        * [Examples](examples.md)
    * [Persistence](persistence.md)
+   * Getting meterpreter shell
 * Password cracking
    * [Cracking passwords](cracking_passwords.md)
    * [Generate custom wordlist](generate_custom_wordlist.md)
