@@ -56,7 +56,7 @@
        * [Exposed Version Control](exposed_version_control.md)
        * [Nosql-injections](nosql-injections.md)
        * [Local file inclusion](local_file_inclusion.md)
-       * Bypass image upload
+       * [Bypass image upload](bypass_image_upload.md)
 * [Exploiting](exploiting.md)
    * [Metasploit](msfconsole.md)
        * [Creating malicious files](creating_malicious_files.md)
