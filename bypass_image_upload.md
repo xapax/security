@@ -1,5 +1,8 @@
 # Bypass image upload
 
+Here is the definite guide:
+
+http://www.securityidiots.com/Web-Pentest/hacking-website-by-shell-uploading.html
 
 ## Rename it
 
