@@ -4,6 +4,8 @@ Here is the definite guide:
 
 http://www.securityidiots.com/Web-Pentest/hacking-website-by-shell-uploading.html
 
+https://www.owasp.org/index.php/Unrestricted_File_Upload
+
 ## Rename it
 
 But instead we can just rename our shell and upload it as shell.php.jpg. It passed the filter and the file is executed as php.
