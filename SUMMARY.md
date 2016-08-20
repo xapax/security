@@ -38,7 +38,7 @@
        * [Passwords](passwords.md)
        * [Server misconfiguration](server_misconfiguration.md)
        * [phpMyAdmin](phpmyadmin.md)
-       * Samba
+       * [Samba](samba.md)
    * [Client-side vulnerabilities](web-services.md)
        * [WAF - Web application firewall](waf_-_web_application_firewall.md)
        * [Hidden files and directories](web-scanning.md)
