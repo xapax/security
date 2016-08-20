@@ -60,6 +60,7 @@
    * Refe
    * [Social Engineering - Phishing](social_engineering_-_phishing.md)
 * [Post Exploitation](post_exploitation.md)
+   * [Spawning shells](spawning_shells.md)
    * [Privilege Escalation](privilege_escalation.md)
        * [Internal Enumeration](internal_enumeration.md)
        * [Mysql](mysql.md)
