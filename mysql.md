@@ -1,6 +1,16 @@
 # Mysql
 
-You might gain access to a shell by upoading a reverse-shell. And then you need to escalate your privilege. One way to do that is to look into the databse and see what users and passwords that are available. Maybe someone is resuing a password?
+
+
+
+## Mysql-commands cheat sheet
+    
+    http://cse.unl.edu/~sscott/ShowFiles/SQL/CheatSheet/SQLCheatSheet.html
+
+
+## Finding passwords to mysql
+
+You might gain access to a shell by uploading a reverse-shell. And then you need to escalate your privilege. One way to do that is to look into the databse and see what users and passwords that are available. Maybe someone is resuing a password?
 
 So the first step is to find the login-credencials for the database. Those are usually found in some configuration-file oon the web-server. For example, in joomla they are found in:
 ```
@@ -71,6 +81,3 @@ class JConfig {
     You can also use mysql to upload a shell
     
     
-   ## Mysql-commands cheat sheet
-    
-    http://cse.unl.edu/~sscott/ShowFiles/SQL/CheatSheet/SQLCheatSheet.html
