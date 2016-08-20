@@ -16,4 +16,8 @@ adduser pelle sudo
 Now if the machine has ssh you will be able to ssh into the machine.
 
 ## 
+
+
+https://www.offensive-security.com/metasploit-unleashed/binary-linux-trojan/
+
 If you have a meterpreter shell you can easily just run. 
