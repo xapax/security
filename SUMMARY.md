@@ -26,7 +26,7 @@
        * [Nmap scripts](nmap_scripts.md)
        * DNS Zone Transfer Attack
        * [Port Scanning](port_scanning.md)
-       * enum4linux
+       * [enum4linux](enum4linux.md)
 * [Vulnerability analysis](vulnerability_analysi1s.md)
    * [Automated Vulnerability Scanners](automated_vulnerability_scanners.md)
    * Server-side vulnerabilities
