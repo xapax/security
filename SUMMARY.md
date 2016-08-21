@@ -46,6 +46,7 @@
            * [Hidden files and directories](web-scanning.md)
            * [SQL-injections](sql-injections.md)
            * Test
+           * Attacking the system
        * Attcking the user
            * [Clickjacking](clickjacking.md)
            * [Broken authentication or session management](broken_authentication_or_session_management.md)
