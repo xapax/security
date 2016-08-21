@@ -41,7 +41,7 @@
        * [Heartbleed](heartbleed.md)
        * [Samba](samba.md)
    * [Client-side vulnerabilities](web-services.md)
-       * [Lead to compromise](lead_to_compromise.md)
+       * [Attacking the system](lead_to_compromise.md)
            * [Local file inclusion](local_file_inclusion.md)
            * [Hidden files and directories](web-scanning.md)
            * [SQL-injections](sql-injections.md)
