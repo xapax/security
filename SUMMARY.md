@@ -45,6 +45,7 @@
            * [Local file inclusion](local_file_inclusion.md)
            * [Hidden files and directories](web-scanning.md)
            * [SQL-injections](sql-injections.md)
+           * [Bypass image upload](bypass_image_upload.md)
            * Test
            * Attacking the system
        * Attacking the user
@@ -60,7 +61,6 @@
        * [Dictionary Attacks](dictionary_attacks.md)
        * [Exposed Version Control](exposed_version_control.md)
        * [Nosql-injections](nosql-injections.md)
-       * [Bypass image upload](bypass_image_upload.md)
 * [WAF - Web application firewall](waf_-_web_application_firewall.md)
 * [Exploiting](exploiting.md)
    * [Metasploit](msfconsole.md)
