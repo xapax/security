@@ -14,3 +14,6 @@ And once you have gotten access to that you can do other things. Check out the c
 
 This is the definitive guide to Local File inclusion
 https://highon.coffee/blog/lfi-cheat-sheet/
+
+And this
+http://securityidiots.com/Web-Pentest/LFI
