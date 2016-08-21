@@ -39,6 +39,7 @@
        * [Server misconfiguration](server_misconfiguration.md)
        * [phpMyAdmin](phpmyadmin.md)
        * [Samba](samba.md)
+   * [Heartbleed](heartbleed.md)
    * [Client-side vulnerabilities](web-services.md)
        * [Lead to compromise](lead_to_compromise.md)
            * [Hidden files and directories](web-scanning.md)
