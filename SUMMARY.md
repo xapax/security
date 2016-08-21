@@ -46,7 +46,6 @@
            * [Hidden files and directories](web-scanning.md)
            * [SQL-injections](sql-injections.md)
            * Test
-       * [WAF - Web application firewall](waf_-_web_application_firewall.md)
        * Don't lead to compromise
            * [Clickjacking](clickjacking.md)
            * [Text/content-injection](text-injection.md)
@@ -61,6 +60,7 @@
        * [Exposed Version Control](exposed_version_control.md)
        * [Nosql-injections](nosql-injections.md)
        * [Bypass image upload](bypass_image_upload.md)
+* [WAF - Web application firewall](waf_-_web_application_firewall.md)
 * [Exploiting](exploiting.md)
    * [Metasploit](msfconsole.md)
        * [Creating malicious files](creating_malicious_files.md)
