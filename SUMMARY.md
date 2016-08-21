@@ -47,10 +47,10 @@
            * Test
        * [WAF - Web application firewall](waf_-_web_application_firewall.md)
        * Don't lead to compromise
+           * [Cross Site Request Forgery](cross_site_request_forgery.md)
            * [Cross-site-scripting](cross-site-scripting.md)
                * [Examples](examplesXSS.md)
            * ss
-       * [Cross Site Request Forgery](cross_site_request_forgery.md)
        * [Subdomain takeover](subdomain_takeover.md)
        * [Clickjacking](clickjacking.md)
        * [Broken authentication or session management](broken_authentication_or_session_management.md)
