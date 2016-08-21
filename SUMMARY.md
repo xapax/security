@@ -47,7 +47,7 @@
            * [SQL-injections](sql-injections.md)
            * Test
            * Attacking the system
-       * Attcking the user
+       * Attacking the user
            * [Clickjacking](clickjacking.md)
            * [Broken authentication or session management](broken_authentication_or_session_management.md)
            * [Text/content-injection](text-injection.md)
