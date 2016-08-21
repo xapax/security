@@ -1,6 +1,9 @@
 # Privilege Escalation
 
 
+
+http://netsec.ws/?p=309
+
 ## Linux
 
 1. Weak passwords
