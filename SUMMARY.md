@@ -47,7 +47,6 @@
            * [SQL-injections](sql-injections.md)
            * [Bypass image upload](bypass_image_upload.md)
            * [Exposed Version Control](exposed_version_control.md)
-           * Attacking the system
        * Attacking the user
            * [Clickjacking](clickjacking.md)
            * [Broken authentication or session management](broken_authentication_or_session_management.md)
