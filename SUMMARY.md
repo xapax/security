@@ -46,6 +46,7 @@
            * [Hidden files and directories](web-scanning.md)
            * [SQL-injections](sql-injections.md)
            * [Bypass image upload](bypass_image_upload.md)
+           * [Exposed Version Control](exposed_version_control.md)
            * Test
            * Attacking the system
        * Attacking the user
@@ -59,7 +60,6 @@
            * ss
        * [XML External Entity Attack](xml_external_entity_attack.md)
        * [Dictionary Attacks](dictionary_attacks.md)
-       * [Exposed Version Control](exposed_version_control.md)
        * [Nosql-injections](nosql-injections.md)
 * [WAF - Web application firewall](waf_-_web_application_firewall.md)
 * [Exploiting](exploiting.md)
