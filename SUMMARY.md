@@ -57,6 +57,7 @@
        * [Nosql-injections](nosql-injections.md)
        * [Local file inclusion](local_file_inclusion.md)
        * [Bypass image upload](bypass_image_upload.md)
+       * Lead to compromise
 * [Exploiting](exploiting.md)
    * [Metasploit](msfconsole.md)
        * [Creating malicious files](creating_malicious_files.md)
