@@ -3,7 +3,7 @@
 Enumeration
 http://www.rebootuser.com/?p=1758
 
-
+http://netsec.ws/?p=309
 
 We can enumarate the system manually. Or using a script. This is a great script to use for internal enumeration.
 
