@@ -10,3 +10,7 @@ In most web-services that use a database we can get a hold of the database usern
 
 in wordpress the file is **wp-config.php**
 And once you have gotten access to that you can do other things. Check out the chapter on mysql.
+
+
+This is the definitive guide to Local File inclusion
+https://highon.coffee/blog/lfi-cheat-sheet/
