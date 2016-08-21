@@ -48,13 +48,13 @@
        * [WAF - Web application firewall](waf_-_web_application_firewall.md)
        * Don't lead to compromise
            * [Clickjacking](clickjacking.md)
+           * [Text/content-injection](text-injection.md)
            * [Cross Site Request Forgery](cross_site_request_forgery.md)
            * [Cross-site-scripting](cross-site-scripting.md)
                * [Examples](examplesXSS.md)
            * ss
        * [Subdomain takeover](subdomain_takeover.md)
        * [Broken authentication or session management](broken_authentication_or_session_management.md)
-       * [Text/content-injection](text-injection.md)
        * [XML External Entity Attack](xml_external_entity_attack.md)
        * [Dictionary Attacks](dictionary_attacks.md)
        * [Exposed Version Control](exposed_version_control.md)
