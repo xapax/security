@@ -29,6 +29,7 @@
        * [enum4linux](enum4linux.md)
 * [Vulnerability analysis](vulnerability_analysi1s.md)
    * [Automated Vulnerability Scanners](automated_vulnerability_scanners.md)
+   * [WAF - Web application firewall](waf_-_web_application_firewall.md)
    * Server-side vulnerabilities
        * [Port Knocking](port_knocking.md)
        * [Dictionary Attack -- SSH FTP](dictionary_attack_--_ssh_ftp.md)
@@ -58,7 +59,6 @@
        * [XML External Entity Attack](xml_external_entity_attack.md)
        * [Dictionary Attacks](dictionary_attacks.md)
        * [Nosql-injections](nosql-injections.md)
-* [WAF - Web application firewall](waf_-_web_application_firewall.md)
 * [Exploiting](exploiting.md)
    * [Metasploit](msfconsole.md)
        * [Creating malicious files](creating_malicious_files.md)
