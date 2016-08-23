@@ -15,9 +15,35 @@ adduser pelle sudo
 
 Now if the machine has ssh you will be able to ssh into the machine.
 
-## 
+## SSH key
 
+Add key to exisitng ssh-account.
+
+
+## Cronjob NC
+
+Create cronjob that connects to my machine every 10 minutes
+
+
+## Binary trojan
+Create a binary with malicious content inside. Run that, get meterpreter shell, run metasploit persistence.
 
 https://www.offensive-security.com/metasploit-unleashed/binary-linux-trojan/
 
-If you have a meterpreter shell you can easily just run. 
+If you have a meterpreter shell you can easily just run persistence.
+
+## Backdoor in webserver
+
+You can put a cmd or shell-backdoor in a webserver.
+
+Put backdoor on webserver, either in separate file or in hidden in another file
+
+## Admin account to CMS
+
+Add admin account to CMS.
+
+
+## Mysql-backdoor
+
+Mysql backdoor
+
