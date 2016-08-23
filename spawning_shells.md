@@ -12,18 +12,24 @@ Anyways, if you get one of these shells you
 Ways to spawn a shell
 
 Using python
-```python -c 'import pty; pty.spawn("/bin/sh")'```
+
+```
+python -c 'import pty; pty.spawn("/bin/sh")'
+```
 
 
-`echo 'os.system('/bin/bash')'`
+```
+echo 'os.system('/bin/bash')'
+```
 
-`/bin/sh -i`
-
-http://pentestmonkey.net/blog/post-exploitation-without-a-tty
-
+```
+/bin/sh -i
+```
 
 
 ## References:
 http://unix.stackexchange.com/questions/122616/why-do-i-need-a-tty-to-run-sudo-if-i-can-sudo-without-a-password
 
 http://netsec.ws/?p=337
+
+http://pentestmonkey.net/blog/post-exploitation-without-a-tty
