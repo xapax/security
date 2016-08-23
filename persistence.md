@@ -15,6 +15,11 @@ adduser pelle sudo
 
 Now if the machine has ssh you will be able to ssh into the machine.
 
+## Crack the password of existing user
+
+Get the `/etc/shadow` file and crack the passwords.
+
+
 ## SSH key
 
 Add key to exisitng ssh-account.
