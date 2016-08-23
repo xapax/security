@@ -35,3 +35,23 @@ Upload and download files.
 upload
 download
 ```
+
+
+## Scripts
+
+
+### Migrate
+A really common and useful script that is build into metasploit is the migrate script. If you get the shell through some kind of exploits that crashes a program the user might shut down that program and it will close your session. So you need to migrate your session to another process. You can do that with the `migrate` script.
+
+First run this command to output all processes
+```
+ps
+```
+
+Now you choose one and run
+```
+run migrate -p 1327
+```
+Where the `-p` is the PID of the process.
+
+
