@@ -71,11 +71,11 @@
 * [Post Exploitation](post_exploitation.md)
    * [Spawning shells](spawning_shells.md)
    * [Meterpreter for post-exploitation](getting_meterpreter_shell.md)
+   * [Loot](loot.md)
    * [Privilege Escalation](privilege_escalation.md)
        * [Internal Enumeration](internal_enumeration.md)
        * [Examples](examples.md)
    * [Persistence](persistence.md)
-   * [Loot](loot.md)
 * Password cracking
    * [Cracking passwords](cracking_passwords.md)
    * [Generate custom wordlist](generate_custom_wordlist.md)
