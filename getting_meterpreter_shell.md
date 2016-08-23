@@ -7,6 +7,15 @@ So just create a meterpreter-shell from msfvenom or something like that. Maybe a
 
 ## Basics
 
+List all commands
+```
+help
+```
+
+Get help about a specific command
+```
+help upload
+```
 
 ### Sessions
 So first some basics. You can put the shell into a background job with the command `background`. This might be useful if you have several shells going at the same time. Or if you want to move to a specific directory to upload or download some files.
