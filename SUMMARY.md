@@ -14,6 +14,7 @@
    * [Networking](networking.md)
        * networking
    * [General tips](general_tips.md)
+   * Bug Bounties
 * [Recon/information gathering phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
        * [Email Harvesting](email_harvesting.md)
