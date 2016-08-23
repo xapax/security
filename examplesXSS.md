@@ -1,5 +1,8 @@
 # Examples
 
+This is a good list:
+
+https://www.linkedin.com/pulse/20140812222156-79939846-xss-vectors-you-may-need-as-a-pen-tester
 
 ## No security
 `<script>alert(1)</script>`
