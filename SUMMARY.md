@@ -40,6 +40,7 @@
        * [Passwords](passwords.md)
        * [Server misconfiguration](server_misconfiguration.md)
        * [phpMyAdmin](phpmyadmin.md)
+       * [Mysql](mysql.md)
        * [Heartbleed](heartbleed.md)
        * [Samba](samba.md)
    * [Client-side vulnerabilities](web-services.md)
@@ -72,7 +73,6 @@
    * [Spawning shells](spawning_shells.md)
    * [Privilege Escalation](privilege_escalation.md)
        * [Internal Enumeration](internal_enumeration.md)
-       * [Mysql](mysql.md)
        * [Examples](examples.md)
    * [Persistence](persistence.md)
 * Password cracking
