@@ -69,7 +69,7 @@
    * Refe
    * [Social Engineering - Phishing](social_engineering_-_phishing.md)
 * [Post Exploitation](post_exploitation.md)
-   * [Getting meterpreter shell](getting_meterpreter_shell.md)
+   * [Meterpreter for post-exploitation](getting_meterpreter_shell.md)
    * [Spawning shells](spawning_shells.md)
    * [Privilege Escalation](privilege_escalation.md)
        * [Internal Enumeration](internal_enumeration.md)
