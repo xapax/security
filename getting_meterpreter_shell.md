@@ -55,3 +55,10 @@ run migrate -p 1327
 Where the `-p` is the PID of the process.
 
 
+## Post modules
+
+There are tons of modules specifically created for post-exploitation. They can be found with
+
+```
+use post/
+```
