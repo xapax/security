@@ -20,3 +20,9 @@ msfcli
 ```
 msfupdate
 ```
+
+### Search in metasploit
+
+```
+searchsploit
+```
