@@ -22,6 +22,12 @@ If you are wondering how to get the script onto the machine, check out that chap
 ## Unix privesc
 
 http://pentestmonkey.net/tools/audit/unix-privesc-check
+Run the script and save the output in a file, and then grep for warning in it.
+
+
+## Linprivchecker.py
+
+https://github.com/reider-roque/linpostexp/blob/master/linprivchecker.py
 
 # Manually
 
