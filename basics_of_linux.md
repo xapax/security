@@ -63,6 +63,14 @@ This must be by far one of the most useful programs. But I tend to always forget
  
  Add new 
  
+ ### sudo
+ 
+ List what rights the sudo user has.
+ ```
+ sudo -l
+```
+ 
+ 
 ## 2. Text-fu
  - https://linuxjourney.com/lesson/stderr-standard-error-redirect
 
