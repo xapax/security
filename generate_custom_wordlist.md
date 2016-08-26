@@ -35,8 +35,14 @@ Then you should probably remove duplicates.
 
 ## Cewl - Spider and build dictionary
 
+
 ```
-cewl -w createWordlist.txt -d 1 https://www.example.com 
+cewl -w createWordlist.txt https://www.example.com 
+```
+
+**Add minimum password length**
+```
+cewl -w createWordlist.txt -m 6 https://www.example.com 
 ```
 
 ## References
