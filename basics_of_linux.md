@@ -103,7 +103,16 @@ sort file | uniq
 `cat filename | sort -u > newFileName`
 
 
- 3. Vim
+### tr - translate
+
+Transform all letter into capital letters
+```
+tr "[:lower:]" "[:upper:]" < file1 > file2 
+```
+
+http://www.thegeekstuff.com/2012/12/linux-tr-command/
+
+## Vim
  - https://linuxjourney.com/lesson/regular-expressions-regex
 
 ## 4. User management
