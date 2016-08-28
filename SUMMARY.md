@@ -76,7 +76,7 @@
        * [Internal Enumeration](internal_enumeration.md)
        * [Examples](examples.md)
    * [Persistence](persistence.md)
-   * Pivoting
+   * [Pivoting](pivoting.md)
 * Password cracking
    * [Cracking passwords](cracking_passwords.md)
    * [Generate custom wordlist](generate_custom_wordlist.md)
