@@ -56,13 +56,7 @@ This must be by far one of the most useful programs. But I tend to always forget
  
  sed can perform basic editing on streams, that is to say, text.
  
- 
- A. Add binary to the path file
- Show the current path-variable
- `echo $PATH`
- 
- Add new 
- 
+  
  ### sudo
  
  List what rights the sudo user has.
