@@ -77,6 +77,7 @@
        * [Examples](examples.md)
    * [Persistence](persistence.md)
    * [Pivoting](pivoting.md)
+   * Post-exploit modules metasploit
 * Password cracking
    * [Cracking passwords](cracking_passwords.md)
    * [Generate custom wordlist](generate_custom_wordlist.md)
