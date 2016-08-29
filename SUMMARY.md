@@ -105,7 +105,7 @@
    * [Metasploit](metasploit.md)
        * [Basics](basics.md)
        * [Commands](commands.md)
-       * Exploits
+       * [Exploits](exploits.md)
 * [Physical access to machine](physical_access_to_machine.md)
 * [Literature](littearature.md)
 

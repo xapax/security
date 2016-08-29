@@ -24,6 +24,8 @@ msfconsole
 db_rebuild_cache
 ```
 
+
+
 It will take a few minutes. And then you will be able to use fast search.
 
 ## Exploits
