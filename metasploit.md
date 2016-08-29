@@ -1,28 +1,5 @@
 # Metasploit
 
 
-```
-msfconsole
-```
+Well metasploit is of course way to big to treat in a simple book like this. But I am going to give it a shot anyways. Because what he hell, it is not like this book has a word-limit.
 
-Exploits are graded from something to excellent. Exploits that are excellent should not crash the system you try to exploit.
-
-
-You can either find modules right in metasplot, or on their website: http://www.rapid7.com/db/modules
-
-
-```
-msfcli
-```
-
-### Update metasploit
-
-```
-msfupdate
-```
-
-### Search in metasploit
-
-```
-searchsploit
-```
