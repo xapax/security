@@ -1,6 +1,31 @@
 # Basics
 
 
+
+## Set up fast cache search
+
+If you try to search in metasploit it will tell you that it uses slow search. Because it hasn't build up the cache. To solve this we have to run
+
+```
+msfdb init
+```
+
+Then we wait a few minutes. And then check to see if the databse is connected.
+First we enter 
+```
+msfconsole
+db_status
+```
+
+It should say that the database is connected. If it is, then we run:
+
+```
+msfconsole
+db_rebuild_cache
+```
+
+It will take a few minutes. And then you will be able to use fast search.
+
 ## Exploits
 
 An exploit is a module that has a payload.
