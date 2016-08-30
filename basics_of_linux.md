@@ -1,6 +1,8 @@
 # Basics of linux
 
 https://linuxjourney.com/
+https://github.com/jlevy/the-art-of-command-line
+
 
 ## 1. Basic commands
 ### pwd
