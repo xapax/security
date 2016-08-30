@@ -31,6 +31,17 @@ sudo tcpdump -i wlan0 src port 80 or dst port 80 -w port-80-recording.pcap
 sudo tcpdump -i eth0 src port 80 or dst port 80 -w port-80-recording.pcap
 
 
+## Sniffing for passwords
+
+Once we have dumped some of the traffic we can insert it into metasploit and run **psnuffle** on it.
+
+```
+use auxiliary/sniffer/psnuffle
+```
+
+https://www.offensive-security.com/metasploit-unleashed/password-sniffing/
+
+
 ## References
 
 
