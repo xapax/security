@@ -9,7 +9,6 @@
        * [Python fundamentals](python_fundamentals.md)
        * [Useful scripts](connections.md)
    * [Transfering files](transfering_files.md)
-   * [Reverse-shell](reverse-shell.md)
    * [Example of company architecture](example_of_company_architecture.md)
    * [Networking](networking.md)
        * networking
@@ -69,6 +68,7 @@
    * [Social Engineering - Phishing](social_engineering_-_phishing.md)
    * [Default layout Apache on different versiont](default_layout_apache_on_different_versiont.md)
    * [Shells](shells.md)
+       * [Reverse-shell](reverse-shell.md)
        * Webshell
 * [Post Exploitation](post_exploitation.md)
    * [Spawning shells](spawning_shells.md)
