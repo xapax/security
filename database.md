@@ -8,3 +8,12 @@ workspace
 workspace -a nameOfNewWorkspace #Add
 workspace -d nameOfNewWorkspace #Delete
 ```
+
+
+```
+hosts
+```
+
+```
+services
+```
