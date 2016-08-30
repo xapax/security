@@ -34,6 +34,13 @@ Then you can load it into the database with the following command.
 db_import /path/to/file.xml
 ```
 
+### Metasploit PortScan modules
+
+If you for some reason don't have access to nmap you can run metasploits modules that does portscans
+
+```
+use auxiliary/scanner/portscan/
+```
 
 ## Nmap
 
