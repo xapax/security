@@ -2,6 +2,39 @@
 
 
 
+
+## Metasploit
+
+We can do port-scanning with metasploit and nmap. And we can even integrate nmap into metasploit. This might be a good way to keep your process neat and organized. 
+
+### db_nmap
+
+You can run `db_nmap` and all the output will be stored in the metasploit database and available with 
+
+```
+hosts
+services
+```
+
+You can also import nmap scans. But you must first output it in xml-format with the following flag  
+
+```
+nmap 192.168.1.107 -oX result.xml
+```
+
+Good practice would be to output the scan-results in xml, grepable and normal format. You do that with
+
+```
+nmap 192.168.1.107 -oA result
+```
+
+Then you can load it into the database with the following command. 
+
+```
+db_import /path/to/file.xml
+```
+
+
 ## Nmap
 
 Now that you have gathered some IP addresses from your subdomain scanning it is time to scan those addresses. You just copy-paste those addresses and add them to a file, line bby line. Then you can scan all of them with nmap at the same time. Using the `-iL` flag.
@@ -70,4 +103,5 @@ Now you can input all those Ips to nmap and scan them.
 Nmap has a command to make the output grepable.
 
 `nmap -vvv -p 80 201.210.67.0-100 -oG - | grep 80/open`
+
 
