@@ -37,27 +37,7 @@ Remove directory
 ### history
 Show commands history
 ### find
-This must be by far one of the most useful programs. But I tend to always forget how it works.
- 
-### cut
- This is a useful command to cut in text. 
-  
- Let's say that we have the following text, and we want to cut out the ip-address. 
-
-```
-64 bytes from 192.168.0.1: icmp_req=1 ttl=255 time=4.86 ms
-```
-
-```
- cut -d" " -f4
- ```
- 
- `-d` stands for delimiter. and `-f` for field.  
-
-### sed - Stream editor
- 
- sed can perform basic editing on streams, that is to say, text.
- 
+This must be by far one of the most useful programs. But I tend to always forget how it works. 
   
  ### sudo
  
@@ -69,6 +49,27 @@ This must be by far one of the most useful programs. But I tend to always forget
  
 ## 2. Text-fu
  - https://linuxjourney.com/lesson/stderr-standard-error-redirect
+
+### cut
+ This is a useful command to cut in text. 
+  
+ Let's say that we have the following text, and we want to cut out the ip-address. 
+
+```
+64 bytes from 192.168.0.1: icmp_req=1 ttl=255 time=4.86 ms
+```
+
+```
+cut -d" " -f4
+```
+ 
+ `-d` stands for delimiter. and `-f` for field.  
+
+### sed - Stream editor
+ 
+sed can perform basic editing on streams, that is to say, text.
+
+
 
 ### Show all lines just once
 You have a list of passwords, or ip-addresses or whatever. And you want to remove all duplicates. How do you do it?
