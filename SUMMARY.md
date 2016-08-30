@@ -106,6 +106,7 @@
        * [Basics](basics.md)
        * [Commands](commands.md)
        * [Exploits](exploits.md)
+       * Payloads
 * [Physical access to machine](physical_access_to_machine.md)
 * [Literature](littearature.md)
 
