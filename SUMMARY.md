@@ -78,9 +78,9 @@
        * [Internal Enumeration](internal_enumeration.md)
        * [Examples](examples.md)
    * [Persistence](persistence.md)
+   * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
    * [Pivoting](pivoting.md)
    * [Post-exploit modules metasploit](post-exploit_modules_metasploit.md)
-* [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
 * Password cracking
    * [Cracking passwords](cracking_passwords.md)
    * [Generate custom wordlist](generate_custom_wordlist.md)
@@ -94,7 +94,6 @@
    * [Arp-spoofing](arp-spoofing.md)
        * [SSL-strip](ssl-strip.md)
    * [DNS-spoofing](dns-spoofing.md)
-   * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
    * [Wireshark](wireshark.md)
 * [Wifi](wifi.md)
    * WEP
