@@ -68,6 +68,7 @@
    * [Msfvenom](msfvenom.md)
    * [Social Engineering - Phishing](social_engineering_-_phishing.md)
    * [Default layout Apache on different versiont](default_layout_apache_on_different_versiont.md)
+   * Shells
 * [Post Exploitation](post_exploitation.md)
    * [Spawning shells](spawning_shells.md)
    * [Meterpreter for post-exploitation](getting_meterpreter_shell.md)
