@@ -137,3 +137,31 @@ Related ports:
 110 is the POP3 non-encrypted.
 25, 465
 
+## VNC 5900
+
+VNC is used to get a screen for a remote host. But some of them have some exploits.
+
+You can use vncviewer to connect to a vnc-service. Vncviewer comes built-in in Kali.
+
+It defaults to port 5900, so if the machine is using some other port 
+```
+vncviewer 192.168.1.109
+```
+
+### Metasploit scanner
+
+You can scan VNC for logins, with bruteforce. 
+
+**Login scan**
+```
+use auxiliary/scanner/vnc/vnc_login
+set rhosts 192.168.1.109
+run
+```
+
+**Scan for no-auth**
+```
+use auxiliary/scanner/vnc/vnc_none_auth
+set rhosts 192.168.1.109
+run
+```
