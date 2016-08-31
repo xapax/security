@@ -33,7 +33,7 @@ sudo tcpdump -i eth0 src port 80 or dst port 80 -w port-80-recording.pcap
 
 ## Sniffing for passwords
 
-Once we have dumped some of the traffic we can insert it into metasploit and run **psnuffle** on it.
+Once we have dumped some of the traffic we can insert it into metasploit and run **psnuffle** on it. It can sniff passwords and usernames from pop3, imap, ftp, and HTTP GET. This is a really easy way to find usernames and passwords from traffic that you have already dumped, or are in the process of dumping.
 
 ```
 use auxiliary/sniffer/psnuffle
