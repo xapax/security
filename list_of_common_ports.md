@@ -137,7 +137,24 @@ Related ports:
 110 is the POP3 non-encrypted.
 25, 465
 
-## VNC 5900
+## Port 2049 - NFS
+
+Network file system
+This is a service used so that people can access certain parts of a remote filesystem. If this is badly configured it could mean that you grant exessive access to users.
+
+If the service is on its default port you can run this command to see what the filesystem is sharing
+```
+showmount -e 192.168.1.109
+```
+
+Then you can mount the filesystem to your machine using the following command
+
+```
+mount -t 192.168.1.109:/ /tmp/NFS
+```
+Now we can go to /tmp/NFS and check out /etc/passwd, and add and remove files.
+
+## Port 5900 - VNC
 
 VNC is used to get a screen for a remote host. But some of them have some exploits.
 
