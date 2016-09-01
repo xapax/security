@@ -77,7 +77,7 @@
    * [Privilege Escalation](privilege_escalation.md)
        * [Internal Enumeration](internal_enumeration.md)
        * [Examples](examples.md)
-   * Privilege escalation windows
+   * [Privilege escalation windows](privilege_escalation_windows.md)
    * [Loot with meterpreter](loot.md)
    * [Persistence](persistence.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
