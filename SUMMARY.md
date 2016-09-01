@@ -73,11 +73,11 @@
        * [Webshell](webshell.md)
 * [Post Exploitation](post_exploitation.md)
    * [Spawning shells](spawning_shells.md)
+   * [Meterpreter for post-exploitation](getting_meterpreter_shell.md)
    * [Privilege Escalation](privilege_escalation.md)
        * [Internal Enumeration](internal_enumeration.md)
        * [Examples](examples.md)
    * Privilege escalation windows
-   * [Meterpreter for post-exploitation](getting_meterpreter_shell.md)
    * [Loot with meterpreter](loot.md)
    * [Persistence](persistence.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
