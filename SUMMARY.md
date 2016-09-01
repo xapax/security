@@ -31,10 +31,10 @@
    * [Automated Vulnerability Scanners](automated_vulnerability_scanners.md)
    * [WAF - Web application firewall](waf_-_web_application_firewall.md)
    * Server-side vulnerabilities
+       * [List of common ports](list_of_common_ports.md)
        * [Port Knocking](port_knocking.md)
        * [Dictionary Attack -- SSH FTP](dictionary_attack_--_ssh_ftp.md)
        * [SMTP - Extract emails](smtp_-_extract_emails.md)
-       * [List of common ports](list_of_common_ports.md)
        * FTP
        * [Passwords](passwords.md)
        * [Server misconfiguration](server_misconfiguration.md)
