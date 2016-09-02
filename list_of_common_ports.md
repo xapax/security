@@ -114,10 +114,9 @@ https://www.exploit-db.com/exploits/34896/
 
 ## Port 139 - Samba shares
 
-Samba is a service that enables the user to share parts of the system with other machines. It has interoperability, which means that it can share stuff between unix and windows systems.
+Samba is a service that enables the user to share files with other machines. It has interoperability, which means that it can share stuff between unix and windows systems. A windows user will just see an icon for a folder that contains some files. Even though the folder and files really exists on a unix-server.
 
-
-You can log in to a samba-share using smbclient, like this
+For linux-users you can log in to the smb-share using smbclient, like this:
 
 ```
 smbclient -L 192.168.1.102
@@ -125,6 +124,7 @@ smbclient -L 192.168.1.102
 
 If you don't provide any password, just click enter, the server might show you the different shares and version of the server. This can be useful information for looking for exploits. There are tons of exploits for smb.
 
+So smb, for a linux-user, is pretty much like and ftp or a nfs.
 
 ## Port 443 - HTTPS
 
