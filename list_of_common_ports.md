@@ -126,6 +126,9 @@ If you don't provide any password, just click enter, the server might show you t
 
 So smb, for a linux-user, is pretty much like and ftp or a nfs.
 
+Here is a good guide for how to configure samba:
+https://help.ubuntu.com/community/How%20to%20Create%20a%20Network%20Share%20Via%20Samba%20Via%20CLI%20(Command-line%20interface/Linux%20Terminal)%20-%20Uncomplicated,%20Simple%20and%20Brief%20Way!
+
 ## Port 443 - HTTPS
 
 Okay this is only here as a reminder to always check for SSL-vulnerabilities such as heartbleed. Search for heartbleed in this book to find out how to exploit it.
