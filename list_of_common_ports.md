@@ -1,4 +1,4 @@
-# List of common ports
+# Common ports/services and how to use them
 
 There are too many ports and services to write about all of them here. But still, I am going to try to write a bit about what I am learning.
 
