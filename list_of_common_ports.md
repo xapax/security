@@ -111,6 +111,21 @@ Exploits can be found in metasploit25 can be quite useful
 And shellshock
 https://www.exploit-db.com/exploits/34896/
 
+
+## Port 139 - Samba shares
+
+Samba is a service that enables the user to share parts of the system with other machines. It has interoperability, which means that it can share stuff between unix and windows systems.
+
+
+You can log in to a samba-share using smbclient, like this
+
+```
+smbclient -L 192.168.1.102
+```
+
+If you don't provide any password, just click enter, the server might show you the different shares and version of the server. This can be useful information for looking for exploits. There are tons of exploits for smb.
+
+
 ## Port 443 - HTTPS
 
 Okay this is only here as a reminder to always check for SSL-vulnerabilities such as heartbleed. Search for heartbleed in this book to find out how to exploit it.
