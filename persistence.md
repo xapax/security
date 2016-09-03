@@ -15,7 +15,7 @@ adduser pelle sudo
 
 Now if the machine has ssh you will be able to ssh into the machine.
 
-On some machines, older linux I think, you haver to do
+On some machines, older linux I think, you have to do
 
 ```
 useradd pelle
