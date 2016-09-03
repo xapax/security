@@ -26,6 +26,13 @@ https://hackertarget.com/sqlmap-post-request-injection/
 
 ## Login bypass
 
+This is the most classic, standard first test:
+```
+' or '1'='1
+```
+
+Then you have:
+
 ```
 -'
 ' '
