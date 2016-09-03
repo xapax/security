@@ -12,8 +12,9 @@ Try the username as password
 
 2. Reused passwords
 
+3. Cronjob with privileges running script that are editable for other users. 
 
-nmap as root
+4. nmap as root
 
 ## Windows
 
