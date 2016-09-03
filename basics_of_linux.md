@@ -199,6 +199,14 @@ source /etc/environment
 ```
 
 
+### Adding a path
+
+This is a non-persistent way to add binaries to your path. Might be useful if you have entered a system that has limited binaries in the path.
+
+```
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+```
+
 ### Install package
 ```
 sudo apt-get install
