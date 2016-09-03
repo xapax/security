@@ -110,6 +110,25 @@ tr "[:lower:]" "[:upper:]" < file1 > file2
 http://www.thegeekstuff.com/2012/12/linux-tr-command/
 
 ## Vim
+
+### Search
+
+In command-mode:
+```
+/
+```
+
+### Show line-number
+
+```
+:set number
+```
+
+```
+:set nonumber
+```
+
+### Go to line
  - https://linuxjourney.com/lesson/regular-expressions-regex
 
 ## 4. User management
