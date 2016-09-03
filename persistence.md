@@ -15,6 +15,14 @@ adduser pelle sudo
 
 Now if the machine has ssh you will be able to ssh into the machine.
 
+On some machines, older linux I think, you haver to do
+
+```
+useradd pelle
+passwd pelle
+echo "pelle    ALL=(ALL) ALL" >> /etc/sudoers
+```
+
 ## Crack the password of existing user
 
 Get the `/etc/shadow` file and crack the passwords.
