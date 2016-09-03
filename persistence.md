@@ -38,6 +38,8 @@ crontab -e
 nc -lvp 5556
 ```
 
+### References:
+http://kaoticcreations.blogspot.cl/2012/07/backdooring-unix-system-via-cron.html
 
 
 ## Binary trojan
