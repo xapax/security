@@ -1,7 +1,11 @@
 # Mysql
 
 
+## Configuration files
 
+```
+cat /etc/my.cnf
+```
 
 ## Mysql-commands cheat sheet
     
