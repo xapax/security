@@ -5,6 +5,7 @@ In the chapter Basics I linked to some reverse shells. Another way to create rev
 
 Here is a good list for creating shells with msfvenom. 
 http://netsec.ws/?p=331
+https://jivoi.github.io/2015/07/01/pentest-tips-and-tricks/
 
 ## Python
 
