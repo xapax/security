@@ -53,7 +53,7 @@ nc -lvp 5556
 Sometimes you have to set the user
 ```
 crontab -e
-*/10 * * * * root /path/to/binary
+*/10 * * * * pelle /path/to/binary
 ```
 
 
