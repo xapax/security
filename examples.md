@@ -11,6 +11,7 @@ nmap --interactive
 !sh
 ```
 
+https://gist.github.com/dergachev/7916152
 
 
 chrootkit
