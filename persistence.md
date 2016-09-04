@@ -4,6 +4,9 @@ So if you manage to compromise a system the system might die for whatever reason
 
 Or, maybe the way to compromise the machine is really complicated or noisy and you don't want to go through the hassle of doing it all again. So instead you just create a backdoor that you can enter fast and easy.
 
+Read this
+https://gist.github.com/dergachev/7916152
+
 ## Create a new user
 
 The most obvious, but not so subtle way is to just create a new user (if you are root, or someone with that privilege) 
