@@ -75,3 +75,5 @@ Mysql backdoor
 ## Hide backdoor in bootblock
 
 
+## Nmap
+https://gist.github.com/dergachev/7916152
