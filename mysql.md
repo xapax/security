@@ -7,6 +7,8 @@
 cat /etc/my.cnf
 ```
 
+http://www.cyberciti.biz/tips/how-do-i-enable-remote-access-to-mysql-database-server.html
+
 ## Mysql-commands cheat sheet
     
     http://cse.unl.edu/~sscott/ShowFiles/SQL/CheatSheet/SQLCheatSheet.html
