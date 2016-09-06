@@ -31,7 +31,7 @@ echo 'os.system('/bin/bash')'
 
 ## Interactive tty-shell
 
-So if you manage to upgrade to a non-interactive tty-shell you will still have a limited shell. You won't be able to use the up and down arrows, you won't have tab-completion. This might be really frustrating if you stay in that shell for long. However that can be fixed using socat. Follow these instructions.
+So if you manage to upgrade to a non-interactive tty-shell you will still have a limited shell. You won't be able to use the up and down arrows, you won't have tab-completion. This might be really frustrating if you stay in that shell for long. It can also be more risky, if a execution gets stuck you cant use Ctr-C or Ctr-Z without killing your session. However that can be fixed using socat. Follow these instructions.
 
 https://github.com/cornerpirate/socat-shell
 
