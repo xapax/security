@@ -1,7 +1,6 @@
 # Summary
 
 * [Introduction](README.md)
-   * OSCP
 * [The Basics](the_basics.md)
    * [Basics of linux](basics_of_linux.md)
    * [Basics of windows](basics_of_windows.md)
@@ -117,5 +116,6 @@
        * [Database](database.md)
        * [Meterpreter](meterpreter.md)
 * [Physical access to machine](physical_access_to_machine.md)
+* OSCP
 * [Literature](littearature.md)
 
