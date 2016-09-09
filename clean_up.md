@@ -33,7 +33,8 @@ Here you have failed and successfull login attempts. SSH, SUDO, and much more.
 ### Apache
 
 ```
-/var/log/apache2/access_log
+/var/log/apache2/access.log
+/var/log/apache2/error.log
 ```
 
 Remove your own ip like this
