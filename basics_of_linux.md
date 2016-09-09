@@ -131,6 +131,12 @@ In command-mode:
 ### Go to line
  - https://linuxjourney.com/lesson/regular-expressions-regex
 
+### To to last line
+
+```
+G
+```
+
 ## 4. User management
 
 To add a user we write:
