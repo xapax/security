@@ -25,6 +25,11 @@ For example:
 /var/log/messages
 ```
 
+Here you have failed and successfull login attempts
+```
+/var/log/auth.log
+```
+
 ### Apache
 
 ```
