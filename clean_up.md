@@ -25,7 +25,7 @@ For example:
 /var/log/messages
 ```
 
-Here you have failed and successfull login attempts
+Here you have failed and successfull login attempts. SSH, SUDO, and much more.
 ```
 /var/log/auth.log
 ```
