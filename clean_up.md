@@ -36,6 +36,27 @@ Remove your own ip like this
 ```
 grep -v '<src-ip-address>' /path/to/access_log > a && mv a /path/to/access_log
 ```
+What it does is simply to copy all lines except the lines that contain your IP-address. And then move them, and them move them back again.
+
+```
+grep -v <entry-to-remove> <logfile> > /tmp/a ; mv /tmp/a <logfile> ; rm -f /tmp/a
+```
+
+### UTMP and WTMP
+
+These logs are not stored in plaintext but instead as binaries. Which makes it a bit harder to clear.
+
+```
+who
+```
+
+```
+last
+```
+
+```
+lastlog
+```
 
 ### Command history
 
