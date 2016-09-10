@@ -8,9 +8,8 @@ http://netsec.ws/?p=309
 
 ### Weak or reused passwords
 
-Try the username as password
+If there is a web-server, check the connection to the database. Try that password. Also log into the database with the user you found. Is there a admin-account that might be reusing passwords?
 
-Reused passwords
 
 ### Configuration mistakes
 
