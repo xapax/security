@@ -13,6 +13,14 @@ http://www.cyberciti.biz/tips/how-do-i-enable-remote-access-to-mysql-database-se
     
     http://cse.unl.edu/~sscott/ShowFiles/SQL/CheatSheet/SQLCheatSheet.html
 
+## Uploading a shell
+    
+    You can also use mysql to upload a shell
+
+## Escalating privileges
+
+If mysql is started as root you might have a chance to use it as a way to escalate your privileges.
+Read more of this in the escalate chapter.
 
 ## Finding passwords to mysql
 
@@ -80,10 +88,4 @@ class JConfig {
     ```
     
     So there we have it. 
-    
-    ## Uploading a shell
-    
-    
-    You can also use mysql to upload a shell
-    
     
