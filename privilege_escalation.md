@@ -14,9 +14,16 @@ Reused passwords
 
 ### Configuration mistakes
 
+Web-server running as root
+
 **Cronjob** with privileges running script that are editable for other users. 
 
 **nmap** as root
+
+### Software vulnerabilites
+Software vulnerabilites can lead to priv-esc, like vulnerabiliteis in:
+- Kernel
+- sudo
 
 ## Windows
 
