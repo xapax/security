@@ -302,6 +302,128 @@ fdisk -l
 
 ## 9. The Filesystem
 
+### The Filesystem Hierarchy Standard
+
+![](fss.jpg)
+This image is copied from here: http://askubuntu.com/questions/138547/how-to-understand-the-ubuntu-file-system-layout/138551#138551
+
+#### Difference between sbin and bin
+
+sbin is system binaries. A normal user do not have access to these binaries. It is only root and users with sudo privileges that do. 
+
+```
+pelle@mymachine:/bin$ ls -la /bin
+total 4092
+drwxr-xr-x  2 root root   4096 2012-02-04 19:12 .
+drwxr-xr-x 21 root root   4096 2012-02-06 18:41 ..
+-rwxr-xr-x  1 root root 702160 2008-05-12 14:33 bash
+-rwxr-xr-x  3 root root  26300 2008-03-21 06:32 bunzip2
+-rwxr-xr-x  3 root root  26300 2008-03-21 06:32 bzcat
+lrwxrwxrwx  1 root root      6 2012-02-04 09:51 bzcmp -> bzdiff
+-rwxr-xr-x  1 root root   2128 2008-03-21 06:32 bzdiff
+lrwxrwxrwx  1 root root      6 2012-02-04 09:51 bzegrep -> bzgrep
+-rwxr-xr-x  1 root root   4874 2008-03-21 06:32 bzexe
+lrwxrwxrwx  1 root root      6 2012-02-04 09:51 bzfgrep -> bzgrep
+-rwxr-xr-x  1 root root   3642 2008-03-21 06:32 bzgrep
+-rwxr-xr-x  3 root root  26300 2008-03-21 06:32 bzip2
+-rwxr-xr-x  1 root root   8064 2008-03-21 06:32 bzip2recover
+lrwxrwxrwx  1 root root      6 2012-02-04 09:51 bzless -> bzmore
+-rwxr-xr-x  1 root root   1297 2008-03-21 06:32 bzmore
+-rwxr-xr-x  1 root root  27312 2008-04-04 02:42 cat
+-rwxr-xr-x  1 root root  45824 2008-04-04 02:42 chgrp
+-rwxr-xr-x  1 root root  42816 2008-04-04 02:42 chmod
+-rwxr-xr-x  1 root root  47868 2008-04-04 02:42 chown
+-rwxr-xr-x  1 root root  71664 2008-04-04 02:42 cp
+-rwxr-xr-x  1 root root 110540 2007-11-13 05:54 cpio
+-rwxr-xr-x  1 root root  79988 2009-03-09 09:03 dash
+-rwxr-xr-x  1 root root  55820 2008-04-04 02:42 date
+-rwxr-xr-x  1 root root  48308 2008-04-04 02:42 dd
+-rwxr-xr-x  1 root root  45588 2008-04-04 02:42 df
+-rwxr-xr-x  1 root root  92376 2008-04-04 02:42 dir
+-rwxr-xr-x  1 root root   4496 2008-09-26 08:43 dmesg
+-rwxr-xr-x  1 root root   8800 2007-11-15 13:01 dnsdomainname
+-rwxr-xr-x  1 root root  24684 2008-04-04 02:42 echo
+-rwxr-xr-x  1 root root  40560 2008-02-29 02:19 ed
+-rwxr-xr-x  1 root root  96440 2007-10-23 16:58 egrep
+-rwxr-xr-x  1 root root  22192 2008-04-04 02:42 false
+-rwxr-xr-x  1 root root   5740 2008-02-06 17:49 fgconsole
+-rwxr-xr-x  1 root root  53396 2007-10-23 16:58 fgrep
+-rwxr-xr-x  1 root root  22536 2007-11-23 05:15 fuser
+-rwsr-xr--  1 root fuse  20056 2008-02-26 13:25 fusermount
+-rwxr-xr-x  1 root root 100536 2007-10-23 16:58 grep
+-rwxr-xr-x  2 root root     63 2007-11-15 06:49 gunzip
+-rwxr-xr-x  1 root root   5874 2007-11-15 06:49 gzexe
+-rwxr-xr-x  1 root root  53488 2007-11-15 06:49 gzip
+-rwxr-xr-x  1 root root   8796 2007-11-15 13:01 hostname
+```
+
+We have echo, cp, grep. The normal stuff a user needs.
+
+In sbin we have binaries that control the system. 
+```
+pelle@mymachine:/bin$ ls -la /sbin
+total 5884
+drwxr-xr-x  2 root root     4096 2012-02-04 10:01 .
+drwxr-xr-x 21 root root     4096 2012-02-06 18:41 ..
+-rwxr-xr-x  1 root root    18164 2008-03-27 13:25 badblocks
+-rwxr-xr-x  1 root root     8276 2008-03-27 13:25 blkid
+-rwxr-xr-x  1 root root     9476 2008-09-26 08:43 blockdev
+-rwxr-xr-x  1 root root    53864 2008-09-26 08:43 cfdisk
+-rwxr-xr-x  1 root root     3600 2008-09-26 08:43 ctrlaltdel
+-rwxr-xr-x  1 root root    67712 2008-03-27 13:25 debugfs
+-rwxr-xr-x  1 root root   199164 2007-07-26 06:57 debugreiserfs
+-rwxr-xr-x  1 root root    31448 2008-10-06 08:51 depmod
+lrwxrwxrwx  1 root root        9 2012-02-04 09:51 dhclient -> dhclient3
+-rwxr-xr-x  1 root root   352392 2008-04-02 09:38 dhclient3
+-rwxr-xr-x  1 root root     8170 2008-04-02 09:38 dhclient-script
+-rwxr-xr-x  1 root root    43508 2008-03-12 08:24 dosfsck
+-rwxr-xr-x  1 root root    12140 2008-03-27 13:25 dumpe2fs
+-rwxr-xr-x  3 root root   156076 2008-03-27 13:25 e2fsck
+-rwxr-xr-x  1 root root    12332 2008-03-27 13:25 e2image
+-rwxr-xr-x  3 root root    23840 2008-03-27 13:25 e2label
+-rwxr-xr-x  1 root root    85064 2008-09-26 08:43 fdisk
+-rwxr-xr-x  3 root root    23840 2008-03-27 13:25 findfs
+-rwxr-xr-x  1 root root    20020 2008-03-27 13:25 fsck
+-rwxr-xr-x  1 root root     7028 2008-09-26 08:43 fsck.cramfs
+-rwxr-xr-x  3 root root   156076 2008-03-27 13:25 fsck.ext2
+-rwxr-xr-x  3 root root   156076 2008-03-27 13:25 fsck.ext3
+-rwxr-xr-x  1 root root    22288 2008-09-26 08:43 fsck.minix
+lrwxrwxrwx  1 root root        7 2012-02-04 09:57 fsck.msdos -> dosfsck
+-rwxr-xr-x  1 root root      333 2009-01-23 10:01 fsck.nfs
+-rwxr-xr-x  1 root root      112 2007-07-26 06:57 fsck.reiserfs
+lrwxrwxrwx  1 root root        7 2012-02-04 09:57 fsck.vfat -> dosfsck
+-rwxr-xr-x  1 root root    15168 2008-09-26 08:43 getty
+-rwxr-xr-x  1 root root      375 2009-12-10 10:55 grub-install
+lrwxrwxrwx  1 root root        6 2012-02-04 09:51 halt -> reboot
+-rwxr-xr-x  1 root root    69228 2008-03-28 18:26 hdparm
+-rwxr-xr-x  1 root root    31620 2008-09-26 08:43 hwclock
+-rwxr-xr-x  1 root root    61808 2007-12-13 05:51 ifconfig
+-rwxr-xr-x  2 root root    27372 2007-09-19 20:25 ifdown
+-rwxr-xr-x  2 root root    27372 2007-09-19 20:25 ifup
+-rwxr-xr-x  1 root root    89604 2008-04-11 09:50 init
+-rwxr-xr-x  1 root root    56484 2008-04-11 09:50 initctl
+-rwxr-xr-x  1 root root     4632 2008-10-06 08:51 insmod
+-rwxr-xr-x  1 root root     1542 2008-03-31 17:11 installkernel
+lrwxrwxrwx  1 root root        7 2012-02-04 09:51 ip -> /bin/ip
+-rwxr-xr-x  1 root root    47448 2008-01-28 08:49 ip6tables
+-rwxr-xr-x  1 root root    51680 2008-01-28 08:49 ip6tables-restore
+-rwxr-xr-x  1 root root    51644 2008-01-28 08:49 ip6tables-save
+-rwxr-xr-x  1 root root    10948 2007-12-13 05:51 ipmaddr
+-rwxr-xr-x  1 root root    47480 2008-01-28 08:49 iptables
+-rwxr-xr-x  1 root root    51712 2008-01-28 08:49 iptables-restore
+-rwxr-xr-x  1 root root    49308 2008-01-28 08:49 iptables-save
+-rwxr-xr-x  1 root root    14048 2008-01-28 08:49 iptables-xml
+-rwxr-xr-x  1 root root    14944 2007-12-13 05:51 iptunnel
+-rwxr-xr-x  1 root root     6012 2008-09-26 08:43 isosize
+-rwxr-xr-x  1 root root    20596 2007-12-21 09:36 iwconfig
+-rwxr-xr-x  1 root root    11784 2007-12-21 09:36 iwevent
+-rwxr-xr-x  1 root root     7764 2007-12-21 09:36 iwgetid
+-rwxr-xr-x  1 root root    26376 2007-12-21 09:36 iwlist
+-rwxr-xr-x  1 root root     9164 2007-12-21 09:36 iwpriv
+-rwxr-xr-x  1 root root     8420 2007-12-21 09:36 iwspy
+-rwxr-xr-x  1 root root     6300 2008-02-06 17:49 kbdrate
+```
+
 ### Mount
 
 So everything on the linux-filesystem belongs to some part of the filesystem-tree. So if we plug in some device we need to mount it to the filesystem. That pretty much means that we need to connect it to the filesystem. Mount is like another word for connect.
