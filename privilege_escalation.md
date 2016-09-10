@@ -14,13 +14,23 @@ If there is a web-server, check the connection to the database. Try that passwor
 ### Configuration mistakes
 
 **Web-server running as root**
+Now you can just create a php-script and then have root execute it.
 
 **Cronjob**
 With privileges running script that are editable for other users. 
 
 **nmap** as root
+Run nmap and then enter into interactive shell and then you can issue commands as root.
 
 **Mysql running as root**
+
+If mysql is running as root and you are able to log in as root to it, you can run commands as root by doing this
+```
+select sys_exec("cp /etc/sudoers /tmp/sudoers");
+```
+
+Or you can use this exploit. 
+https://www.exploit-db.com/exploits/1518/
 
 **SUID files**
 
