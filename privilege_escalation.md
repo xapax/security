@@ -13,17 +13,23 @@ If there is a web-server, check the connection to the database. Try that passwor
 
 ### Configuration mistakes
 
-Web-server running as root
+**Web-server running as root**
 
-**Cronjob** with privileges running script that are editable for other users. 
+**Cronjob**
+With privileges running script that are editable for other users. 
 
 **nmap** as root
+
+**Mysql running as root**
 
 **SUID files**
 
 ```
 find / -perm -u=s -type f 2>/dev/null
 ```
+
+
+
 
 ### Software vulnerabilites
 Software vulnerabilites can lead to priv-esc, like vulnerabiliteis in:
