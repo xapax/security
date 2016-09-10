@@ -38,9 +38,6 @@ https://www.exploit-db.com/exploits/1518/
 find / -perm -u=s -type f 2>/dev/null
 ```
 
-
-
-
 ### Software vulnerabilites
 Software vulnerabilites can lead to priv-esc, like vulnerabiliteis in:
 - Kernel
