@@ -9,5 +9,10 @@ You can connect to samba the following way
 smbclient //192.168.1.106/tmp
 ```
 
+```
+smbclient \\\\192.168.1.105\\ipc$ -U john 
+```
 
-
+```
+smbclient //192.168.1.105/ipc$ -U john  
+```
