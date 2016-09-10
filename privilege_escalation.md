@@ -6,15 +6,17 @@ http://netsec.ws/?p=309
 
 ## Linux
 
-1. Weak passwords
+### Weak or reused passwords
 
 Try the username as password
 
-2. Reused passwords
+Reused passwords
 
-3. Cronjob with privileges running script that are editable for other users. 
+### Configuration mistakes
 
-4. nmap as root
+**Cronjob** with privileges running script that are editable for other users. 
+
+**nmap** as root
 
 ## Windows
 
