@@ -12,24 +12,38 @@ Let's start with the basics.
 tcpdump - this command will output all network traffic straight to the terminal. Might be hard to understand if there is a lot of traffic.
 
 **-A** - stands for Ascii, and output it in ascii.
+
 **-w file.pcap ** - the w-flag will save the output into the filename of your choice. The traffic is stored in pcap-format, which is the standard packet-analysis-format. 
+
 **-i any ** - will record traffic for all interfaces.
+
 **-D** - show list of all interfaces
+
 **-q** - be less verbose. Be more **quiet**
+
 **-s** - The default size that tcpdump captures is only 96 bytes. If you want it to capture more you have to define it yourself `-s0` gives you the whole packet.
+
 **-c** - count. Set how many packets you want to intercept. And then stop.
+
 **port 22** - only see traffic on a specific port.
+
 **-vvv** - Verbose. Depending on how verbose you want the output. 
 
 ### Useful commands
 
 
-`tcpdump -i wlan0 -vvv -A | grep "GET"`- This will grep all GET from the wlan0 interface.
+```
+tcpdump -i wlan0 -vvv -A | grep "GET"
+```
+This will grep all GET from the wlan0 interface.
 This will not get any SSL-encrypted traffic.
 
+```
 sudo tcpdump -i wlan0 src port 80 or dst port 80 -w port-80-recording.pcap
+```
+```
 sudo tcpdump -i eth0 src port 80 or dst port 80 -w port-80-recording.pcap
-
+```
 
 ## Sniffing for passwords
 
