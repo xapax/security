@@ -115,6 +115,7 @@
        * [Payloads](payloads.md)
        * [Database](database.md)
        * [Meterpreter](meterpreter.md)
+       * Modules
 * [Physical access to machine](physical_access_to_machine.md)
 * [OSCP](oscp.md)
 * [Literature](littearature.md)
