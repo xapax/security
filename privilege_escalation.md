@@ -3,6 +3,8 @@
 Watch this video!
 http://www.irongeek.com/i.php?page=videos/bsidesaugusta2016/its-too-funky-in-here04-linux-privilege-escalation-for-fun-profit-and-all-around-mischief-jake-williams
 
+http://www.slideshare.net/nullthreat/fund-linux-priv-esc-wprotections
+
 http://netsec.ws/?p=309
 
 ## Linux
