@@ -111,6 +111,7 @@ sudo vi
 And you have shell.
 
 **less**
+From less you can go into vi, and then into a shell
 ```
 sudo less /etc/shadow
 v
