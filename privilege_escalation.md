@@ -39,8 +39,14 @@ Running as root
 
 #### Bad path configuration
 Putting . in the path
+If you put a dot in your path you won't have to write `./binary` to be able to execute it. You will be able to execute any script or binary that is in the current directory.
+
+Why do people/sysadmins do this? Because they are lazy and won't want to write `./`.
+
 This explains it
 https://hackmag.com/security/reach-the-root/
+And here
+http://www.dankalia.com/tutor/01005/0100501004.htm
 
 #### **Cronjob** 
 With privileges running script that are editable for other users. 
@@ -194,6 +200,8 @@ echo $'id\ncat /etc/shadow' > /tmp/.test
 chmod +x /tmp/.test
 sudo tcpdump -ln -i eth0 -w /dev/null -W 1 -G 1 -z /tmp/.test -Z root
 ```
+
+**emacs**
 
 ### Software vulnerabilites
 
