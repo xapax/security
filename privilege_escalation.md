@@ -46,6 +46,20 @@ World/user writable scripts that are invoked by root can me rewritten to escalat
 
 Also check scripts that are called by these scripts.
 
+```
+#World writable files directories
+find / -writable -type d 2>/dev/null
+find / -perm -222 -type d 2>/dev/null
+find / -perm -o w -type d 2>/dev/null
+
+# World executable folder
+find / -perm -o x -type d 2>/dev/null
+
+# World writable and executable folders
+find / \( -perm -o w -perm -o x \) -type d 2>/dev/null
+```
+
+
 #### World/user writable binaries
 
 #### Weak permissions on LD_preload
@@ -70,6 +84,15 @@ Any editor with a setudi/setuig can be abused.
 **nmap**
 SUID on nmap.
 
+Find them
+
+```
+#Find SUID
+find / -perm -u=s -type f 2>/dev/null
+
+#Find GUID
+find / -perm -g=s -type f 2>/dev/null
+```
 
 ### Abusing sudo-rights
 
@@ -88,6 +111,24 @@ uname -a
 /etc/issue*
 /etc/release
 ```
+
+**Tools**
+```
+# Programming tools
+find / -name perl*
+find / -name python*
+find / -name gcc*
+find / -name cc
+
+#Upload tools
+find / -name wget
+find / -name nc*
+find / -name netcat*
+find / -name tftp*
+find / -name ftp
+```
+
+
 
 #### Binary expoits against root owned binaries
 - sudo
