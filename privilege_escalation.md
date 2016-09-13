@@ -238,7 +238,7 @@ find / -name ftp
 
 ## Keylogger
 
-If you have a account for a user. 
+If you have access to an account with sudo-rights but you don't have its password you can install a keylogger to get it.
 
 
 ## Windows
