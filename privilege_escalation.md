@@ -68,6 +68,8 @@ find / \( -perm -o w -perm -o x \) -type d 2>/dev/null
 
 #### Weak permissions on LD_preload
 
+https://blog.maleadt.net/2015/02/25/sudo-escalation/
+
 #### Homemade crappy suid programs
 **SUID files**
 
