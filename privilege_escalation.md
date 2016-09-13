@@ -96,9 +96,19 @@ find / -perm -g=s -type f 2>/dev/null
 
 ### Abusing sudo-rights
 
-If you have a shell that has limited sudo programs you might still be able to use it. Any program that can write or overwrite cna be used. If you have `cp` you can overwrite `/etc/shadow` or `/etc/sudoers`. 
+If you have a shell that has limited sudo programs you might still be able to use it. Any program that can write or overwrite can be used. If you have `cp` you can overwrite `/etc/shadow` or `/etc/sudoers`. 
 **ht**
 The text/binary-editor HT running as sudo
+
+**nano**
+
+**vi**
+With vi it is even easier. Just open vi
+```
+sudo vi
+:shell
+```
+And you have shell.
 
 
 
