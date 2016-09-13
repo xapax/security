@@ -62,7 +62,10 @@ find / -perm -u=s -type f 2>/dev/null
 
 Run ltrace on them to see what they do.
 
-#### Setuid/setuig 
+#### Setuid/setuig
+
+SUID is a bit that you can set on a file. If you run a binary the binary is run as the user who is running it. But if the binary has the SUID-bit it will be run as the owner of that binary. This can be abused.
+Any editor with a setudi/setuig can be abused.
 
 **nmap**
 SUID on nmap.
