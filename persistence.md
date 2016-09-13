@@ -7,6 +7,9 @@ Or, maybe the way to compromise the machine is really complicated or noisy and y
 Read this
 https://gist.github.com/dergachev/7916152
 
+This is a creat introduction
+http://www.dankalia.com/tutor/01005/0100501002.htm
+
 ## Create a new user
 
 The most obvious, but not so subtle way is to just create a new user (if you are root, or someone with that privilege) 
