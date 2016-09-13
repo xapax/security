@@ -15,6 +15,8 @@ http://www.slideshare.net/nullthreat/fund-linux-priv-esc-wprotections
 
 http://netsec.ws/?p=309
 
+https://www.rebootuser.com/?page_id=1721
+
 **Don't use binary exploits if you can avoid it. If you use it it might crash the machine. So binary exploits should be the last resort. Always use a simpler priv-esc if you can. They can also produce a lot of stuff in the sys.log**
 
 ## Linux
@@ -37,6 +39,8 @@ Running as root
 
 #### Bad path configuration
 Putting . in the path
+This explains it
+https://hackmag.com/security/reach-the-root/
 
 #### **Cronjob** 
 With privileges running script that are editable for other users. 
