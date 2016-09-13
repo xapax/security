@@ -118,6 +118,13 @@ v
 :shell
 ```
 
+**more**
+You need to run more on a file that is bigger than your screen.
+```
+sudo more /home/pelle/myfile
+
+```
+
 
 ### Software vulnerabilites
 
