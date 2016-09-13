@@ -113,3 +113,11 @@ https://gist.github.com/dergachev/7916152
 ## Setuid on text-editor
 
 You can setuid on an editor. So if you can easily enter as a www-data, you can easily escalate to root through the editor. 
+
+```
+# Make root the owner of the file
+chown root myBinary
+
+# set the sticky bit/suid
+chmod u+s myBinary
+```
