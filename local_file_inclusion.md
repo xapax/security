@@ -17,3 +17,7 @@ https://highon.coffee/blog/lfi-cheat-sheet/
 
 And this
 http://securityidiots.com/Web-Pentest/LFI
+
+And this:
+
+https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/
