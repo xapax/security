@@ -84,6 +84,7 @@
    * [Pivoting](pivoting.md)
    * [Post-exploit modules metasploit](post-exploit_modules_metasploit.md)
    * [Cover your tracks](clean_up.md)
+   * Privilige escalation on windows
 * Password cracking
    * [Cracking passwords](cracking_passwords.md)
    * [Generate custom wordlist](generate_custom_wordlist.md)
