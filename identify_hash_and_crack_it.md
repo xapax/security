@@ -32,3 +32,10 @@ My hash was a Apache md5, so I will use the corresponding code for it, `1600`
 ```
 hashcat -m 11 -a 0 -o found.txt admin.hash /usr/share/hashcat/rules/rockyou-30000.rule
 ```
+
+## Online
+Crackstation
+Hashkiller
+Google hashes
+Search pastebin.
+
