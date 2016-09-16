@@ -25,6 +25,20 @@ https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/
 ## Sensitive file
 
 ```
+# Usually found in the root of the website
+.htaccess
+```
+
+### SSH
+```
+authorized_keys
+id_rsa
+id_rsa.keystore
+id_rsa.pub
+known_hosts
+```
+### Logs
+```
 /etc/httpd/logs/acces_log 
 /etc/httpd/logs/error_log 
 /var/www/logs/access_log 
@@ -36,9 +50,28 @@ https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/
 /var/log/apache/access.log 
 /var/log/apache2/access.log
 /var/log/access_log
+```
 
+### General files
+
+First you need to check the passwd file to find the users.
+```
 cat /etc/passwd
 cat /etc/group
 cat /etc/shadow
-ls -alh /var/mail/
+/var/mail/
 ```
+
+### User specific files
+
+Found in the home-directory
+
+```
+.bash_history
+.mysql_history
+.my.cnf
+```
+
+## Bruteforcing SSH known_hosts
+
+https://blog.rootshell.be/2010/11/03/bruteforcing-ssh-known_hosts-files/
