@@ -45,7 +45,7 @@
    * [Client-side vulnerabilities](web-services.md)
        * [Attacking the system](lead_to_compromise.md)
            * [Local file inclusion](local_file_inclusion.md)
-           * Remote file inclusion
+           * [Remote file inclusion](remote_file_inclusion.md)
            * [Hidden files and directories](web-scanning.md)
            * [SQL-injections](sql-injections.md)
            * [Bypass image upload](bypass_image_upload.md)
