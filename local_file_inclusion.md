@@ -22,14 +22,16 @@ And this:
 
 https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/
 
-## Sensitive file
+
+## Linux
+### Sensitive file
 
 ```
 # Usually found in the root of the website
 .htaccess
 ```
 
-### SSH
+#### SSH
 ```
 authorized_keys
 id_rsa
@@ -37,7 +39,7 @@ id_rsa.keystore
 id_rsa.pub
 known_hosts
 ```
-### Logs
+#### Logs
 ```
 /etc/httpd/logs/acces_log 
 /etc/httpd/logs/error_log 
@@ -52,7 +54,7 @@ known_hosts
 /var/log/access_log
 ```
 
-### General files
+#### General files
 
 First you need to check the passwd file to find the users.
 ```
@@ -62,7 +64,7 @@ cat /etc/shadow
 /var/mail/
 ```
 
-### User specific files
+#### User specific files
 
 Found in the home-directory
 
@@ -71,6 +73,18 @@ Found in the home-directory
 .mysql_history
 .my.cnf
 ```
+
+#### Proc files
+
+https://blog.netspi.com/directory-traversal-file-inclusion-proc-file-system/
+```
+/proc/sched_debug # Can be used to see what processes the machine is running
+/proc/mounts
+/proc/net/arp
+/proc/net/route
+/proc/net/tcp
+/proc/net/udp
+
 
 ## Bruteforcing SSH known_hosts
 
