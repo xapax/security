@@ -45,11 +45,11 @@
    * [Client-side vulnerabilities](web-services.md)
        * [Attacking the system](lead_to_compromise.md)
            * [Local file inclusion](local_file_inclusion.md)
+           * Remote file inclusion
            * [Hidden files and directories](web-scanning.md)
            * [SQL-injections](sql-injections.md)
            * [Bypass image upload](bypass_image_upload.md)
            * [Exposed Version Control](exposed_version_control.md)
-           * Remote file inclusion
        * Attacking the user
            * [Clickjacking](clickjacking.md)
            * [Broken authentication or session management](broken_authentication_or_session_management.md)
