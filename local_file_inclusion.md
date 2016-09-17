@@ -127,6 +127,8 @@ https://blog.rootshell.be/2010/11/03/bruteforcing-ssh-known_hosts-files/
 
 Under the right circumstances you might be able to get a shell from a LFI
 
+
+### Log files
 There are some requirements. We need to be able to read the apache2 log files, either the success.log or the error.log
 
 So once you have found a LFI vuln you have to inject php-code into the log file and then execute it.
@@ -164,6 +166,13 @@ In the browser:
 ```
 http://192.168.1.102/index.php?/var/log/apache2/access.log&cmd=id
 ```
+
+### /proc/self/environ
+
+We can also inject code into /proc/self/environ through the user-agent
+
+https://www.exploit-db.com/papers/12992/
+
 
 
 https://www.youtube.com/watch?v=ttTVNcPnsJY
