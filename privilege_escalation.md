@@ -209,9 +209,20 @@ Software vulnerabilites can lead to priv-esc, like vulnerabiliteis in:
 - Kernel
 ```
 uname -a
+uname -r
 /etc/issue*
 /etc/release
+cat /proc/version
+
+# RHEL/CentOS/Suse/Fedora
+rpm -q kernel
+
+# Debian
+dpkg --list | grep linux-image
+
 ```
+
+
 
 **Tools**
 ```
