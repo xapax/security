@@ -5,6 +5,7 @@ Local file inclusion means unauthorized access to filesystem.
 With this we can get a hold of many sensitive files
 
 
+
 In most web-services that use a database we can get a hold of the database username and password:
 
 
@@ -108,3 +109,8 @@ https://blog.netspi.com/directory-traversal-file-inclusion-proc-file-system/
 ## Bruteforcing SSH known_hosts
 
 https://blog.rootshell.be/2010/11/03/bruteforcing-ssh-known_hosts-files/
+
+
+## LFI to shell
+
+https://www.youtube.com/watch?v=ttTVNcPnsJY
