@@ -35,6 +35,19 @@ Here is an example of php-code vulnerable to LFI. As you can see we just pass in
      ?>
 ```
 
+## Bypassing execution
+
+So if you an LFI you might have notices that you can read txt-files but not .php files, since they are executed and not read. There is a bypass around that
+
+```
+http://example.com/index.php?page=php://filter/convert.base64-encode/resource=index
+```
+Here you use a php-filter to convert it all into base64. So in return you get the whole page base64 encoded. Now you only need to decode it. Save the base64-text into a file and then run:
+
+```
+base64 -d savefile.php
+```
+
 
 ## Linux
 
