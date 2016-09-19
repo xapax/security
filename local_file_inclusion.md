@@ -48,6 +48,8 @@ index.php?page=../../../../../../var/www/dossierexistant/../../../../../etc/pass
 
 ### Sensitive file
 
+This is the default layout of important apache files.
+https://wiki.apache.org/httpd/DistrosDefaultLayout
 
 #### Web server files
 ```
