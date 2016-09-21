@@ -74,6 +74,26 @@ curl -s http://example.com/gallery.php?page=/etc/passwd -b cookiefile
 This is the default layout of important apache files.
 https://wiki.apache.org/httpd/DistrosDefaultLayout
 
+
+```
+/etc/issue (A message or system identification to be printed before the login prompt.)
+/etc/motd (Message of the day banner content. Can contain information about the system owners or use of the system.)
+/etc/passwd 
+/etc/group 
+/etc/resolv.conf (might be better than /etc/passwd for triggering IDS sigs)
+/etc/shadow
+/home/[USERNAME]/.bash_history or .profile
+~/.bash_history or .profile
+$USER/.bash_history or .profile
+/root/.bash_history or .profile
+```
+Comes from here: https://gist.github.com/sckalath/a8fd4e754a72015aa0b8
+
+/etc/mtab
+/etc/inetd.conf
+/var/log/dmessage
+
+
 #### Web server files
 ```
 # Usually found in the root of the website
@@ -201,3 +221,7 @@ https://www.exploit-db.com/papers/12992/
 
 
 https://www.youtube.com/watch?v=ttTVNcPnsJY
+
+## Windows
+
+https://gist.github.com/sckalath/da1a232f362a700ab459
