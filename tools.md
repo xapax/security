@@ -8,40 +8,66 @@ These are our tools:
 - gdb
 
 This is a great little trick. If you are working a lot with hexadecimal and you want to easily convert it to ascii you can write this in bash
-`echo 6a6548 | xxd -r -p`
-will print out: `jeH`
+```
+echo 6a6548 | xxd -r -p
+```
+will print out: **jeH**
 xxd is a program that makes ascii into hexdumps. with the -r we can reverse it. 
 
 ## Objdump
 Objdump is a program that outputs the assembly code of a compiled program. It ca be executed like this.
-example: `objdump -D myProgram`
-example: `objdump -M myProgram` - This is to read the assembly in intel-syntax
+example: 
+```
+objdump -D myProgram
+objdump -M myProgram ; This is to read the assembly in intel-syntax
+```
 
-## GDB? GNU Debugger
+## GDB - GNU Debugger
 
 
-Useful commands:
 ###Setting breakpoints
 Sometimes you want the debugger to stop at a certain point in the program, so that you can investigate memory and stuff. We can set these breakpoints with the following command:
-`break main` - set a break at the main-function
-`break 10` - set a break at that line. I think it is set before the line is executed.
+
+Set a break at the main-function
+```
+break main
+```
+
+Set a break at that line. I think it is set before the line is executed.
+```
+break 10
+```
 
 **Show breakpoints**
 If you want to know which breakpoints you have set you can run:
-`info breakpoint`
-`info break`
-`info b`
+```
+info breakpoint
+info break
+info b
+```
 
 **Remove breakpoints** 
-`clear 9` - will delete all breakpoints on line 9
+Will delete all breakpoints on line 9
+```
+clear 9
+``` 
 
-`run` - Runs the program
- 
-`list` - show code if you have compile it with the -g flag
-`list 10` - will show the code around line 10. five lines before, and five lines after.
-`list 1,20` - will list all lines between the numbers.
+Run the program
+```
+run
+```
 
-`disassemble main` - this shows the code in assembly. It is pretty much the same as running objdump.
+Show code
+```
+list ; show code if you have compile it with the -g flag
+list 10` ; will show the code around line 10. five lines before, and five lines after.
+list 1,20 ; will list all lines between the numbers.
+```
+
+This shows the code in assembly. It is pretty much the same as running objdump.
+```
+disassemble main
+```
 
 `info register eip` - shows info about instruct pointer. this can be written as `i r eip`. On 64bit machines it is called `rip`instead of `eip`. It basically shows to what address eip is pointing at. So the output might be something like this:
 `(gdb) i r rip
