@@ -69,15 +69,24 @@ This shows the code in assembly. It is pretty much the same as running objdump.
 disassemble main
 ```
 
-`info register eip` - shows info about instruct pointer. this can be written as `i r eip`. On 64bit machines it is called `rip`instead of `eip`. It basically shows to what address eip is pointing at. So the output might be something like this:
-`(gdb) i r rip
+Show info about instruct pointer
+```
+info register eip
+i r eip
+```
+On 64bit machines it is called `rip`instead of `eip`. It basically shows to what address eip is pointing at. So the output might be something like this:
+```
+(gdb) i r rip
 rip            0x4004aa	0x4004aa <main+4>
-`
+```
 Which means that rip at this moment is pointing at 0x4004aa. Which means that this is going to be the next instruct that gets executed.
 
-The strucutre is like this:
-`examine/[format] address`
-`x` - examine. If you at any point want to examine the memory, of a varaible or funciton or something. You can use `x`.
+The structure is like this:
+```
+examine/[format] address
+x/
+```
+
 Format is how you want to display the memory. Here are the following formats:
 ```
     o - octal
@@ -93,16 +102,27 @@ Format is how you want to display the memory. Here are the following formats:
 ```
 
 Example:
-`x/s myVariable` - This means: examine myVariable, and output the content in that memory in the form of a string.
-Now this does not work for values that does not have a memory address. It will just give you `0x16:	Cannot access memory at address 0x16`
-That is because the varible is not a pointer (it does not point to an memory-address), but instead it is a hardcoded value.
+```
+x/s myVariable
+```
+This means: examine myVariable, and output the content in that memory in the form of a string.
+Now this does not work for values that does not have a memory address. It will just give you `
+```
+0x16:	Cannot access memory at address 0x16
+```
+That is because the variable is not a pointer (it does not point to an memory-address), but instead it is a hardcoded value.
 
-`x/i $rip` examine/info instruction pointer register. This command can be used to examine a specifc part of memory. In this example it was the instruct pointer, but it can also be a specific address in memory. 
+```
+x/i $rip
+```
+Examine/info instruction pointer register. This command can be used to examine a specific part of memory. In this example it was the instruct pointer, but it can also be a specific address in memory. 
 
 **Python**
 Python can be quite useful go generate strings as input. Of course this can be done with a lot of other languages. so it would work like this.
-`./myProgram $(python -c 'print "\x41" * 30')`
-This is something I learned a lot earlier. Basically, the `$(python)` creates a shell within our command. And in that shell we run the normal python command. The `-c` flag tells python that we are going to run a command instead of opening up the interactive shell. You can test this in the terminal like this:
+```
+./myProgram $(python -c 'print "\x41" * 30')
+```
+Basically, the `$(python)` creates a shell within our command. And in that shell we run the normal python command. The `-c` flag tells python that we are going to run a command instead of opening up the interactive shell. You can test this in the terminal like this:
 ```
 $ python -c 'print "hello" * 100'
 hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello
@@ -111,5 +131,7 @@ hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello
 
 #### GCC
 Compile the program in debugger mode, so that the debugger has access to the code.
-`gcc -g program.c`
+```
+gcc -g program.c
+```
 
