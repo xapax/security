@@ -117,6 +117,14 @@ x/i $rip
 ```
 Examine/info instruction pointer register. This command can be used to examine a specific part of memory. In this example it was the instruct pointer, but it can also be a specific address in memory. 
 
+
+### Show all functions
+
+
+```
+info funcions
+```
+
 **Python**
 Python can be quite useful go generate strings as input. Of course this can be done with a lot of other languages. so it would work like this.
 ```
