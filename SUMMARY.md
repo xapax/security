@@ -18,6 +18,7 @@
 * [Recon/information gathering phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
        * [Email Harvesting](email_harvesting.md)
+       * Users
    * [Active information gathering](active_information_gathering.md)
        * [Port Scanning](port_scanning.md)
        * [Find Subdomains](find_subdomains.md)
