@@ -96,7 +96,7 @@
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
    * [Basics of assembly](binary_exploitation.md)
-   * Buffer overflow (BOF)
+   * [Buffer overflow (BOF)](buffer_overflow_bof.md)
    * [Vulnerabilities](vulnerabilities.md)
    * [Exploit examples and tutorials](exploit_examples_and_tutorials.md)
    * [Setuid c-code](setuid_c-code.md)
