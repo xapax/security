@@ -5,6 +5,7 @@
 1. Investigate the file
 ```
 file
+strings
 ```
 
 2. Test it out - what does the program do?
