@@ -19,7 +19,9 @@ Objdump is a program that outputs the assembly code of a compiled program. It ca
 example: 
 ```
 objdump -D myProgram
-objdump -M myProgram ; This is to read the assembly in intel-syntax
+objdump -M intel -d program_name ;This is to read the assembly in intel-syntax
+
+
 ```
 
 ## GDB - GNU Debugger
