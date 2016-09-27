@@ -19,8 +19,8 @@ info functions
 4. Look at the assembly of a function
 
 ```
-info main
-info otherfunction
+disass main
+disass otherfunction
 ```
 
 5. Look for the flow of the program. Look for cmp
