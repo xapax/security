@@ -24,3 +24,12 @@ disass otherfunction
 ```
 
 5. Look for the flow of the program. Look for cmp
+
+6. Set up breakpoints with hooks
+
+```
+define hook-stop
+info registers  ;show the registers
+x/24xw $esp  ;show the stack
+x/2i $eip  ;show the new two instructions
+end
