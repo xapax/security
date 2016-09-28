@@ -33,3 +33,11 @@ info registers  ;show the registers
 x/24xw $esp  ;show the stack
 x/2i $eip  ;show the new two instructions
 end
+```
+
+7. Step through the whole program. Or at the breakpoints
+
+```
+si ;steps one forward, but follows functions
+ni ;does not follow functions
+```
