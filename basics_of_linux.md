@@ -52,7 +52,10 @@ Locate is really fast because it relies on an internal database. So in order to 
 ```
 updatedb
 ```
-
+Then you can easilty find stuff using 
+```
+locate filename
+```
  
 ## 2. Text-fu
  - https://linuxjourney.com/lesson/stderr-standard-error-redirect
