@@ -483,7 +483,8 @@ systemctl enable apache2
 
 ```
 
-
+### rcconf
+This is a tool to control services more easily, what is running upon boot and so on.
 
 
 ## 10. Boot the system
