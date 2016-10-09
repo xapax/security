@@ -133,6 +133,11 @@ Transform all letter into capital letters
 tr "[:lower:]" "[:upper:]" < file1 > file2 
 ```
 
+Example
+```
+cat file.txt | tr "." "_"
+```
+Remove all dots and replace them with underscore.
 http://www.thegeekstuff.com/2012/12/linux-tr-command/
 
 ## Vim
