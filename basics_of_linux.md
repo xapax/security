@@ -507,6 +507,7 @@ Flags
 -a # All
 -n # show numeric addresses
 -p # show port
+-t # tcp
 ```
 
 
