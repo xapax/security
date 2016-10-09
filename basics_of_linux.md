@@ -477,6 +477,13 @@ Start ssh
 systemctl start ssh
 ```
 Make ssh start upon boot
+```
+systemctl enable ssh
+systemctl enable apache2
+
+```
+
+
 
 
 ## 10. Boot the system
