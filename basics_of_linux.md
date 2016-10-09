@@ -134,10 +134,16 @@ tr "[:lower:]" "[:upper:]" < file1 > file2
 ```
 
 Example
+Remove character
 ```
 cat file.txt | tr "." "_"
 ```
 Remove all dots and replace them with underscore.
+
+Example
+```
+cat file.txt | tr -d "."
+```
 http://www.thegeekstuff.com/2012/12/linux-tr-command/
 
 ## Vim
