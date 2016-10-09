@@ -493,6 +493,20 @@ Make ssh start upon boot
 
 ## 16. Network basics
 
+Find out what services are listening for connection on your machine
+Flags
+```
+-a # All
+-n # show numeric addresses
+-p # show port
+```
+
+
+```
+netstat -anp
+```
+
+
 ## 17. Subnetting
 
 ## 18. Routing
