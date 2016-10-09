@@ -46,6 +46,13 @@ This must be by far one of the most useful programs. But I tend to always forget
  sudo -l
 ```
  
+## Finding files
+There are three ways to find files on linux. Locate, find and which.
+Locate is really fast because it relies on an internal database. So in order to have it updated you need to run
+```
+updatedb
+```
+
  
 ## 2. Text-fu
  - https://linuxjourney.com/lesson/stderr-standard-error-redirect
