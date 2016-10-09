@@ -48,6 +48,8 @@ This must be by far one of the most useful programs. But I tend to always forget
  
 ## Finding files
 There are three ways to find files on linux. Locate, find and which.
+
+### Locate
 Locate is really fast because it relies on an internal database. So in order to have it updated you need to run
 ```
 updatedb
