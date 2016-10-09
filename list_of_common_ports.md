@@ -111,6 +111,7 @@ Exploits can be found in metasploit25 can be quite useful
 And shellshock
 https://www.exploit-db.com/exploits/34896/
 
+## Port 110 - Pop3
 
 ## Port 139 - Samba shares
 
