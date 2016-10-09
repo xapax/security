@@ -58,6 +58,20 @@ Then you can easilty find stuff using
 ```
 locate filename
 ```
+
+### Which
+Which searched the directories that are defined in your $PATH variable.
+
+### Find
+Find is slower but a lot more thourough. You can search for files recursivly and with regex and a lot of other features.
+
+
+```
+find / -name file 2>/dev/null
+
+# This will send all permissions denied outputs to dev/null.
+find / -name file 2>/dev/null 2>/dev/null
+```
  
 ## 2. Text-fu
  - https://linuxjourney.com/lesson/stderr-standard-error-redirect
