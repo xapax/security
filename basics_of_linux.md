@@ -470,6 +470,8 @@ Knowing how to mount and unmount might be useful if you want to get access to a 
 
 ## Controlling services
 
+### Systemctl
+Systemctl can be used to enable and disable various services on your linux machine.
 Start ssh
 ```
 systemctl start ssh
