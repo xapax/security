@@ -470,9 +470,11 @@ Knowing how to mount and unmount might be useful if you want to get access to a 
 
 ## Controlling services
 
+Start ssh
 ```
 systemctl start ssh
 ```
+Make ssh start upon boot
 
 
 ## 10. Boot the system
