@@ -18,8 +18,11 @@ So if you just start capturing all traffic on a network you are soon going to ge
 Click on the fourth icon from the left. If you hover over it it says `Capture options`
 
 Some useful might be.
-This will only capture packets where this host is involved.
-`host 192.168.1.102`
+From a specific host and with a specific port:
+```
+host 192.168.1.102
+port 110
+```
 
 
 ### Display filter
