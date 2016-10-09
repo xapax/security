@@ -475,7 +475,14 @@ Systemctl can be used to enable and disable various services on your linux machi
 Start ssh
 ```
 systemctl start ssh
+systemctl stop ssh
 ```
+
+You can verify that the service is listening for connection by running network status.
+```
+netstat -apnt
+```
+
 Make ssh start upon boot
 ```
 systemctl enable ssh
@@ -512,7 +519,7 @@ Flags
 
 
 ```
-netstat -anp
+netstat -anpt
 ```
 
 
