@@ -174,14 +174,20 @@ Now we want to print out the fourth column of that file, we can just pipe this t
 
 ```
 awk '/172.16.40.10.81/ {print $4}' error.log
+# Another example
+awk '{print $2,$5;}' error.txt
+This prints columns 2 and 5.
 ```
 
-#### Begin statements
+#### BEGIN and END statements
 So if you are manipulating some text you might want to start the output with some info about the columns or something like that. To do that we can use the BEGIN-keyword.
 
 ```
 awk 'BEGIN {printf "IP-address \tPort\n"} /nop/ {print $3}' test.txt | head
+awk 'BEGIN{printf "IP-address \tPort\n"} /nop/ {print $3} END {printf "End of the file\n"}' test.txt | tail
 ```
+
+
 Here we are printing IP-address    PORT to the first line of the file.
 
 ## Vim
