@@ -19,7 +19,7 @@
    * [Passive information gatherig](passive_information_gatherig.md)
        * [Email Harvesting](email_harvesting.md)
        * [Users](users.md)
-       * Google hacking
+       * [Google hacking](google_hacking.md)
    * [Active information gathering](active_information_gathering.md)
        * [Port Scanning](port_scanning.md)
        * [Find Subdomains](find_subdomains.md)
