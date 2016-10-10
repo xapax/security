@@ -179,6 +179,12 @@ awk '{print $2,$5;}' error.txt
 This prints columns 2 and 5.
 ```
 
+#### Custom delimiter
+We can use the -F flag to add a custom delimiter.
+```
+awk -F ':' '{print $1}' test.txt
+```
+
 #### BEGIN and END statements
 So if you are manipulating some text you might want to start the output with some info about the columns or something like that. To do that we can use the BEGIN-keyword.
 
