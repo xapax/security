@@ -155,12 +155,21 @@ This is the basic structure of an awk command
 ```
 awk '/search_pattern/ { action_to_take_on_matches; another_action; }' file_to_parse
 ```
-
+The search pattern takes regex.
 Do can exclude the search portion or the action portion. 
 
+This just prints every line of the file.
 ```
 awk '{print}' filename
 ```
+
+#### Filtering capabilites
+
+Filtering out specific ip-address:
+```
+awk '/172.16.40.10.81/' error.log
+```
+
 
 ## Vim
 
