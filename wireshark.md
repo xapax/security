@@ -27,7 +27,7 @@ port 110
 
 ### Display filter
 
-Show only packets used by this IP-address.
+Show only packets used by this IP-address, or to a specific port
 ```
 ip.addr == 192.168.1.102
 tcp.port eq 25
