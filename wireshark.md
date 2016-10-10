@@ -28,7 +28,10 @@ port 110
 ### Display filter
 
 Show only packets used by this IP-address.
-`ip.addr == 192.168.1.102`
+```
+ip.addr == 192.168.1.102
+tcp.port eq 25
+```
 
 ### Automatically resolve ip-addresses
 
