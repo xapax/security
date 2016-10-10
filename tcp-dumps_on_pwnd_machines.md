@@ -40,10 +40,14 @@ This will not get any SSL-encrypted traffic.
 
 ```
 sudo tcpdump -i wlan0 src port 80 or dst port 80 -w port-80-recording.pcap
-```
-```
 sudo tcpdump -i eth0 src port 80 or dst port 80 -w port-80-recording.pcap
 ```
+
+Print the traffick in hex with ascii interpretation.
+```
+tcpdump -nX -r file.pcap
+```
+
 
 ## Sniffing for passwords
 
