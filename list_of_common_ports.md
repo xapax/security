@@ -113,6 +113,12 @@ https://www.exploit-db.com/exploits/34896/
 
 ## Port 110 - Pop3
 
+```
+telnet 192.168.1.105 110
+USER pelle@192.168.1.105
+PASS admin
+```
+
 ## Port 139 - Samba shares
 
 Samba is a service that enables the user to share files with other machines. It has interoperability, which means that it can share stuff between unix and windows systems. A windows user will just see an icon for a folder that contains some files. Even though the folder and files really exists on a unix-server.
