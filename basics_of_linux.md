@@ -146,6 +146,22 @@ cat file.txt | tr -d "."
 ```
 http://www.thegeekstuff.com/2012/12/linux-tr-command/
 
+
+### AWK
+So awk is an advanced tool for editing text-files. It is its own programming language to it can become quite complex. Awk iterates over the whole file line by line. 
+
+This is the basic structure of an awk command
+
+```
+awk '/search_pattern/ { action_to_take_on_matches; another_action; }' file_to_parse
+```
+
+Do can exclude the search portion or the action portion. 
+
+```
+awk '{print}' filename
+```
+
 ## Vim
 
 ### Search
