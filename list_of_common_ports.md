@@ -6,7 +6,9 @@ There are too many ports and services to write about all of them here. But still
 
 You can find out the version of the SSH either but scanning it with nmap or by connecting with it using `nc`
 
-`nc 192.168.1.10 22`
+```
+nc 192.168.1.10 22
+```
 
 It returnes something like this:
 SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu1
@@ -167,6 +169,7 @@ It can be a bit buggy sometimes so run it several times to make sure it found al
 
 Enum4linux can be used to enumerate windows and linux machines with smb-shares
 
+The do all option
 ```
 enum4linux -a 192.168.1.120
 ```
