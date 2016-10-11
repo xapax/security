@@ -67,6 +67,7 @@ nmap -vvv -Pn -A -iL listOfIP.txt
 If we do not want to create a connection we can add the `-sS` flag
 
 #### Output scan to a textfile
+
 Not all output works with grepable format. For example NSE does not work with grepable. So you might want to use xml instead.
 
 ```
@@ -78,6 +79,7 @@ Not all output works with grepable format. For example NSE does not work with gr
 
 # To xml
 -oX nameOfFile
+
 ```
 
 #### UDP scan
