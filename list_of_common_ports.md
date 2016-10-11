@@ -146,7 +146,7 @@ nmap -p 139,445 192.168.1.1/24
 ```
 There are several NSE scripts that can be useful, for example:
 
-Find them here
+Find them here in kali
 
 ```
 ls -l /usr/share/nmap/scripts/smb*
