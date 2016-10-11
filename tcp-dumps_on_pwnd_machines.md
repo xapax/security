@@ -30,7 +30,8 @@ tcpdump - this command will output all network traffic straight to the terminal.
 **-vvv** - Verbose. Depending on how verbose you want the output. 
 
 ### Useful commands
-
+Lots of good stuff here
+http://www.rationallyparanoid.com/articles/tcpdump.html
 
 ```
 tcpdump -i wlan0 -vvv -A | grep "GET"
