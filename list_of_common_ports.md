@@ -146,6 +146,12 @@ nmap -p 139,445 192.168.1.1/24
 ```
 There are several NSE scripts that can be useful, for example:
 
+Find them here
+
+```
+ls -l /usr/share/nmap/scripts/smb*
+```
+
 ```
 nmap -p 139,445 192.168.1.1/24 --script smb-enum-shares.nse smb-os-discovery.nse
 ```
@@ -164,6 +170,8 @@ Enum4linux can be used to enumerate windows and linux machines with smb-shares
 ```
 enum4linux -a 192.168.1.120
 ```
+
+For info about it ere: https://labs.portcullis.co.uk/tools/enum4linux/
 
 ## Port 443 - HTTPS
 
