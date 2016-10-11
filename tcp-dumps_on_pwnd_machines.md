@@ -48,6 +48,12 @@ Print the traffick in hex with ascii interpretation.
 tcpdump -nX -r file.pcap
 ```
 
+Only record tcp-traffic
+
+```
+tcpdump tcp -w file.pcap
+```
+
 
 ## Sniffing for passwords
 
