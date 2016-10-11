@@ -157,6 +157,14 @@ nbtscan -r 192.168.1.1/24
 ```
 It can be a bit buggy sometimes so run it several times to make sure it found all users.
 
+#### Enum4linux
+
+Enum4linux can be used to enumerate windows and linux machines with smb-shares
+
+```
+enum4linux -a 192.168.1.120
+```
+
 ## Port 443 - HTTPS
 
 Okay this is only here as a reminder to always check for SSL-vulnerabilities such as heartbleed. Search for heartbleed in this book to find out how to exploit it.
