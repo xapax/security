@@ -583,6 +583,15 @@ Flags
 netstat -anpt
 ```
 
+To easily check out what process is using lots of bandwidth you can use nethogs.
+
+```
+sudo apt-get install nethogs
+nethogs
+```
+
+Or you can use tcpdump
+
 
 ## 17. Subnetting
 
