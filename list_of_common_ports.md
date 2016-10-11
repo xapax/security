@@ -119,10 +119,11 @@ USER pelle@192.168.1.105
 PASS admin
 ```
 
-## Port 139 - Samba shares
+## Port 139 and 445- SMB/Samba shares
 
 Samba is a service that enables the user to share files with other machines. It has interoperability, which means that it can share stuff between unix and windows systems. A windows user will just see an icon for a folder that contains some files. Even though the folder and files really exists on a unix-server.
 
+### Connecting
 For linux-users you can log in to the smb-share using smbclient, like this:
 
 ```
@@ -135,6 +136,26 @@ So smb, for a linux-user, is pretty much like and ftp or a nfs.
 
 Here is a good guide for how to configure samba:
 https://help.ubuntu.com/community/How%20to%20Create%20a%20Network%20Share%20Via%20Samba%20Via%20CLI%20(Command-line%20interface/Linux%20Terminal)%20-%20Uncomplicated,%20Simple%20and%20Brief%20Way!
+
+
+### Scanning with nmap
+Scanning for smb with Nmap
+
+```
+nmap -p 139,445 192.168.1.1/24 
+```
+There are several NSE scripts that can be useful, for example:
+
+```
+nmap -p 139,445 192.168.1.1/24 --script smb-enum-shares.nse smb-os-discovery.nse
+```
+
+### nbtscan
+
+```
+nbtscan -r 192.168.1.1/24
+```
+It can be a bit buggy sometimes so run it several times to make sure it found all users.
 
 ## Port 443 - HTTPS
 
