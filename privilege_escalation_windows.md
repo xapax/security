@@ -31,10 +31,15 @@ http://toshellandback.com/2015/11/24/ms-priv-esc/
 
 ### Group Policy Preferences (GPP)
 
+Most recommended article
+http://www.fuzzysecurity.com/tutorials/16.html
+
 https://www.offensive-security.com/metasploit-unleashed/privilege-escalation/
 
-http://www.fuzzysecurity.com/tutorials/16.html
+
 
 https://github.com/gentilkiwi/mimikatz
 
 http://bernardodamele.blogspot.cl/2011/12/dump-windows-password-hashes.html
+
+https://www.youtube.com/watch?v=kMG8IsCohHA&feature=youtu.be
