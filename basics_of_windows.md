@@ -100,3 +100,6 @@ Equvialent to traceroute
  Shreds the whole machine
  ciper /w:C:\
  ```
+ 
+ **netstat -an**
+ 
