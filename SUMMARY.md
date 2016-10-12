@@ -84,6 +84,7 @@
        * Internal Enumeration - Windows
        * [Privilege escalation windows](privilege_escalation_windows.md)
        * [Examples](examples.md)
+       * Privilege Escalation - Linux
    * [Loot with meterpreter](loot.md)
    * [Persistence](persistence.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
