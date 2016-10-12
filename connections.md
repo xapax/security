@@ -102,6 +102,7 @@ Read more about parallellism here: http://chriskiehl.com/article/parallelism-in-
 
 ## Connecting to SMTP
 
+A crappy script to connect to a smtp-server and if you are allowed to test for users with VRFY it goes ahead and test for the users that you input from a file.
 One very important thing to note here, that had me stuck for quite a while is that you need to send the query strings in raw-format
 
 The `\r` here is fundamental!!
