@@ -80,7 +80,7 @@
    * [Spawning shells](spawning_shells.md)
    * [Meterpreter for post-exploitation](getting_meterpreter_shell.md)
    * [Privilege Escalation](privilege_escalation.md)
-       * [Internal Enumeration](internal_enumeration.md)
+       * [Internal Enumeration - Linux](internal_enumeration.md)
        * [Privilege escalation windows](privilege_escalation_windows.md)
        * [Examples](examples.md)
    * [Loot with meterpreter](loot.md)
