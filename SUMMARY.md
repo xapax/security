@@ -83,7 +83,7 @@
        * [Internal Enumeration - Linux](internal_enumeration.md)
        * [Internal Enumeration - Windows](internal_enumeration_-_windows.md)
        * [Privilege Escalation - Linux](privilege_escalation_-_linux.md)
-       * [Privilege escalation windows](privilege_escalation_windows.md)
+       * [Privilege Escalation - Windows](privilege_escalation_windows.md)
        * [Examples](examples.md)
    * [Loot with meterpreter](loot.md)
    * [Persistence](persistence.md)
