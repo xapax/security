@@ -43,3 +43,5 @@ https://github.com/gentilkiwi/mimikatz
 http://bernardodamele.blogspot.cl/2011/12/dump-windows-password-hashes.html
 
 https://www.youtube.com/watch?v=kMG8IsCohHA&feature=youtu.be
+
+https://www.youtube.com/watch?v=PC_iMqiuIRQ
