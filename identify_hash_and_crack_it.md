@@ -39,6 +39,7 @@ hashcat -m 11 -a 0 -o found.txt admin.hash /usr/share/hashcat/rules/rockyou-3000
 
 You can use findmyhash 
 
+Here is an example of how to use it:
 ```
 findmyhash LM -h 6c3d4c343f999422aad3b435b51404ee:bcd477bfdb45435a34c6a38403ca4364
 ```
