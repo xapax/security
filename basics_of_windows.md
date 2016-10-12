@@ -36,33 +36,67 @@ http://superuser.com/questions/504136/root-vs-administrator-vs-system
 
 SAM key
 
-## Show environmental variables 
-
-```
-set
-```
-
-### Show options for commands
-
-The "man"-pages in windows is simply:
-```
-help dir
-```
-
-### Show hidden files
-
-```
-dir /A
-```
-
-### Print out file content, like cat
-
-```
-type file.txt
-```
 
 ## Xampp default folder
 
 ```
 :C\xampp/htdocs
 ```
+
+
+## Useful commands
+
+
+**Show environmental variables**
+
+```
+set
+```
+
+**Show options for commands**
+
+The "man"-pages in windows is simply:
+```
+help dir
+```
+
+**Show hidden files**
+
+```
+dir /A
+```
+
+**Print out file content, like cat**
+
+```
+type file.txt
+```
+
+**ipconfig**
+
+Show ip-address and other network information
+
+**ping**
+
+well, it pings
+
+**tracert**
+
+Equvialent to traceroute
+
+**shutdown**
+
+```
+ # Shutdown now
+ shutdown /s /t 0
+ 
+ # Restart
+ shutdown /r /t 0
+ ```
+ 
+ **ciper - Clear data/shred**
+ 
+ ```
+ Shreds the whole machine
+ ciper /w:C:\
+ ```
