@@ -1,6 +1,12 @@
 # Privilege escalation windows
 
 
+https://www.reddit.com/r/AskNetsec/comments/3ujqu3/best_windows_privilege_escalation_resources/
+"Enumeration.
+You don't always need to run some exploit to get higher privileges, just convince some service that is running as admin or SYSTEM to open nc.exe for you. Web services are often misconfigured and running as admin or system.
+Also look at modifying a startup service to run nc.exe or your malicious binary. replace UPnP with your backdoor.
+Source: OSCP and OSCE; Never used exploits to get privilege escalation on the windows machines in the lab or exam"
+
 ## Metasploit - The easy way
 
 So if you have a metasploit meterpreter session going you can run **getsystem**.
