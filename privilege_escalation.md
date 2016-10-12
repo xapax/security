@@ -252,7 +252,6 @@ find / -name ftp
 If you have access to an account with sudo-rights but you don't have its password you can install a keylogger to get it.
 
 
-## Windows
 
 ## References
 https://www.trustwave.com/Resources/SpiderLabs-Blog/My-5-Top-Ways-to-Escalate-Privileges/
