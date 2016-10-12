@@ -81,9 +81,9 @@
    * [Meterpreter for post-exploitation](getting_meterpreter_shell.md)
    * [Privilege Escalation](privilege_escalation.md)
        * [Internal Enumeration - Linux](internal_enumeration.md)
+       * Internal Enumeration - Windows
        * [Privilege escalation windows](privilege_escalation_windows.md)
        * [Examples](examples.md)
-       * Internal Enumeration - Windows
    * [Loot with meterpreter](loot.md)
    * [Persistence](persistence.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
