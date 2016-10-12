@@ -7,6 +7,8 @@ You don't always need to run some exploit to get higher privileges, just convinc
 Also look at modifying a startup service to run nc.exe or your malicious binary. replace UPnP with your backdoor.
 Source: OSCP and OSCE; Never used exploits to get privilege escalation on the windows machines in the lab or exam"
 
+Look for vulnerable services that may be running as system
+
 ## Metasploit - The easy way
 
 So if you have a metasploit meterpreter session going you can run **getsystem**.
@@ -51,3 +53,9 @@ http://bernardodamele.blogspot.cl/2011/12/dump-windows-password-hashes.html
 https://www.youtube.com/watch?v=kMG8IsCohHA&feature=youtu.be
 
 https://www.youtube.com/watch?v=PC_iMqiuIRQ
+
+http://www.harmj0y.net/blog/powershell/powerup-a-usage-guide/
+
+https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerUp
+
+http://pwnwiki.io/#!privesc/windows/index.md
