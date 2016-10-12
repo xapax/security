@@ -13,6 +13,12 @@ hash-identifier
 ```
 And then just input the hash
 
+Or use **hashid**
+
+```
+hashid
+```
+
 ## Cracking the hash
 
 Okay so now we know what hash it is, let's get cracking. We are going to use hashcat.
