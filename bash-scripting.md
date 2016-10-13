@@ -63,8 +63,14 @@ $1
 ```
 This is the first command line argument.
 
-## Daemonize an execution
+## Deamonize an execution
+
+If you do a ping-sweep with host the command will take about a second to complete. ANd if you run that against 255 hosts I will take a long time to complete. To avoid this we can just deamonize every execution to ake it faster
 
 ```
+#!/bin/bash
 
+for ip in $(cat ips.txt); do
+ping -c 1 $ip &
+done
 ```
