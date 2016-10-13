@@ -182,6 +182,19 @@ Simple Network Management Protocol
 
 SNMP protocols 1,2 and 2c does not encrypt its traffic. So it can be intercepted to steal credencials.
 
+SNMP is used to manage devices on a network. It has some funny terminology. For example, instead of using the word password the word community is used instead. But it is kind of the same thing. A common community-string/password is public.
+
+Common community strings
+```
+public
+private
+community
+```
+
+### MIB - Management information base
+
+SNMP stores all teh data in the Management Information Base.
+
 ### Scan for open ports - Nmap
 Since SNMP is using UDP we have to use the `-sU` flag.
 ```
