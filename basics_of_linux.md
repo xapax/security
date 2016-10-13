@@ -570,7 +570,44 @@ This is a tool to control services more easily, what is running upon boot and so
 ## 16. Network basics
 
 
-### Find outgoing and incoming connections
+### Netstat - Find outgoing and incoming connections
+
+Netstat is a multiplatform tool. So it works on both mac, windows and linux.
+
+
+
+```
+$ netstat -apaA inet
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 jobbdator:domain        *:*                     LISTEN      -               
+tcp        0      0 localhost:ipp           *:*                     LISTEN      -               
+tcp        0      0 localhost:27017         *:*                     LISTEN      -               
+tcp        0      0 localhost:mysql         *:*                     LISTEN      -               
+tcp        0      0 192.168.0.15:44013      ec2-54-85-27-14.c:https ESTABLISHED 6604/slack --disabl
+tcp        0      0 192.168.0.15:51448      ec2-50-16-193-3.c:https ESTABLISHED 3120/chrome     
+tcp        0      0 192.168.0.15:43476      104.27.152.203:https    TIME_WAIT   -               
+tcp        0      0 192.168.0.15:59380      149.154.175.50:https    ESTABLISHED 5068/Telegram   
+tcp        0      0 192.168.0.15:53840      149.154.175.50:http     ESTABLISHED 5068/Telegram   
+tcp        0      0 192.168.0.15:47158      176.32.99.76:https      ESTABLISHED 3120/chrome     
+tcp        0      0 192.168.0.15:47161      176.32.99.76:https      ESTABLISHED 3120/chrome     
+tcp        0      0 localhost:27017         localhost:44196         ESTABLISHED -               
+tcp        0      0 192.168.0.15:46910      a104-114-242-25.d:https ESTABLISHED 3120/chrome     
+tcp        0      0 localhost:44196         localhost:27017         ESTABLISHED 6903/node       
+tcp        0      0 192.168.0.15:36280      cb-in-f101.1e100.:https ESTABLISHED 3120/chrome     
+tcp        0      0 192.168.0.15:47160      176.32.99.76:https      ESTABLISHED 3120/chrome     
+tcp        0      1 192.168.0.15:59285      149.154.175.50:https    LAST_ACK    -               
+udp        0      0 *:35733                 *:*                                 -               
+udp        0      0 jobbdator:domain        *:*                                 -               
+udp        0      0 *:bootpc                *:*                                 -               
+udp        0      0 *:33158                 *:*                                 -               
+udp        0      0 *:ipp                   *:*                                 -               
+udp        0      0 *:mdns                  *:*                                 3120/chrome     
+udp        0      0 *:mdns                  *:*                                 3120/chrome     
+udp        0      0 *:mdns                  *:*                                 -               
+udp        0      0 192.168.0.15:55065      ce-in-f189.1e100.:https ESTABLISHED 3120/chrome     
+```
+
+
 Find out what services are listening for connection on your machine
 Flags
 ```
