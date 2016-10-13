@@ -192,6 +192,10 @@ nmap -iL ips.txt -p 161,162 -sU --open -vvv -oG snmp-nmap.txt
 
 I have had more success using onesixtyone than using nmap. So better use both.
 
+```
+
+```
+
 ## Port 443 - HTTPS
 
 Okay this is only here as a reminder to always check for SSL-vulnerabilities such as heartbleed. Search for heartbleed in this book to find out how to exploit it.
