@@ -597,11 +597,15 @@ Or you can use tcpdump
 
 ### Troubleshooting
 
+#### Have you tried turning it on and off?
+
 I have had problems with the network-adapter not starting or something like that, on Ubuntu. You can try to restart the network manager if this happens:
 
 ```bash
 sudo service network-manager restart
 ```
+
+#### Magical rfkill
 
 If for some reason the wifi is blocked you can unblock it (or block it) with rfkill.
 
@@ -615,7 +619,8 @@ $ rfkill list
 	Hard blocked: no
 ```
 
-TO block the **phy0** from the example above you do:
+To block or unblock the **phy0** from the example above you do:
+
 ```
 # Block
 rfkill block 0
