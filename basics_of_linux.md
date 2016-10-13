@@ -607,7 +607,7 @@ udp        0      0 *:mdns                  *:*                                 
 udp        0      0 192.168.0.15:55065      ce-in-f189.1e100.:https ESTABLISHED 3120/chrome     
 ```
 
-A few interesting things to observe here is that my machine is using anyport over 1024 to connect to the outside. So it is not like just because we communicate with https and connect to port 443 that we use that port on our machine. On our machine it can be any port (over 1024) and usually any port over 10000.
+A few interesting things to observe here is that my machine is using any port over 1024 to connect to the outside. So it is not like just because we communicate with https and connect to port 443 that we use that port on our machine. On our machine it can be any port (over 1024) and usually any port over 10000.
 
 Find out what services are listening for connection on your machine
 Flags
