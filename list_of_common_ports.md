@@ -176,6 +176,18 @@ enum4linux -a 192.168.1.120
 
 For info about it ere: https://labs.portcullis.co.uk/tools/enum4linux/
 
+## Port 161 and 162 - SNMP
+
+Simple Network Management Protocol
+
+SNMP protocols 1,2 and 2c does not encrypt its traffic. So it can be intercepted to steal credencials.
+
+### Scan for open ports
+Since SNMP is using UDP we have to use the `-sU` flag.
+```
+nmap -iL ips.txt -p 161,162 -sU --open -vvv -oG snmp-nmap.txt
+```
+
 ## Port 443 - HTTPS
 
 Okay this is only here as a reminder to always check for SSL-vulnerabilities such as heartbleed. Search for heartbleed in this book to find out how to exploit it.
