@@ -182,11 +182,15 @@ Simple Network Management Protocol
 
 SNMP protocols 1,2 and 2c does not encrypt its traffic. So it can be intercepted to steal credencials.
 
-### Scan for open ports
+### Scan for open ports - Nmap
 Since SNMP is using UDP we have to use the `-sU` flag.
 ```
 nmap -iL ips.txt -p 161,162 -sU --open -vvv -oG snmp-nmap.txt
 ```
+
+### Onesixtyone
+
+I have had more success using onesixtyone than using nmap. So better use both.
 
 ## Port 443 - HTTPS
 
