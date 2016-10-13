@@ -1,10 +1,10 @@
 # Bash-scripting
 
-### Iterate over a file
+## Iterate over a file
 
 This script will iterate over a file and echo out every single line
 
-```
+```bash
 for line in $(cat file.txt);do
 echo $line
 done
@@ -19,7 +19,7 @@ while read p; do
 done <onlyIps.txt
 ```
 
-### For-loops
+## For-loops
 
 ```bash
 for ((i = 0; i < 10; i++)); do
@@ -35,15 +35,15 @@ for x in `seq 1 100`; do
 done
 ```
 
-### If statement
+## If statement
 
-```
+```bash
 if [ "$1" == "" ]; then
     echo "This happens"
 fi
 ```
 
-### If/Else
+## If/Else
 
 ```bash
 if [ "$1" == "" ]; then
@@ -53,7 +53,8 @@ echo "Something else happens"
 fi
 ```
 
-### Command line arguments
+
+## Command line arguments
 
 Command line arguments are represented like this
 
@@ -61,3 +62,9 @@ Command line arguments are represented like this
 $1
 ```
 This is the first command line argument.
+
+## Daemonize an execution
+
+```
+
+```
