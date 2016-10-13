@@ -96,6 +96,13 @@ cut -d" " -f4
 sed can perform basic editing on streams, that is to say, text.
 
 
+Remove first line of file/stream
+
+```
+sed "1d"
+```
+
+
 
 ### Show all lines just once
 You have a list of passwords, or ip-addresses or whatever. And you want to remove all duplicates. How do you do it?
@@ -671,9 +678,5 @@ If there is a **hard block** it means that there is a physical switch on you mac
 ## 17. Subnetting
 
 ## 18. Routing
-
-## 19. Network config
-
-## 20. Troubleshooting
 
 ## 21. DNS
