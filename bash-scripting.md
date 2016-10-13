@@ -4,6 +4,12 @@
 
 This script will iterate over a file and echo out every single line
 
+```
+for line in $(cat file.txt);do
+echo $line
+done
+```
+
 
 ```bash
 #!/bin/bash
