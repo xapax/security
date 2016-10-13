@@ -569,6 +569,8 @@ This is a tool to control services more easily, what is running upon boot and so
 
 ## 16. Network basics
 
+
+### Find outgoing and incoming connections
 Find out what services are listening for connection on your machine
 Flags
 ```
@@ -592,6 +594,36 @@ nethogs
 
 Or you can use tcpdump
 
+
+### Troubleshooting
+
+I have had problems with the network-adapter not starting or something like that, on Ubuntu. You can try to restart the network manager if this happens:
+
+```bash
+sudo service network-manager restart
+```
+
+If for some reason the wifi is blocked you can unblock it (or block it) with rfkill.
+
+```
+$ rfkill list
+0: phy0: Wireless LAN
+	Soft blocked: no
+	Hard blocked: no
+2: hci0: Bluetooth
+	Soft blocked: no
+	Hard blocked: no
+```
+
+TO block the **phy0** from the example above you do:
+```
+# Block
+rfkill block 0
+# Unblock
+rfkill unblock 0
+```
+
+If there is a **hard block** it means that there is a physical switch on you machine that you need to switch off.
 
 ## 17. Subnetting
 
