@@ -209,6 +209,12 @@ I have had more success using onesixtyone than using nmap. So better use both.
 
 ```
 
+### Metasploit
+
+There are a few snmp modules in metasploit that you can use. snmp_enum can show you usernames, services, and other stuff.
+
+https://www.offensive-security.com/metasploit-unleashed/snmp-scan/
+
 ## Port 443 - HTTPS
 
 Okay this is only here as a reminder to always check for SSL-vulnerabilities such as heartbleed. Search for heartbleed in this book to find out how to exploit it.
