@@ -176,6 +176,25 @@ enum4linux -a 192.168.1.120
 
 For info about it ere: https://labs.portcullis.co.uk/tools/enum4linux/
 
+### rpcclient
+
+You can also use rpcclient to enumerate the share.
+
+Connect with a null-session. That is, without a user. This only works for older windows servers.
+
+```
+rpcclient -U "" 192.168.1.101
+```
+
+Once connected you could enter commands like
+
+```
+srvinfo
+enumdomusers
+getdompwinfo
+
+```
+
 ## Port 161 and 162 - SNMP
 
 Simple Network Management Protocol
