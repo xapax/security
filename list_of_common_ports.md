@@ -240,7 +240,12 @@ Now we can use this to query the data we really want.
 #### snmpenum
 
 
-#### snmpcheck
+#### snmp-check
+
+
+``` 
+snmp-check -t 192.168.1.101 -c public
+```
 
 ### Scan for open ports - Nmap
 Since SNMP is using UDP we have to use the `-sU` flag.
