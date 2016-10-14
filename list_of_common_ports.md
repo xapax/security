@@ -242,7 +242,7 @@ Now we can use this to query the data we really want.
 
 #### snmp-check
 
-
+This is a bit easier to use and with a lot prettier output.
 ``` 
 snmp-check -t 192.168.1.101 -c public
 ```
