@@ -13,4 +13,6 @@ host -t ns wikipedia.com
 host -l wikipedia.com ns1.wikipedia.com
 ```
 
+This can also be done with tools such as dnsrecon and dnsenum.
+
 https://security.stackexchange.com/questions/10452/dns-zone-transfer-attack
