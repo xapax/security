@@ -101,14 +101,22 @@ Equvialent to traceroute
 
 ### Processes
 
+List processes
+
 ```
 tasklist
 ```
 
+Kill process
 ```
 taskkill /PID 1532 /F
 ```
 
+### Users
+
+```
+net users
+```
 
 ### Other
 
