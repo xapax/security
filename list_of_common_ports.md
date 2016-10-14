@@ -203,6 +203,8 @@ SNMP protocols 1,2 and 2c does not encrypt its traffic. So it can be intercepted
 
 SNMP is used to manage devices on a network. It has some funny terminology. For example, instead of using the word password the word community is used instead. But it is kind of the same thing. A common community-string/password is public.
 
+You can have read-only access to the snmp.Often just with the community string `public`. 
+
 Common community strings
 ```
 public
@@ -214,7 +216,11 @@ Here is a longer list of common communiyt strings: https://github.com/danielmies
 
 ### MIB - Management information base
 
-SNMP stores all teh data in the Management Information Base.
+SNMP stores all teh data in the Management Information Base. The MIB is a database that is organized as a tree. Different branches contains different information. So one branch can be username information, and another can be processes running. The "leaf" or the endpoint is the actual data. If you have read-access to the database you can read through each endpoint in the tree. This can be used with snmpwalk. It walks through the whole database tree and outputs the content.
+
+```
+snmpwalk -c public -v1 192.168.1.101 #community string and which version
+```
 
 ### Scan for open ports - Nmap
 Since SNMP is using UDP we have to use the `-sU` flag.
@@ -224,6 +230,7 @@ nmap -iL ips.txt -p 161,162 -sU --open -vvv -oG snmp-nmap.txt
 
 ### Onesixtyone
 
+With onesixtyone you can test for open ports but also brute force community strings.
 I have had more success using onesixtyone than using nmap. So better use both.
 
 ```
