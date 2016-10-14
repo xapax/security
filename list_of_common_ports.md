@@ -218,6 +218,7 @@ Here is a longer list of common communiyt strings: https://github.com/danielmies
 
 SNMP stores all teh data in the Management Information Base. The MIB is a database that is organized as a tree. Different branches contains different information. So one branch can be username information, and another can be processes running. The "leaf" or the endpoint is the actual data. If you have read-access to the database you can read through each endpoint in the tree. This can be used with snmpwalk. It walks through the whole database tree and outputs the content.
 
+#### snmpwalk
 ```
 snmpwalk -c public -v1 192.168.1.101 #community string and which version
 ```
@@ -235,6 +236,11 @@ This command will output a lot of information. Way to much, and most of it will 
 ```
 
 Now we can use this to query the data we really want.
+
+#### snmpenum
+
+
+#### snmpcheck
 
 ### Scan for open ports - Nmap
 Since SNMP is using UDP we have to use the `-sU` flag.
