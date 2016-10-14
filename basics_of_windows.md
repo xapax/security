@@ -105,6 +105,11 @@ Equvialent to traceroute
 tasklist
 ```
 
+```
+taskkill /PID 1532 /F
+```
+
+
 ### Other
 
 **shutdown**
