@@ -47,17 +47,18 @@ SAM key
 ## Useful commands
 
 
-**Show environmental variables**
+### Dealing with files and stuff
+
+**Delete file**
 
 ```
-set
+del
 ```
 
-**Show options for commands**
+**Create dir**
 
-The "man"-pages in windows is simply:
 ```
-help dir
+md folderName
 ```
 
 **Show hidden files**
@@ -71,6 +72,12 @@ dir /A
 ```
 type file.txt
 ```
+
+
+### Network
+
+ **netstat -an**
+
 
 **ipconfig**
 
@@ -101,5 +108,17 @@ Equvialent to traceroute
  ciper /w:C:\
  ```
  
- **netstat -an**
  
+ 
+ **Show environmental variables**
+
+```
+set
+```
+
+**Show options for commands**
+
+The "man"-pages in windows is simply:
+```
+help dir
+```
