@@ -28,7 +28,6 @@
            * [DNS Zone Transfer Attack](dns_zone_transfer_attack.md)
        * [CMS Scanning](cms_scanning.md)
        * [Nmap scripts](nmap_scripts.md)
-       * DNS Zone Transfer Attack
        * [enum4linux](enum4linux.md)
 * [Vulnerability analysis](vulnerability_analysi1s.md)
    * [Automated Vulnerability Scanners](automated_vulnerability_scanners.md)
