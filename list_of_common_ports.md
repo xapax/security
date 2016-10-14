@@ -167,7 +167,7 @@ It can be a bit buggy sometimes so run it several times to make sure it found al
 
 #### Enum4linux
 
-Enum4linux can be used to enumerate windows and linux machines with smb-shares
+Enum4linux can be used to enumerate windows and linux machines with smb-shares. 
 
 The do all option
 ```
@@ -209,6 +209,8 @@ public
 private
 community
 ```
+
+Here is a longer list of common communiyt strings: https://github.com/danielmiessler/SecLists/blob/master/Miscellaneous/wordlist-common-snmp-community-strings.txt
 
 ### MIB - Management information base
 
