@@ -32,6 +32,11 @@ On windows it is possible to grant permission of a file to System but not to Adm
 One example of this is the SAM key, which contains local account information. The system user has access to this information, but Administrator does not.
 http://superuser.com/questions/504136/root-vs-administrator-vs-system
 
+
+## Windows folder
+
+Ip you put an executable in the `\Windows` folder it will be in your path, and you will be able to execute it from anywhere in the cmd-prompt. 
+
 ## Important files and stuff
 
 SAM key
