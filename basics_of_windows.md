@@ -73,6 +73,13 @@ dir /A
 type file.txt
 ```
 
+**grep files**
+
+```
+findstr file.txt
+```
+
+
 
 ### Network
 
@@ -92,7 +99,13 @@ well, it pings
 Equvialent to traceroute
 
 
+### Processes
 
+```
+tasklist
+```
+
+### Other
 
 **shutdown**
 
