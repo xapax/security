@@ -222,6 +222,20 @@ SNMP stores all teh data in the Management Information Base. The MIB is a databa
 snmpwalk -c public -v1 192.168.1.101 #community string and which version
 ```
 
+This command will output a lot of information. Way to much, and most of it will not be relevant to us and much we won't understand really. So it is better to request the info that you are interested in. Here are the locations of the stuff that we are interested in:
+
+```
+1.3.6.1.2.1.25.1.6.0 System Processes
+1.3.6.1.2.1.25.4.2.1.2 Running Programs
+1.3.6.1.2.1.25.4.2.1.4 Processes Path
+1.3.6.1.2.1.25.2.3.1.4 Storage Units
+1.3.6.1.2.1.25.6.3.1.2 Software Name
+1.3.6.1.4.1.77.1.2.25 User Accounts
+1.3.6.1.2.1.6.13.1.3 TCP Local Ports
+```
+
+Now we can use this to query the data we really want.
+
 ### Scan for open ports - Nmap
 Since SNMP is using UDP we have to use the `-sU` flag.
 ```
