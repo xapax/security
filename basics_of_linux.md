@@ -717,6 +717,16 @@ To add line-numbers for each rule, so that you can then specify which rule you w
 iptables -L -v --line-numbers
 ```
 
+**Remove/delete a rule**
+To remove a rule you just do
+
+```
+# Remove one specific rule
+iptables -D INPUT 2
+# Remove all rules
+iptables -F
+```
+
 **Save your changes**
 Your changes will only be saved and therefore in action until you restart iptables. So they will disappear every time you reboot unless you save the changes. To save the changes on ubuntu you do
 
@@ -752,7 +762,19 @@ iptables -Z
 iptables -F
 ```
 
-So now we just need to add our rules
+So now we just need to add our rules. A simple script for this would be
+
+```
+#!/bin/bash
+iptables -F
+iptables -I INPUT 1 -p tcp -j ACCEPT
+```
+
+Then check out the traffci with
+
+```
+iptables -L -v --line-numbers
+```
 
 
 
