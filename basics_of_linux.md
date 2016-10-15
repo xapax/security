@@ -711,9 +711,49 @@ iptables -L
 ```
 And we can now see our new rule.
 
+To add line-numbers for each rule, so that you can then specify which rule you want to reset or change or something you can output the rluels with line-numbers
+
+```
+iptables -L -v --line-numbers
+```
+
+**Save your changes**
+Your changes will only be saved and therefore in action until you restart iptables. So they will disappear every time you reboot unless you save the changes. To save the changes on ubuntu you do
+
+```
+sudo /sbin/iptables-save
+```
+
 #### Measuring bandwidth usage
 
-There are a few different tools in hour arsenal that we can use to  measure bandwidth usage. We will start with iptables
+There are a few different tools in hour arsenal that we can use to  measure bandwidth usage. We will start with iptables. 
+
+To view the input and output traffic we just list the rules with some verbosity.
+
+```
+iptables -L -v
+# Stdout
+Chain INPUT (policy ACCEPT 6382 packets, 1900K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 4266 packets, 578K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+```
+
+So clean this up and reset the count we can do the following
+
+```
+# Restar the count
+iptables -Z
+# Remove all the rules, FLUSH them
+iptables -F
+```
+
+So now we just need to add our rules
+
 
 
 ### Troubleshooting
