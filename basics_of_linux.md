@@ -776,7 +776,8 @@ Then check out the traffci with
 iptables -L -v --line-numbers
 ```
 
-
+References:
+https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules
 
 ### Troubleshooting
 
