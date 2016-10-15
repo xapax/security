@@ -118,6 +118,18 @@ taskkill /PID 1532 /F
 net users
 ```
 
+### File types
+
+Unlike linux not everything is a file in windows. File-endings are important
+
+#### BAT
+
+.bat-files are the windows equivalent to bash-scripts
+
+In order to write a batch-script you open up an editor and then just write your commands. ANd then you save it as blabla.bat. And make sure you don't save it as a text file.
+
+Then you just run the script from the cmd
+
 ### Other
 
 **shutdown**
@@ -151,3 +163,4 @@ The "man"-pages in windows is simply:
 ```
 help dir
 ```
+
