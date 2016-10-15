@@ -640,6 +640,59 @@ nethogs
 Or you can use tcpdump
 
 
+
+### Firewall - Iptables
+
+Iptables is a firewall tool in linux. A firewall is basically a tool that scans incoming and/or outgoing traffic. You can add rules to the iptables to filter for certain traffic. 
+
+#### Types of chains
+
+So you can filter traffic in three different ways **input**, **forward**, and **output**. These are called three different chains.
+
+**INPUT**
+This is for incoming connections. If someone wants to ssh into your machien. Or a web-server responds to your request.
+
+**FORWARD**
+This chain is used for traffic that is not aimed at your machine. A router for eample usually just passes information on. Most connections are just passing through. As you can see this will probably not be used so much on your machine, as a normal desktop or a server doesn't router that much traffic.
+
+**OUTPUT**
+
+This chain is used for outgoing traffic. 
+
+##### Active rules
+
+To view your active rules you do
+
+```
+iptables -L
+# It will output something like this
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+```
+So as we can see the current policy is to accept all traffic in all directions.
+
+If you for some reason has been tampering with the iptables and maybe fucked up. This is how you return it to the default setting, accepting all connections
+
+
+```
+ iptables --policy INPUT ACCEPT
+ iptables --policy OUTPUT ACCEPT
+ iptables --policy FORWARD ACCEPT
+ ```
+
+#### Measuring bandwidth usage
+
+There are a few different tools in hour arsenal that we can use to  measure bandwidth usage. We will start with iptables
+
+
 ### Troubleshooting
 
 #### Have you tried turning it on and off?
