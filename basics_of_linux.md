@@ -688,6 +688,29 @@ If you for some reason has been tampering with the iptables and maybe fucked up.
  iptables --policy FORWARD ACCEPT
  ```
 
+If you instead want to forbid all traffic you do
+
+```
+ iptables --policy INPUT DROP
+ iptables --policy OUTPUT DROP
+ iptables --policy FORWARD DROP
+ ```
+
+Okay, so let's block out some connections. To do that we want to add/append a new rule. We want to block all connections from our enemy 192.168.1.30.
+
+```
+# A for append, and S for source. 
+iptables -A INPUT -s 192.168.1.30 -j DROP
+# Block an entire range
+iptables -A INPUT -s 192.168.1.0/24 -j DROP
+```
+
+Now if we want to see our current rules we just do
+```
+iptables -L
+```
+And we can now see our new rule.
+
 #### Measuring bandwidth usage
 
 There are a few different tools in hour arsenal that we can use to  measure bandwidth usage. We will start with iptables
