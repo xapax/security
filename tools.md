@@ -7,12 +7,26 @@ These are our tools:
 - objdump
 - gdb
 
+
+
 This is a great little trick. If you are working a lot with hexadecimal and you want to easily convert it to ascii you can write this in bash
 ```
 echo 6a6548 | xxd -r -p
 ```
 will print out: **jeH**
 xxd is a program that makes ascii into hexdumps. with the -r we can reverse it. 
+
+## Nasm to opcode
+
+If we want to convert an assembly instruction to opcode we can use this tool
+
+```
+/usr/share/metasploit-framework/tools/exploit/nasm_shell.rb
+
+nasm > JMP ESP
+00000000  FFE4              jmp esp
+```
+
 
 ## Objdump
 Objdump is a program that outputs the assembly code of a compiled program. It ca be executed like this.
