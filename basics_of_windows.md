@@ -32,6 +32,21 @@ On windows it is possible to grant permission of a file to System but not to Adm
 One example of this is the SAM key, which contains local account information. The system user has access to this information, but Administrator does not.
 http://superuser.com/questions/504136/root-vs-administrator-vs-system
 
+## Structure of windows
+
+### Windows 7
+
+The root folder of windows **c:\*** by default contains the following 
+
+```
+Windows
+Users
+
+```
+
+#### Windows
+
+
 ## Important files and stuff
 
 SAM key
@@ -166,8 +181,14 @@ Then you just run the script from the cmd
 
 ### DLL - Dynamic Link Library
 
-A DLL file is a library that is used for one or more program. It is not an executable in itself, but it contains code that the executable calls. It is used to modularize the code of a program. 
+A DLL file is a library that is used for one or more program. It is a binary-file but it is not executable in itself, but it contains code that the executable calls. It is used to modularize the code of a program. 
 
 In the windows operating system DLL files are shared among different applications. In windows the dll **Comdlg32** performs dialog boxes. So different applications can invoke this library yo easily create a dioalog box. This promotes code reuse.
 
-So a application may use the standard windows DLL-files, but it may also bring its own DLL-files. 
+So a application may use the standard windows DLL-files, but it may also bring its own DLL-files.
+
+So if one DLL-file is missing for a program a certain module might not work. 
+
+### LIB
+
+Lib is a bit like DLL, it is a library. But it is not dynamic as DLL. So lib-files are linked on compile-time. While dll-files are linked in run-time. Since lib-files are compiled into the exacutable you never see it (unless you are developing of course). But since DLL-files are dynamically loaded at run-time they are still around for the user to see.
