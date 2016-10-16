@@ -61,6 +61,7 @@ SAM key
 
 ## Useful commands
 
+This might come in handy for the linux-users: http://www.lemoda.net/windows/windows2unix/windows2unix.html
 For more on how to use powershell see the powershell-scripting chapter
 
 ### Dealing with files and stuff
