@@ -34,6 +34,8 @@ http://superuser.com/questions/504136/root-vs-administrator-vs-system
 
 ## Structure of windows
 
+https://en.wikipedia.org/wiki/Directory_structure
+
 ### Windows 7
 
 The root folder of windows **c:\*** by default contains the following 
