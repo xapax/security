@@ -6,3 +6,13 @@ Many priv-esc techniques on windows comes from third-party programs and not nece
 http://netsec.ws/?cat=64
 
 http://netsec.ws/?p=314
+
+## Info about the system
+
+
+
+```
+systeminfo
+whoami
+```
+
