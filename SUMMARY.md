@@ -5,6 +5,7 @@
    * [Basics of linux](basics_of_linux.md)
    * [Basics of windows](basics_of_windows.md)
    * [Bash-scripting](bash-scripting.md)
+   * Powershell scripting
    * [Scripting with python](scripting_with_python.md)
        * [Python fundamentals](python_fundamentals.md)
        * [Useful scripts](connections.md)
@@ -15,7 +16,6 @@
        * networking
    * [General tips](general_tips.md)
    * [Bug Bounties](bug_bounties.md)
-   * Powershell scripting
 * [Recon/information gathering phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
        * [Email Harvesting](email_harvesting.md)
