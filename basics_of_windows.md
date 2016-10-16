@@ -118,18 +118,6 @@ taskkill /PID 1532 /F
 net users
 ```
 
-### File types
-
-Unlike linux not everything is a file in windows. File-endings are important
-
-#### BAT
-
-.bat-files are the windows equivalent to bash-scripts
-
-In order to write a batch-script you open up an editor and then just write your commands. ANd then you save it as blabla.bat. And make sure you don't save it as a text file.
-
-Then you just run the script from the cmd
-
 ### Other
 
 **shutdown**
@@ -164,3 +152,22 @@ The "man"-pages in windows is simply:
 help dir
 ```
 
+## File types
+
+Unlike linux not everything is a file in windows. File-endings are important
+
+### BAT
+
+.bat-files are the windows equivalent to bash-scripts
+
+In order to write a batch-script you open up an editor and then just write your commands. And then you save it as blabla.bat. And make sure you don't save it as a text file.
+
+Then you just run the script from the cmd
+
+### DLL - Dynamic Link Library
+
+A DLL file is a library that is used for one or more program. It is not an executable in itself, but it contains code that the executable calls. It is used to modularize the code of a program. 
+
+In the windows operating system DLL files are shared among different applications. In windows the dll **Comdlg32** performs dialog boxes. So different applications can invoke this library yo easily create a dioalog box. This promotes code reuse.
+
+So a application may use the standard windows DLL-files, but it may also bring its own DLL-files. 
