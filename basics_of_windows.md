@@ -61,6 +61,7 @@ SAM key
 
 ## Useful commands
 
+For more on how to use powershell see the powershell-scripting chapter
 
 ### Dealing with files and stuff
 
