@@ -8,7 +8,6 @@
    * Windows
        * [Basics of windows](basics_of_windows.md)
        * Powershell scripting
-       * Www
    * [Scripting with python](scripting_with_python.md)
        * [Python fundamentals](python_fundamentals.md)
        * [Useful scripts](connections.md)
