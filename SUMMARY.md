@@ -2,6 +2,7 @@
 
 * [Introduction](README.md)
 * [The Basics](the_basics.md)
+   * Linux
    * [Basics of linux](basics_of_linux.md)
    * [Basics of windows](basics_of_windows.md)
    * [Bash-scripting](bash-scripting.md)
@@ -16,7 +17,6 @@
        * networking
    * [General tips](general_tips.md)
    * [Bug Bounties](bug_bounties.md)
-   * Linux
 * [Recon/information gathering phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
        * [Email Harvesting](email_harvesting.md)
