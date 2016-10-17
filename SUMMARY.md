@@ -7,7 +7,7 @@
        * [Bash-scripting](bash-scripting.md)
    * Windows
        * [Basics of windows](basics_of_windows.md)
-       * Powershell
+       * [Powershell](powershell.md)
    * [Scripting with python](scripting_with_python.md)
        * [Python fundamentals](python_fundamentals.md)
        * [Useful scripts](connections.md)
