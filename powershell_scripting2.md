@@ -1,6 +1,6 @@
 # Powershell scripting
 
-
+https://www.youtube.com/watch?v=czJrXiLs0wM
 ## Variables
 
 Variables are declared like this
