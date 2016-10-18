@@ -74,3 +74,19 @@ for ip in $(cat ips.txt); do
 ping -c 1 $ip &
 done
 ```
+
+
+## Use the output of command
+
+It has happened to me several times that I want to input the output of a command into a new command, for example:
+
+I search for a file, find three, and take the last line, which is a path. Now I want to cat that path:
+```
+locate 646.c | tail -n 1
+```
+
+This can be done like this:
+
+```
+cat $(locate 646.c | tail -n 1)
+```
