@@ -36,6 +36,21 @@ http://superuser.com/questions/504136/root-vs-administrator-vs-system
 
 https://en.wikipedia.org/wiki/Directory_structure
 
+### Registry
+
+You often hear talk about the registry when talking about windows. But what is really the registry?
+
+Well the windows registry is a hierarchical database that stores low-level settings used by the OS or any other application that uses it. The SAM (Security account manager) uses it, along with a lot of other stuff.
+
+There is not really any equivalent for the Registry in Linux. Most configurations are done in text-files in Linux.You can usually find the under `/etc`.
+
+#### Edit the registry
+
+In Linux you usually just sudo-edit a config-file in **/etc**.
+In Windows you open Regedit and you can see the whole hierarchy. The registry is built with Key-value pairs.
+
+### SAM
+
 ### Windows 7
 
 The root folder of windows **c:\*** by default contains the following 
