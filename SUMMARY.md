@@ -15,12 +15,12 @@
    * [Powershell scripting](powershell_scripting.md)
    * [Bug Bounties](bug_bounties.md)
    * [Transfering files](transfering_files2.md)
+       * [Transfering files on linux](transfering_files.md)
        * Transfering files to windows
    * [Example of company architecture](example_of_company_architecture.md)
    * [Networking](networking.md)
        * networking
    * [General tips](general_tips.md)
-* [Transfering files on linux](transfering_files.md)
 * [Recon/information gathering phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
        * [Email Harvesting](email_harvesting.md)
