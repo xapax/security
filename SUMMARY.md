@@ -13,7 +13,7 @@
        * [Python fundamentals](python_fundamentals.md)
        * [Useful scripts](connections.md)
    * [Powershell scripting](powershell_scripting.md)
-   * [Transfering files](transfering_files.md)
+   * [Transfering files on linux](transfering_files.md)
    * [Bug Bounties](bug_bounties.md)
    * [Example of company architecture](example_of_company_architecture.md)
    * [Networking](networking.md)
