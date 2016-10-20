@@ -1,9 +1,9 @@
 # Basics of windows
 
 
-## Windows domain
+## Windows network - Windows domain
 
-A windows network is usually called a Windows domain. On windows domain all users are connected to a domain controller. Domain controller is 
+A windows network is usually called a Windows domain. On windows domain all users are connected to a domain controller. 
 
 ### Active directory
 
@@ -24,7 +24,10 @@ A workgroup architecture stands in contrast to the domain-system. A workgroup is
 
 ## User privileges
 
+How does the user-system work on windows.
+
 ### SYSTEM
+
 System is actually not a user per se. System is technically a security principle. One big difference between SYSTEM and Administrator is that is the computer is connected to a domain the system user can access the domain in the context of the domain account. The administrator cannot.
 
 On windows it is possible to grant permission of a file to System but not to Administrator.
@@ -50,6 +53,18 @@ In Linux you usually just sudo-edit a config-file in **/etc**.
 In Windows you open Regedit and you can see the whole hierarchy. The registry is built with Key-value pairs.
 
 ### SAM
+
+### Drivers
+
+You hear a lot of talk about drivers in the windows ecosystem. 
+Drivers are software lets the OS communicate with the hardware. Like networks cards, graphics card, printers.
+To list all the drivers on the machine use the following command:
+
+```
+driverquery
+```
+This can we good to know since drivers can contains vulnerabilites that can be used for priv-esc. Check out the chapter on that.
+
 
 ### Windows 7
 
