@@ -18,9 +18,17 @@ So if you have a metasploit meterpreter session going you can run **getsystem**.
 ### Cleartext passwords
 
 Can be find like this:
-
 ```
 findstr /si password *.txt | *.xml | *.ini
+```
+
+Thse are common files to find them in. They might be base64-encoded. So look out for that. 
+
+```
+c:\sysprep.inf
+c:\sysprep\sysprep.xml
+%WINDIR%\Panther\Unattend\Unattended.xml
+%WINDIR%\Panther\Unattended.xml
 ```
 
 ### Kernel exploits
