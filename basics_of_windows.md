@@ -35,6 +35,15 @@ On windows it is possible to grant permission of a file to System but not to Adm
 One example of this is the SAM key, which contains local account information. The system user has access to this information, but Administrator does not.
 http://superuser.com/questions/504136/root-vs-administrator-vs-system
 
+
+## Normal user
+
+You can add a new user through the cmd with the following command:
+
+```
+net user username /add
+```
+
 ## Structure of windows
 
 https://en.wikipedia.org/wiki/Directory_structure
