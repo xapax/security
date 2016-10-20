@@ -106,6 +106,5 @@ echo $webclient.DownloadFile($url,$file) >>wget.ps1
 
 Now we invoke it with this crazy syntax:
 ```
-powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -
-NoProfile -File wget.ps1
+powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File wget.ps1
 ```
