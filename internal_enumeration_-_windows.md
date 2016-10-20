@@ -59,10 +59,17 @@ tasklist /SVC
 net start
 
 
-# Drivers
-DRIVERQUERY
+# List all drivers
+driverquery
+
 ```
 
+
+### List all patches
+
+```
+wmic qfe get Caption,Description,HotFixID,InstalledOn
+```
 
 ## References
 
