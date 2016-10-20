@@ -15,13 +15,17 @@ So if you have a metasploit meterpreter session going you can run **getsystem**.
 
 ## Manually
 
-## Kernel exploits
+### Kernel exploits
 
 Just as in windows kernel exploits should be our last resource, since it might but the machine in an unstable state or create some other problem with the machine. 
 
-### Python to binary
+#### Python to binary
 
 If we have an exploit written in python but we don't have python installed on the victim-machine we can always transform it into a binary with pyinstaller. Good trick to know.
+
+### Misconfigurations
+
+#### Incorrect file and service permissions
 
 ### Unquoted Service Paths
 
