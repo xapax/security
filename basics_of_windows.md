@@ -56,7 +56,7 @@ In Windows you open Regedit and you can see the whole hierarchy. The registry is
 
 ### Drivers
 
-You hear a lot of talk about drivers in the windows ecosystem. 
+You hear a lot of talk about drivers in the windows ecosystem, but not in linux. That is because in linux the drivers are open-sources and included inthe kernel, for most part. These drivers might be produced by nice programmers or they could be developed by the hardware-producer themselves. That's why it is so easy and fast to install new hardware on linux. If it is comptabile that is.
 Drivers are software lets the OS communicate with the hardware. Like networks cards, graphics card, printers.
 To list all the drivers on the machine use the following command:
 
