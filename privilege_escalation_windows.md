@@ -60,7 +60,7 @@ return 0;
 We then compile it with out cross-compiler, if you are on linux, like this:
 
 ```
-i686-w64-mingw32-gcc windows-exp.c -lws2_32 -o pro.exe
+i686-w64-mingw32-gcc windows-exp.c -lws2_32 -o exp.exe
 ```
 
 
