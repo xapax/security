@@ -93,7 +93,7 @@ http://www.fuzzysecurity.com/tutorials/16.html
 
 https://www.offensive-security.com/metasploit-unleashed/privilege-escalation/
 
-
+http://it-ovid.blogspot.cl/2012/02/windows-privilege-escalation.html
 
 https://github.com/gentilkiwi/mimikatz
 
