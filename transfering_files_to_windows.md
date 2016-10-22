@@ -39,7 +39,7 @@ atftpd --daemon --port 69 /tftp
 /etc/init.d/atftpd restart
 ```
 
-Now you can put stuff in /srf/tftp and it will be served. Remember that TFTP used UDP. So if you run netstat it will not show it as listening. 
+Now you can put stuff in /srv/tftp and it will be served. Remember that TFTP used UDP. So if you run netstat it will not show it as listening. 
 
 You can see it running like this
 
