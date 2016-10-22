@@ -25,4 +25,9 @@ And evil.txt will look like something like this:
 <?php echo shell_exec("whoami");?>
 ```
 
-So when the victim-server includes this file it will automatically execute the commands that are in the evil.txt file. ANd we have a RCE.
+So when the victim-server includes this file it will automatically execute the commands that are in the evil.txt file. And we have a RCE.
+
+
+## Nullbyte to avoid .php
+
+Remember to add the nullbyte **%00** to avoid appending **.php**. This will only work on php before version 5.3. 
