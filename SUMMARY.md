@@ -67,7 +67,7 @@
            * [Cross Site Request Forgery](cross_site_request_forgery.md)
            * [Cross-site-scripting](cross-site-scripting.md)
                * [Examples](examplesXSS.md)
-           * Browser vulnerabilities
+           * [Browser vulnerabilities](browser_vulnerabilities.md)
        * [XML External Entity Attack](xml_external_entity_attack.md)
        * [Dictionary Attacks](dictionary_attacks.md)
        * [Nosql-injections](nosql-injections.md)
