@@ -14,6 +14,8 @@ The attacker can execute a keylogging-script that steals everything the user inp
 3. Phishing
 The attacker can insert a fake login. Image that you visit a site, and from that site you are able to login using your facebook or google-account. The attacker could spoof that so that when you enter your credencials, they are then sent to the attacker. 
 
+
+
 ### Types of XSS
 
 1. Persistent
