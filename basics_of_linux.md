@@ -231,6 +231,17 @@ In command-mode:
 G
 ```
 
+#### Add character to the beginning of each line
+
+I have needed to do this several time when I write batch-scripts that I want to copy-paste into a windows-machine using echo. Instead of having to add a `echo` on each line I want to do it all at onece.
+
+Here is how youdo it
+
+    Use Ctrl + V to enter visual block mode.
+    Move Up / Down to select the columns of text in the lines you want to comment.
+    Then hit Shift + i and type the text you want to insert.
+    Then hit Esc , wait 1 second and the inserted text will appear on every line.
+
 ## 4. User management
 
 To add a user we write:
