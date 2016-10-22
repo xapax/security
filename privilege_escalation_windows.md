@@ -89,6 +89,8 @@ http://toshellandback.com/2015/11/24/ms-priv-esc/
 ### Group Policy Preferences (GPP)
 
 Most recommended article
+
+http://travisaltman.com/windows-privilege-escalation-via-weak-service-permissions/
 http://www.fuzzysecurity.com/tutorials/16.html
 
 https://www.offensive-security.com/metasploit-unleashed/privilege-escalation/
