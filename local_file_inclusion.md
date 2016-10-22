@@ -48,6 +48,21 @@ Here you use a php-filter to convert it all into base64. So in return you get th
 base64 -d savefile.php
 ```
 
+### Using the nullbyte handeling .php
+
+THe nullbyte techniqu works in versions below php 5.3. So look out for that.
+
+If the include looks like this:
+
+```
+# index.php
+    <?php
+      $file = $_GET['page'];
+      require($file . ".php");
+     ?>
+```
+
+The php i added to the filename, this will mean that we will not be able to find the files we are looking for. Since the file /etc/passwd.php does not exist. However, if we add the nullbyte to the end of our attack-string the **.php** will not be taken into account. So we add **%00** to the end of our attackstring.
 
 ## Linux
 
