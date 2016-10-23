@@ -121,7 +121,15 @@ or true--
 ")) or (("x"))=(("x
 ```
 
+## Map out the database using error-messages
 
+If we manage to find an error-message after a broken sql-query, we can use that to try to map out the database structure.
+
+For example, if we have a url that end with 
+
+```
+http://example.com/photoalbum.php?id=1
+```
 
 
 ## References
