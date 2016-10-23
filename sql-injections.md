@@ -121,7 +121,11 @@ or true--
 ")) or (("x"))=(("x
 ```
 
-## Map out the database using error-messages
+## Sql-injections manually
+
+Sqlmap is good, but it is not very stealthy. ANd it can generate a lot of traffic. And also it is good to understand the vulnerability in the cote and not just run tools. So let's learn sql-injections the manual way.
+
+### Map out the database using error-messages
 
 If we manage to find an error-message after a broken sql-query, we can use that to try to map out the database structure.
 
@@ -131,7 +135,16 @@ For example, if we have a url that end with
 http://example.com/photoalbum.php?id=1
 ```
 
-
 We should first ad a **'** or a **"**. 
+
+#### Column number enumeration
+
+So in order to enumerate the columns of a table we can use the **order by**
+
+```
+http://example.com/photoalbum.php?id=1 order by 1
+```
+
+Then you can increase the number until you get an error, when you get an error you know where the limit is and therefor you know how many columns the tables has. 
 
 ## References
