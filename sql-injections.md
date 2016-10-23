@@ -50,6 +50,11 @@ Sqlmap is a great tool to perform sqlinjections.
 Here is the manual.
 https://github.com/sqlmapproject/sqlmap/wiki/Usage
 
+### Crawl a page to find sql-injections
+
+```
+sqlmap -u http://example.com --crawl=1
+```
 
 ### Dumping a database or table
 
