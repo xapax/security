@@ -147,4 +147,9 @@ http://example.com/photoalbum.php?id=1 order by 1
 
 Then you can increase the number until you get an error, when you get an error you know where the limit is and therefor you know how many columns the tables has. 
 
+
+### Blind sql-injection
+
+We say that it is blind becasue we do not have access to the error log. 
+
 ## References
