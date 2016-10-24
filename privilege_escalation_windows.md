@@ -98,7 +98,14 @@ NTLM > Windows vista**
 
 ### fgdump.exe
 
-We can use fgdump.exe (locate fgdump.exe on kali) to get the password hashes. Run it and there is a file called 127.0.0.1.pwndump where the hash is saved. Now you can try to brute force it. 
+We can use fgdump.exe (locate fgdump.exe on kali) to extract NTLM and LM Password hashes. Run it and there is a file called 127.0.0.1.pwndump where the hash is saved. Now you can try to brute force it. 
+
+
+### Windows Credencial Editor (WCE)
+
+WCE can steal NTLM passwords from memory in cleartext!
+
+You
 
 Most recommended article
 
