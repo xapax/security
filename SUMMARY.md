@@ -103,6 +103,7 @@
    * [Offline password cracking](identify_hash_and_crack_it.md)
    * [Online password cracking](online_password_cracking.md)
    * [Pass the hash - reusing hashes](pass_the_hash_-_reusing_hashes.md)
+* Port forwarding and tunneling
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
    * [Basics of assembly](binary_exploitation.md)
@@ -122,7 +123,6 @@
 * [Wifi](wifi.md)
    * WEP
    * [WPS](wps.md)
-* Port forwarding and tunneling
 * [Tools of the trade](tools_of_the_trade.md)
    * [Hashcat](hashcat.md)
    * [recon-ng](recon-ng.md)
