@@ -89,25 +89,6 @@ http://toshellandback.com/2015/11/24/ms-priv-esc/
 ### Group Policy Preferences (GPP)
 
 
-## Dumping password
-
-This most likely requires administrative rights.
-
-Windows stores passwords in SAM - Security Account Manager. Passwords are stored differently depending on the operating system. Up until (and including) Windows 2003 stored the passwords in LAN Manager (LM) and NT LAN Manager (NTLM). LM is incredibly insecure.From windows vista and on the system does not use LM, only NTLM. So it is a bit more secure.
-
-**LM and NTLM >= Windows 2003
-NTLM > Windows vista**
-
-### fgdump.exe
-
-We can use fgdump.exe (locate fgdump.exe on kali) to extract NTLM and LM Password hashes. Run it and there is a file called 127.0.0.1.pwndump where the hash is saved. Now you can try to brute force it. 
-
-
-### Windows Credencial Editor (WCE)
-
-WCE can steal NTLM passwords from memory in cleartext!
-
-You
 
 Most recommended article
 
