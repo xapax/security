@@ -99,7 +99,6 @@
    * [Post-exploit modules metasploit](post-exploit_modules_metasploit.md)
    * [Cover your tracks](clean_up.md)
 * Password cracking
-   * [Cracking passwords](cracking_passwords.md)
    * [Generate custom wordlist](generate_custom_wordlist.md)
    * [Offline password cracking](identify_hash_and_crack_it.md)
    * [Online password cracking](online_password_cracking.md)
