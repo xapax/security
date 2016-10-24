@@ -15,3 +15,9 @@ medusa -h 192.168.1.101 -u admin -P wordlist.txt -M http -m DIR:/test -T 10
 ```
 
 ## Remote Desktop Protocol - Port 3389
+
+For RDP we can use Ncrack.
+
+```
+ncrack -vv --user admin -P password-file.txt rdp://192.168.0.101
+```
