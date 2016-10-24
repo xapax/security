@@ -32,7 +32,7 @@ webcam_stream  Play a video stream from the specified webcam
 
 ## Dumping password on windows
 
-This most likely requires administrative rights.
+This most likely requires administrative rights, that's why the chapter is found here and not in priv-esc.
 
 Windows stores passwords in SAM - Security Account Manager. Passwords are stored differently depending on the operating system. Up until (and including) Windows 2003 stored the passwords in LAN Manager (LM) and NT LAN Manager (NTLM). LM is incredibly insecure.From windows vista and on the system does not use LM, only NTLM. So it is a bit more secure.
 
