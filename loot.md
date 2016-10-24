@@ -53,5 +53,11 @@ We can use fgdump.exe (locate fgdump.exe on kali) to extract NTLM and LM Passwor
 ### Windows Credencial Editor (WCE)
 
 WCE can steal NTLM passwords from memory in cleartext!
+There are different versions of WCE, one for 32 bit systems and one for 64 bit. So make sure you have the right one.
 
-You
+You can run it like this
+```
+wce32.exe -w
+```
+
+
