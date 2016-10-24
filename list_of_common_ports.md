@@ -355,6 +355,17 @@ mount -t 192.168.1.109:/ /tmp/NFS
 ```
 Now we can go to /tmp/NFS and check out /etc/passwd, and add and remove files.
 
+
+## Port 3389 - Remote Desktop Protocol
+
+This is a proprietary protocol developed by windows to allow remote desktop.
+
+This protocl can be brute-forced with ncrack.
+
+```
+
+```
+
 ## Port 5900 - VNC
 
 VNC is used to get a screen for a remote host. But some of them have some exploits.
