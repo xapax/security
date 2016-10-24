@@ -51,3 +51,8 @@ Notice that is is **umount** and not unmount.
 ```
 umount /media/windows
 ```
+
+
+## Dump the hashes
+
+https://prakharprasad.com/windows-password-cracking-using-john-the-ripper/
