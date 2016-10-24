@@ -103,7 +103,7 @@
    * [Generate custom wordlist](generate_custom_wordlist.md)
    * [Offline password cracking](identify_hash_and_crack_it.md)
    * [Online password cracking](online_password_cracking.md)
-   * Pass the hash - reusing hashes
+   * [Pass the hash - reusing hashes](pass_the_hash_-_reusing_hashes.md)
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
    * [Basics of assembly](binary_exploitation.md)
