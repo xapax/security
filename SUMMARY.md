@@ -1,7 +1,6 @@
 # Summary
 
 * [Introduction](README.md)
-   * Port forwarding and tunneling
 * [The Basics](the_basics.md)
    * [Linux](linux.md)
        * [Basics of linux](basics_of_linux.md)
@@ -123,6 +122,7 @@
 * [Wifi](wifi.md)
    * WEP
    * [WPS](wps.md)
+* Port forwarding and tunneling
 * [Tools of the trade](tools_of_the_trade.md)
    * [Hashcat](hashcat.md)
    * [recon-ng](recon-ng.md)
