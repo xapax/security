@@ -20,6 +20,12 @@ The service you want to hack might have specific password rules. Must contain ce
 
 ## Combine a small/semi-small dict with a custom
 
+To combine two wordlists you can just do
+
+```
+cat wordlist.txt >> wordlist2.txt
+```
+
 ## Html2dic - Build dictionary from html
 
 You can build a dictionary from a html-page.
@@ -50,6 +56,15 @@ cewl -w createWordlist.txt https://www.example.com
 ```
 cewl -w createWordlist.txt -m 6 https://www.example.com 
 ```
+
+## Improve the custom wordlist
+
+As we all know few password are just simple words. Many use numbers and special characters. To improve our password list we can use john the ripper. We can input our own rules, or we can just use the standard john-the-ripper rules
+
+```
+john ---wordlist=wordlist.txt --rules --stdout > wordlist-modified.txt
+```
+
 
 ## References
 http://null-byte.wonderhowto.com/how-to/hack-like-pro-crack-passwords-part-4-creating-custom-wordlist-with-crunch-0156817/
