@@ -1,6 +1,12 @@
 # Loot
 
+
+## Meterpreter
+
 If you have a meterpreter shell you are able to do a lot of thing with very little effort.
+If you do not have a meterpreter-shell you can always create a exploit with msfvenom. An elf or exe or other format to upgrade your shell.
+
+
 
 
 Show help of all commands:
@@ -32,7 +38,7 @@ webcam_stream  Play a video stream from the specified webcam
 
 ## Dumping password on windows
 
-This most likely requires administrative rights, that's why the chapter is found here and not in priv-esc.
+This most likely requires administrative rights, that's why the chapter is found here and not in priv-esc. Once you have a hash you can move on tto the Password Cracking-chapter where we discuss different techniques of cracking hashes.
 
 Windows stores passwords in SAM - Security Account Manager. Passwords are stored differently depending on the operating system. Up until (and including) Windows 2003 stored the passwords in LAN Manager (LM) and NT LAN Manager (NTLM). LM is incredibly insecure.From windows vista and on the system does not use LM, only NTLM. So it is a bit more secure.
 
