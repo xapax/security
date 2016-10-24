@@ -55,3 +55,5 @@ Hashkiller
 Google hashes
 Search pastebin.
 
+
+## Windows 
