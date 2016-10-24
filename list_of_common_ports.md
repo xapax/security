@@ -113,6 +113,50 @@ Exploits can be found in metasploit25 can be quite useful
 And shellshock
 https://www.exploit-db.com/exploits/34896/
 
+
+## Port 80 - HTTP
+
+We usually just think of vulnerailities on the http-itnerface, the web page, when we think of port 80. But with .htaccess we are able to password protect certain directories. If that is the case we can brute force that the following way.
+
+### Password protect directory with htaccess
+
+**Step 1**
+
+Create a directory that you want to password-protect.
+Create .htaccess tile inside that directory.
+Content of .htaccess:
+```
+AuthType Basic
+AuthName "Password Protected Area"
+AuthUserFile /var/www/html/test/.htpasswd
+Require valid-user
+```
+
+Create .htpasswd file
+
+```
+htpasswd -cb .htpasswd test admin
+service apache2 restart
+```
+
+This will now create a file called .htpasswd with the user: test and the password: admin
+
+If the directory does not display a login-prompt, you might have to change the **apache2.conf** file. To this:
+
+```
+<Directory /var/www/html/test>
+	AllowOverride AuthConfig
+</Directory>
+```
+
+### Brute force it
+
+Now that we know how this works we can try to brute force it with medusa.
+
+```
+medusa -h 192.168.1.101 -u admin -P wordlist.txt -M http -m DIR:/test -T 10
+```
+
 ## Port 110 - Pop3
 
 ```
