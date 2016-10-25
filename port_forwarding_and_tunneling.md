@@ -88,7 +88,7 @@ SSH Tunneling is not only useful for hackers and pentesters. It is also useful f
 So with local port forwarding we are just forwarding our traffic from a local port to somewhere. For example. Lets say that you have facebook.com blocked by your company. So in order to bypass this firewall we can forward all the traffic from a local port to our destination.
 
 ```
-ssh -L 8080:www.facebook.com:80 localhost
+ssh -L 8081:www.facebook.com:80 localhost
 ```
 
 
