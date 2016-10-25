@@ -81,14 +81,18 @@ So the bind-address is where the proxy receieves the connection, and the connect
 
 ## SSH Tunneling - Port forwarding on SSH
 
-SSH Tunneling is not only useful for hackers and pentesters. It is also useful for anyone that wants to encrypt traffic that goes over unencrypted protocols. For example VNC, IMAP or IRC. But for us it might be useful if a network has a firewall that filters outgoing traffic. 
+**Use cases**
+- You want to encrypt traffic that uses unencrypted protocols. Like VNC, IMAP, IRC.
+- You are on a public network and want to encrypt all your http traffic.
+- You want to bypass firewall rules.
+
 
 ### Local port forwarding
 
-So with local port forwarding we are just forwarding our traffic from a local port to somewhere. For example. Lets say that you have facebook.com blocked by your company. So in order to bypass this firewall we can forward all the traffic from a local port to our destination.
+Now facebook will be available on address localhost:8080.
 
 ```
-ssh -L 8081:www.facebook.com:80 localhost
+ssh -L 8080:www.facebook.com:80 localhost
 ```
 
 
@@ -96,6 +100,23 @@ ssh -L 8081:www.facebook.com:80 localhost
 
 ### Dynamic port forwarding
 
+This can be used to dynamically forward all traffic from a specific application. 
+
+#### Tunnel all http/https traffic through ssh
+
+For this we need two machines.
+Machine1 - 111.111.1111.111 - The server that works as our proxy.
+Machine2 - The computer with the web browser.
+
+First you set ssh to 
+
+```
+# On Machine2 we run
+ssh -D localhost:9999 root@111.111.111.111
+```
+
+Now you go to Firefox/settings/advanced/network and **SOCKS** you add 
+**127.0.0.1** and port **9999**
 
 ## References
 
