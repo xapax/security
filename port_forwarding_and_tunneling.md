@@ -108,15 +108,28 @@ For this we need two machines.
 Machine1 - 111.111.1111.111 - The server that works as our proxy.
 Machine2 - The computer with the web browser.
 
+First we check out what out public IP adress is, so that we know the IP address before and after, so we can verify that it works.
 First you set ssh to 
 
 ```
 # On Machine2 we run
 ssh -D localhost:9999 root@111.111.111.111
+
+# Can also be run with the -N flag
+ssh -D localhost:9999 root@111.111.111.111 -N
+
 ```
 
 Now you go to Firefox/settings/advanced/network and **SOCKS** you add 
 **127.0.0.1** and port **9999**
+
+Notice that this setup probably leaks DNS. So don't use it if you need opsec.
+
+To fix the DNS-leak you can go to **about:config** in firefox (in the addressbar) then look for **network.proxy.socks_remote_dns**, and switch it to **TRUE**. Now you can check: https://ipleak.net/
+
+But we are not done yet. It still says that we have **WebRTC leaks**. In order to solve this you can go to about:config again and set the following to **FALSE**
+
+**media.peerconnection.enabled**
 
 ## References
 
