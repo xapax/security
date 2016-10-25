@@ -13,6 +13,13 @@ nc 192.168.1.10 22
 It returnes something like this:
 SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu1
 
+This banner is defined in RFC4253, in chapter 4.2 Protocol Version Exchange. http://www.openssh.com/txt/rfc4253.txt
+The protocol-version string should be defined like this:
+**SSH-protoversion-softwareversion SP comments CR LF**
+Where comments is optional. And SP means space, and CR (carriege return) and LF (Line feed)
+So basically the comments should be separated by a space. 
+
+
 ## Port 25 - SMTP
 
 SMTP is a server to server service. The user receives or sends emails using IMAP or POP3. Those messages are then routed to the SMTP-server which communicates the email to another server.
