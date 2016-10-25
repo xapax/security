@@ -44,7 +44,6 @@
        * [Port Knocking](port_knocking.md)
        * [SMTP - Extract emails](smtp_-_extract_emails.md)
        * FTP
-       * [Passwords](passwords.md)
        * [Server misconfiguration](server_misconfiguration.md)
        * [phpMyAdmin](phpmyadmin.md)
        * [Mysql](mysql.md)
