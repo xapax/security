@@ -1,7 +1,7 @@
 # Summary
 
 * [Introduction](README.md)
-   * Firewalls
+   * [Firewalls](firewalls.md)
 * [The Basics](the_basics.md)
    * [Linux](linux.md)
        * [Basics of linux](basics_of_linux.md)
