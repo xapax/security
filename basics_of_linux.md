@@ -597,7 +597,7 @@ Netstat is a multiplatform tool. So it works on both mac, windows and linux.
 ```
 $ netstat -apaA inet
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
-tcp        0      0 jobbdator:domain        *:*                     LISTEN      -               
+tcp        0      0 mymachine:domain        *:*                     LISTEN      -               
 tcp        0      0 localhost:ipp           *:*                     LISTEN      -               
 tcp        0      0 localhost:27017         *:*                     LISTEN      -               
 tcp        0      0 localhost:mysql         *:*                     LISTEN      -               
@@ -615,7 +615,7 @@ tcp        0      0 192.168.0.15:36280      cb-in-f101.1e100.:https ESTABLISHED 
 tcp        0      0 192.168.0.15:47160      176.32.99.76:https      ESTABLISHED 3120/chrome     
 tcp        0      1 192.168.0.15:59285      149.154.175.50:https    LAST_ACK    -               
 udp        0      0 *:35733                 *:*                                 -               
-udp        0      0 jobbdator:domain        *:*                                 -               
+udp        0      0 mymachine:domain        *:*                                 -               
 udp        0      0 *:bootpc                *:*                                 -               
 udp        0      0 *:33158                 *:*                                 -               
 udp        0      0 *:ipp                   *:*                                 -               
@@ -716,6 +716,8 @@ iptables -A INPUT -s 192.168.1.30 -j DROP
 iptables -A INPUT -s 192.168.1.0/24 -j DROP
 ```
 
+
+
 Now if we want to see our current rules we just do
 ```
 iptables -L
@@ -787,6 +789,13 @@ Then check out the traffci with
 iptables -L -v --line-numbers
 ```
 
+#### Examples
+
+**Block outgoing connections to a specific ip**
+
+```
+iptables -A OUTPUT -d 198.23.253.22 -j DROP
+```
 References:
 https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules
 
