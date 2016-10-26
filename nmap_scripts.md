@@ -22,6 +22,15 @@ To find the "man"-pages, the info about a script we write:
 nmap -script-help http-vuln-cve2013-0156.nse
 ```
 
+**Run multiple scripts**
+
+Can be run by separating the script with a comma
+
+```
+nmap --script scriptone.nse,sciprt2.nse,script3.nse 192.168.1.101
+```
+
+
 ## Basics
 
 Run the default scripts
