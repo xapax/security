@@ -54,6 +54,9 @@ use exploit/multi/handler
 set payload windows/shell/reverse_tcp
 ```
 
+### Inject payload into binary
+
+
 
 ## Bash
 
