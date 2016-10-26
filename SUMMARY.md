@@ -2,7 +2,6 @@
 
 * [Introduction](README.md)
    * [Firewalls](firewalls.md)
-   * Bypassing antivirus
 * [The Basics](the_basics.md)
    * [Linux](linux.md)
        * [Basics of linux](basics_of_linux.md)
@@ -105,6 +104,7 @@
    * [Pass the hash - reusing hashes](pass_the_hash_-_reusing_hashes.md)
 * [Port forwarding and tunneling](port_forwarding_and_tunneling.md)
    * Local
+* Bypassing antivirus
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
    * [Basics of assembly](binary_exploitation.md)
