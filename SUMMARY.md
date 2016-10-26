@@ -103,6 +103,7 @@
    * [Online password cracking](online_password_cracking.md)
    * [Pass the hash - reusing hashes](pass_the_hash_-_reusing_hashes.md)
 * [Port forwarding and tunneling](port_forwarding_and_tunneling.md)
+   * Local
 * [Binary Exploitation](binary_exploitation2.md)
    * [Tools](tools.md)
    * [Basics of assembly](binary_exploitation.md)
