@@ -29,6 +29,13 @@ Output file but thest little bit at a time
 ### cp
 Copy
 ### mkdir
+
+To make an entire strcture add the **-p** flag
+
+```
+mkdir -p new/thisonetoo/and/this/one
+```
+
 Make directory 
 ### rm
 Remove
