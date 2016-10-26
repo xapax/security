@@ -2,6 +2,7 @@
 
 * [Introduction](README.md)
    * [Firewalls](firewalls.md)
+   * Bypassing antivirus
 * [The Basics](the_basics.md)
    * [Linux](linux.md)
        * [Basics of linux](basics_of_linux.md)
