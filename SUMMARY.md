@@ -136,6 +136,7 @@
        * [Database](database.md)
        * [Meterpreter](meterpreter.md)
        * [Modules](modules.md)
+       * Write exploits
 * [Physical access to machine](physical_access_to_machine.md)
 * [OSCP](oscp.md)
 * [Literature](littearature.md)
