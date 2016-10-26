@@ -13,6 +13,17 @@ Look for vulnerable services that may be running as system
 
 So if you have a metasploit meterpreter session going you can run **getsystem**.
 
+### Post modules
+
+First you need to background the meterpreter shell and then you just run the post modules.
+You can also try some different post modules. 
+
+**Find weak service permissions**
+
+```
+use exploit/windows/local/service_permissions
+```
+
 ## Manually
 
 ### Cleartext passwords
