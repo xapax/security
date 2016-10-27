@@ -421,6 +421,12 @@ exploit
 vncviewer 192.168.1.109
 ```
 
+### Ctr-alt-del
+
+If you are unable to input ctr-alt-del (kali might interpret it as input for kali).
+
+Try **shift-ctr-alt-del**
+
 ### Metasploit scanner
 
 You can scan VNC for logins, with bruteforce. 
