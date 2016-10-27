@@ -46,6 +46,19 @@ Windows stores passwords in SAM - Security Account Manager. Passwords are stored
 
 **NTLM > Windows vista**
 
+### LM Hashes
+
+LM hashes can be reaully easy to crack. The LM part in the example below is the first part.
+
+```
+Administrator:500:FA21A6D3CF(01B8BAAD3B435B51404EE:C294D192B82B6AA35C3DFCA81F1F59BC:::
+```
+
+Example of NT
+```
+Administrator:500:NO PASSWORD*********************:BE134K40129560B46534340292AF4E72:::
+```
+
 ### fgdump.exe
 
 We can use fgdump.exe (locate fgdump.exe on kali) to extract NTLM and LM Password hashes. Run it and there is a file called 127.0.0.1.pwndump where the hash is saved. Now you can try to brute force it. 
