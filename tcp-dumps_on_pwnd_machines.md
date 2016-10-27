@@ -67,6 +67,11 @@ use auxiliary/sniffer/psnuffle
 https://www.offensive-security.com/metasploit-unleashed/password-sniffing/
 
 
+## Windows
+
+On windows you can use `netsh trace help`
+
+
 ## References
 
 
