@@ -69,7 +69,7 @@ https://www.offensive-security.com/metasploit-unleashed/password-sniffing/
 
 ## Windows
 
-On windows you can use `netsh trace help`
+On windows you can use `netsh trace help`. It works on Windows 7 and Windows Server 2008 and newer.
 
 
 ## References
