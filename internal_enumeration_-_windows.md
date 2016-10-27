@@ -10,6 +10,14 @@ http://netsec.ws/?p=314
 ## Info about the system
 
 
+schtasks /query /fo LIST /v
+schtasks /query /fo LIST /v
+net start
+accesschk.exe -uwcqv "Authenticated Users" *
+dir network-secret.txt /s
+windump -i 2 -w capture -n -U -s 0 src not 10.11.0.X and dst not 10.11.0.X
+
+
 
 ```
 systeminfo
@@ -25,6 +33,13 @@ net users
 
 #More info about a specific user
 net user user1
+```
+
+## Firewall
+
+```
+netsh firewall show state
+netsh firewall show config
 ```
 
 ## Network
@@ -73,7 +88,7 @@ Local address 127.0.0.1 means that the service is only listening for connection 
 
 Local address 192.168.1.9 means that the service is only listening for connections from the local network. So someone in the local network can connect to it, but not someone from the internet. 
 
-### Processes running
+## Processes running
 
 ```
 # The cronjob of windows
@@ -86,9 +101,20 @@ net start
 
 # List all drivers
 driverquery
-
 ```
 
+## Users and domain
+
+```
+net users
+net localgroups
+
+# View Domain Groups
+net group /domain
+
+# View Members of Domain Group
+net group /domain <Group Name>
+```
 
 ### List all patches
 
