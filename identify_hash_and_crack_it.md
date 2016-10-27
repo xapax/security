@@ -92,8 +92,16 @@ Here is an example of how to use it:
 findmyhash LM -h 6c3d4c343f999422aad3b435b51404ee:bcd477bfdb45435a34c6a38403ca4364
 ```
 
+### Cracking
 Crackstation
+https://crackstation.net/
+
 Hashkiller
+https://hashkiller.co.uk/
+
+Crackpot
+http://cracker.offensive-security.com/index.php
+
 Google hashes
 Search pastebin.
 
