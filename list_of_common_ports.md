@@ -446,4 +446,10 @@ run
 ```
 
 
-#
+## Port 8080
+
+Since this port is used by many different services. They are divided like this.
+
+### Tomcat
+
+Tomcat suffers from default passwords. There is even a module in metasploit that enumerates common tomcat passwords. And another module for exploiting it and giving you a shell.
