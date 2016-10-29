@@ -118,13 +118,17 @@ Windows Server 2016 	2016 	NT 10.0
 
 A windows network is usually called a Windows domain. On windows domain all users are connected to a domain controller. 
 
+So when you log in to your machine it authenticates against the Domain controller. This way it is ultimately the domain controller that decides security policy. Length of password, how often it should be changed, disableing account. If a users quits the job you can just remove his/her account, and then add a new one. The person in control over the Domain controller is in control of the network. As a pentester your goal is obviously to gain Administrator/system level access to the Domain controller. That means you control the network. 
+
+In order to set up a Domain network you need at least one Windows server for the domain controller. 
+
 ### Active directory
 
 From Windows 2000 the application Active directory has been in charge of maintaining the central database of users and configurations.
 
 ### Domain controller
 
-Any windows computer can be configured to be a domain controller. The domain controller manages all the security aspects of the interaction between user and domain.
+Any windows computer can be configured to be a domain controller. The domain controller manages all the security aspects of the interaction between user and domain. There are usually a least two computers configured to be domain-controllers. In case one breaks down. 
 
 ### SMB
 
@@ -132,8 +136,11 @@ On networks that are based on linux and you need to integrate a windows machine 
 
 ## Workgroup
 
-A workgroup architecture stands in contrast to the domain-system. A workgroup is based on the idea of peer-to-peer and not server-client as Domain is. In Domain you have a server (domain controller) and a client (the user). Therefore it might be a bit hard to control a network bigger than a dozen clients. So it is usually used for smaller networks.
+A workgroup architecture stands in contrast to the domain-system. A workgroup is based on the idea of peer-to-peer and not server-client as Domain is. In Domain you have a server (domain controller) and a client (the user). Therefore it might be a bit hard to control a network bigger than a dozen clients. So it is usually used for smaller networks. If a computer is part of a workgroup it cannot be part of a domain. In a workgroup architecture each computer is in charge of its own security settings. So there is no single computer in charge of all the security settings for the workgroup. 
 
+In a network you can have several workgroups. But that is usually not the case. 
+
+In a workgroup users can see each other, and share files. 
 
 ## User privileges
 
@@ -359,3 +366,8 @@ So if one DLL-file is missing for a program a certain module might not work.
 ### LIB
 
 Lib is a bit like DLL, it is a library. But it is not dynamic as DLL. So lib-files are linked on compile-time. While dll-files are linked in run-time. Since lib-files are compiled into the exacutable you never see it (unless you are developing of course). But since DLL-files are dynamically loaded at run-time they are still around for the user to see.
+
+
+## References
+
+http://compudyne.net/post08152012/
