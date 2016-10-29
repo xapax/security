@@ -120,7 +120,11 @@ A windows network is usually called a Windows domain. On windows domain all user
 
 So when you log in to your machine it authenticates against the Domain controller. This way it is ultimately the domain controller that decides security policy. Length of password, how often it should be changed, disableing account. If a users quits the job you can just remove his/her account, and then add a new one. The person in control over the Domain controller is in control of the network. As a pentester your goal is obviously to gain Administrator/system level access to the Domain controller. That means you control the network. 
 
+Since you authenticate against a domain controller you can log in to your account from any of the machines in the network. Think of systems you have had in schools and universities, where you can just sit down by any computer and log in to your account. 
+
 In order to set up a Domain network you need at least one Windows server for the domain controller. 
+
+If you have hacked a machine and you want to know if it is part of either a Workgroup or a domain you can do the following: go to Control panel/System. If it says **Workgroup: something** it measn that the machine is connected to a workgroup.
 
 ### Active directory
 
