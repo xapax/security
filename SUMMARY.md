@@ -43,7 +43,6 @@
        * [Common ports/services and how to use them](list_of_common_ports.md)
        * [Port Knocking](port_knocking.md)
        * [SMTP - Extract emails](smtp_-_extract_emails.md)
-       * FTP
        * [Server misconfiguration](server_misconfiguration.md)
        * [phpMyAdmin](phpmyadmin.md)
        * [Mysql](mysql.md)
