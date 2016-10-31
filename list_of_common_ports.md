@@ -20,6 +20,16 @@ Where comments is optional. And SP means space, and CR (carriege return) and LF 
 So basically the comments should be separated by a space. 
 
 
+## Port 23 - Telnet
+
+Telnet is considered insecure mainly because it does not encrypt its traffic. Also a quck search in exploit-db wll show that there are various rce vulnerabilites on different versions. Might be worth checking out. 
+
+You cal also brute force it like this:
+
+```
+hydra -l root -P /root/SecLists/Passwords/10_million_password_list_top_100.txt 192.168.1.101 telnet
+```
+
 ## Port 25 - SMTP
 
 SMTP is a server to server service. The user receives or sends emails using IMAP or POP3. Those messages are then routed to the SMTP-server which communicates the email to another server.
