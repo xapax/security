@@ -408,6 +408,11 @@ Related ports:
 110 is the POP3 non-encrypted.
 25, 465
 
+
+## Port 1025 - NFS or IIS
+
+I have seen them open on windows machine. But nothing has been listening on it.
+
 ## Port 2049 - NFS
 
 Network file system
