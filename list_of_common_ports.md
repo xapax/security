@@ -377,6 +377,11 @@ There are a few snmp modules in metasploit that you can use. snmp_enum can show 
 
 https://www.offensive-security.com/metasploit-unleashed/snmp-scan/
 
+
+## Port 199 - Smux
+
+
+
 ## Port 443 - HTTPS
 
 Okay this is only here as a reminder to always check for SSL-vulnerabilities such as heartbleed. Search for heartbleed in this book to find out how to exploit it.
@@ -419,6 +424,10 @@ Then you can mount the filesystem to your machine using the following command
 mount -t 192.168.1.109:/ /tmp/NFS
 ```
 Now we can go to /tmp/NFS and check out /etc/passwd, and add and remove files.
+
+
+## Port 3306 - MySQL
+
 
 
 ## Port 3389 - Remote Desktop Protocol
