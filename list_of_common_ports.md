@@ -294,6 +294,10 @@ getdompwinfo
 
 ```
 
+## Port 143 - IMAP
+
+IMAP lets you access email stored on that server. So imagine that you are on a network at work, the emails you recieve is not stored on your computer but on a specific mail-server. So every time you look inyour inbox your eail-client (like outlook) fetches the emails from the mail-server using imap.
+
 ## Port 161 and 162 - SNMP
 
 Simple Network Management Protocol
