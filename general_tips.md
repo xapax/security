@@ -23,3 +23,9 @@ print decoded
 ## Default passwords
 
 http://www.defaultpassword.com/
+
+
+## Getting GUI on machine that does not have RDP or VNC
+
+You can forward X over SSH.
+http://www.vanemery.com/Linux/XoverSSH/X-over-SSH2.html
