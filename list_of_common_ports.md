@@ -298,6 +298,8 @@ getdompwinfo
 
 IMAP lets you access email stored on that server. So imagine that you are on a network at work, the emails you recieve is not stored on your computer but on a specific mail-server. So every time you look inyour inbox your eail-client (like outlook) fetches the emails from the mail-server using imap.
 
+IMAP is a lot like pop3. But with IMAP you can access your email from various devices. With pop3 you can only access them from one device.
+
 ## Port 161 and 162 - SNMP
 
 Simple Network Management Protocol
