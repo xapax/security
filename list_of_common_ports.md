@@ -186,6 +186,8 @@ medusa -h 192.168.1.101 -u admin -P wordlist.txt -M http -m DIR:/test -T 10
 
 ## Port 110 - Pop3
 
+This service is used for fetching emails on a email server. So the server that has this port open is probably an email-server, and other clients on the network (or outside) access this server to fetch their emails.
+
 ```
 telnet 192.168.1.105 110
 USER pelle@192.168.1.105
