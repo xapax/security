@@ -2,9 +2,19 @@
 
 There are too many ports and services to write about all of them here. But still, I am going to try to write a bit about what I am learning.
 
+## Port 21 - FTP
+
+Connect to the ftp-server to enumerate software and version
+
+```
+ftp 192.168.1.101
+nc 192.168.1.101 21
+```
+
 ## Port 22 - SSH
 
-You can find out the version of the SSH either but scanning it with nmap or by connecting with it using `nc`
+SSH is such an old and fundamental technology so most modern version are quite hardened.
+You can find out the version of the SSH either but scanning it with nmap or by connecting with it using `nc`.
 
 ```
 nc 192.168.1.10 22
