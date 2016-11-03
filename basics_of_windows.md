@@ -166,6 +166,14 @@ You can add a new user through the cmd with the following command:
 
 ```
 net user username /add
+net user username password /add
+net user kalle secret_password /add
+
+# Add user to administrator group - thus making it administrator
+net localgroup administrators kalle /add
+
+# Add to Remote Desktop User
+https://www.windows-commandline.com/add-user-to-group-from-command-line/
 ```
 
 ## Structure of windows
