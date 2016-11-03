@@ -413,6 +413,10 @@ Related ports:
 
 I have seen them open on windows machine. But nothing has been listening on it.
 
+## Port 1030/1032/1033/1038
+
+I think these are used by the RPC within Windows Domains. I have found no use for them so far. But they might indicate that the target is part of a Windows domain. 
+
 ## Port 2049 - NFS
 
 Network file system
