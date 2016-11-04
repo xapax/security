@@ -417,6 +417,8 @@ I have seen them open on windows machine. But nothing has been listening on it.
 
 I think these are used by the RPC within Windows Domains. I have found no use for them so far. But they might indicate that the target is part of a Windows domain. 
 
+
+
 ## Port 1521 - Oracle database
 
 Enumeration
@@ -439,6 +441,15 @@ References:
 
 http://www.red-database-security.com/wp/itu2007.pdf
 
+
+## Ports 1748, 1754, 1808, 1809 - Oracle
+
+These are also ports used by oracle on windows. They run Oracles **Intelligent Agent**.
+
+## Port 2100 - Oracle XML DB
+
+There are some exploits for this, so check it out. You can use the default Oracle users to access to it. You can use the normal ftp protocol to access it. 
+
 ## Port 2049 - NFS
 
 Network file system
@@ -459,6 +470,8 @@ Now we can go to /tmp/NFS and check out /etc/passwd, and add and remove files.
 
 ## Port 3306 - MySQL
 
+
+## Port 3339 - Oracle web interface
 
 
 ## Port 3389 - Remote Desktop Protocol
