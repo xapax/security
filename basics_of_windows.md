@@ -143,6 +143,12 @@ Nbtstat Information
 <1c> - <GROUP> B <ACTIVE>  Domain Controllers
 ``` 
 
+A third way is to run this command
+
+```
+echo %logonserver%
+```
+
 
 ### SMB
 
