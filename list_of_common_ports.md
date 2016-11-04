@@ -432,6 +432,13 @@ Bruteforce the ISD
 auxiliary/scanner/oracle/sid_brute
 ```
 
+Connect to the database with **sqlplus**
+
+
+References:
+
+http://www.red-database-security.com/wp/itu2007.pdf
+
 ## Port 2049 - NFS
 
 Network file system
