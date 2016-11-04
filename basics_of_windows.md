@@ -134,6 +134,16 @@ From Windows 2000 the application Active directory has been in charge of maintai
 
 Any windows computer can be configured to be a domain controller. The domain controller manages all the security aspects of the interaction between user and domain. There are usually a least two computers configured to be domain-controllers. In case one breaks down. 
 
+If you have compromised a machine that belongs to a domain you can check if it has any users. DC:s don't have local users.
+
+If you run enum4linux you can look out for this seciton
+
+```
+Nbtstat Information
+<1c> - <GROUP> B <ACTIVE>  Domain Controllers
+``` 
+
+
 ### SMB
 
 On networks that are based on linux and you need to integrate a windows machine you can use SMB to do that.
