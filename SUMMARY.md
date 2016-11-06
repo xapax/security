@@ -85,7 +85,6 @@
    * [Loot](loot.md)
    * [Persistence](persistence.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
-   * [Post-exploit modules metasploit](post-exploit_modules_metasploit.md)
    * [Cover your tracks](clean_up.md)
 * Password cracking
    * [Generate custom wordlist](generate_custom_wordlist.md)
