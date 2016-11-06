@@ -144,6 +144,9 @@ There are usually three types of users on a windows machine:
 2. Administrator
 3. Regular user
 
+The process can be automatd with the windows-priv-esc checker.
+http://pentestmonkey.net/tools/windows-privesc-check
+
 ## Metasploit - The easy way
 
 So if you have a metasploit meterpreter session going you can run **getsystem**.
@@ -160,6 +163,13 @@ use exploit/windows/local/service_permissions
 ```
 
 ## Manually
+
+Go from Administrator to system. Use https://technet.microsoft.com/en-us/sysinternals/bb897553
+psexec.exe
+
+```
+psexec.exe -s cmd.exe
+```
 
 ### Cleartext passwords
 
@@ -209,11 +219,14 @@ If we have an exploit written in python but we don't have python installed on th
 
 ### Misconfigurations
 
-#### Weak ervice permissions
+#### Weak service permissions
 
 If you find a service that has read-write permissions set to everyone you can just change that binary into a binary that adds a user to the administrators group and thereby giving it privileges.
 
-First we need to find services. That can be done using **wmci**. Wmci is not availbe on all windows machines, and it might not be avaliable to your user. But if it is, you can use it like this:
+First we need to find services. That can be done using **wmci**. Wmci is not availbe on all windows machines, and it might not be avaliable to your user. If you don't have access to it, there is a workaround using sc.exe. See further down. But if wmci is availible, you can use it like this.
+
+
+##### WMCI
 
 ```
 wmic service list brief
@@ -226,6 +239,15 @@ As you can see in the command you need to make sure that you have access to wimc
 for /f "tokens=2 delims='='" %a in ('wmic service list full^|find /i "pathname"^|find /i /v "system32"') do @echo %a >> c:\windows\temp\permissions.txt
 
 for /f eol^=^"^ delims^=^" %a in (c:\windows\temp\permissions.txt) do cmd.exe /c icacls "%a"
+```
+
+##### SC.exe
+
+```
+sc query state= all | findstr "SERVICE_NAME:" >> Servicenames.txt
+
+
+sc qc [Insert Service Name] | findstr “BINARY_PATH_NAME” >> servicebinarypaths.txt
 ```
 
 Binaries in system32 are excluded sine they are mostly correct, since they are installed by windows. What we are interested in is binaries that have been installed by the user.In the output you want to look for **BUILTIN\Users:(F)**. That means your user has write access. So you can just rename the .exe file and add your own. And then restart the program and your program will be exevuted instead. This can be a simple getsuid program or a reverse shell that you create with msfvenom.
