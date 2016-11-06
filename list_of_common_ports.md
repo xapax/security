@@ -414,7 +414,7 @@ https://www.offensive-security.com/metasploit-unleashed/snmp-scan/
 
 ## Port 443 - HTTPS
 
-Okay this is only here as a reminder to always check for SSL-vulnerabilities such as heartbleed.
+Okay this is only here as a reminder to always check for SSL-vulnerabilities such as heartbleed. For more on how to exploit web-applications check out the chapter on client-side vulnerabilities. 
 
 ### Heartbleed
 
