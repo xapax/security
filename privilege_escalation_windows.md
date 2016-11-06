@@ -259,11 +259,10 @@ Now you can process them one by one with the calc command.
 Binaries in system32 are excluded sine they are mostly correct, since they are installed by windows. What we are interested in is binaries that have been installed by the user.In the output you want to look for **BUILTIN\Users:(F)**.
 
 ```
-C:\Program Files\freeSSHd\FreeSSHDService.exe BUILTIN\Users:R 
-                                              BUILTIN\Power Users:C 
-                                              BUILTIN\Administrators:F 
-                                              NT AUTHORITY\SYSTEM:F 
-                                              BOB\Administrator:F 
+C:\path\to\file.exe BUILTIN\Users:F
+BUILTIN\Power Users:C 
+BUILTIN\Administrators:F 
+NT AUTHORITY\SYSTEM:F 
 ```
 
 That means your user has write access. So you can just rename the .exe file and add your own. And then restart the program and your program will be exevuted instead. This can be a simple getsuid program or a reverse shell that you create with msfvenom.
