@@ -162,6 +162,10 @@ You can also try some different post modules.
 use exploit/windows/local/service_permissions
 ```
 
+```
+post/windows/gather/credentials/gpp
+```
+
 ## Manually
 
 Go from Administrator to system. Use https://technet.microsoft.com/en-us/sysinternals/bb897553
