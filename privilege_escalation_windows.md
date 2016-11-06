@@ -167,6 +167,7 @@ Thse are common files to find them in. They might be base64-encoded. So look out
 ```
 c:\sysprep.inf
 c:\sysprep\sysprep.xml
+c:\unattend.xml
 %WINDIR%\Panther\Unattend\Unattended.xml
 %WINDIR%\Panther\Unattended.xml
 ```
