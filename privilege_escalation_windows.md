@@ -166,6 +166,10 @@ use exploit/windows/local/service_permissions
 post/windows/gather/credentials/gpp
 ```
 
+```
+exploit/windows/local/trusted_service_path
+```
+
 ## Manually
 
 Go from Administrator to system. Use https://technet.microsoft.com/en-us/sysinternals/bb897553
@@ -211,6 +215,10 @@ reg query "HKLM\SYSTEM\Current\ControlSet\Services\SNMP"
 
 # Putty
 reg query "HKCU\Software\SimonTatham\PuTTY\Sessions"
+
+# Search for password in registry
+reg query HKLM /f password /t REG_SZ /s
+reg query HKCU /f password /t REG_SZ /s
 ```
 
 **Group Policy Preference**
@@ -344,6 +352,11 @@ There is also a metasploit module for this is: exploit/windows/local/trusted_ser
 
 
 ### AlwaysInstallElevated
+
+```
+reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevated
+reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevated
+```
 
 http://toshellandback.com/2015/11/24/ms-priv-esc/
 
