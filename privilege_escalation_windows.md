@@ -228,6 +228,9 @@ for /f "tokens=2 delims='='" %a in ('wmic service list full^|find /i "pathname"^
 for /f eol^=^"^ delims^=^" %a in (c:\windows\temp\permissions.txt) do cmd.exe /c icacls "%a"
 ```
 
+Binaries in system32 are excluded sine they are mostly correct, since they are installed by windows. What we are interested in is binaries that have been installed by the user.
+
+
 Here is a POC code for this
 
 ```c
