@@ -33,7 +33,6 @@
            * [DNS Zone Transfer Attack](dns_zone_transfer_attack.md)
        * [CMS Scanning](cms_scanning.md)
        * [Nmap scripts](nmap_scripts.md)
-       * [enum4linux](enum4linux.md)
 * [Vulnerability analysis](vulnerability_analysi1s.md)
    * Server-side vulnerabilities
        * [Common ports/services and how to use them](list_of_common_ports.md)
