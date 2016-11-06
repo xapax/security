@@ -85,7 +85,6 @@
    * [Loot](loot.md)
    * [Persistence](persistence.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
-   * [Pivoting](pivoting.md)
    * [Post-exploit modules metasploit](post-exploit_modules_metasploit.md)
    * [Cover your tracks](clean_up.md)
 * Password cracking
@@ -94,6 +93,7 @@
    * [Online password cracking](online_password_cracking.md)
    * [Pass the hash - reusing hashes](pass_the_hash_-_reusing_hashes.md)
 * [Port forwarding and tunneling](port_forwarding_and_tunneling.md)
+   * [Pivoting](pivoting.md)
    * Local
 * [Bypassing antivirus](bypassing_antivirus.md)
 * [Binary Exploitation](binary_exploitation2.md)
