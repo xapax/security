@@ -1,7 +1,6 @@
 # Summary
 
 * [Introduction](README.md)
-   * [Firewalls](firewalls.md)
 * [The Basics](the_basics.md)
    * [Linux](linux.md)
        * [Basics of linux](basics_of_linux.md)
@@ -19,6 +18,7 @@
    * [Example of company architecture](example_of_company_architecture.md)
    * [Networking](networking.md)
        * networking
+   * [Firewalls](firewalls.md)
    * [General tips and tricks](general_tips.md)
 * [Recon/information gathering phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
