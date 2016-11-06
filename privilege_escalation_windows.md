@@ -138,6 +138,12 @@ Source: OSCP and OSCE; Never used exploits to get privilege escalation on the wi
 
 Look for vulnerable services that may be running as system
 
+There are usually three types of users on a windows machine:
+
+1. System
+2. Administrator
+3. Regular user
+
 ## Metasploit - The easy way
 
 So if you have a metasploit meterpreter session going you can run **getsystem**.
@@ -203,9 +209,24 @@ If we have an exploit written in python but we don't have python installed on th
 
 ### Misconfigurations
 
-#### Incorrect file and service permissions
+#### Weak ervice permissions
 
-If you find a service that has read-write permissions set to everyone you can just change that binary into a binary that adds a user to the administrators'group and thereby giving it privileges.
+If you find a service that has read-write permissions set to everyone you can just change that binary into a binary that adds a user to the administrators group and thereby giving it privileges.
+
+First we need to find services. That can be done using **wmci**. Wmci is not availbe on all windows machines, and it might not be avaliable to your user. But if it is, you can use it like this:
+
+```
+wmic service list brief
+```
+This will produce a lot out output and we need to know which one of all of these services have weak permissions. In order to check that we can use the icalcs program. Notice that icalcs is only available from Vista and up. XP has calcs instead.
+
+As you can see in the command you need to make sure that you have access to wimc, icalcs and write privilege in windows\temp.
+
+```
+for /f "tokens=2 delims='='" %a in ('wmic service list full^|find /i "pathname"^|find /i /v "system32"') do @echo %a >> c:\windows\temp\permissions.txt
+
+for /f eol^=^"^ delims^=^" %a in (c:\windows\temp\permissions.txt) do cmd.exe /c icacls "%a"
+```
 
 Here is a POC code for this
 
