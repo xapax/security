@@ -254,7 +254,11 @@ FOR /F "tokens=2 delims= " %i in (Servicenames.txt) DO @echo %i >> services.txt
 FOR /F %i in (services.txt) DO @sc qc %i | findstr "BINARY_PATH_NAME" >> path.txt
 ```
 
-Now you can process them one by one with the calc command.
+Now you can process them one by one with the cacls command.
+
+```
+cacls "C:\path\to\file.exe"
+```
 
 Binaries in system32 are excluded sine they are mostly correct, since they are installed by windows. What we are interested in is binaries that have been installed by the user.In the output you want to look for **BUILTIN\Users:(F)**.
 
