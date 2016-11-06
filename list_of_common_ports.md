@@ -1,6 +1,6 @@
 # Common ports/services and how to use them
 
-There are too many ports and services to write about all of them here. But still, I am going to try to write a bit about what I am learning.
+I will try to make this chapter into a reference library. So that you can just check in this chapter to see common ways to exploit certain common services. I will only discuss the most common, since there are quite a few.
 
 ## Port 21 - FTP
 
@@ -10,6 +10,8 @@ Connect to the ftp-server to enumerate software and version
 ftp 192.168.1.101
 nc 192.168.1.101 21
 ```
+
+Many ftp-servers allow anonymous users. These might be misconfgirued and give too much access, and it might also be necessary for certain exploits to work. So alwyas try to log in with anonymous:anonymous.
 
 ## Port 22 - SSH
 
