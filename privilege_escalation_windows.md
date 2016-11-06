@@ -290,6 +290,8 @@ We then compile it with out cross-compiler, if you are on linux, like this:
 i686-w64-mingw32-gcc windows-exp.c -lws2_32 -o exp.exe
 ```
 
+rever-shell with msfvenom.
+
 Okay, so now that we have either create our setuid or our reverse shell we need to restart the program, we can do that using wmci. Like this
 
 ```
@@ -357,3 +359,4 @@ http://www.harmj0y.net/blog/powershell/powerup-a-usage-guide/
 https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerUp
 
 http://pwnwiki.io/#!privesc/windows/index.md
+
