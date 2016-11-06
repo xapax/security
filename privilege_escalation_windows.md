@@ -162,6 +162,10 @@ You can also try some different post modules.
 use exploit/windows/local/service_permissions
 ```
 
+```
+post/windows/gather/credentials/gpp
+```
+
 ## Manually
 
 Go from Administrator to system. Use https://technet.microsoft.com/en-us/sysinternals/bb897553
@@ -207,6 +211,19 @@ reg query "HKLM\SYSTEM\Current\ControlSet\Services\SNMP"
 
 # Putty
 reg query "HKCU\Software\SimonTatham\PuTTY\Sessions"
+```
+
+**Group Policy Preference**
+If the machine belongs to a domain and your user has access to "System Volume Information" there might be some sensitive files there.
+
+Look for the file **Groups.xml**. It might be encrpted the password. But the encryption.key can be found on windows homepage. Other interesting files here might be
+
+```
+Services\Services.xml: Element-Specific Attributes
+ScheduledTasks\ScheduledTasks.xml: Task Inner Element, TaskV2 Inner Element, ImmediateTaskV2 Inner Element
+Printers\Printers.xml: SharedPrinter Element
+Drives\Drives.xml: Element-Specific Attributes
+DataSources\DataSources.xml: Element-Specific Attributes
 ```
 
 ### Kernel exploits
