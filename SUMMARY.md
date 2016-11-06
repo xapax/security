@@ -13,7 +13,6 @@
    * [Scripting with python](scripting_with_python.md)
        * [Python fundamentals](python_fundamentals.md)
        * [Useful scripts](connections.md)
-   * [Bug Bounties](bug_bounties.md)
    * [Transfering files](transfering_files2.md)
        * [Transfering files on linux](transfering_files.md)
        * [Transfering files to windows](transfering_files_to_windows.md)
