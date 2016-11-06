@@ -81,6 +81,11 @@ VRFY, EXPN or RCPT command
 
 This process can of course be automatized
 
+**Check for commands**
+```
+nmap -script smtp-commands.nse 192.168.1.101
+```
+
 #### smtp-user-enum
 The command will look like this. `-M` for mode. `-U` for userlist. `-t` for target
 
@@ -108,6 +113,8 @@ Target domain ............
 
 8607 queries in 112 seconds (76.8 queries / sec)
 ```
+
+
 
 #### Metasploit
 
