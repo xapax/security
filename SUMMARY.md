@@ -45,7 +45,6 @@
        * [Server misconfiguration](server_misconfiguration.md)
        * [phpMyAdmin](phpmyadmin.md)
        * [Heartbleed](heartbleed.md)
-       * [Samba](samba.md)
    * [Client-side vulnerabilities](web-services.md)
        * [Attacking the system](lead_to_compromise.md)
            * [Local file inclusion](local_file_inclusion.md)
