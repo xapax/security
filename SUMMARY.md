@@ -80,7 +80,6 @@
 * [Post Exploitation](post_exploitation.md)
    * [Spawning shells](spawning_shells.md)
    * [Meterpreter for post-exploitation](getting_meterpreter_shell.md)
-   * [Internal Enumeration and Privilege Escalation](privilege_escalation.md)
    * [Privilege Escalation - Linux](privilege_escalation_-_linux.md)
    * [Privilege Escalation - Windows](privilege_escalation_windows.md)
    * [Loot](loot.md)
