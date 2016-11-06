@@ -42,7 +42,6 @@
    * Server-side vulnerabilities
        * [Common ports/services and how to use them](list_of_common_ports.md)
        * [Port Knocking](port_knocking.md)
-       * [SMTP - Extract emails](smtp_-_extract_emails.md)
        * [Server misconfiguration](server_misconfiguration.md)
        * [phpMyAdmin](phpmyadmin.md)
        * [Heartbleed](heartbleed.md)
