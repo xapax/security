@@ -255,6 +255,12 @@ Okay, so now that we have either create our setuid or our reverse shell we need 
 wmic service NAMEOFSERVICE call startservice
 ```
 
+If your meterpreter session dies you need to remember to first migrate it to a more stable service. A common service to migrate to is winlogon.exe since it is run by system and it is always run. You can find the PID like this
+
+```
+wmic process list brief | find "winlogon"
+```
+
 **Using metasploit**
 ```
 use exploit/windows/local/service_permissions
