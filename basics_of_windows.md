@@ -235,6 +235,21 @@ Users
 
 #### Windows
 
+## IIS - Windows web server
+
+IIS stands for Internet Information Services (before it was Internet Information Server).
+
+The software is usually includede in most Windows versions, except for the home editions. The IIS version usually corresponds to the OS version. There is a new IIS version for every new OS, in general. 
+
+By default IIS 5.1 and earlier run websites in a single process running the context of the System account
+
+### ASP
+
+Activ server pages is the scripting environment for IIS.
+ASP render the content on the server side.
+The scripting languages that are supported are:
+VBScript, JScript and PerlScript.
+
 
 ## Important files and stuff
 
