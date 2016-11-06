@@ -38,7 +38,6 @@
        * [enum4linux](enum4linux.md)
 * [Vulnerability analysis](vulnerability_analysi1s.md)
    * [Automated Vulnerability Scanners](automated_vulnerability_scanners.md)
-   * [WAF - Web application firewall](waf_-_web_application_firewall.md)
    * Server-side vulnerabilities
        * [Common ports/services and how to use them](list_of_common_ports.md)
        * [Port Knocking](port_knocking.md)
@@ -46,6 +45,7 @@
        * [phpMyAdmin](phpmyadmin.md)
        * [Heartbleed](heartbleed.md)
    * [Client-side vulnerabilities](web-services.md)
+       * [WAF - Web application firewall](waf_-_web_application_firewall.md)
        * [Attacking the system](lead_to_compromise.md)
            * [Local file inclusion](local_file_inclusion.md)
            * [Remote file inclusion](remote_file_inclusion.md)
