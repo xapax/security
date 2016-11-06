@@ -209,6 +209,19 @@ reg query "HKLM\SYSTEM\Current\ControlSet\Services\SNMP"
 reg query "HKCU\Software\SimonTatham\PuTTY\Sessions"
 ```
 
+**Group Policy Preference**
+If the machine belongs to a domain and your user has access to "System Volume Information" there might be some sensitive files there.
+
+Look for the file **Groups.xml**. It might be encrpted the password. But the encryption.key can be found on windows homepage. Other interesting files here might be
+
+```
+Services\Services.xml: Element-Specific Attributes
+ScheduledTasks\ScheduledTasks.xml: Task Inner Element, TaskV2 Inner Element, ImmediateTaskV2 Inner Element
+Printers\Printers.xml: SharedPrinter Element
+Drives\Drives.xml: Element-Specific Attributes
+DataSources\DataSources.xml: Element-Specific Attributes
+```
+
 ### Kernel exploits
 
 Just as in windows kernel exploits should be our last resource, since it might but the machine in an unstable state or create some other problem with the machine. 
