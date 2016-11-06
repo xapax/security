@@ -45,7 +45,6 @@
        * [SMTP - Extract emails](smtp_-_extract_emails.md)
        * [Server misconfiguration](server_misconfiguration.md)
        * [phpMyAdmin](phpmyadmin.md)
-       * [Mysql](mysql.md)
        * [Heartbleed](heartbleed.md)
        * [Samba](samba.md)
    * [Client-side vulnerabilities](web-services.md)
