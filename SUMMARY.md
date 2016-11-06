@@ -42,7 +42,6 @@
        * [Port Knocking](port_knocking.md)
        * [Server misconfiguration](server_misconfiguration.md)
        * [phpMyAdmin](phpmyadmin.md)
-       * [Heartbleed](heartbleed.md)
    * [Client-side vulnerabilities](web-services.md)
        * [WAF - Web application firewall](waf_-_web_application_firewall.md)
        * [Attacking the system](lead_to_compromise.md)
