@@ -187,9 +187,10 @@ reg query "HKCU\Software\ORL\WinVNC3\Password"
 reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon"
 
 # SNMP Paramters
- reg query "HKLM\SYSTEM\Current\ControlSet\Services\SNMP"
+reg query "HKLM\SYSTEM\Current\ControlSet\Services\SNMP"
 
-
+# Putty
+reg query "HKCU\Software\SimonTatham\PuTTY\Sessions"
 ```
 
 ### Kernel exploits
