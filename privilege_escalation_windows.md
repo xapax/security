@@ -261,6 +261,8 @@ If your meterpreter session dies you need to remember to first migrate it to a m
 wmic process list brief | find "winlogon"
 ```
 
+So when you get the shell you can either type **migrate PID** or automate this so that meterpreter automatically migrates.  
+
 **Using metasploit**
 ```
 use exploit/windows/local/service_permissions
