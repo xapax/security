@@ -94,9 +94,13 @@ Local address 192.168.1.9 means that the service is only listening for connectio
 # The cronjob of windows
 schtasks /query /fo LIST /v
 
-# Running processes
+# Running services
 tasklist /SVC
 net start
+
+# Running processes
+tasklist /v
+
 
 
 # List all drivers
