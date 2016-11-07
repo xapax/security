@@ -147,6 +147,9 @@ There are usually three types of users on a windows machine:
 The process can be automatd with the windows-priv-esc checker.
 http://pentestmonkey.net/tools/windows-privesc-check
 
+If you are admin you can use this tool to get SYSTEM.
+https://technet.microsoft.com/en-us/sysinternals/bb897553
+
 ## Metasploit - The easy way
 
 So if you have a metasploit meterpreter session going you can run **getsystem**.
@@ -185,6 +188,9 @@ Can be find like this:
 ```
 findstr /si password *.txt | *.xml | *.ini
 findstr /si pass *.txt | *.xml | *.ini
+
+dir /s *pass* == *cred* == *vnc* == *.config*
+
 ```
 
 Thse are common files to find them in. They might be base64-encoded. So look out for that. 
@@ -362,8 +368,6 @@ http://toshellandback.com/2015/11/24/ms-priv-esc/
 
 ### Unattended Installs
 
-
-### Group Policy Preferences (GPP)
 
 
 
