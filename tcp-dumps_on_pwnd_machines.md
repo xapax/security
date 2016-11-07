@@ -69,7 +69,19 @@ https://www.offensive-security.com/metasploit-unleashed/password-sniffing/
 
 ## Windows
 
-On windows you can use `netsh trace help`. It works on Windows 7 and Windows Server 2008 and newer.
+On windows you can use 
+
+````
+netsh trace help
+```. It works on Windows 7 and Windows Server 2008 and newer.
+
+Using metasploit you can also do packetcaptures with the command
+
+```
+run packetrecorder -li
+And then choose a interface.
+run packetrecorder -i 2
+```
 
 https://www.hackthis.co.uk/articles/no-wireshark-no-tcpdump-no-problem
 
