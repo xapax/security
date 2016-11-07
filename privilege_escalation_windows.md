@@ -342,6 +342,9 @@ So when you get the shell you can either type **migrate PID** or automate this s
 use exploit/windows/local/service_permissions
 ```
 
+
+http://chairofforgetfulness.blogspot.cl/2014/01/better-together-scexe-and.html
+
 ### Unquoted Service Paths
 
 This attack is explained here:
