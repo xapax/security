@@ -387,6 +387,14 @@ at 01:23 /interactive cmd.exe
 
 And then ia cmd with SYSTEM privs pops up.
 
+#### Vista and up
+
+You first need to upload PsExec.exe anad then you run:
+
+```
+psexec -i -s cmd.exe
+```
+
 Most recommended article
 
 http://travisaltman.com/windows-privilege-escalation-via-weak-service-permissions/
