@@ -2,6 +2,16 @@
 
 I will try to make this chapter into a reference library. So that you can just check in this chapter to see common ways to exploit certain common services. I will only discuss the most common, since there are quite a few.
 
+## Port XXX - Service unknown
+
+If you have a port open with unkown service you can do this to find out which service it might be.
+
+```
+amap -d 192.168.19.244 8000
+```
+
+
+
 ## Port 21 - FTP
 
 Connect to the ftp-server to enumerate software and version
