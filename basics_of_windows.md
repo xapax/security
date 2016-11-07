@@ -1,5 +1,6 @@
 # Basics of windows
 
+http://www.r00tsec.com/2012/11/howto-manual-pentest-windows-cheatsheet.html
 
 ## Operating system versions
 
