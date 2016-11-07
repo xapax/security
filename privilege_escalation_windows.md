@@ -385,7 +385,7 @@ time
 at 01:23 /interactive cmd.exe
 ```
 
-And then ia cmd with SYSTEM privs pops up.
+And then the cmd with SYSTEM privs pops up.
 
 #### Vista and up
 
