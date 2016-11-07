@@ -327,7 +327,9 @@ Once connected you could enter commands like
 srvinfo
 enumdomusers
 getdompwinfo
-
+querydominfo
+netshareenum
+netshareenumall
 ```
 
 ## Port 143/993 - IMAP
