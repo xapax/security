@@ -579,7 +579,9 @@ http://www.cyberciti.biz/tips/how-do-i-enable-remote-access-to-mysql-database-se
 ### Escalating privileges
 
 If mysql is started as root you might have a chance to use it as a way to escalate your privileges.
-Read more of this in the escalate chapter.
+
+#### MYSQL UDF INJECTION:
+
 
 ### Finding passwords to mysql
 
@@ -607,7 +609,6 @@ class JConfig {
     
   So there we have it. 
     
-
 
 
 ## Port 3339 - Oracle web interface
