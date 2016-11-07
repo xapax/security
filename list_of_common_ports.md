@@ -153,6 +153,9 @@ Exploits can be found in metasploit25 can be quite useful
 And shellshock
 https://www.exploit-db.com/exploits/34896/
 
+## Port 69 - TFTP
+
+This is a ftp-server but it is using udp.
 
 ## Port 80 - HTTP
 
@@ -245,7 +248,9 @@ So smb, for a linux-user, is pretty much like and ftp or a nfs.
 Here is a good guide for how to configure samba:
 https://help.ubuntu.com/community/How%20to%20Create%20a%20Network%20Share%20Via%20Samba%20Via%20CLI%20(Command-line%20interface/Linux%20Terminal)%20-%20Uncomplicated,%20Simple%20and%20Brief%20Way!
 
-
+```
+mount -t cifs -o user=USERNAME,sec=ntlm,dir_mode=0077 "//10.10.10.10/My Share" /mnt/cifs
+```
 
 ### Scanning with nmap
 Scanning for smb with Nmap
@@ -300,7 +305,7 @@ nbtscan -r 192.168.1.1/24
 ```
 It can be a bit buggy sometimes so run it several times to make sure it found all users.
 
-#### Enum4linux
+### Enum4linux
 
 Enum4linux can be used to enumerate windows and linux machines with smb-shares. 
 
@@ -447,7 +452,7 @@ nmap -sV --script=ssl-heartbleed 192.168.101.8
 
 You can exploit the vulnerability in many different ways. There is a module for it in burp suite, and metasploit also has a module for it.
 
-*```
+```
 use auxiliary/scanner/ssl/openssl_heartbleed
 set RHOSTS 192.168.101.8
 set verbose true
@@ -456,6 +461,11 @@ run
 
 Now you have a flow of random data, some of it might be of interest to you.
 
+### Certificate
+
+Read the certificate. 
+- Does it include names that might be useful?
+- Correct vhost
 
 ## Port 587 - Submission
 
