@@ -262,6 +262,13 @@ Here we are looking for tasks that are run with by a priviliged user, and run a 
 schtasks /query /fo LIST /v
 ```
 
+This might produce a huge amount of text. I have not been able to figure out how to just output the relevant strings with findstr. So if you know a better way please notify me. As for now I just copy-paste the text and past it into my linux-terminal and run.
+
+Yeah I know this ain't pretty, but it works. You can of course change the name SYSTEM to another priviliged user.
+```
+cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM
+```
+
 #### Weak service permissions
 
 If you find a service that has read-write permissions set to everyone you can just change that binary into a binary that adds a user to the administrators group and thereby giving it privileges.
