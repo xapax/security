@@ -43,3 +43,10 @@ unzip Hyperion-1.2.zip
 i686-w64-mingw32-c++ Hyperion-1.2/Src/Crypter/*.cpp -o hyperion.exe
 ```
 
+In Kali you have hyperion 1 included. However for it to work you have to run it from it's correct path. So go to **/usr/share/veil-evasion/tools/hyperion**
+
+And run it like this
+
+```
+wine hyperion /path/to/file.exe encryptedfile.exe
+```
