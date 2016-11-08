@@ -254,6 +254,14 @@ If we have an exploit written in python but we don't have python installed on th
 
 ### Misconfigurations
 
+### Schedualed tasks
+
+Here we are looking for tasks that are run with by a priviliged user, and run a binary that we can overwrite.
+
+```
+schtasks /query /fo LIST /v
+```
+
 #### Weak service permissions
 
 If you find a service that has read-write permissions set to everyone you can just change that binary into a binary that adds a user to the administrators group and thereby giving it privileges.
