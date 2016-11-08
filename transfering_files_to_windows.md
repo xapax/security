@@ -29,6 +29,10 @@ Of course you need to have a ftp-server configured with the user asshat and the 
 
 ## TFTP
 
+Works by default on:
+**Windows XP**
+**Windows 2003**
+
 A TFTP client is installed by default on windows machines up to Windows XP and Windows 2003. What is good about TFTP is that you can use it non-interactivly. Which means less risk of losing your shell.
 
 Kali has a TFTP server build in.
