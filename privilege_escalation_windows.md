@@ -179,12 +179,7 @@ exploit/windows/local/trusted_service_path
 
 ## Manually
 
-Go from Administrator to system. Use https://technet.microsoft.com/en-us/sysinternals/bb897553
-psexec.exe
-
-```
-psexec.exe -s cmd.exe
-```
+Even the manual way can be speeded up. Using this awesome script (wmic_info.bat). Found here: http://www.fuzzysecurity.com/tutorials/16.html 
 
 ### Cleartext passwords
 
@@ -247,6 +242,13 @@ DataSources\DataSources.xml: Element-Specific Attributes
 ### Kernel exploits
 
 Just as in windows kernel exploits should be our last resource, since it might but the machine in an unstable state or create some other problem with the machine. 
+
+1. Step one - Identify the hotfixes/patches
+
+```
+wmic qfe get Caption,Description,HotFixID,InstalledOn
+```
+
 
 #### Python to binary
 
