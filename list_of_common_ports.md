@@ -485,6 +485,10 @@ Read the certificate.
 - Does it include names that might be useful?
 - Correct vhost
 
+# Port 554 - RTSP
+
+RTSP (Real Time Streaming Protocol) is a stateful protocol built on top of tcp usually used for streaming images. Many commercial IP-cameras are running on this port. They often have a GUI interface, so look out for that. 
+
 ## Port 587 - Submission
 
 Outgoing smtp-port
@@ -568,6 +572,11 @@ Now we can go to /tmp/NFS and check out /etc/passwd, and add and remove files.
 
 ## Port 3306 - MySQL
 
+```
+mysql --host=192.168.1.101 -u root -p
+```
+
+
 ### Configuration files
 
 ```
@@ -631,6 +640,9 @@ This protocl can be brute-forced with ncrack.
 ```
 
 ```
+
+## Port 5357 - WSDAPI
+
 
 ## Port 5900 - VNC
 
