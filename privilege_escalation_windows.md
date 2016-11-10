@@ -188,8 +188,12 @@ Can be find like this:
 findstr /si password *.txt | *.xml | *.ini
 findstr /si pass *.txt | *.xml | *.ini
 
+#Find all those strings in config files.
 dir /s *pass* == *cred* == *vnc* == *.config*
 
+# Find all pass in all files.
+findstr /spin "password" *.*
+findstr /spin "password" *.*
 ```
 
 Thse are common files to find them in. They might be base64-encoded. So look out for that. 
