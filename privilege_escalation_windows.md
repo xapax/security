@@ -300,6 +300,8 @@ cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM
 
 ### Weak service permissions
 
+Services on windows are programs that run in the background. Without a GUI.
+
 If you find a service that has read-write permissions set to everyone you can just change that binary into a binary that adds a user to the administrators group and thereby giving it privileges.
 
 First we need to find services. That can be done using **wmci**. Wmci is not availbe on all windows machines, and it might not be avaliable to your user. If you don't have access to it, there is a workaround using sc.exe. See further down. But if wmci is availible, you can use it like this.
