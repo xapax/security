@@ -2,6 +2,10 @@
 
 This is a list of some common web-services. The list is alphabetical.
 
+## Cold Fusion
+
+http://www.slideshare.net/chrisgates/coldfusion-for-penetration-testers
+
 ## Drupal
 
 ## Joomla
