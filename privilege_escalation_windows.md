@@ -177,6 +177,10 @@ post/windows/gather/credentials/gpp
 exploit/windows/local/trusted_service_path
 ```
 
+
+
+
+
 ## Manually
 
 Even the manual way can be speeded up. Using this awesome script (wmic_info.bat). Found here: http://www.fuzzysecurity.com/tutorials/16.html 
@@ -243,6 +247,26 @@ Drives\Drives.xml: Element-Specific Attributes
 DataSources\DataSources.xml: Element-Specific Attributes
 ```
 
+### Internal services
+
+Sometimes there are services that are only accessible from inside the network. For example a MySQL server might not be accessible from the outside, for security reasons. These services might be more vulnarble since they are not meant to be seen from the outside.
+
+So basically run 
+
+```
+netstat -ano
+```
+
+And look for LISTENING.
+Then you compare that to the scan you did from the outside.
+Does it contain any ports that are not accessible from the outside?
+
+If that is the case, maybe you can make a remote forward to access it.
+
+```
+plink.exe -l root -pw mysecretpassword 192.168.0.101 -R 8080:127.0.0.1:8080
+```
+
 ### Kernel exploits
 
 Just as in windows kernel exploits should be our last resource, since it might but the machine in an unstable state or create some other problem with the machine. 
@@ -269,6 +293,7 @@ schtasks /query /fo LIST /v
 This might produce a huge amount of text. I have not been able to figure out how to just output the relevant strings with findstr. So if you know a better way please notify me. As for now I just copy-paste the text and past it into my linux-terminal and run.
 
 Yeah I know this ain't pretty, but it works. You can of course change the name SYSTEM to another priviliged user.
+
 ```
 cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM
 ```
@@ -324,6 +349,8 @@ BUILTIN\Administrators:F
 NT AUTHORITY\SYSTEM:F 
 ```
 
+http://chairofforgetfulness.blogspot.cl/2014/01/better-together-scexe-and.html
+
 That means your user has write access. So you can just rename the .exe file and add your own. And then restart the program and your program will be exevuted instead. This can be a simple getsuid program or a reverse shell that you create with msfvenom.
 
 
@@ -361,13 +388,6 @@ wmic process list brief | find "winlogon"
 
 So when you get the shell you can either type **migrate PID** or automate this so that meterpreter automatically migrates.  
 
-**Using metasploit**
-```
-use exploit/windows/local/service_permissions
-```
-
-
-http://chairofforgetfulness.blogspot.cl/2014/01/better-together-scexe-and.html
 
 ### Unquoted Service Paths
 
