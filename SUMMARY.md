@@ -38,7 +38,6 @@
        * [Common ports/services and how to use them](list_of_common_ports.md)
        * [Port Knocking](port_knocking.md)
        * [Server misconfiguration](server_misconfiguration.md)
-       * [phpMyAdmin](phpmyadmin.md)
    * [Client-side vulnerabilities](web-services.md)
        * [Common web-services](common_web-services.md)
        * [WAF - Web application firewall](waf_-_web_application_firewall.md)
