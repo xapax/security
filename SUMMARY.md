@@ -62,6 +62,7 @@
        * [XML External Entity Attack](xml_external_entity_attack.md)
        * [Dictionary Attacks](dictionary_attacks.md)
        * [Nosql-injections](nosql-injections.md)
+       * Common web-services
    * [Automated Vulnerability Scanners](automated_vulnerability_scanners.md)
 * [Exploiting](exploiting.md)
    * [Metasploit](msfconsole.md)
