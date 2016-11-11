@@ -1,6 +1,6 @@
 # Common web-services
 
-This is a list of some common web-services
+This is a list of some common web-services. The list is alphabetical.
 
 ## Drupal
 
