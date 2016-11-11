@@ -239,4 +239,37 @@ https://www.youtube.com/watch?v=ttTVNcPnsJY
 
 ## Windows
 
+- Fingerprinting
+
+    *:\boot.ini
+    *:\WINDOWS\win.ini
+    *:\WINNT\win.ini
+    *:\WINDOWS\Repair\SAM
+    *:\WINDOWS\php.ini
+    *:\WINNT\php.ini
+    *:\Program Files\Apache Group\Apache\conf\httpd.conf
+    *:\Program Files\Apache Group\Apache2\conf\httpd.conf
+    *:\Program Files\xampp\apache\conf\httpd.conf
+    *:\php\php.ini
+    *:\php5\php.ini
+    *:\php4\php.ini
+    *:\apache\php\php.ini
+    *:\xampp\apache\bin\php.ini
+    *:\home2\bin\stable\apache\php.ini
+    *:\home\bin\stable\apache\php.ini
+
+- Logs
+
+    *:\Program Files\Apache Group\Apache\logs\access.log
+    *:\Program Files\Apache Group\Apache\logs\error.log
+
+- PHP Session Locations
+
+    *:\WINDOWS\TEMP\
+    *:\php\sessions\
+    *:\php5\sessions\
+    *:\php4\sessions\
+
+## References:
+https://nets.ec/File_Inclusion
 https://gist.github.com/sckalath/da1a232f362a700ab459
