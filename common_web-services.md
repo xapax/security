@@ -4,6 +4,7 @@ This is a list of some common web-services. The list is alphabetical.
 
 ## Cold Fusion
 
+If you have found a cold fusion you are almost certainly struck gold.
 http://www.slideshare.net/chrisgates/coldfusion-for-penetration-testers
 
 ### Determine version
