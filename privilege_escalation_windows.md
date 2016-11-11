@@ -196,7 +196,7 @@ findstr /spin "password" *.*
 findstr /spin "password" *.*
 ```
 
-Thse are common files to find them in. They might be base64-encoded. So look out for that. 
+These are common files to find them in. They might be base64-encoded. So look out for that. 
 
 **In files**
 ```
@@ -258,8 +258,6 @@ wmic qfe get Caption,Description,HotFixID,InstalledOn
 
 If we have an exploit written in python but we don't have python installed on the victim-machine we can always transform it into a binary with pyinstaller. Good trick to know.
 
-### Misconfigurations
-
 ### Schedualed tasks
 
 Here we are looking for tasks that are run with by a priviliged user, and run a binary that we can overwrite.
@@ -275,18 +273,19 @@ Yeah I know this ain't pretty, but it works. You can of course change the name S
 cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM
 ```
 
-#### Weak service permissions
+### Weak service permissions
 
 If you find a service that has read-write permissions set to everyone you can just change that binary into a binary that adds a user to the administrators group and thereby giving it privileges.
 
 First we need to find services. That can be done using **wmci**. Wmci is not availbe on all windows machines, and it might not be avaliable to your user. If you don't have access to it, there is a workaround using sc.exe. See further down. But if wmci is availible, you can use it like this.
 
 
-##### WMCI
+#### WMCI
 
 ```
 wmic service list brief
 ```
+
 This will produce a lot out output and we need to know which one of all of these services have weak permissions. In order to check that we can use the icalcs program. Notice that icalcs is only available from Vista and up. XP has calcs instead.
 
 As you can see in the command you need to make sure that you have access to wimc, icalcs and write privilege in windows\temp.
