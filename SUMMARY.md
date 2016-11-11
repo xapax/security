@@ -48,6 +48,7 @@
            * [SQL-injections](sql-injections.md)
            * [Bypass image upload](bypass_image_upload.md)
            * [Exposed Version Control](exposed_version_control.md)
+           * Common web-services
            * [Truncating mysql vulerability](truncating_mysql_vulerability.md)
        * Attacking the user
            * [Clickjacking](clickjacking.md)
@@ -62,7 +63,6 @@
        * [XML External Entity Attack](xml_external_entity_attack.md)
        * [Dictionary Attacks](dictionary_attacks.md)
        * [Nosql-injections](nosql-injections.md)
-       * Common web-services
    * [Automated Vulnerability Scanners](automated_vulnerability_scanners.md)
 * [Exploiting](exploiting.md)
    * [Metasploit](msfconsole.md)
