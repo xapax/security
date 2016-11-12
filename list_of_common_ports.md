@@ -2,6 +2,10 @@
 
 I will try to make this chapter into a reference library. So that you can just check in this chapter to see common ways to exploit certain common services. I will only discuss the most common, since there are quite a few.
 
+
+this is fucking awesome. if there is any ports her  you dont find check out this guide.
+http://www.0daysecurity.com/penetration-testing/enumeration.html
+
 ## Port XXX - Service unknown
 
 If you have a port open with unkown service you can do this to find out which service it might be.
