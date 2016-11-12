@@ -1,5 +1,12 @@
 # TCP-Dumps on pwnd machines
 
+
+Fast command:
+
+```
+tcpdump -i any -s0 -w capture.pcap
+```
+
 If you are on a network with other machines that you still haven't owned, it might be useful to take a tcp-dump from the machine you have owned. So that you can inspect the traffic between that machine and the other machines on the network. This might be helpful when attacking the other machines.
 
 So after we have exploited a machine we want to use that machine to learn as much about the network as possbible. To be able to map the entire network. We want to know about switches, firewalls, routers, other computers, server, etc. We want to know what ports are open, their operating systems.
