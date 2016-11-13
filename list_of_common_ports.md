@@ -604,6 +604,13 @@ Now we can go to /tmp/NFS and check out /etc/passwd, and add and remove files.
 mysql --host=192.168.1.101 -u root -p
 ```
 
+You will most likely see this a lot:
+
+```
+ERROR 1130 (HY000): Host '192.168.0.101' is not allowed to connect to this MySQL server
+```
+
+This occurs because mysql is configured so that the root user is only allowed to log in from 127.0.0.1. This is a reasonable security measure put up to protect the database.
 
 ### Configuration files
 
