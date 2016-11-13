@@ -42,6 +42,16 @@ neo-security.xml and password.properties
 
 ## Drupal
 
+## Elastix
+
+Full of vulnerabilites. The old versions at least.
+
+http://example.com/vtigercrm/
+default login is
+admin:admin
+
+You might be able to upload shell in profile-photo.
+
 ## Joomla
 
 ## Phpmyadmin
