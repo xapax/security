@@ -494,6 +494,10 @@ run
 
 Now you have a flow of random data, some of it might be of interest to you.
 
+### CRIME
+
+### Breach
+
 ### Certificate
 
 Read the certificate. 
