@@ -224,6 +224,17 @@ USER pelle@192.168.1.105
 PASS admin
 ```
 
+## Port 111 - Rpcbind
+
+RFC: 1833
+
+Rpcbind can help us look for NFS-shares. So look out for nfs.
+Obtain list of services running with RPC:
+
+```
+rpcbind -p 192.168.1.101
+```
+
 ## Port 135 - MSRPC
 
 This is the windows rpc-port.
@@ -644,6 +655,10 @@ This protocl can be brute-forced with ncrack.
 ```
 
 ```
+
+## Port 4445 - Upnotifyp
+
+I have not found anything here. Try connecting with netcat and visiting in browser.
 
 ## Port 5357 - WSDAPI
 
