@@ -539,6 +539,15 @@ I have seen them open on windows machine. But nothing has been listening on it.
 I think these are used by the RPC within Windows Domains. I have found no use for them so far. But they might indicate that the target is part of a Windows domain. 
 
 
+## Port 1433 - MsSQL
+
+Default port for Microsoft SQL .
+
+Many o the scanning modules in metasploit requires authentication. But some do not.
+
+```
+use auxiliary/scanner/mssql/mssql_ping
+```
 
 ## Port 1521 - Oracle database
 
