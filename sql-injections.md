@@ -50,6 +50,18 @@ Sqlmap is a great tool to perform sqlinjections.
 Here is the manual.
 https://github.com/sqlmapproject/sqlmap/wiki/Usage
 
+### Using sqmap with login-page
+
+So you need to authenticate before you can access the vulnerable paramter.
+
+You just cature the request using burp suite, and save the requiest in a file. Then your run
+
+```
+sqlmap -r request.txt
+```
+
+Since the cookie is saved in the reuqest sqlmap can do it.
+
 ### Crawl a page to find sql-injections
 
 ```
