@@ -539,6 +539,15 @@ I have seen them open on windows machine. But nothing has been listening on it.
 I think these are used by the RPC within Windows Domains. I have found no use for them so far. But they might indicate that the target is part of a Windows domain. 
 
 
+## Port 1433 - MsSQL
+
+Default port for Microsoft SQL .
+
+Many o the scanning modules in metasploit requires authentication. But some do not.
+
+```
+use auxiliary/scanner/mssql/mssql_ping
+```
 
 ## Port 1521 - Oracle database
 
@@ -595,6 +604,13 @@ Now we can go to /tmp/NFS and check out /etc/passwd, and add and remove files.
 mysql --host=192.168.1.101 -u root -p
 ```
 
+You will most likely see this a lot:
+
+```
+ERROR 1130 (HY000): Host '192.168.0.101' is not allowed to connect to this MySQL server
+```
+
+This occurs because mysql is configured so that the root user is only allowed to log in from 127.0.0.1. This is a reasonable security measure put up to protect the database.
 
 ### Configuration files
 
