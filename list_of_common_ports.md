@@ -600,8 +600,19 @@ Now we can go to /tmp/NFS and check out /etc/passwd, and add and remove files.
 
 ## Port 3306 - MySQL
 
+Always test the following:
+
+Username: root
+
+Password: root
+
 ```
 mysql --host=192.168.1.101 -u root -p
+mysql -h <Hostname> -u root
+mysql -h <Hostname> -u root@localhost
+mysql -h <Hostname> -u ""@localhost
+
+telnet 192.168.0.101 3306
 ```
 
 You will most likely see this a lot:
