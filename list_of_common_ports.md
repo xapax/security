@@ -97,6 +97,14 @@ Here we have managed to identify the user root. But roooooot was rejected.
 
 VRFY, EXPN or RCPT command
 
+Telnet is a bit more friendly some times. So always use that too
+
+```
+telnet 10.11.1.229 25
+```
+
+
+
 ### Automatized
 
 This process can of course be automatized
