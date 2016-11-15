@@ -29,6 +29,23 @@ echo 'os.system('/bin/bash')'
 /bin/sh -i
 ```
 
+**bash**
+
+```
+/bin/bash -i
+```
+
+**Perl**
+
+```
+perl -e 'exec "/bin/sh";'
+```
+
+**From within VI**
+
+```
+:!bash
+```
 
 ## Interactive tty-shell
 
