@@ -268,17 +268,8 @@ For linux-users you can log in to the smb-share using smbclient, like this:
 
 ```
 smbclient -L 192.168.1.102
-```
-
-```
 smbclient //192.168.1.106/tmp
-```
-
-```
 smbclient \\\\192.168.1.105\\ipc$ -U john 
-```
-
-```
 smbclient //192.168.1.105/ipc$ -U john  
 ```
 
