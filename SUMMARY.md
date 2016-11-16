@@ -67,6 +67,7 @@
 * [Exploiting](exploiting.md)
    * [Social Engineering - Phishing](social_engineering_-_phishing.md)
    * [Default layout Apache on different versiont](default_layout_apache_on_different_versiont.md)
+   * [Reverse-shell](reverse-shell.md)
    * [Shells](shells.md)
        * [Reverse-shell](reverse-shell.md)
        * [Webshell](webshell.md)
