@@ -22,10 +22,9 @@ This code can be injected into pages that use php.
 # Exec() does not output the result without echo, and only output the last line. So not very useful!
 <?php echo exec("whoami");?>
 
-# Instead to this if you can
+# Instead to this if you can. It will return the output as an array, and then print it all.
 <?php exec("ls -la",$array); print_r($array); ?>
 
-The exec() function accepts a command as a parameter but does not output the result. If second optional parameter is specified, the result will be returned as an array. Otherwise, only the last line of the result will be shown if echoed.
 ```
 
 You can then call then execute the commands like this:
