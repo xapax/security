@@ -98,4 +98,8 @@ Test if it is possible to upload and execute files with webdav.
 davtest -url http://192.168.1.101 -directory demo_dir -rand aaaa_upfileP0C
 ```
 
+### Access the code
+
+http://secureyes.net/nw/assets/Bypassing-IIS-6-Access-Restrictions.pdf
+
 ## Wordpress
