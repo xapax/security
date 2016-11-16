@@ -65,8 +65,6 @@
        * [Nosql-injections](nosql-injections.md)
    * [Automated Vulnerability Scanners](automated_vulnerability_scanners.md)
 * [Exploiting](exploiting.md)
-   * [Metasploit](msfconsole.md)
-       * [Creating malicious files](creating_malicious_files.md)
    * [Social Engineering - Phishing](social_engineering_-_phishing.md)
    * [Default layout Apache on different versiont](default_layout_apache_on_different_versiont.md)
    * [Shells](shells.md)
