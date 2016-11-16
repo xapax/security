@@ -21,5 +21,13 @@ now we genereate the shellcode using the command **generate**.
 
 To see the options use **generate -h**
 
+## Single commands in windows
+
+If you don't have space and only want to execute a single command you can use
+
+```
+use payload/windows/exec
+```
+
 
 
