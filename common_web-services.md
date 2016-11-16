@@ -98,6 +98,12 @@ Test if it is possible to upload and execute files with webdav.
 davtest -url http://192.168.1.101 -directory demo_dir -rand aaaa_upfileP0C
 ```
 
+If you managed to gain access but is unable to execute code there is a workaround for that!
+So if webdav has prohibited the user to upload .asp code, and pl and whatever, we can do this:
+
+upload a file called shell443.txt, which of course is you .asp shell. And then you rename it to **shell443.asp;.jpg**. Now you visit the page in the browser and the asp code will run and return your shell. 
+
+
 ### Access the code
 
 http://secureyes.net/nw/assets/Bypassing-IIS-6-Access-Restrictions.pdf
