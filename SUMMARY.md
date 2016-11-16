@@ -67,7 +67,6 @@
 * [Exploiting](exploiting.md)
    * [Metasploit](msfconsole.md)
        * [Creating malicious files](creating_malicious_files.md)
-       * [Creating reverse-shells](creating_reverse-shells.md)
    * [Msfvenom](msfvenom.md)
    * [Social Engineering - Phishing](social_engineering_-_phishing.md)
    * [Default layout Apache on different versiont](default_layout_apache_on_different_versiont.md)
