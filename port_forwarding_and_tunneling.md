@@ -165,5 +165,20 @@ But we are not done yet. It still says that we have **WebRTC leaks**. In order t
 
 **media.peerconnection.enabled**
 
+## Port forward with metasploit
+
+We can also forward ports using metasploit. Say that the compromised machine is running services that are only accessible from within the network, from within that machine. To access that port we can do this in meterpreter:
+
+```
+portfwd add -l <attacker port> -p <victim port> -r <victim ip>
+portfwd add -l 3306 -p 3306 -r 192.168.222
+```
+
+Now we can access this port on our machine locally like this.
+
+```
+nc 127.0.0.1 3306
+```
+
 ## References
 
