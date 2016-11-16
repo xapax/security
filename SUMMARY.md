@@ -46,7 +46,7 @@
            * [Remote file inclusion](remote_file_inclusion.md)
            * [Hidden files and directories](web-scanning.md)
            * [SQL-injections](sql-injections.md)
-           * [Bypass image upload](bypass_image_upload.md)
+           * [Bypass file upload filtering](bypass_image_upload.md)
            * [Exposed Version Control](exposed_version_control.md)
            * Common web-services
            * [Truncating mysql vulerability](truncating_mysql_vulerability.md)
