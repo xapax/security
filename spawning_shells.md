@@ -54,11 +54,8 @@ So if you manage to upgrade to a non-interactive tty-shell you will still have a
 
 https://github.com/cornerpirate/socat-shell
 
-
 ## References:
 
 http://unix.stackexchange.com/questions/122616/why-do-i-need-a-tty-to-run-sudo-if-i-can-sudo-without-a-password
-
 http://netsec.ws/?p=337
-
 http://pentestmonkey.net/blog/post-exploitation-without-a-tty
