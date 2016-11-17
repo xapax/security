@@ -12,22 +12,32 @@ This isn't really a science. Some tools find some stuff, other tools other stuff
 ### recon-ng
 In order to find subdomains we can use the recon-ng framework. It has the same basic structure as metasploit. You can learn more about this tool in the tools-section.
 
-`recon-ng`
+```
+recon-ng
+```
 
-`use use recon/domains-hosts/`
+```
+use use recon/domains-hosts/
+```
 
 This will give you a vast amount of alternatives.
 
-`show options`
+```
+show options
+```
 
-`set source cnn.com`
+```
+set source cnn.com
+```
 
 
-All these subdomains will be saved in `hosts`, which you can access though: `show hosts`
+All these subdomains will be saved in **hosts**, which you can access though: **show hosts**
 
 If some of these subdomains are not given IPs automatically you can just run
-`use recon/hosts-hosts/resolve`
-`run`
+```
+use recon/hosts-hosts/resolve
+run
+```
 
 And it will resolve all the hosts in the hosts-file. 
 
@@ -37,18 +47,26 @@ Using google we can also find subdomains.
 
 This will only give us the subdomains of a site.
 
-`site:msn.com -site:www.msn.com`
+```
+site:msn.com -site:www.msn.com
+```
 
-`site:*.nextcloud.com`
+```
+site:*.nextcloud.com
+```
 
 To exclude a specific subdomain you can do this:
-`site:*.nextcloud.com -site:help.nextcloud.com`
+```
+site:*.nextcloud.com -site:help.nextcloud.com
+```
 
 ### subbrute.py
 
 The basic command is like this
 
-`./subbrute.py -p cnn.com`
+```
+./subbrute.py -p cnn.com
+```
 
 https://github.com/TheRook/subbrute
 
@@ -72,12 +90,14 @@ If you manage to figure out the IP range that the target owns (see section about
 
 The text-file onlyIps.txt is a textfile with one IP-address on each line.
 
-`#!/bin/bash
+```bash
+#!/bin/bash
 
 while read p; do
   echo $p;
   host  $p
-done <onlyIps.txt`
+done <onlyIps.txt
+```
 
 Here are some more tools that can do reverse lookup
 http://www.cyberciti.biz/faq/how-to-test-or-check-reverse-dns/
