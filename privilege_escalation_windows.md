@@ -2,13 +2,6 @@
 
 We now have a low-privileges shell that we want to escalate into a privileged shell.
 
-The process can be automatd with the windows-priv-esc checker.
-http://pentestmonkey.net/tools/windows-privesc-check
-
-If you are admin you can use this tool to get SYSTEM.
-https://technet.microsoft.com/en-us/sysinternals/bb897553
-
-
 ## Basic Enumeration of the System
 
 Before we start looking for privilege escalation opportunities we need to understand a bit about the machine. We need to know what users have privileges. What patches/hotfixes the system has.  
