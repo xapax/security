@@ -1,4 +1,4 @@
-# Default layout Apache on different versiont
+# Default Layout of Apache on Different Versions
 
 
 Really useful if you want to know what the root-folder is for an apache install:
