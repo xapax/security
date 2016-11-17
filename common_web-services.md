@@ -92,6 +92,28 @@ On windows-machines we can use tftp.
 
 ## Webdav
 
+Okay so webdav is old as hell, and not used very often. It is pretty much like ftp. But you go through http to access it. So if you have webdav installed on a xamp-server you can access it like this:
+
+```
+cadaver 192.168.1.101/webdav
+```
+
+Then sign in with username and password.
+The default username and passwords on xamp are:
+
+Username: **wampp**
+
+Password: **xampp**
+
+Then use **put** and **get** to upload and download. With this you can of course upload a shell that gives you better access.
+
+If you are looking for live examples just google this:
+
+```
+inurl:webdav site:com
+```
+
+
 Test if it is possible to upload and execute files with webdav.
 
 ```
@@ -103,8 +125,7 @@ So if webdav has prohibited the user to upload .asp code, and pl and whatever, w
 
 upload a file called shell443.txt, which of course is you .asp shell. And then you rename it to **shell443.asp;.jpg**. Now you visit the page in the browser and the asp code will run and return your shell. 
 
-
-### Access the code
+### References
 
 http://secureyes.net/nw/assets/Bypassing-IIS-6-Access-Restrictions.pdf
 
