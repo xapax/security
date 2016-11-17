@@ -212,7 +212,7 @@ portfwd add -l <attacker port> -p <victim port> -r <victim ip>
 portfwd add -l 3306 -p 3306 -r 192.168.222
 ```
 
-So how should we interpret the netstat output? Here is an example, now what does this mena?
+So how should we interpret the netstat output?
 
 ```
 Proto  Local address      Remote address     State        User  Inode  PID/Program name
@@ -231,12 +231,14 @@ Proto  Local address      Remote address     State        User  Inode  PID/Progr
     udp    192.168.1.9:500    0.0.0.0:*                       0     0      -
 ```
 
-**Important to understand**
-Local address 0.0.0.0 means that the service is listening on all interfaces. This means that it can recieve a connection from the network card, from the loopbak interface or any other interface. 
+**Local address 0.0.0.0**
+Local address 0.0.0.0 means that the service is listening on all interfaces. This means that it can receive a connection from the network card, from the loopback interface or any other interface. This means that anyone can connect to it.
 
-Local address 127.0.0.1 means that the service is only listening for connection from the your PC. Not from the internet or anywhere else.
+**Local address 127.0.0.1**
+Local address 127.0.0.1 means that the service is only listening for connection from the your PC. Not from the internet or anywhere else. This is interesting to us!
 
-Local address 192.168.1.9 means that the service is only listening for connections from the local network. So someone in the local network can connect to it, but not someone from the internet. 
+**192.168.1.9**
+Local address 192.168.1.9 means that the service is only listening for connections from the local network. So someone in the local network can connect to it, but not someone from the internet. This is also interesting to us!
 
 
 ### Kernel exploits
