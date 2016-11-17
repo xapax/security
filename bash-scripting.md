@@ -67,7 +67,7 @@ This is the first command line argument.
 
 If you do a ping-sweep with host the command will take about a second to complete. And if you run that against 255 hosts I will take a long time to complete. To avoid this we can just deamonize every execution to make it faster. We use the **&** to demonize it.
 
-```
+```bash
 #!/bin/bash
 
 for ip in $(cat ips.txt); do
@@ -82,12 +82,12 @@ It has happened to me several times that I want to input the output of a command
 
 I search for a file, find three, and take the last line, which is a path. Now I want to cat that path:
 
-```
+```bash
 locate 646.c | tail -n 1
 ```
 
 This can be done like this:
 
-```
+```bash
 cat $(locate 646.c | tail -n 1)
 ```
