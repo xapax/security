@@ -27,7 +27,7 @@ for ((i = 0; i < 10; i++)); do
 done
 ```
 
-Another way to write this is by using the program `seq`. Seq is pretty much like `range()` in python. So it can be used like this:
+Another way to write this is by using the program **seq**. Seq is pretty much like **range()** in python. So it can be used like this:
 
 ```bash
 for x in `seq 1 100`; do
@@ -65,7 +65,7 @@ This is the first command line argument.
 
 ## Deamonize an execution
 
-If you do a ping-sweep with host the command will take about a second to complete. ANd if you run that against 255 hosts I will take a long time to complete. To avoid this we can just deamonize every execution to ake it faster
+If you do a ping-sweep with host the command will take about a second to complete. And if you run that against 255 hosts I will take a long time to complete. To avoid this we can just deamonize every execution to make it faster. We use the **&** to demonize it.
 
 ```
 #!/bin/bash
@@ -81,6 +81,7 @@ done
 It has happened to me several times that I want to input the output of a command into a new command, for example:
 
 I search for a file, find three, and take the last line, which is a path. Now I want to cat that path:
+
 ```
 locate 646.c | tail -n 1
 ```
