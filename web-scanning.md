@@ -1,18 +1,38 @@
 # Find hidden files and directories
 
+## TLDR
+
+```
+# Dirb
+dirb https://192.168.1.101
+
+# Gobuster - remove relevant responde codes (403 for example)
+gobuster -u http://192.168.1.101 -w /usr/share/seclists/Discovery/Web_Content/common.txt -s '200,204,301,302,307,403,500' -e
+```
+
+## About
+
 Dirbusting, Forced Browse or whatever you like to call it.
 
-It is when you make requests to a site based on a dictionary in order to find files ir directories that are not linked anywhere on the site. If they are linked a spider can easily find it. Otherwise you have to bruteforce it.
+It is when you make requests to a site based on a dictionary in order to find files in directories that are not linked anywhere on the site. If they are linked a spider can easily find it. Otherwise you have to bruteforce it.
+
 
 ### Dirb
+
 This is a really easy tool to use:
 
-`dirb http://target.com`
+```
+dirb http://target.com
+```
 
 ### Dirbuster
 
 It is a GUI
-You start it with `dirbuster` from the terminal
+You start it with 
+```
+dirbuster
+```
+from the terminal
 
 ### OWASP ZAP
 
@@ -23,10 +43,14 @@ Click on Forced Browse
 
 ### Wfuzz
 
-You can find the manual by typing: `wfuzz -h`
+You can find the manual by typing: 
+```
+wfuzz -h
+```
 
+```
 wfuzz -c -z file,/root/.ZAP/fuzzers/dirbuster/directory-list-2.3-big.txt --sc 200 http://pegasus.dev:8088/FUZZ.php
-
+```
 
 
 
