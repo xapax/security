@@ -7,18 +7,23 @@
 
 ## Netdiscover
 
+```
 netdiscover -r 192.168.1.1/24
-
+```
 
 ## Nikto
 
 Nikto is a good tool.
 
-`nikto -host 192.168.1.101`
+```
+nikto -host 192.168.1.101
+```
 
 ## Find interesting files
 
-`site:example.com filetype:pdf`
+```
+site:example.com filetype:pdf
+```
 
 This can easily be turned into a script that checks for all important filetypes.
 
