@@ -41,7 +41,7 @@
        * [Attacking the system](lead_to_compromise.md)
            * [Local file inclusion](local_file_inclusion.md)
            * [Remote file inclusion](remote_file_inclusion.md)
-           * [Hidden files and directories](web-scanning.md)
+           * [Hidden Files and Directories](web-scanning.md)
            * [SQL-injections](sql-injections.md)
            * [Bypass File Upload Filtering](bypass_image_upload.md)
            * [Exposed Version Control](exposed_version_control.md)
