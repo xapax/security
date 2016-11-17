@@ -1,3 +1,7 @@
 .markdown-section pre {
 background-color: #ddd;
 }
+
+.markdown-section h4 {
+    font-size: 1.0em;
+}
