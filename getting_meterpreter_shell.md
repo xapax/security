@@ -52,7 +52,7 @@ Now you choose one and run
 ```
 run migrate -p 1327
 ```
-Where the `-p` is the PID of the process.
+Where the **-p** is the PID of the process.
 
 
 ## Post modules
