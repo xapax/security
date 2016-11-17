@@ -31,7 +31,6 @@
            * [DNS Basics](dns_basics.md)
            * [Finding subdomains](finding_subdomains.md)
            * [DNS Zone Transfer Attack](dns_zone_transfer_attack.md)
-       * [Nmap scripts](nmap_scripts.md)
 * [Vulnerability analysis](vulnerability_analysi1s.md)
    * Server-side vulnerabilities
        * [Common ports/services and how to use them](list_of_common_ports.md)
