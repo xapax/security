@@ -56,6 +56,13 @@ You might be able to upload shell in profile-photo.
 
 ## Phpmyadmin
 
+Default credencials
+
+```
+root <blank>
+pma <blank>
+```
+
 If you find a phpMyAdmin part of a site that does not have any authentication, or you have managed to bypass the authetication you can use it to upload a shell.
 
 You go to:
