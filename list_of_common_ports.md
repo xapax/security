@@ -587,6 +587,16 @@ These are also ports used by oracle on windows. They run Oracles **Intelligent A
 
 There are some exploits for this, so check it out. You can use the default Oracle users to access to it. You can use the normal ftp protocol to access it. 
 
+Can be accessed through ftp.
+Some default passwords here: 
+https://docs.oracle.com/cd/B10501_01/win.920/a95490/username.htm
+Name: 
+Version:
+
+Default logins:
+sys:sys
+scott:tiger
+
 ## Port 2049 - NFS
 
 Network file system
