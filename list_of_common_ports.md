@@ -600,7 +600,7 @@ scott:tiger
 ## Port 2049 - NFS
 
 Network file system
-This is a service used so that people can access certain parts of a remote filesystem. If this is badly configured it could mean that you grant exessive access to users.
+This is a service used so that people can access certain parts of a remote filesystem. If this is badly configured it could mean that you grant excessive access to users.
 
 If the service is on its default port you can run this command to see what the filesystem is sharing
 ```
