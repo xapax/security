@@ -208,7 +208,8 @@ If that is the case, maybe you can make a remote forward to access it.
 plink.exe -l root -pw mysecretpassword 192.168.0.101 -R 8080:127.0.0.1:8080
 
 # Port forward using meterpreter
-
+portfwd add -l <attacker port> -p <victim port> -r <victim ip>
+portfwd add -l 3306 -p 3306 -r 192.168.222
 ```
 
 So how should we interpret the netstat output? Here is an example, now what does this mena?
