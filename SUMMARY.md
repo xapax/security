@@ -45,7 +45,6 @@
            * [SQL-injections](sql-injections.md)
            * [Bypass file upload filtering](bypass_image_upload.md)
            * [Exposed Version Control](exposed_version_control.md)
-           * Common web-services
            * [Truncating mysql vulerability](truncating_mysql_vulerability.md)
        * Attacking the user
            * [Clickjacking](clickjacking.md)
