@@ -67,7 +67,7 @@
    * [Generate Shellcode](create_shellcode.md)
 * [Post Exploitation](post_exploitation.md)
    * [Spawning Shells](spawning_shells.md)
-   * [Meterpreter for post-exploitation](getting_meterpreter_shell.md)
+   * [Meterpreter for Post-Exploitation](getting_meterpreter_shell.md)
    * [Privilege Escalation - Linux](privilege_escalation_-_linux.md)
    * [Privilege Escalation - Windows](privilege_escalation_windows.md)
    * [Loot](loot.md)
