@@ -2,18 +2,19 @@
 
 ## Array/list
 
+```python
 my_list = [1,"string",3,4,5]
 for item in my_list:
     print item
 
-**Append/push to list**
+# Append/push to list
 my_list.append("addMe")
-
+```
 
 
 ## Modules
 
-Always good to modularize your code.
+Always good to modular your code.
 
 **module1.py**
 
@@ -23,6 +24,7 @@ def addNumbers(numberOne, numberTwo)
 ```
 
 **script.py**
+
 ```python
 import module1
 
@@ -34,7 +36,12 @@ print total
 ## Pip - package management
 
 Install pip
-`sudo apt-get install python-pip`
+```bash
+sudo apt-get install python-pip
+```
+
 
 To install package
-`pip install package`
+```
+pip install package
+```
