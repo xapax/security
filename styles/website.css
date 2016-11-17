@@ -1,8 +1,4 @@
-.book .book-body .page-wrapper .page-inner section.normal code {
-  background-color: red;
-}
-
 
 .markdown-section pre {
-background-color: blue;
+background-color: #ddd;
 }
