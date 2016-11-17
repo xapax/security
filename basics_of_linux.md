@@ -1,22 +1,25 @@
 # Basics of linux
 
-https://linuxjourney.com/
-https://github.com/jlevy/the-art-of-command-line
 
 
 ## 1. Basic commands
-### pwd
- Print working directory
-### cd
- Change directory
-### ls
- list
- 
- Sort list by time. -time -reverse
 
- ```
- ls -ltr
- ```
+**pwd**
+
+Print working directory
+
+**cd**
+
+Change directory
+
+**ls**
+List files in directory
+ 
+Sort list by time. -time -reverse
+
+```bash
+ls -ltr
+```
  
 ### touch
  Create a new file
@@ -846,3 +849,8 @@ If there is a **hard block** it means that there is a physical switch on you mac
 ## 18. Routing
 
 ## 21. DNS
+
+## References
+
+https://linuxjourney.com/
+https://github.com/jlevy/the-art-of-command-line
