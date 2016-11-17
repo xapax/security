@@ -3,6 +3,7 @@
 A webshell is a shell that you can access through the web. This is useful for when you have firewalls that filter outgoing traffic on ports other than port 80. As long as you have a webserver, and want it to function, you can't filter our traffic on port 80 (and 443). It is also a bit more stealthy than a reverse shell on other ports since the traffic is hidden in the http traffic.
 
 You have access to different kinds of webshells on Kali here:
+
 ```
 /usr/share/webshells
 ```
@@ -95,7 +96,4 @@ Call oS.Run("win.com cmd.exe /c c:\Inetpub\shell443.exe",0,True)
 ## References
 
 http://www.acunetix.com/blog/articles/keeping-web-shells-undercover-an-introduction-to-web-shells-part-3/
-
-
-
 http://www.binarytides.com/web-shells-tutorial/
