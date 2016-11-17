@@ -594,6 +594,7 @@ Init.d is just a wrapper around Systemctl. I prefer it.
 ```
 
 ### rcconf
+
 This is a tool to control services more easily, what is running upon boot and so on.
 
 
@@ -615,8 +616,6 @@ This is a tool to control services more easily, what is running upon boot and so
 ### Netstat - Find outgoing and incoming connections
 
 Netstat is a multiplatform tool. So it works on both mac, windows and linux.
-
-
 
 ```
 $ netstat -apaA inet
@@ -672,23 +671,21 @@ sudo apt-get install nethogs
 nethogs
 ```
 
-Or you can use tcpdump
-
-
+Or you can use tcpdump, or iptables.
 
 ### Firewall - Iptables
 
-Iptables is a firewall tool in linux. A firewall is basically a tool that scans incoming and/or outgoing traffic. You can add rules to the iptables to filter for certain traffic. 
+Iptables is a firewall tool in linux. A firewall is basically a tool that scans incoming and/or outgoing traffic. You can add rules to the iptables to filter for certain traffic.
 
 #### Types of chains
 
 So you can filter traffic in three different ways **input**, **forward**, and **output**. These are called three different chains.
 
 **INPUT**
-This is for incoming connections. If someone wants to ssh into your machien. Or a web-server responds to your request.
+This is for incoming connections. If someone wants to ssh into your machine. Or a web-server responds to your request.
 
 **FORWARD**
-This chain is used for traffic that is not aimed at your machine. A router for eample usually just passes information on. Most connections are just passing through. As you can see this will probably not be used so much on your machine, as a normal desktop or a server doesn't router that much traffic.
+This chain is used for traffic that is not aimed at your machine. A router for example usually just passes information on. Most connections are just passing through. As you can see this will probably not be used so much on your machine, as a normal desktop or a server doesn't router that much traffic.
 
 **OUTPUT**
 
@@ -807,7 +804,7 @@ iptables -F
 iptables -I INPUT 1 -p tcp -j ACCEPT
 ```
 
-Then check out the traffci with
+Then check out the traffc with
 
 ```
 iptables -L -v --line-numbers
@@ -820,7 +817,7 @@ iptables -L -v --line-numbers
 ```
 iptables -A OUTPUT -d 198.23.253.22 -j DROP
 ```
-References:
+
 https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules
 
 ### Troubleshooting
