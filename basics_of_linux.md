@@ -21,66 +21,93 @@ Sort list by time. -time -reverse
 ls -ltr
 ```
  
-### touch
- Create a new file
-### file 
- Show info about file
-### cat
- Output file.
-### less
-Output file but thest little bit at a time
-### cp
-Copy
-### mkdir
+**touch**
 
-To make an entire strcture add the **-p** flag
+Create a new file.
+
+**file**
+
+Show info about file.
+
+**cat**
+
+Output content of file.
+
+**less**
+
+Output file but thest little bit at a time
+
+**cp**
+
+Copy
+
+**mkdir**
+
+Make directory.
+
+To make an entire directory structure add the **-p** flag
 
 ```
 mkdir -p new/thisonetoo/and/this/one
 ```
 
-Make directory 
-### rm
-Remove
-### rmdir
-Remove directory
-### history
+**rm**
+Remove file
+
+Remmove recursivly and its content. Very dangerous command! 
+
+```
+rm -rf ./directory
+```
+
+Watch the command destroy an enire machine: https://www.youtube.com/watch?v=D4fzInlyYQo
+
+**rmdir**
+
+Remove empty directory
+
+**history**
+
 Show commands history
-### find
-This must be by far one of the most useful programs. But I tend to always forget how it works. 
-  
- ### sudo
+
+**sudo**
  
  List what rights the sudo user has.
- ```
- sudo -l
 ```
- 
+sudo -l
+```
+
+Sudo config file is usually **/etc/sudoers**
+
 ## Finding files
-There are three ways to find files on linux. Locate, find and which.
+There are mainly three ways to find files on linux. **Locate**, **find** and **which**.
 
 ### Locate
-Locate is really fast because it relies on an internal database. So in order to have it updated you need to run
+Locate is really fast because it relies on an internal database. So in order to have it updated you need to run:
+
 ```
 updatedb
 ```
-Then you can easilty find stuff using 
+
+Then you can easily find stuff like this:
+
 ```
 locate filename
 ```
 
 ### Which
+
 Which searched the directories that are defined in your $PATH variable.
 
+
 ### Find
-Find is slower but a lot more thourough. You can search for files recursivly and with regex and a lot of other features.
+
+Find is slower but a lot more thorough. You can search for files recursively and with regex and a lot of other features.
 
 
 ```
-find / -name file 2>/dev/null
-
 # This will send all permissions denied outputs to dev/null.
-find / -name file 2>/dev/null 2>/dev/null
+find / -name file 2>/dev/null
 ```
  
 ## 2. Text-fu
