@@ -548,6 +548,14 @@ Many o the scanning modules in metasploit requires authentication. But some do n
 use auxiliary/scanner/mssql/mssql_ping
 ```
 
+### Brute force.
+
+```
+scanner/mssql/mssql_login
+```
+
+If you have credencials look in metasploit for other modules.
+
 ## Port 1521 - Oracle database
 
 Enumeration
