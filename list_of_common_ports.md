@@ -698,10 +698,15 @@ class JConfig {
 
 This is a proprietary protocol developed by windows to allow remote desktop.
 
-This protocl can be brute-forced with ncrack.
-
+Log in like this
+```
+rdesktop -u guest -p guest 10.11.1.5 -g 94%
 ```
 
+Brute force like this
+
+```
+ncrack -vv --user Administrator -P /root/passwords.txt rdp://192.168.1.101
 ```
 
 ## Port 4445 - Upnotifyp
