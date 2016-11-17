@@ -42,6 +42,7 @@ sudo apt-get install python-pip
 
 
 To install package
-```
+
+```bash
 pip install package
 ```
