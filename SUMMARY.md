@@ -74,6 +74,7 @@
    * [Persistence](persistence.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
    * [Cover your tracks](clean_up.md)
+   * Escaping Restricted Shell
 * Password cracking
    * [Generate custom wordlist](generate_custom_wordlist.md)
    * [Offline password cracking](identify_hash_and_crack_it.md)
