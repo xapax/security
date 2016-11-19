@@ -63,7 +63,7 @@ hydra -l root -P /root/SecLists/Passwords/10_million_password_list_top_100.txt 1
 ## Port 25 - SMTP
 
 SMTP is a server to server service. The user receives or sends emails using IMAP or POP3. Those messages are then routed to the SMTP-server which communicates the email to another server.
-The SMTP-server has a database with all emails that can receive or send emails. We can use SMTP to query that database for possible emails. 
+The SMTP-server has a database with all emails that can receive or send emails. We can use SMTP to query that database for possible email-addresses. Notice that we cannot retrieve any emails from SMTP. We can only send emails.
 
 Here are the possible commands
 
@@ -242,6 +242,13 @@ Obtain list of services running with RPC:
 ```
 rpcbind -p 192.168.1.101
 ```
+
+## Port 119 - NNTP
+Network time protocol. 
+It is used syncronize time. if a machine is running this server it might work as a server for synronizing time. So other machines query this machine for the exact time. 
+
+An attacker could use this to change the time. Which might cause denial of service and all around havoc.
+
 
 ## Port 135 - MSRPC
 
@@ -583,19 +590,6 @@ http://www.red-database-security.com/wp/itu2007.pdf
 
 These are also ports used by oracle on windows. They run Oracles **Intelligent Agent**.
 
-## Port 2100 - Oracle XML DB
-
-There are some exploits for this, so check it out. You can use the default Oracle users to access to it. You can use the normal ftp protocol to access it. 
-
-Can be accessed through ftp.
-Some default passwords here: 
-https://docs.oracle.com/cd/B10501_01/win.920/a95490/username.htm
-Name: 
-Version:
-
-Default logins:
-sys:sys
-scott:tiger
 
 ## Port 2049 - NFS
 
@@ -612,7 +606,23 @@ Then you can mount the filesystem to your machine using the following command
 ```
 mount -t 192.168.1.109:/ /tmp/NFS
 ```
+
 Now we can go to /tmp/NFS and check out /etc/passwd, and add and remove files.
+
+
+## Port 2100 - Oracle XML DB
+
+There are some exploits for this, so check it out. You can use the default Oracle users to access to it. You can use the normal ftp protocol to access it. 
+
+Can be accessed through ftp.
+Some default passwords here: 
+https://docs.oracle.com/cd/B10501_01/win.920/a95490/username.htm
+Name: 
+Version:
+
+Default logins:
+sys:sys
+scott:tiger
 
 
 ## Port 3306 - MySQL
