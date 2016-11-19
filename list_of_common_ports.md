@@ -732,6 +732,13 @@ This is categorized by microsoft as a RCE vulnerability. But there is no POC for
 
 I have not found anything here. Try connecting with netcat and visiting in browser.
 
+## Port 4555 - RSIP
+
+I have seen this port being used by Apache James Remote Configuration. 
+
+There is an exploit for version 2.3.2
+
+https://www.exploit-db.com/docs/40123.pdf
 
 ## Port 5357 - WSDAPI
 
