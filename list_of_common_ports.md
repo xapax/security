@@ -704,10 +704,13 @@ rdesktop -u guest -p guest 10.11.1.5 -g 94%
 ```
 
 Brute force like this
-
 ```
 ncrack -vv --user Administrator -P /root/passwords.txt rdp://192.168.1.101
 ```
+
+### Ms12-020
+
+This is categorized by microsoft as a RCE vulnerability. But there is no POC for it online. You can only DOS a machine using this exploit. 
 
 ## Port 4445 - Upnotifyp
 
