@@ -3,9 +3,22 @@
 ## TLDR
 
 ```
+# Stealthy
+nmap -sS 10.11.1.X
+
+# Scan all ports, might take a while.
+nmap 10.11.1.X -p-
+
+# Scan for UDP
+nmap 10.11.1.X -sU
+unicornscan -mU -v -I 10.11.1.X
+
+# Scan for version, with NSE-scripts and trying to identify OS
+nmap 10.11.1.X -sV -sC -O
+
+# All out monsterscan
 nmap -vvv -Pn -A -iL listOfIP.txt
 ```
-
 
 ## Nmap
 
@@ -25,11 +38,20 @@ If machine1 omits the last ack packet the connection is not made. This can be a 
 
 This is the default mode for nmap. If you do not add any flags and scan a machine this is the type of connection it creates.
 
-#### "Stealthy" -sS
+### "Stealthy" -sS
 
 By adding the -sS flag we are telling nmap to not finalize the three way handshake. It will send a syn, receive syn-ack (if the port is open), and then terminate the connection. This used to be considered stealthy before, since it was often not logged.
 
 If we do not want to create a connection we can add the `-sS` flag
+
+### UDP scan
+
+UDP is after TCP the most common protocol. DNS (53), SNMP (161/162) and DHCP (67/68) are some common ones. Scanning for it is slow and unreliable.
+
+```
+-sU
+```
+
 
 #### Output scan to a textfile
 
@@ -47,11 +69,6 @@ Not all output works with grepable format. For example NSE does not work with gr
 
 ```
 
-#### UDP scan
-
-```
--sU
-```
 
 ### Scan an entire IP-range
 You might find that a site has several machines on the same ip-range. You can then use nmap to scan the whole range.
