@@ -1,52 +1,17 @@
 # Port Scanning
 
-
-
-
-## Metasploit
-
-We can do port-scanning with metasploit and nmap. And we can even integrate nmap into metasploit. This might be a good way to keep your process neat and organized. 
-
-### db_nmap
-
-You can run `db_nmap` and all the output will be stored in the metasploit database and available with 
+## TLDR
 
 ```
-hosts
-services
+nmap -vvv -Pn -A -iL listOfIP.txt
 ```
 
-You can also import nmap scans. But you must first output it in xml-format with the following flag  
-
-```
-nmap 192.168.1.107 -oX result.xml
-```
-
-Good practice would be to output the scan-results in xml, grepable and normal format. You do that with
-
-```
-nmap 192.168.1.107 -oA result
-```
-
-Then you can load it into the database with the following command. 
-
-```
-db_import /path/to/file.xml
-```
-
-### Metasploit PortScan modules
-
-If you for some reason don't have access to nmap you can run metasploits modules that does portscans
-
-```
-use auxiliary/scanner/portscan/
-```
 
 ## Nmap
 
-Now that you have gathered some IP addresses from your subdomain scanning it is time to scan those addresses. You just copy-paste those addresses and add them to a file, line bby line. Then you can scan all of them with nmap at the same time. Using the `-iL` flag.
+Now that you have gathered some IP addresses from your subdomain scanning it is time to scan those addresses. You just copy-paste those addresses and add them to a file, line by line. Then you can scan all of them with nmap at the same time. Using the `-iL` flag.
 
-### Basics
+### Basics - tcp-connect scan
 
 Okay, so a bit of the basics of Nmap and how it works. When one machine initiate a connection with another machine using the **transmission-control protocol (tcp)** it performs what is know as a three-way handshake. That means:
 ```
@@ -58,11 +23,11 @@ machine1 sends a ack packet to machine2.
 If machine2 responds with a syn-ack we know that that port is open. This is basically what nmap does when it scans for a port.
 If machine1 omits the last ack packet the connection is not made. This can be a way to make less noise. 
 
-```
-nmap -vvv -Pn -A -iL listOfIP.txt
-```
+This is the default mode for nmap. If you do not add any flags and scan a machine this is the type of connection it creates.
 
-#### Stealthy
+#### "Stealthy" -sS
+
+By adding the -sS flag we are telling nmap to not finalize the three way handshake. It will send a syn, receive syn-ack (if the port is open), and then terminate the connection. This used to be considered stealthy before, since it was often not logged.
 
 If we do not want to create a connection we can add the `-sS` flag
 
@@ -158,5 +123,46 @@ Run the default scripts
 ```
 nmap -sC example.com
 ```
+
+
+## Metasploit
+
+We can do port-scanning with metasploit and nmap. And we can even integrate nmap into metasploit. This might be a good way to keep your process neat and organized. 
+
+### db_nmap
+
+You can run `db_nmap` and all the output will be stored in the metasploit database and available with 
+
+```
+hosts
+services
+```
+
+You can also import nmap scans. But you must first output it in xml-format with the following flag  
+
+```
+nmap 192.168.1.107 -oX result.xml
+```
+
+Good practice would be to output the scan-results in xml, grepable and normal format. You do that with
+
+```
+nmap 192.168.1.107 -oA result
+```
+
+Then you can load it into the database with the following command. 
+
+```
+db_import /path/to/file.xml
+```
+
+### Metasploit PortScan modules
+
+If you for some reason don't have access to nmap you can run metasploits modules that does portscans
+
+```
+use auxiliary/scanner/portscan/
+```
+
 
 
