@@ -18,6 +18,12 @@ nmap 10.11.1.X -sV -sC -O
 
 # All out monsterscan
 nmap -vvv -Pn -A -iL listOfIP.txt
+
+# Fast scan
+nmap 10.11.1.X -F
+
+# Only scan the 100 most common ports
+nmap 10.11.1.X --top-ports 100
 ```
 
 ## Nmap
@@ -40,9 +46,11 @@ This is the default mode for nmap. If you do not add any flags and scan a machin
 
 ### "Stealthy" -sS
 
-By adding the -sS flag we are telling nmap to not finalize the three way handshake. It will send a syn, receive syn-ack (if the port is open), and then terminate the connection. This used to be considered stealthy before, since it was often not logged.
+By adding the **-sS** flag we are telling nmap to not finalize the three way handshake. It will send a syn, receive syn-ack (if the port is open), and then terminate the connection. This used to be considered stealthy before, since it was often not logged.
 
-If we do not want to create a connection we can add the `-sS` flag
+In the flag I imagine that the first **s** stands for scan/scantype and the second **S** stands for **syn**.
+
+So **-sS** can be read as **scantype syn**
 
 ### UDP scan
 
