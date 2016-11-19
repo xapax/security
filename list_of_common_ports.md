@@ -230,6 +230,12 @@ This service is used for fetching emails on a email server. So the server that h
 telnet 192.168.1.105 110
 USER pelle@192.168.1.105
 PASS admin
+
+# List all emails
+list
+
+# Retrive email number 5, for example
+retr 5
 ```
 
 ## Port 111 - Rpcbind
