@@ -555,6 +555,14 @@ I think these are used by the RPC within Windows Domains. I have found no use fo
 
 Default port for Microsoft SQL .
 
+```
+sqsh -S 192.168.1.101 -U sa
+
+# Execute commands
+exec master..xp_cmdshell
+```
+
+
 Many o the scanning modules in metasploit requires authentication. But some do not.
 
 ```
