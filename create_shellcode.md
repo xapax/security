@@ -27,6 +27,8 @@ If you don't have space and only want to execute a single command you can use
 
 ```
 use payload/windows/exec
+
+use payload/cmd/windows/generic
 ```
 
 
