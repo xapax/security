@@ -136,6 +136,13 @@ upload a file called shell443.txt, which of course is you .asp shell. And then y
 
 http://secureyes.net/nw/assets/Bypassing-IIS-6-Access-Restrictions.pdf
 
+## Webmin
+
+Webmin is a webgui to interact with the machine.
+
+The password to enter is the same as the passsword for the root user, and other users if they have that right. There are several vulnerabilites for it. It is run on port 10000.
+
+
 ## Wordpress
 
 
