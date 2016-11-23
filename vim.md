@@ -38,3 +38,15 @@ f,
 ## .vimrc
 
 Here is all your vim-configuration.
+
+
+## Plugins
+
+Install vundle here
+https://github.com/VundleVim/Vundle.vim
+
+**Add plugin**
+
+Add plugin to your .vimrc-file and then open vim and write
+
+**:PluginInstall**
