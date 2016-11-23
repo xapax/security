@@ -1,5 +1,17 @@
 # Vim
 
+## Core concepts
+
+In vim you have the concept of buffers.
+
+```
+# List buffers
+:buffers
+
+# Close/delete a buffer
+:bdelete
+:bd
+```
 
 ## Movement
 
