@@ -27,5 +27,14 @@ E
 **back to the beginning of previous word**
 b
 
-**back to the beginning of previous word**
+**back to the end of previous word**
 B
+
+**go to next character of your choice**
+If you want to go to the next comma
+f,
+
+
+## .vimrc
+
+Here is all your vim-configuration.
