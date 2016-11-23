@@ -12,6 +12,7 @@
    * [Scripting with python](scripting_with_python.md)
        * [Python fundamentals](python_fundamentals.md)
        * [Useful scripts](connections.md)
+   * Vim
    * [Transferring files](transfering_files2.md)
        * [Transfering files on linux](transfering_files.md)
        * [Transfering files on windows](transfering_files_to_windows.md)
@@ -20,7 +21,6 @@
        * networking
    * [Firewalls](firewalls.md)
    * [General tips and tricks](general_tips.md)
-   * Vim
 * [Recon/information gathering phase](scanning.md)
    * [Passive information gatherig](passive_information_gatherig.md)
        * [Email Harvesting](email_harvesting.md)
