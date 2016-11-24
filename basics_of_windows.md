@@ -155,6 +155,14 @@ echo %logonserver%
 
 On networks that are based on linux and you need to integrate a windows machine you can use SMB to do that.
 
+### Kerberos
+
+Kerberos is the authentication protocol that windows domains use to authenticate users to the Domain controller. But kerberos can also be found in several unix-operating systems. Kerberos was not built by windows, but long before.
+
+I think a machine that has port 88 open (the default kerberos port) can be assumed to be a Domain Controller.
+
+The risk 
+
 ## Workgroup
 
 A workgroup architecture stands in contrast to the domain-system. A workgroup is based on the idea of peer-to-peer and not server-client as Domain is. In Domain you have a server (domain controller) and a client (the user). Therefore it might be a bit hard to control a network bigger than a dozen clients. So it is usually used for smaller networks. If a computer is part of a workgroup it cannot be part of a domain. In a workgroup architecture each computer is in charge of its own security settings. So there is no single computer in charge of all the security settings for the workgroup. 
