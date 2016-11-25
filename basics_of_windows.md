@@ -157,11 +157,11 @@ On networks that are based on linux and you need to integrate a windows machine 
 
 ### Kerberos
 
-Kerberos is the authentication protocol that windows domains use to authenticate users to the Domain controller. But kerberos can also be found in several unix-operating systems. Kerberos was not built by windows, but long before.
+Kerberos is a network authentication protocol. The original protocol is used by many unix-systems. Windows have their own version of the Kerberos protol, so that it works with their NT-kernel.  It is used by windows Domains to authenticate users. But kerberos can also be found in several unix-operating systems. Kerberos was not built by windows, but long before.
 
 I think a machine that has port 88 open (the default kerberos port) can be assumed to be a Domain Controller.
 
-The risk 
+
 
 ## Workgroup
 
