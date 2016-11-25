@@ -161,7 +161,7 @@ Kerberos is a network authentication protocol. The original protocol is used by 
 
 I think a machine that has port 88 open (the default kerberos port) can be assumed to be a Domain Controller.
 
-
+When a user logs in ot the Domain Active Directory uses Kerberos to authenticate the user. When the user insert her password the gets one-way crypted and sent with Kerberos to the Active directory that compares it with it's password database. The Key Distribution Center responds with a TGI ticket to the user machine. 
 
 ## Workgroup
 
