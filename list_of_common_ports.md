@@ -541,6 +541,10 @@ You will often see port 631 open in your priv-esc enumeration when you run **net
 
 You authenticate with the OS-users.
 
+Find version. Test **cups-config --version**. If this does not work surf to **http://localhost:631/printers and see the CUPS version in the title bar of your browser**.
+
+
+
 There are vulnerabilites for it so check your searchsploit.
 
 ## Port 993 - Imap Encrypted
