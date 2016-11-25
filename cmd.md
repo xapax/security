@@ -89,6 +89,10 @@ net users
 # Add user
 net user hacker my_password /add
 net localgroup Administrator hacker /add
+
+# Check if you are part of a domain
+net localgroup /domain
+
 ```
 
 ### Other
