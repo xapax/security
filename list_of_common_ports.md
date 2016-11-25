@@ -222,6 +222,13 @@ Now that we know how this works we can try to brute force it with medusa.
 medusa -h 192.168.1.101 -u admin -P wordlist.txt -M http -m DIR:/test -T 10
 ```
 
+## Port 88 - Kerberos
+
+Kerberos is a protocol that is used for netowrk authentication. Different versions are used by Nix and Windows. But if you see a machine with port 88 open you can be fairly certain that it is a Windows Domain Controller.
+
+If you already have a login to a user of that domain you might be able to escalate that privilege.
+MS14-068
+
 ## Port 110 - Pop3
 
 This service is used for fetching emails on a email server. So the server that has this port open is probably an email-server, and other clients on the network (or outside) access this server to fetch their emails.
@@ -526,6 +533,15 @@ Outgoing smtp-port
 
 If Postfix is run on it it could be vunerable to shellshock
 https://www.exploit-db.com/exploits/34896/
+
+
+## Port 631 - Cups
+Common UNIX Printing System has become the standard for sharing printers on a linux-network. 
+You will often see port 631 open in your priv-esc enumeration when you run **netstat**. You can log in to it here: **http://localhost:631/admin**
+
+You authenticate with the OS-users.
+
+There are vulnerabilites for it so check your searchsploit.
 
 ## Port 993 - Imap Encrypted
 
