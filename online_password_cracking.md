@@ -22,6 +22,15 @@ It can then be brute forced like this:
 medusa -h 192.168.1.101 -u admin -P wordlist.txt -M http -m DIR:/test -T 10
 ```
 
+### Logins
+
+Use Burp suite. 
+
+1. Intecept a login attempt.
+2. Right-lick "Send to intruder". Select Sniper if you have nly one field you want to bruteforce. If you for example already know the username. Otherwise select cluster-attack.
+3. Select your payload, your wordlist.
+4. Click attack.
+5. Look for response-length that differs from the rest.
 
 ## Port 161 - SNMP
 
