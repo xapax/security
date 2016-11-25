@@ -93,6 +93,8 @@ net localgroup Administrator hacker /add
 # Check if you are part of a domain
 net localgroup /domain
 
+# List all users in a domain
+net users /domain
 ```
 
 ### Other
