@@ -705,6 +705,7 @@ http://www.cyberciti.biz/tips/how-do-i-enable-remote-access-to-mysql-database-se
 If mysql is started as root you might have a chance to use it as a way to escalate your privileges.
 
 #### MYSQL UDF INJECTION:
+https://infamoussyn.com/2014/07/11/gaining-a-root-shell-using-mysql-user-defined-functions-and-setuid-binaries/
 
 
 ### Finding passwords to mysql
