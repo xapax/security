@@ -92,12 +92,19 @@ Go to a character and the press **r** followed by the character you want instead
 
 **rp** if you want to replace p.
 
+**R**
+
 ## Substitute - Search and replace
 
 :s/thee/the/g
 
 ## Entering insert-mode
 
+i
+o
+O
+a
+A
 
 ## .vimrc
 
