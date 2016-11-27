@@ -1,5 +1,7 @@
 # Vim
 
+http://www.viemu.com/a-why-vi-vim.html
+
 ## Core concepts
 
 In vim you have the concept of buffers.
@@ -13,7 +15,7 @@ In vim you have the concept of buffers.
 :bd
 ```
 
-## Movement
+## Movement - Motion commands
 
 **Left,up,down,right**
 hjkl
@@ -45,6 +47,51 @@ B
 **go to next character of your choice**
 If you want to go to the next comma
 f,
+
+
+## Operators
+
+Operators are commands that do things. Like delete, change or copy. 
+
+c - change
+ce - change until end of the word.
+c$ - change until end of line.
+
+
+## Combining Motions and Operators
+
+Now that you know some motion commands and operator commands. You can start combining them.
+
+dw - delete word
+d$ - delete to the end of the line
+
+## Count - Numbers
+
+You can add numbers before motion commands. To move faster.
+
+4w - move cursor three words forward
+0 - move curso to the start of the line
+
+You can use numbers to perform operations.
+d3w - delete three words
+
+3dd - delete three lines
+
+
+## Replace
+
+If you need to replace a character, there is no need to enter insert-mode. You can just use replace
+
+
+Go to a character and the press **r** followed by the character you want instead.
+
+**rp** if you want to replace p.
+
+## Substitute - Search and replace
+
+:s/thee/the/g
+
+## Entering insert-mode
 
 
 ## .vimrc
