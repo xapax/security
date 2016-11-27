@@ -94,6 +94,14 @@ Go to a character and the press **r** followed by the character you want instead
 
 **R**
 
+## Clipboard
+
+In order to copy something FROM vim to the OS-clipboard you can do this:
+
+The **"** means that we are not entering a registry. And the * means the OS-clipboard. So we are yanking something and putting it in the OS-clipboard registry.
+```
+"*y
+```
 ## Substitute - Search and replace
 
 :s/thee/the/g
