@@ -48,6 +48,11 @@ B
 If you want to go to the next comma
 f,
 
+**start of file**
+gg
+
+**end of file**
+G
 
 ## Operators
 
