@@ -131,3 +131,34 @@ The "man"-pages in windows is simply:
 help dir
 ```
 
+### Mounting - Mapping
+
+In the windows world mounting is called mapping.
+The command to deal with mounting/mapping is **net use**
+
+Using net use we can connect to other shared folder, on other systems. Many windows machines have a default-share called IPC (Interprocess communication share). It does not contain any files. But we can usually connect to it without authentication. This is called a **null-session**. Although the share does not contain any files it contains a lot of data that is useful for enumeration.
+The linux-equivalent of **net use** is usually **smbclient**. 
+
+
+```
+net use \\IP address\IPC$ "" /u:""
+net use \\192.168.1.101\IPC$ "" /u:""
+```
+
+If you want to map a drive from another network to your filesystem you can do that like this:
+
+```
+net use z: \\192.168.1.101\SYSVOL
+```
+
+Here you map the drive to the letter **z**. If the command is successfull you should now be able to access those files by entering the **z** drive.
+
+You enter the z-drive by doing this:
+
+```
+C:\>z:
+Z:\
+```
+
+#### Switch between drives
+So if you have mapped a drive like the example before, 
