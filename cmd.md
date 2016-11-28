@@ -158,6 +158,10 @@ You enter the z-drive by doing this:
 ```
 C:\>z:
 Z:\
+
+# Now we switch back to c
+Z:\>c:
+C:\
 ```
 
 #### Switch between drives
