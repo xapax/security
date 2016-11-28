@@ -473,7 +473,26 @@ https://www.offensive-security.com/metasploit-unleashed/snmp-scan/
 
 ## Port 199 - Smux
 
+## Port 389/636 - Ldap
 
+Lightweight Directory Access Protocol.
+This port is usually used for Directories. Directory her means more like a telephone-directory rather than a folder. Ldap directory can be understood a bit like the windows registry. A database-tree. Ldap is sometimes used to store usersinformation. 
+Ldap is used more often in corporate structure.
+Webapplications can use ldap for authentication. If that is the case it is possible to perform **ldap-injections** which are similar to sqlinjections.
+
+
+You can sometimes access the ldap using a anonymous login, or with other words no session. This can be useful becasue you might find some valuable data, about users.
+
+```
+ldapsearch -h 192.168.1.101 -p 389 -x -b "dc=mywebsite,dc=com"
+```
+
+
+When a client connects to the Ldap directory it can use it to query data, or add or remove. 
+
+Port 636 is used for SSL.
+
+There are also metasploit modules for Windows 2000 SP4 and Windows Xp SP0/SP1
 
 ## Port 443 - HTTPS
 
