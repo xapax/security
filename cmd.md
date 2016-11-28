@@ -156,7 +156,6 @@ diskpart
 list volume
 ```
 
-
 The command to deal with mounting/mapping is **net use**
 
 Using **net use** we can connect to other shared folder, on other systems. Many windows machines have a default-share called IPC (Interprocess communication share). It does not contain any files. But we can usually connect to it without authentication. This is called a **null-session**. Although the share does not contain any files it contains a lot of data that is useful for enumeration.
@@ -187,5 +186,10 @@ Z:\>c:
 C:\
 ```
 
-#### Switch between drives
-So if you have mapped a drive like the example before, 
+** Remove a network drive - umount it**
+First leave the drive if you are in it:
+
+```
+c:
+net use z: /del
+```
