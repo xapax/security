@@ -138,6 +138,10 @@ In the windows world mounting is called mapping.
 If you want to see which drives are mapped/mounted to your filesystem you can use any of these commands:
 
 ```
+# This is the most thorough
+wmic logicaldisk get deviceid, volumename, description
+
+# But this works too
 wmic logicaldisk get name
 wmic logicaldisk get caption
 ```
