@@ -95,7 +95,30 @@ reg query HKCU /f password /t REG_SZ /s
 ```
 
 ### Group Policy Preference
+
 If the machine belongs to a domain and your user has access to **System Volume Information** there might be some sensitive files there.
+
+First we need to map/mount that drive. In order to do that we need to know the IP-address of the domain controller. We can just look in the envronment-variables
+
+```
+# Output environemtn-variables
+set
+
+# Look for the following:
+LOGONSERVER=\\NAMEOFSERVER
+USERDNSDOMAIN=WHATEVER.LOCAL
+
+# Look up ip-addres
+nslookup nameofserver.whatever.local
+
+# It will output something like this
+Address:  10.11.1.220
+
+```
+
+
+
+gpp-decrypt
 
 Look for the file **Groups.xml**. It might be encrypted the password. But the encryption.key can be found on windows homepage. Other interesting files here might be
 
