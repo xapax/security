@@ -73,6 +73,7 @@
    * [Privilege Escalation - Linux](privilege_escalation_-_linux.md)
    * [Privilege Escalation - Windows](privilege_escalation_windows.md)
    * [Loot](loot.md)
+       * Loot windows - For credentials and other stuff
    * [Persistence](persistence.md)
    * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
    * [Cover your tracks](clean_up.md)
