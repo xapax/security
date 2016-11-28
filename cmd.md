@@ -134,9 +134,18 @@ help dir
 ### Mounting - Mapping
 
 In the windows world mounting is called mapping.
+
+If you want to see which drives are mapped/mounted to your filesystem you can use any of these commands:
+
+```
+wmic logicaldisk get name
+wmic logicaldisk get caption
+```
+
+
 The command to deal with mounting/mapping is **net use**
 
-Using net use we can connect to other shared folder, on other systems. Many windows machines have a default-share called IPC (Interprocess communication share). It does not contain any files. But we can usually connect to it without authentication. This is called a **null-session**. Although the share does not contain any files it contains a lot of data that is useful for enumeration.
+Using **net use** we can connect to other shared folder, on other systems. Many windows machines have a default-share called IPC (Interprocess communication share). It does not contain any files. But we can usually connect to it without authentication. This is called a **null-session**. Although the share does not contain any files it contains a lot of data that is useful for enumeration.
 The linux-equivalent of **net use** is usually **smbclient**. 
 
 
