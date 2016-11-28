@@ -112,7 +112,7 @@ USERDNSDOMAIN=WHATEVER.LOCAL
 nslookup nameofserver.whatever.local
 
 # It will output something like this
-Address:  10.11.1.220
+Address:  192.168.1.101
 
 ```
 
