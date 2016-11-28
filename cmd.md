@@ -170,7 +170,11 @@ net use \\192.168.1.101\IPC$ "" /u:""
 If you want to map a drive from another network to your filesystem you can do that like this:
 
 ```
+# This will map it to drive z
 net use z: \\192.168.1.101\SYSVOL
+
+# This will map it to the first available drive-letter
+net use * \\192.168.1.101\SYSVOL
 ```
 
 Here you map the drive to the letter **z**. If the command is successfull you should now be able to access those files by entering the **z** drive.
