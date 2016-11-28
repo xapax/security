@@ -144,6 +144,16 @@ wmic logicaldisk get deviceid, volumename, description
 # But this works too
 wmic logicaldisk get name
 wmic logicaldisk get caption
+
+# This can be slow. So don't kill your shell!
+fsutil fsinfo drives
+
+# With powershell
+get-psdrive -psprovider filesystem
+
+# This works too, but it is interacive. So it might be dangerous work hackers
+diskpart
+list volume
 ```
 
 
