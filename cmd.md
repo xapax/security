@@ -154,6 +154,9 @@ get-psdrive -psprovider filesystem
 # This works too, but it is interacive. So it might be dangerous work hackers
 diskpart
 list volume
+
+# Map only netowrk drives
+net use
 ```
 
 The command to deal with mounting/mapping is **net use**
