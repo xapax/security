@@ -304,6 +304,14 @@ https://help.ubuntu.com/community/How%20to%20Create%20a%20Network%20Share%20Via%
 mount -t cifs -o user=USERNAME,sec=ntlm,dir_mode=0077 "//10.10.10.10/My Share" /mnt/cifs
 ```
 
+### Connectin with PSExec
+
+If you have credentials you can use psexec you easily log in. You can either use the standalone binary or the metasploit module.
+
+```
+use exploit/windows/smb/psexec
+```
+
 ### Scanning with nmap
 Scanning for smb with Nmap
 
@@ -788,6 +796,10 @@ There is an exploit for version 2.3.2
 
 https://www.exploit-db.com/docs/40123.pdf
 
+## Port 47001 - Windows Remote Management Service
+
+Windows Remote Management Service
+
 ## Port 5357 - WSDAPI
 
 ## Port 5722 - DFSR
@@ -849,3 +861,7 @@ Since this port is used by many different services. They are divided like this.
 ### Tomcat
 
 Tomcat suffers from default passwords. There is even a module in metasploit that enumerates common tomcat passwords. And another module for exploiting it and giving you a shell.
+
+## Port 9389 - 
+
+> Active Directory Administrative Center is installed by default on Windows Server 2008 R2 and is available on Windows 7 when you install the Remote Server Administration Tools (RSAT).
