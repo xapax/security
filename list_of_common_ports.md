@@ -790,6 +790,12 @@ https://www.exploit-db.com/docs/40123.pdf
 
 ## Port 5357 - WSDAPI
 
+## Port 5722 - DFSR
+
+> The Distributed File System Replication (DFSR) service is a state-based, multi-master file replication engine that automatically copies updates to files and folders between computers that are participating in a common replication group. DFSR was added in Windows Server 2003 R2.
+
+I am not sure how what can be done with this port. But if it is open it is a sign that the machine in question might be a Domain Controller. 
+
 
 ## Port 5900 - VNC
 
