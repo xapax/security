@@ -16,6 +16,25 @@ ifconfig
 ifconfig -a
 ```
 
+## Metasploit
+
+
+### Ping-sweep the network
+
+First we want to scan the network to see what devices we can target. In this example we already have a meterpreter shell on a windows machine with SYSTEM-privileges.
+
+```
+meterpreter > run arp_scanner -r 192.168.1.0/24
+```
+This command will output all the devices on the netowork.
+
+### Scan each host
+
+Now that we have a list of all available machines. We want to portscan them.
+
+
+
+
 
 This is a good video-explanation:
 https://www.youtube.com/watch?v=c0XiaNAkjJA
