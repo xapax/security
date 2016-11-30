@@ -32,7 +32,32 @@ This command will output all the devices on the netowork.
 
 Now that we have a list of all available machines. We want to portscan them.
 
+We will to that portscan through metasploit. Using this module:
 
+```
+use auxiliary/scanner/portscan/tcp
+```
+
+If we run that module now it will only scan machines in the network we are already on. So first we need to connect us into the second network.
+
+On the already pwn machine we do
+
+```
+ipconfig
+```
+
+Now we add the second network as a new route in metasploit. First we background our session, and then do this:
+
+```
+# the ip addres and the subnet mask, and then the meterpreter session
+route add 192.168.11.1 255.255.255.0 1
+```
+
+Now we can run our portsanning module:
+
+```
+use auxiliary/scanner/portscan/tcp
+```
 
 
 
