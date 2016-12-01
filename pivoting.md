@@ -59,6 +59,14 @@ Now we can run our portsanning module:
 use auxiliary/scanner/portscan/tcp
 ```
 
+### Attack a specific port
+
+In order to attack a specific port we need to forwards it like this
+
+```
+portfwd add -l 3389 -p 3389 -r 192.168.1.222
+```
+
 
 
 This is a good video-explanation:
