@@ -91,6 +91,16 @@ Running as root
 
 **Mysql**
 
+If you find that mysql is running as root you can eutiher try 
+
+```
+select sys_exec('whoami');
+select sys_eval('whoami');
+```
+
+If neither of those won't workyou can use a User Defined Function. UDP. This has worked for me:
+https://infamoussyn.com/2014/07/11/gaining-a-root-shell-using-mysql-user-defined-functions-and-setuid-binaries/
+
 #### Bad path configuration
 Putting . in the path
 If you put a dot in your path you won't have to write `./binary` to be able to execute it. You will be able to execute any script or binary that is in the current directory.
