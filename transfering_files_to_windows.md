@@ -57,6 +57,8 @@ So now you can upload and download whatever from the windows-machine like this
 tftp -i 192.160.1.101 GET wget.exe
 ```
 
+I usually put all files I want to make available in **/usr/tftp**
+
 ## VBScript
 
 Here is a good script to make a wget-clone in VB.

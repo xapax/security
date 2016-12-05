@@ -134,7 +134,23 @@ mysql -u root -p -h 127.0.0.1 --port=3307
 
 ### Dynamic port forwarding
 
-This can be used to dynamically forward all traffic from a specific application. 
+This can be used to dynamically forward all traffic from a specific application. This is really cool. With remote and local port forwarding you are only forwarding a single port. But that can be a hassle if your target machine has 10 ports open that you want to connect to. So instad we can use a dynamic port forwarding technique. 
+
+Dynamic port forwarding sounds really complicated, but it is incredibly easy to set up.
+Just set upp the tunnel like this. After it is set up do not run any commands in that session.
+
+```
+# We connect to the machine we want to pivot from
+ssh -D 9050 user@192.168.1.111
+```
+
+Since proxychains uses 9050 by defualt (the defaultport for tor) we don't even need to configure proxychains. But if you want to change the port you can do that in **/etc/proxychains.conf**.
+
+```
+proxychains nc 192.168.2.222 21
+```
+
+So supress all the logs from proxychains you can configure it in the config file.
 
 #### Tunnel all http/https traffic through ssh
 
