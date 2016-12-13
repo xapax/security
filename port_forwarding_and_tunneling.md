@@ -174,6 +174,21 @@ Now facebook will be available on address localhost:8080.
 ssh -L 8080:www.facebook.com:80 localhost
 ```
 
+You can also forward ports like this:
+
+```
+
+ssh username@<remote-machine> -L localport:target-ip:target-port
+
+ssh sean@192.168.1.111 -L 10000:192.168.1.222:10000
+```
+
+Now this port will be available on your localhost.
+So you go to:
+
+```
+nc localhost:10000
+```
 
 ### Remote port forwarding
 

@@ -84,7 +84,6 @@
     * [Online password cracking](online_password_cracking.md)
     * [Pass the hash - reusing hashes](pass_the_hash_-_reusing_hashes.md)
 * [Pivoting - Port forwarding - Tunneling](port_forwarding_and_tunneling.md)
-    * [Pivoting](pivoting.md)
 * [Bypassing antivirus](bypassing_antivirus.md)
 * [Binary Exploitation](binary_exploitation2.md)
     * [Tools](tools.md)
