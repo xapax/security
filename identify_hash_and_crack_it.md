@@ -106,4 +106,8 @@ Google hashes
 Search pastebin.
 
 
-## Windows 
+## Windows
+
+If you find a local file inclusion vulnerability you might be able to retrieve two fundamental files from it. the **system** tregistry and the **SAM** registry. There two files/registrys are all we need to get the machines hashes.
+
+
