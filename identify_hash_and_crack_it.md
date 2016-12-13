@@ -109,5 +109,21 @@ Search pastebin.
 ## Windows
 
 If you find a local file inclusion vulnerability you might be able to retrieve two fundamental files from it. the **system** tregistry and the **SAM** registry. There two files/registrys are all we need to get the machines hashes.
+These files can be found in several different locations in windows. Here they are:
 
+```
+Systemroot can be windows
+%SYSTEMROOT%\repair\SAM
+windows\repair\SAM
+%SYSTEMROOT%\System32\config\RegBack\SAM
 
+System file can be found here
+SYSTEMROOT%\repair\system
+%SYSTEMROOT%\System32\config\RegBack\system
+```
+
+So if the manage to get your hands on both of these files you can extract the password hashed like this:
+
+```
+pwdump system sam 
+```
