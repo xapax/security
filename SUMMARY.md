@@ -67,6 +67,7 @@
     * [Shells](reverse-shell.md)
     * [Webshell](webshell.md)
     * [Generate Shellcode](create_shellcode.md)
+    * [Editing Exploits](editing-exploits.md)
 * [Post Exploitation](post_exploitation.md)
     * [Spawning Shells](spawning_shells.md)
     * [Meterpreter for Post-Exploitation](getting_meterpreter_shell.md)
