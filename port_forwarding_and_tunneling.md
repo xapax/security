@@ -290,5 +290,12 @@ Now we can access this port on our machine locally like this.
 nc 127.0.0.1 3306
 ```
 
+
+## SShuttle
+
+```
+sshuttle -r root@10.0.0.1 10.10.10.0/24
+```
+
 ## References
 
