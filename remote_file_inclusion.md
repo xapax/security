@@ -32,6 +32,8 @@ And evil.txt will look like something like this:
 So when the victim-server includes this file it will automatically execute the commands that are in the evil.txt file. And we have a RCE.
 
 
-## Nullbyte to avoid .php
+## Avoid extentions
 
 Remember to add the nullbyte **%00** to avoid appending **.php**. This will only work on php before version 5.3. 
+
+If it does not work you can alsog add a **?**, this way the rest will be interpreted as url parameters.
