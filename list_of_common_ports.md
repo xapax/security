@@ -275,8 +275,9 @@ https://en.wikipedia.org/wiki/Microsoft_RPC
 nmap 192.168.0.101 --script=msrpc-enum
 ```
 
+```
 msf > use exploit/windows/dcerpc/ms03_026_dcom
-
+```
 
 
 ## Port 139 and 445- SMB/Samba shares
