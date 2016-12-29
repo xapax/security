@@ -55,6 +55,13 @@ So now you can upload and download whatever from the windows-machine like this
 tftp -i 192.160.1.101 GET wget.exe
 ```
 
+If you like to test that the tftp-server is working you can test it from linux, I don't think it has a non-interative way. 
+
+```
+tftp 192.160.1.101
+GET test.txt
+```
+
 I usually put all files I want to make available in **/srv/tftp**
 
 ## VBScript
