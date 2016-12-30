@@ -55,7 +55,7 @@ So now you can upload and download whatever from the windows-machine like this
 tftp -i 192.160.1.101 GET wget.exe
 ```
 
-If you like to test that the tftp-server is working you can test it from linux, I don't think it has a non-interative way. 
+If you like to test that the tftp-server is working you can test it from linux, I don't think it has a non-interative way.
 
 ```
 tftp 192.160.1.101
@@ -63,6 +63,10 @@ GET test.txt
 ```
 
 I usually put all files I want to make available in **/srv/tftp**
+
+If you want to make sure that the file was uploaded correct you can check in the syslog. Grep for the IP like this:
+
+`grep 192.168.1.101 /var/log/syslog`
 
 ## VBScript
 
