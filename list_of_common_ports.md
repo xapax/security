@@ -605,9 +605,15 @@ Default port for Microsoft SQL .
 
 ```
 sqsh -S 192.168.1.101 -U sa
+```
 
 # Execute commands
-exec master..xp_cmdshell
+
+```
+To execute the date command to the following after logging in
+xp_cmdshell 'date'
+go
+
 ```
 
 
