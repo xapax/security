@@ -6,11 +6,11 @@ This is a huge chapter. I could divide it up in many subchapters but I like to h
 
 The shell, or the terminal is a really useful tool. Bash is the standard shell on most Linux distros.
 
+### Navigating
 
 
-### Navigating 
 
-**pwd**
+**`pwd`**
 
 Print working directory
 
@@ -348,7 +348,7 @@ Shows all the files and directories and their permission settings.
 drwxrwxrwt 2 root root 4,0K ago  3 17:33 myfile
 ```
 
-Here we have 10 letters in the beginning. The first one `d shows that it is a directory.    
+Here we have 10 letters in the beginning. The first one `d shows that it is a directory.      
 The next three letters are rfor read, w for write and x for execute. The first three belong to the owner, the second three to the group, and the last three to all users.`
 
 [https://linuxjourney.com/lesson/file-permissions](https://linuxjourney.com/lesson/file-permissions)
