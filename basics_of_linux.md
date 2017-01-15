@@ -4,7 +4,11 @@ This is a huge chapter. I could divide it up in many subchapters but I like to h
 
 ## The Shell - Bash
 
-Bash is the standard shell on most Linux distros.
+The shell, or the terminal is a really useful tool. Bash is the standard shell on most Linux distros.
+
+
+
+### Navigating 
 
 **pwd**
 
