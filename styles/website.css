@@ -1,3 +1,7 @@
 .markdown-section pre {
 background-color: #ddd;
 }
+
+.markdown-section code {
+background-color: #ddd;
+}
