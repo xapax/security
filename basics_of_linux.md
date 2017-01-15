@@ -8,17 +8,17 @@ The shell, or the terminal is a really useful tool. Bash is the standard shell o
 
 ### Navigating
 
-
-
-**`pwd`**
+`pwd`
 
 Print working directory
 
-**cd**
+**`cd`**
 
 Change directory
 
-**ls**  
+`cd ~`
+
+**`ls`**  
 List files in directory
 
 Sort list by time. -time -reverse
@@ -27,15 +27,15 @@ Sort list by time. -time -reverse
 ls -ltr
 ```
 
-**touch**
+**`touch`**
 
 Create a new file.
 
-**file**
+**`file`**
 
 Show info about file.
 
-**cat**
+**`cat`**
 
 Output content of file.
 
@@ -348,7 +348,7 @@ Shows all the files and directories and their permission settings.
 drwxrwxrwt 2 root root 4,0K ago  3 17:33 myfile
 ```
 
-Here we have 10 letters in the beginning. The first one `d shows that it is a directory.      
+Here we have 10 letters in the beginning. The first one `d shows that it is a directory.        
 The next three letters are rfor read, w for write and x for execute. The first three belong to the owner, the second three to the group, and the last three to all users.`
 
 [https://linuxjourney.com/lesson/file-permissions](https://linuxjourney.com/lesson/file-permissions)
