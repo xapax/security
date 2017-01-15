@@ -11,16 +11,11 @@ Although there is only one Linux Kernel there are many Linux Distributions, that
 So you probably wonder what the main differences are. Here is a list of some differences:
 
 * Package management program.
-
 * Speed and interval of release
 * Desktop environment
 * Default GUI
 * Community
 * Compilation of the Linux Kernel
 
-
-
 So as you can see depending on the users needs you can choose the distro that fits you best. Some people want to have bleeding-edge \(the latest updates - although a bit more unstable\) and others prefer stability. Some people want a distro with higher degree of security. Others want a distro with only free software, others want distros specially made for kids, or for education, or for scientists. One distro that is common among pentesters is Kali Linux. It comes preinstalled with hundreds of different pentesting-related tools. It might not be the best distro for everyday use. But for pentesting is is really convenient. Of course you could just download the programs to your non-kali distro as you go along. But it might be just an unneccesary hassle for you.
-
-
 
