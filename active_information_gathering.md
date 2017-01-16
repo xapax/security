@@ -1,7 +1,7 @@
 # Active information gathering
 
 
-
+Once the Passive 
 
 
 
@@ -13,19 +13,11 @@ netdiscover -r 192.168.1.1/24
 
 ## Nikto
 
-Nikto is a good tool.
+Nikto is a good tool to scan webservers. It is very intrusive.
 
 ```
 nikto -host 192.168.1.101
 ```
-
-## Find interesting files
-
-```
-site:example.com filetype:pdf
-```
-
-This can easily be turned into a script that checks for all important filetypes.
 
 
 
