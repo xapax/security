@@ -36,7 +36,10 @@ print total
 
 ## Pip - package management
 
+Pip is the python package manager. It ca be used to download other modules.
+
 Install pip
+
 ```bash
 sudo apt-get install python-pip
 ```
