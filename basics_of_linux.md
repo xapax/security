@@ -135,6 +135,14 @@ ls >> result_of_ls.txt
 # This will append the data to the bottom of the file result_of_ls.txt
 ```
 
+Another incredibly useful feature is the **pipe** feature, reprsented with this symbol `|`. It will take the stdout and redirect it into another program. Here is an example:
+
+```bash
+ls -la | less
+```
+
+This will take the stdout from `ls -la` and forward/redirect it into the `less` program. Using the **pipe** you can now chain different commands. 
+
 The file descriptor for **stdout** is: **1**
 
 ### Stderr
