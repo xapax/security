@@ -1,8 +1,9 @@
-# Useful scripts
+# Useful Scripts
 
 
-## Make request
-Sometimes we might want to make a request to a website. In python we can to it the following way.
+## Make Request
+
+Sometimes we might want to make a request to a website programmatically. Instead of having to visit the page in the browser. In Python we can to it the following way.
 
 If you don't have the module requests installed you can install it like this.
 
@@ -17,7 +18,8 @@ print req.text
 ```
 
 ### Custom headers
-WE might receive a 403 error if we don't include a user-agent. Or we might want to send a specific header. We can do that the following way.
+
+We might receive a `403` error if we don't include a user-agent. Or we might want to send a specific header. We can do that the following way.
 
 ```python
 import requests
@@ -42,7 +44,8 @@ print req.status_code
 print req.text
 ```
 
-If you need to add an action to your request you do the following
+If you need to add an action, like loggin in or something like that, to your request you do the following:
+
 ```python
 values = {'action' : 'whatever'}
 req = requests.get("http://site.com", data=values, headers=headers)
@@ -52,7 +55,8 @@ Here is the documentation
 http://docs.python-requests.org/en/master/user/quickstart/
 
 ## Read and write to files
-Many times we want to read through files and do stuff do it. This can of course be done using bash but we can also do it in python.
+
+Many times we want to read through files and do stuff do it. This can of course be done using bash but we can also do it in python. It might be easier to parse text in python.
 
 ```python
 file_open = open("readme.txt", "r")
@@ -63,8 +67,8 @@ for line in file_open:
 ```
 
 
-
 ## Basic banner-grabber
+
 Here is an example of the most basic usage of the socket module. It connects to a port and prints out the response.
 
 ```python
@@ -74,7 +78,7 @@ Here is an example of the most basic usage of the socket module. It connects to 
 import socket
 
 # We use the socker() method of the module socket and store it in the variable s.
-s = socket.socket()
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Here we use the connect method of the socket we created. The two arguments are pretty self-explanatory
 # The first is the adress the second is the port.
@@ -82,12 +86,17 @@ s.connect(("192.168.1.104", 22))
 
 # Here we save what the socket reviewed in the variable answer.
 answer = s.recv(1024)
+print answer
+
+# Send stuff. REMEMBER THE \r\n
+
+s.send("this is my message\r\n")
+print s.recv(1024)
 
 # Here we close the socket.
 s.close
 
-# Here we print out what we recieved.
-print answer
+
 ```
 
 If you need to check all 65535 ports this might take some time. If a packet is sent and recieved that makes it 65535 seconds, it translates into about 18 hours. So to solve that we can run the a function in new threads.
