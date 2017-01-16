@@ -14,7 +14,7 @@
     * [Scripting With Python](scripting_with_python.md)
         * [Python Fundamentals](python_fundamentals.md)
         * [Useful Scripts](connections.md)
-    * [Transferring files](transfering_files2.md)
+    * [Transferring Files](transfering_files2.md)
         * [Transfering files on linux](transfering_files.md)
         * [Transfering files on windows](transfering_files_to_windows.md)
     * [Example of company architecture](example_of_company_architecture.md)
