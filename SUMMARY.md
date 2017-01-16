@@ -5,7 +5,7 @@
     * [Linux](linux.md)
         * [Basics of linux](basics_of_linux.md)
         * [Bash-scripting](bash-scripting.md)
-        * Vim
+        * [Vim](vim.md)
     * Windows
         * [Basics of windows](basics_of_windows.md)
         * [Powershell](powershell.md)
