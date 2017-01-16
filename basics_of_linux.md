@@ -165,12 +165,52 @@ cp: cannot stat 'thisfiledoesnotexist': No such file or directory
 # If we now look at result.txt we will find that it is empty. Since the error-text we recieved could not be redirected into the textfile, since it is stderr and not stdout.
 ```
 
+### Filters
+
+There are certain programs that are especially useful to use together with pipes. They can also be used as stand-alone programs but you will often see them together with pipes.
+
+`sort`
+
+```
+sort test.txt
+```
+
+`uniq`
+
+```
+sort -u test.txt
+sort test.txt | uniq
+cat filename | sort -u > newFileName
+```
+
+`grep`
+
+`head`
+
+`tail`
+
+`tr`
+
+`sed`
 
 
 
-* [https://linuxjourney.com/lesson/stderr-standard-error-redirect](https://linuxjourney.com/lesson/stderr-standard-error-redirect)
+### Editing text
 
-### cut
+
+`sed` - Can perform basic editing on streams, that is to say, text.
+
+Remove first line of file/stream
+
+```
+sed "1d"
+```
+
+`awk`
+
+
+
+`cut` - Cut by column
 
 This is a useful command to cut in text.
 
@@ -184,49 +224,11 @@ Let's say that we have the following text, and we want to cut out the ip-address
 cut -d" " -f4
 ```
 
-`-d stands for delimiter. and -f for field.`
+`-d` stands for delimiter. and `-f` for field.
 
-### sed - Stream editor
 
-sed can perform basic editing on streams, that is to say, text.
 
-Remove first line of file/stream
-
-```
-sed "1d"
-```
-
-### Show all lines just once
-
-You have a list of passwords, or ip-addresses or whatever. And you want to remove all duplicates. How do you do it?
-
-You have list:
-
-```
-aa
-aa
-bb
-bb
-cc
-```
-
-And you want to see:
-
-```
-aa
-bb
-cc
-```
-
-Command:
-
-```
-sort -u test.txt
-sort test.txt | uniq
-cat filename | sort -u > newFileName
-```
-
-### tr - translate
+**tr** - Translate
 
 Transform all letter into capital letters
 
@@ -248,7 +250,8 @@ cat file.txt | tr "." "_"
 
 [http://www.thegeekstuff.com/2012/12/linux-tr-command/](http://www.thegeekstuff.com/2012/12/linux-tr-command/)
 
-### AWK
+
+**awk** 
 
 So awk is an advanced tool for editing text-files. It is its own programming language to it can become quite complex. Awk iterates over the whole file line by line.
 
@@ -267,8 +270,6 @@ This just prints every line of the file.
 awk '{print}' filename
 ```
 
-#### Filtering capabilites
-
 Filtering out specific ip-address:
 
 ```
@@ -284,15 +285,12 @@ awk '{print $2,$5;}' error.txt
 This prints columns 2 and 5.
 ```
 
-#### Custom delimiter
-
 We can use the -F flag to add a custom delimiter.
 
 ```
 awk -F ':' '{print $1}' test.txt
 ```
 
-#### BEGIN and END statements
 
 So if you are manipulating some text you might want to start the output with some info about the columns or something like that. To do that we can use the BEGIN-keyword.
 
