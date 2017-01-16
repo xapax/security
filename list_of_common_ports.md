@@ -439,7 +439,7 @@ private
 community
 ```
 
-Here is a longer list of common communiyt strings: https://github.com/danielmiessler/SecLists/blob/master/Miscellaneous/wordlist-common-snmp-community-strings.txt
+Here is a longer list of common community strings: https://github.com/danielmiessler/SecLists/blob/master/Miscellaneous/wordlist-common-snmp-community-strings.txt
 
 ### MIB - Management information base
 
@@ -476,6 +476,7 @@ snmp-check -t 192.168.1.101 -c public
 
 ### Scan for open ports - Nmap
 Since SNMP is using UDP we have to use the `-sU` flag.
+
 ```
 nmap -iL ips.txt -p 161,162 -sU --open -vvv -oG snmp-nmap.txt
 ```
@@ -581,15 +582,13 @@ https://www.exploit-db.com/exploits/34896/
 
 ## Port 631 - Cups
 Common UNIX Printing System has become the standard for sharing printers on a linux-network. 
-You will often see port 631 open in your priv-esc enumeration when you run **netstat**. You can log in to it here: **http://localhost:631/admin**
+You will often see port 631 open in your priv-esc enumeration when you run `netstat`. You can log in to it here: **http://localhost:631/admin**
 
 You authenticate with the OS-users.
 
-Find version. Test **cups-config --version**. If this does not work surf to **http://localhost:631/printers and see the CUPS version in the title bar of your browser**.
+Find version. Test **cups-config --version**. If this does not work surf to **http://localhost:631/printers** and see the CUPS version in the title bar of your browser.
 
-
-
-There are vulnerabilites for it so check your searchsploit.
+There are vulnerabilities for it so check your searchsploit.
 
 ## Port 993 - Imap Encrypted
 
@@ -597,12 +596,13 @@ The default port for the Imap-protocol.
 
 ## Port 995 - POP3 Encrypten
 
-Port 995 is the default port for the *Post Office Protocol*. 
+Port 995 is the default port for the **Post Office Protocol**.
 The protocol is used for clients to connect to the server and download their emails locally. 
 You usually see this port open on mx-servers. Servers that are meant to send and recieve email.
 
 Related ports: 
 110 is the POP3 non-encrypted.
+
 25, 465
 
 
@@ -612,7 +612,7 @@ I have seen them open on windows machine. But nothing has been listening on it.
 
 ## Port 1030/1032/1033/1038
 
-I think these are used by the RPC within Windows Domains. I have found no use for them so far. But they might indicate that the target is part of a Windows domain. 
+I think these are used by the RPC within Windows Domains. I have found no use for them so far. But they might indicate that the target is part of a Windows domain. Not sure though.
 
 
 ## Port 1433 - MsSQL
@@ -625,11 +625,10 @@ sqsh -S 192.168.1.101 -U sa
 
 # Execute commands
 
-```
-To execute the date command to the following after logging in
+```bash
+# To execute the date command to the following after logging in
 xp_cmdshell 'date'
 go
-
 ```
 
 
@@ -662,7 +661,7 @@ Bruteforce the ISD
 auxiliary/scanner/oracle/sid_brute
 ```
 
-Connect to the database with **sqlplus**
+Connect to the database with `sqlplus`
 
 
 References:
@@ -681,6 +680,7 @@ Network file system
 This is a service used so that people can access certain parts of a remote filesystem. If this is badly configured it could mean that you grant excessive access to users.
 
 If the service is on its default port you can run this command to see what the filesystem is sharing
+
 ```
 showmount -e 192.168.1.109
 ```
@@ -688,11 +688,13 @@ showmount -e 192.168.1.109
 Then you can mount the filesystem to your machine using the following command
 
 ```
+mount 192.168.1.109:/ /tmp/NFS
 mount -t 192.168.1.109:/ /tmp/NFS
 ```
 
 Now we can go to /tmp/NFS and check out /etc/passwd, and add and remove files.
 
+This can be used to escalate privileges if it is not correct configured. Check chapter on Linux Privilege Escalation.
 
 ## Port 2100 - Oracle XML DB
 
@@ -776,20 +778,18 @@ In that file you find the
 ```php
 <?php
 class JConfig {
-
-	var $mailfrom = 'admin@catsanddogs.com';
-	var $fromname = 'Fuku';
+	var $mailfrom = 'admin@rainng.com';
+	var $fromname = 'testuser';
 	var $sendmail = '/usr/sbin/sendmail';
-	var $password = 'mySecretPassowrd1234';
-	var $sitename = 'catsAndDogsInc';
+	var $password = 'myPassowrd1234';
+	var $sitename = 'test';
 	var $MetaDesc = 'Joomla! - the dynamic portal engine and content management system';
 	var $MetaKeys = 'joomla, Joomla';
 	var $offline_message = 'This site is down for maintenance. Please check back again soon.';
-    ```
+	}
+ ```
     
-  So there we have it. 
     
-
 
 ## Port 3339 - Oracle web interface
 
@@ -861,13 +861,14 @@ vncviewer 192.168.1.109
 
 If you are unable to input ctr-alt-del (kali might interpret it as input for kali).
 
-Try **shift-ctr-alt-del**
+Try `shift-ctr-alt-del`
 
 ### Metasploit scanner
 
 You can scan VNC for logins, with bruteforce. 
 
 **Login scan**
+
 ```
 use auxiliary/scanner/vnc/vnc_login
 set rhosts 192.168.1.109
@@ -875,6 +876,7 @@ run
 ```
 
 **Scan for no-auth**
+
 ```
 use auxiliary/scanner/vnc/vnc_none_auth
 set rhosts 192.168.1.109
