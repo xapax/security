@@ -111,7 +111,7 @@ which bash
 
 ## 2. Editing text
 
-First let's just clear out something about **standard streams**. Standard streams are the streams that are used to interact between the human computer-user and the machine. There are three standard streams: standard input (stdin), standard output (stdout), and standard error (stderr).
+First let's just clear out something about **standard streams**, or **I/O**-streams. Standard streams are the streams that are used to interact between the human computer-user and the machine. There are three standard streams: standard input (stdin), standard output (stdout), and standard error (stderr).
 
 ### Stdin
 Stdin is the data that gets inputed into the program. An example of a program that requires stdin data is `cp`. In order for the program to do anything it needs input data. For example `cp file1 copy_of_file1`. Here `file1` and `copy_of_file1` is the stdin.
@@ -120,7 +120,16 @@ The file descriptor for **stdin** is: **0**
 
 ### Stdout
 Stdout is the data that get ouputed from the program.
-For example, when you use the command `cat file1` that data/text that gets outputed is the stdout. Not all programs have stdout. For example when you use `mv` or `cp` successfully you get no stdout back from the program.
+For example, when you use the command `cat file1` that data/text that gets outputed is the stdout The same with the program `ls`. Not all programs have stdout. For example when you use `mv` or `cp` successfully you get no stdout back from the program.
+
+The stdout can be redirected to another file by using these symbols `>` and `>>`. So now we can do the following:
+
+```
+ls > result_of_ls.txt
+# now the result will be written to the file result_of_ls.txt
+ls >> result_of_ls.txt
+# This will append the data to the bottom of the file result_of_ls.txt
+```
 
 The file descriptor for **stdout** is: **1**
 
