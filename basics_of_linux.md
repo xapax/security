@@ -2,7 +2,7 @@
 
 This is a huge chapter. I could divide it up in many subchapters but I like to have it all at one place so I can just do `ctr-f`, and search for whatever I am looking for.
 
-## The Shell - Bash
+## 1. The Shell - Bash
 
 The shell, or the terminal is a really useful tool. Bash is the standard shell on most Linux distros.
 
@@ -22,11 +22,15 @@ The shell, or the terminal is a really useful tool. Bash is the standard shell o
 
 `ls -ltr` - Sort list by last modified. -time -reverse
 
-`file` - Show info about file.
+`file` - Show info about file. What type of file it is. If it is a binary or text file for example.
 
 `cat` - Output content of file.
 
-`less` - Output file but thest little bit at a time
+`less` - Output file but just little bit at a time. Use this one. Not `more`.
+
+Use `/searchterm` to search. It is the same command as in vim. `n` to scroll to next search result. Press `q` to quit.
+
+`more` - Output file but just little bit at a time. `less` is better.
 
 
 ### Working with files
@@ -54,12 +58,11 @@ Watch the command destroy an entire machine: [https://www.youtube.com/watch?v=D4
 `rmdir` - Remove empty directory
 
 
+### A little bit of everything
 
-**history**
+`history` - Show commands history
 
-Show commands history
-
-**sudo**
+`sudo`
 
 List what rights the sudo user has.
 
@@ -69,16 +72,25 @@ sudo -l
 
 Sudo config file is usually **/etc/sudoers**
 
-## Finding files
+### Finding files
 
-There are mainly three ways to find files on linux. **Locate**, **find** and **which**.
+There are mainly three ways to find files on Linux: **find**, **locate**, and **which**.
 
-### Locate
+#### Find
+
+Find is slower than locate but a lot more thorough. You can search for files recursively and with regex and a lot of other features.
+
+```
+# This will send all permissions denied outputs to dev/null.
+find / -name file 2>/dev/null
+```
+
+#### Locate
 
 Locate is really fast because it relies on an internal database. So in order to have it updated you need to run:
 
 ```
-updatedb
+sudo updatedb
 ```
 
 Then you can easily find stuff like this:
@@ -87,20 +99,34 @@ Then you can easily find stuff like this:
 locate filename
 ```
 
-### Which
+#### Which
 
-Which searched the directories that are defined in your $PATH variable.
+Outputs the path of the binary that you are looking for. It searches through the directories that are defined in your $PATH variable.
 
-### Find
-
-Find is slower but a lot more thorough. You can search for files recursively and with regex and a lot of other features.
-
-```
-# This will send all permissions denied outputs to dev/null.
-find / -name file 2>/dev/null
+```bash
+which bash
+# Usually outputs: /bin/bash
 ```
 
-## 2. Text-fu
+
+## 2. Editing text
+
+First let's just clear out something about **standard streams**. Standard streams are the streams that are used to interact between the human computer-user and the machine. There are three standard streams: standard input (stdin), standard output (stdout), and standard error (stderr).
+
+### Stdin
+Stdin is the data that gets inputed into the program. An example of a program that requires stdin data is `cp`. In order for the program to do anything it needs input data. For example `cp file1 copy_of_file1`. Here `file1` and `copy_of_file1` is the stdin.
+
+### Stdout
+Stdout is the data that get ouputed from the program.
+For example, when you use the command `cat file1` that data/text that gets outputed is the stdout. Not all programs have stdout. For example when you use `mv` or `cp` successfully you get no stdout back from the program.
+
+### Stderr
+Stderr is the stream used for outputting error messages. So if a program fails for whatever reason. For example, if we try to copy a file that does not exist, this will be the stdrr output:
+
+```
+cp thisfiledoesnotexist aaaaaaaaaa
+cp: cannot stat 'thisfiledoesnotexist': No such file or directory
+```
 
 * [https://linuxjourney.com/lesson/stderr-standard-error-redirect](https://linuxjourney.com/lesson/stderr-standard-error-redirect)
 
