@@ -654,6 +654,8 @@ This is a tool to control services more easily, what is running upon boot and so
 
 ## 11. Kernel
 
+The Kernel is responsible for talking between the hardware and the software, and to manage the systems resources. 
+
 The Linux Kernel is a monolithic kernel, unlike the OSX and the Windows kernels which are hybrid.
 
 You can find the kernel file in `/boot`. It might look like something like this`vmlinuz-4.4.0-57-generic`. In the beginning of time the kernel was simply called `linux`. But when Virtual Memory was introduced they changed the name to `vmlinux` to reflect that the kernel could handle virtual memory. When the kernel later became too big it was compressed using zlib , therefore the name was changed to `vmlinuz`.
@@ -670,11 +672,9 @@ sudo apt-get update && sudo apt-get upgrade
 
 If you are using a distro that is Long Term Supported (LTS). You will not get the latest Kernel version, but you will get the latest Long Term Supported version.
 
-
-
-## 13. Process utilization
-
 ## 14. Logging
+
+Logs can be viewed here on debian distros `/var/log/`
 
 ## 16. Network basics
 
