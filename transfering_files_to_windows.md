@@ -1,6 +1,6 @@
-# Transferring files to windows
+# Transferring Files to Windows
 
-Transferring files to linux is usually pretty easy. We can use netcat, wget, curl, which most systems have as default. But windows does not have these tools.
+Transferring files to Linux is usually pretty easy. We can use `netcat`, `wget`, or `curl`, which most systems have as default. But windows does not have these tools.
 
 ## FTP
 
