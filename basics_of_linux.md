@@ -116,9 +116,13 @@ First let's just clear out something about **standard streams**. Standard stream
 ### Stdin
 Stdin is the data that gets inputed into the program. An example of a program that requires stdin data is `cp`. In order for the program to do anything it needs input data. For example `cp file1 copy_of_file1`. Here `file1` and `copy_of_file1` is the stdin.
 
+The file descriptor for **stdin** is: **0**
+
 ### Stdout
 Stdout is the data that get ouputed from the program.
 For example, when you use the command `cat file1` that data/text that gets outputed is the stdout. Not all programs have stdout. For example when you use `mv` or `cp` successfully you get no stdout back from the program.
+
+The file descriptor for **stdout** is: **1**
 
 ### Stderr
 Stderr is the stream used for outputting error messages. So if a program fails for whatever reason. For example, if we try to copy a file that does not exist, this will be the stdrr output:
@@ -127,6 +131,21 @@ Stderr is the stream used for outputting error messages. So if a program fails f
 cp thisfiledoesnotexist aaaaaaaaaa
 cp: cannot stat 'thisfiledoesnotexist': No such file or directory
 ```
+
+This is a common way for stderr to present itself, just straight out into the terminal. But sometimes stderr gets sent to a log file.
+
+Stderr is useful because with it we can separate between **stdout** and **stderr**. However, to the eye it might be difficult to distinguish what output is **stdout** and what output is **stderr**.
+
+One easy way to determine is the output is **stderr** or **stdout** is to simply redirect it into a file. Because by default you only redirect **stdout**, and not **stderr**.
+
+```bash
+cp thisfiledoesnotexist aaaaaaaaaa > result.txt
+cp: cannot stat 'thisfiledoesnotexist': No such file or directory
+# If we now look at result.txt we will find that it is empty. Since the error-text we recieved could not be redirected into the textfile, since it is stderr and not stdout.
+```
+
+
+
 
 * [https://linuxjourney.com/lesson/stderr-standard-error-redirect](https://linuxjourney.com/lesson/stderr-standard-error-redirect)
 
