@@ -8,69 +8,52 @@ The shell, or the terminal is a really useful tool. Bash is the standard shell o
 
 ### Navigating
 
-`pwd`
+`pwd` - Print working directory
 
-Print working directory
+`cd` - Change directory
 
-**`cd`**
+`cd ~` - Change directory to your home directory
 
-Change directory
+`cd -` - Go back to previous directory
 
-`cd ~`
+### Looking at files
 
-**`ls`**  
-List files in directory
+`ls` - List files in directory
 
-Sort list by time. -time -reverse
+`ls -ltr` - Sort list by last modified. -time -reverse
+
+`file` - Show info about file.
+
+`cat` - Output content of file.
+
+`less` - Output file but thest little bit at a time
+
+
+### Working with files
+
+`touch` - Create a new file.
+
+`cp` - Copy
+
+`mkdir` - Make directory.
 
 ```bash
-ls -ltr
-```
-
-**`touch`**
-
-Create a new file.
-
-**`file`**
-
-Show info about file.
-
-**`cat`**
-
-Output content of file.
-
-**less**
-
-Output file but thest little bit at a time
-
-**cp**
-
-Copy
-
-**mkdir**
-
-Make directory.
-
-To make an entire directory structure add the **-p** flag
-
-```
+# Make entire directory structure
 mkdir -p new/thisonetoo/and/this/one
 ```
 
-**rm**  
-Remove file
+`rm` - Remove file
 
-Remmove recursivly and its content. Very dangerous command!
-
-```
+```bash
+# Remove recursively and its content. Very dangerous command!
 rm -rf ./directory
 ```
 
-Watch the command destroy an enire machine: [https://www.youtube.com/watch?v=D4fzInlyYQo](https://www.youtube.com/watch?v=D4fzInlyYQo)
+Watch the command destroy an entire machine: [https://www.youtube.com/watch?v=D4fzInlyYQo](https://www.youtube.com/watch?v=D4fzInlyYQo)
 
-**rmdir**
+`rmdir` - Remove empty directory
 
-Remove empty directory
+
 
 **history**
 
@@ -348,7 +331,7 @@ Shows all the files and directories and their permission settings.
 drwxrwxrwt 2 root root 4,0K ago  3 17:33 myfile
 ```
 
-Here we have 10 letters in the beginning. The first one `d shows that it is a directory.        
+Here we have 10 letters in the beginning. The first one `d shows that it is a directory.          
 The next three letters are rfor read, w for write and x for execute. The first three belong to the owner, the second three to the group, and the last three to all users.`
 
 [https://linuxjourney.com/lesson/file-permissions](https://linuxjourney.com/lesson/file-permissions)
