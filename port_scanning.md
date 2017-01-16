@@ -46,11 +46,11 @@ This is the default mode for nmap. If you do not add any flags and scan a machin
 
 ### "Stealthy" -sS
 
-By adding the **-sS** flag we are telling nmap to not finalize the three way handshake. It will send a syn, receive syn-ack (if the port is open), and then terminate the connection. This used to be considered stealthy before, since it was often not logged.
+By adding the `-sS` flag we are telling nmap to not finalize the three way handshake. It will send a `syn`, receive `syn-ack` (if the port is open), and then terminate the connection. This used to be considered stealthy before, since it was often not logged. However it should not be considered stealthy anymore.
 
-In the flag I imagine that the first **s** stands for scan/scantype and the second **S** stands for **syn**.
+In the flag I imagine that the first `s` stands for scan/scantype and the second `S` stands for `syn`.
 
-So **-sS** can be read as **scantype syn**
+So `-sS` can be read as **scantype syn**
 
 ### UDP scan
 
@@ -79,44 +79,54 @@ Not all output works with grepable format. For example NSE does not work with gr
 
 
 ### Scan an entire IP-range
+
 You might find that a site has several machines on the same ip-range. You can then use nmap to scan the whole range.
 
 The `-sn` flag stops nmap from running port-scans. So it speeds up the process.
 
-`nmap -vvv -sn 201.210.67.0/24`
+```
+nmap -vvv -sn 201.210.67.0/24
+```
 
-You can also specify a specifc range, like this
+You can also specify a specific range, like this
 
-`nmap -sP 201.210.67.0-100`
+```
+nmap -sP 201.210.67.0-100
+````
 
 #### Sort out the machines that are up
+
 So let's say you find that 40 machine exists in that range. We can use grep to output those IP:s.
 
 First let's find the IPs that were online. Ip-range is the output from previous command. You can of course combine them all.
 
-`cat ip-range.txt | grep -B 1 "Host is up"`
+```bash
+cat ip-range.txt | grep -B 1 "Host is up"
+```
 
 Now let's sort out the ips from that file.
 
-`grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' ip-range.txt > onlyIps.txt`
+```bash
+grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' ip-range.txt > only-ip.txt
+```
 
-Now you can input all those Ips to nmap and scan them.
-
-
+Now you can input all those ips to nmap and scan them.
 
 
 #### Scan a range and output if a specific port is open
 
 Nmap has a command to make the output grepable.
 
-`nmap -vvv -p 80 201.210.67.0-100 -oG - | grep 80/open`
+```bash
+nmap -vvv -p 80 201.210.67.0-100 -oG - | grep 80/open
+```
 
 ### Nmap scripts
 
 This chapter could also be placed in Vulnerability-analysis and Exploitation. Because nmap scripting is a really versatile tool that can do many things. Here we will focus on it's ability to retrieve information that can be useful in the process to **find vulnerabilities** 
 
 
-First locate the nmap scripts. Nmap scripts end in **nse**. For Nmap script engine.
+First locate the nmap scripts. Nmap scripts end in `.nse`. For Nmap script engine.
 
 ```
 locate *.nse
@@ -188,6 +198,4 @@ If you for some reason don't have access to nmap you can run metasploits modules
 ```
 use auxiliary/scanner/portscan/
 ```
-
-
 
