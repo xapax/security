@@ -1,11 +1,11 @@
 # Powershell scripting
 
-https://www.youtube.com/watch?v=czJrXiLs0wM
+
 ## Variables
 
 Variables are declared like this
 
-```
+```powershell
 $test = "something"
 ```
 
@@ -40,3 +40,4 @@ set-ExecutionPolicy unrestricted
 
 ## References
 https://github.com/samratashok/nishang
+https://www.youtube.com/watch?v=czJrXiLs0wM
