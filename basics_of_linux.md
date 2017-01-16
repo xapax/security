@@ -198,7 +198,9 @@ cat filename | sort -u > newFileName
 ### Editing text
 
 
-`sed` - Can perform basic editing on streams, that is to say, text.
+#### sed
+
+Can perform basic editing on streams, that is to say, text.
 
 Remove first line of file/stream
 
@@ -206,11 +208,12 @@ Remove first line of file/stream
 sed "1d"
 ```
 
-`awk`
 
 
 
-`cut` - Cut by column
+#### cut
+
+Cut by column
 
 This is a useful command to cut in text.
 
@@ -228,7 +231,7 @@ cut -d" " -f4
 
 
 
-**tr** - Translate
+#### tr - Translate
 
 Transform all letter into capital letters
 
@@ -251,7 +254,7 @@ cat file.txt | tr "." "_"
 [http://www.thegeekstuff.com/2012/12/linux-tr-command/](http://www.thegeekstuff.com/2012/12/linux-tr-command/)
 
 
-**awk** 
+#### awk 
 
 So awk is an advanced tool for editing text-files. It is its own programming language to it can become quite complex. Awk iterates over the whole file line by line.
 
