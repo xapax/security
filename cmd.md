@@ -1,11 +1,8 @@
 # CMD - Windows commands
 
 
+The equivalent to the Linux command `;` as in
 
-This might come in handy for the linux-users: http://www.lemoda.net/windows/windows2unix/windows2unix.html
-For more on how to use powershell see the powershell-scripting chapter
-
-The equivalent to the linux command `;` as in
 ```
 echo "command 1" ; echo "command 2"
 ```
@@ -24,7 +21,7 @@ dir & whoami
 del
 ```
 
-**Create dir**
+**Create folder/directory**
 
 ```
 md folderName
@@ -52,34 +49,32 @@ findstr file.txt
 
 ### Network
 
- **netstat -an**
+**Show network information**
 
+`netstat -an`
 
-**ipconfig**
+**Show network adapter info**
 
-Show ip-address and other network information
+`ipconfig`
 
-**ping**
+**Ping another machine** 
 
-well, it pings
+`ping 192.168.1.101` 
 
-**tracert**
+**Traceroute**
 
-Equvialent to traceroute
+`tracert`
 
 
 ### Processes
 
-List processes
+**List processes**
 
-```
-tasklist
-```
+`tasklist`
 
-Kill process
-```
-taskkill /PID 1532 /F
-```
+**Kill a process**
+
+`taskkill /PID 1532 /F`
 
 ### Users
 
@@ -99,7 +94,7 @@ net users /domain
 
 ### Other
 
-**shutdown**
+**Shutdown**
 
 ```
  # Shutdown now
@@ -116,9 +111,7 @@ net users /domain
  ciper /w:C:\
  ```
  
- 
- 
- **Show environmental variables**
+**Show environmental variables**
 
 ```
 set
@@ -135,7 +128,7 @@ help dir
 
 In the windows world mounting is called mapping.
 
-If you want to see which drives are mapped/mounted to your filesystem you can use any of these commands:
+If you want to see which drives are mapped/mounted to your file-system you can use any of these commands:
 
 ```
 # This is the most thorough
@@ -155,14 +148,14 @@ get-psdrive -psprovider filesystem
 diskpart
 list volume
 
-# Map only netowrk drives
+# Map only network drives
 net use
 ```
 
 The command to deal with mounting/mapping is **net use**
 
-Using **net use** we can connect to other shared folder, on other systems. Many windows machines have a default-share called IPC (Interprocess communication share). It does not contain any files. But we can usually connect to it without authentication. This is called a **null-session**. Although the share does not contain any files it contains a lot of data that is useful for enumeration.
-The linux-equivalent of **net use** is usually **smbclient**. 
+Using `net use` we can connect to other shared folder, on other systems. Many windows machines have a default-share called IPC (Interprocess communication share). It does not contain any files. But we can usually connect to it without authentication. This is called a **null-session**. Although the share does not contain any files it contains a lot of data that is useful for enumeration.
+The Linux-equivalent of `net use` is usually `smbclient`. 
 
 
 ```
@@ -180,7 +173,7 @@ net use z: \\192.168.1.101\SYSVOL
 net use * \\192.168.1.101\SYSVOL
 ```
 
-Here you map the drive to the letter **z**. If the command is successfull you should now be able to access those files by entering the **z** drive.
+Here you map the drive to the letter `z`. If the command is successful you should now be able to access those files by entering the `z` drive.
 
 You enter the z-drive by doing this:
 
@@ -194,9 +187,17 @@ C:\
 ```
 
 ** Remove a network drive - umount it**
+
 First leave the drive if you are in it:
 
 ```
 c:
 net use z: /del
 ```
+
+
+# References and Stuff
+
+This might come in handy for the linux-users: http://www.lemoda.net/windows/windows2unix/windows2unix.html
+
+
