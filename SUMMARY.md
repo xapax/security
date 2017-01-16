@@ -19,7 +19,7 @@
         * [Transfering files on Windows](transfering_files_to_windows.md)
     * [Firewalls](firewalls.md)
     * [General tips and tricks](general_tips.md)
-* [Recon\/information gathering phase](scanning.md)
+* [Recon and Information Gathering Phase](scanning.md)
     * [Passive information gatherig](passive_information_gatherig.md)
         * [Email Harvesting](email_harvesting.md)
         * [Users](users.md)
