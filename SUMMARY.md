@@ -12,7 +12,7 @@
         * [PowerShell Scripting](powershell_scripting2.md)
         * [CMD](cmd.md)
     * [Scripting With Python](scripting_with_python.md)
-        * [Python fundamentals](python_fundamentals.md)
+        * [Python Fundamentals](python_fundamentals.md)
         * [Useful scripts](connections.md)
     * [Transferring files](transfering_files2.md)
         * [Transfering files on linux](transfering_files.md)

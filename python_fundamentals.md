@@ -19,7 +19,8 @@ Always good to modular your code.
 **module1.py**
 
 ```python
-def addNumbers(numberOne, numberTwo)
+
+def addNumbers(numberOne, numberTwo):
     return numberOne + numberTwo
 ```
 
