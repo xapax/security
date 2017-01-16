@@ -4,4 +4,4 @@ Whether you like it or not Windows is the most common OS for desktop users in th
 
 So this chapter will contain some basics about Windows and windows networks.
 
-We will also look a bit at PowerShell. 
+We will also look a bit at PowerShell and of course the good old CMD. 
