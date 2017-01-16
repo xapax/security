@@ -178,7 +178,7 @@ for ip in ips:
 
 	s.close()
 ```
-```
 
 ## Client/Server using sockets
+
 http://programmers.stackexchange.com/questions/171734/difference-between-a-socket-and-a-port
