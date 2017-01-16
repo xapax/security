@@ -409,7 +409,12 @@ q                    F10         Quit htop
 
 [http://www.thegeekstuff.com/2011/09/linux-htop-examples/](http://www.thegeekstuff.com/2011/09/linux-htop-examples/)
 
-## 7. Packages
+## 6. Packages
+
+Something that difference Linux from windows is how it handles installing new software. In windows you usually have to google around and then click on random scary download buttons that might fuck up your computer, or not. It's like a constant lottery where you win by no installing malware. In Linux that is usually not really an issue. That is because distros have their own software repositories from where you can download your software. This is kind of like an app-store except everything is free.
+
+The different mayor branches of teh GNU/Linux OS have their own software repositories. Ubuntu has their own, debian has their own, and so on. 
+
 
 ## Organizing your $path variable
 
