@@ -413,43 +413,16 @@ q                    F10         Quit htop
 
 Something that difference Linux from windows is how it handles installing new software. In windows you usually have to google around and then click on random scary download buttons that might fuck up your computer, or not. It's like a constant lottery where you win by no installing malware. In Linux that is usually not really an issue. That is because distros have their own software repositories from where you can download your software. This is kind of like an app-store except everything is free.
 
-The different mayor branches of teh GNU/Linux OS have their own software repositories. Ubuntu has their own, debian has their own, and so on. 
+The different major branches of teh GNU/Linux OS have their own software repositories. Ubuntu has their own, debian has their own, and so on. 
 
-
-## Organizing your $path variable
-
-I am talking about debian/ubuntu here. On other systems I don't know.
-
-You can define your path in `/etc/environment. If you don't have it you can create it and add the path like this:`
-
-```
-source /etc/environment && export PATH
-```
-
-If you are using zsh \(which you should\) you have to add it here
-
-```
-sudo vim /etc/zsh/zshenv
-```
-
-And add this line somewhere:
-
-```
-source /etc/environment
-```
-
-### Adding a path
-
-This is a non-persistent way to add binaries to your path. Might be useful if you have entered a system that has limited binaries in the path.
-
-```
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-```
+Different distros also have their own package-amangers. For example, Debian and ubuntu uses `apt`, while Redhat uses `rpm`, and Arch uses `pacman`. You should strick to your own package-manager, because even though chaning package-manager is possible it will probably just cause you more headache than benefits.
 
 ### Install package
 
+Example of how to install something with apt:
+
 ```
-sudo apt-get install
+sudo apt-get install nmap
 ```
 
 If you only have a .deb file you do this to install from the terminal:
@@ -482,19 +455,51 @@ When you remove some package it might have requires some other dependencies. To 
 sudo apt-get autoremove
 ```
 
+
+### Organizing your $path variable
+
+I am talking about debian/ubuntu here. On other systems I don't know.
+
+You can define your path in `/etc/environment`. If you don't have it you can create it and add the path like this:
+
+```
+source /etc/environment && export PATH
+```
+
+If you are using zsh (which you should) you have to add it here
+
+```
+sudo vim /etc/zsh/zshenv
+```
+
+And add this line somewhere:
+
+```
+source /etc/environment
+```
+
+### Adding a path
+
+This is a non-persistent way to add binaries to your path. Might be useful if you have entered a system that has limited binaries in the path.
+
+```
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+```
+
+
 ### Installing custom packages
 
-If you download a package that is not in the official repository you can put the binary in **/opt**. That is good place to put your binaries.
+If you download a package that is not in the official repository you can put the binary in `/opt`. That is good place to put your binaries.
 
-Now you need to add that path to your path-variable. Remember how we set that in **/etc/environment**. So now open up that file and add `/opt to it, so i looks like this.`
+Now you need to add that path to your path-variable. Remember how we set that in `/etc/environment`. So now open up that file and add `/opt` to it, so i looks like this.
 
 ```
 PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt"
 ```
 
-I always add custom binaries last. That means that if we have two binaries with the same name the machine will first select the original binary. This way you won't have to fear screwing up, by accidentally creating a new **ls** binary for example.
+I always add custom binaries last. That means that if we have two binaries with the same name the machine will first select the original binary. This way you won't have to fear screwing up, by accidentally creating a new `ls` binary for example.
 
-## 8. Cronjobs
+## 7. Cronjobs
 
 There are two ways to configure cronjobs. The first one is by putting scripts in the following folders.
 
@@ -607,7 +612,7 @@ umount /media/usb
 
 Knowing how to mount and unmount might be useful if you want to get access to a remote NFS-directory. You will need to mount it to your filesystem to be able to browse it.
 
-## Controlling services
+## 10. Controlling services
 
 ### Systemctl
 
@@ -647,17 +652,14 @@ Init.d is just a wrapper around Systemctl. I prefer it.
 
 This is a tool to control services more easily, what is running upon boot and so on.
 
-## 10. Boot the system
-
 ## 11. Kernel
 
-## 12. Init
+
+
 
 ## 13. Process utilization
 
 ## 14. Logging
-
-## 15. network sharing
 
 ## 16. Network basics
 
@@ -765,16 +767,16 @@ If you for some reason has been tampering with the iptables and maybe fucked up.
 
 ```
 iptables --policy INPUT ACCEPT
- iptables --policy OUTPUT ACCEPT
- iptables --policy FORWARD ACCEPT
+iptables --policy OUTPUT ACCEPT
+iptables --policy FORWARD ACCEPT
 ```
 
 If you instead want to forbid all traffic you do
 
 ```
 iptables --policy INPUT DROP
- iptables --policy OUTPUT DROP
- iptables --policy FORWARD DROP
+iptables --policy OUTPUT DROP
+iptables --policy FORWARD DROP
 ```
 
 Okay, so let's block out some connections. To do that we want to add/append a new rule. We want to block all connections from our enemy 192.168.1.30.
