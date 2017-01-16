@@ -28,13 +28,13 @@ Source: http://windowsitpro.com/powershell/running-powershell-scripts-easy-1-2-3
 So if we want to run script `myscript.ps1` we have to set the execution-policy.
 First let's check what execution-policy we currently have:
 
-```
+```powershell
 Get-ExecutionPolicy
 ```
 
 Then we can set the execution policy like this
 
-```
+```powershell
 set-ExecutionPolicy unrestricted
 ```
 
