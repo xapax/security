@@ -3,7 +3,7 @@
 I will try to make this chapter into a reference library. So that you can just check in this chapter to see common ways to exploit certain common services. I will only discuss the most common, since there are quite a few.
 
 
-this is fucking awesome. if there is any ports her  you dont find check out this guide.
+This is fucking awesome. if there is any ports here you dont find check out this guide.
 http://www.0daysecurity.com/penetration-testing/enumeration.html
 
 ## Port XXX - Service unknown
@@ -25,9 +25,10 @@ ftp 192.168.1.101
 nc 192.168.1.101 21
 ```
 
-Many ftp-servers allow anonymous users. These might be misconfgirued and give too much access, and it might also be necessary for certain exploits to work. So alwyas try to log in with anonymous:anonymous.
+Many ftp-servers allow anonymous users. These might be misconfigured and give too much access, and it might also be necessary for certain exploits to work. So always try to log in with `anonymous:anonymous`.
 
 **Remember the binary and ascii mode!**
+
 If you upload a binary file you have to put the ftp-server in binary mode, otherwise the file will become corrupted and you will not be able to use it! The same for text-files. Use ascii mode for them!
 You just write **binary** and **ascii** to switch mode.
 
@@ -44,17 +45,18 @@ It returnes something like this:
 SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu1
 
 This banner is defined in RFC4253, in chapter 4.2 Protocol Version Exchange. http://www.openssh.com/txt/rfc4253.txt
-The protocol-version string should be defined like this:
-**SSH-protoversion-softwareversion SP comments CR LF**
+The protocol-version string should be defined like this: `SSH-protoversion-softwareversion SP comments CR LF`
 Where comments is optional. And SP means space, and CR (carriege return) and LF (Line feed)
 So basically the comments should be separated by a space. 
 
 
 ## Port 23 - Telnet
 
-Telnet is considered insecure mainly because it does not encrypt its traffic. Also a quck search in exploit-db wll show that there are various rce vulnerabilites on different versions. Might be worth checking out. 
+Telnet is considered insecure mainly because it does not encrypt its traffic. Also a quick search in exploit-db will show that there are various RCE-vulnerabilities on different versions. Might be worth checking out. 
 
-You cal also brute force it like this:
+**Brute force it**
+
+You can also brute force it like this:
 
 ```
 hydra -l root -P /root/SecLists/Passwords/10_million_password_list_top_100.txt 192.168.1.101 telnet
@@ -82,10 +84,12 @@ VRFY - Asks the server to verify is the email user's mailbox exists.
 ```
 
 ### Manually
+
 We can use this service to find out which usernames are in the database. This can be done in the following way.
 
 ```
-$ nc 192.168.1.103 25                                                                               
+nc 192.168.1.103 25                                                                               
+
 220 metasploitable.localdomain ESMTP Postfix (Ubuntu)
 VRFY root
 252 2.0.0 root
@@ -93,9 +97,9 @@ VRFY roooooot
 550 5.1.1 <roooooot>: Recipient address rejected: User unknown in local recipient table
 ```
 
-Here we have managed to identify the user root. But roooooot was rejected.
+Here we have managed to identify the user `root`. But `roooooot` was rejected.
 
-VRFY, EXPN or RCPT command
+`VRFY`, `EXPN` and `RCPT` can be used to identify users.
 
 Telnet is a bit more friendly some times. So always use that too
 
@@ -110,16 +114,19 @@ telnet 10.11.1.229 25
 This process can of course be automatized
 
 **Check for commands**
+
 ```
 nmap -script smtp-commands.nse 192.168.1.101
 ```
 
 #### smtp-user-enum
+
 The command will look like this. `-M` for mode. `-U` for userlist. `-t` for target
 
 ```
-$ smtp-user-enum -M VRFY -U /root/sectools/SecLists/Usernames/Names/names.txt -t 192.168.1.103
+smtp-user-enum -M VRFY -U /root/sectools/SecLists/Usernames/Names/names.txt -t 192.168.1.103
 ```
+
 ```
 Mode ..................... VRFY
 Worker Processes ......... 5
@@ -167,21 +174,24 @@ Here are the documentations for SMTP
 https://cr.yp.to/smtp/vrfy.html
 
 http://null-byte.wonderhowto.com/how-to/hack-like-pro-extract-email-addresses-from-smtp-server-0160814/
+
 http://www.dummies.com/how-to/content/smtp-hacks-and-how-to-guard-against-them.html
+
 http://pentestmonkey.net/tools/user-enumeration/smtp-user-enum
+
 https://pentestlab.wordpress.com/2012/11/20/smtp-user-enumeration/
 
-Exploits can be found in metasploit25 can be quite useful 
-And shellshock
-https://www.exploit-db.com/exploits/34896/
+
 
 ## Port 69 - TFTP
 
-This is a ftp-server but it is using udp.
+This is a ftp-server but it is using UDP.
 
 ## Port 80 - HTTP
 
-We usually just think of vulnerailities on the http-itnerface, the web page, when we think of port 80. But with .htaccess we are able to password protect certain directories. If that is the case we can brute force that the following way.
+Info about web-vulnerabilities can be found in the next chapter `HTTP - Web Vulnerabilities`.
+
+We usually just think of vulnerabilities on the http-interface, the web page, when we think of port 80. But with `.htaccess` we are able to password protect certain directories. If that is the case we can brute force that the following way.
 
 ### Password protect directory with htaccess
 
@@ -224,9 +234,11 @@ medusa -h 192.168.1.101 -u admin -P wordlist.txt -M http -m DIR:/test -T 10
 
 ## Port 88 - Kerberos
 
-Kerberos is a protocol that is used for netowrk authentication. Different versions are used by Nix and Windows. But if you see a machine with port 88 open you can be fairly certain that it is a Windows Domain Controller.
+Kerberos is a protocol that is used for network authentication. Different versions are used by *nix and Windows. But if you see a machine with port 88 open you can be fairly certain that it is a Windows Domain Controller.
 
 If you already have a login to a user of that domain you might be able to escalate that privilege.
+
+Check out:
 MS14-068
 
 ## Port 110 - Pop3
@@ -257,8 +269,9 @@ rpcbind -p 192.168.1.101
 ```
 
 ## Port 119 - NNTP
+
 Network time protocol. 
-It is used syncronize time. if a machine is running this server it might work as a server for synronizing time. So other machines query this machine for the exact time. 
+It is used synchronize time. If a machine is running this server it might work as a server for synchronizing time. So other machines query this machine for the exact time. 
 
 An attacker could use this to change the time. Which might cause denial of service and all around havoc.
 
@@ -282,9 +295,10 @@ msf > use exploit/windows/dcerpc/ms03_026_dcom
 
 ## Port 139 and 445- SMB/Samba shares
 
-Samba is a service that enables the user to share files with other machines. It has interoperability, which means that it can share stuff between unix and windows systems. A windows user will just see an icon for a folder that contains some files. Even though the folder and files really exists on a unix-server.
+Samba is a service that enables the user to share files with other machines. It has interoperatibility, which means that it can share stuff between linux and windows systems. A windows user will just see an icon for a folder that contains some files. Even though the folder and files really exists on a linux-server.
 
 ### Connecting
+
 For linux-users you can log in to the smb-share using smbclient, like this:
 
 ```
@@ -314,6 +328,7 @@ use exploit/windows/smb/psexec
 ```
 
 ### Scanning with nmap
+
 Scanning for smb with Nmap
 
 ```
@@ -321,7 +336,6 @@ nmap -p 139,445 192.168.1.1/24
 ```
 There are several NSE scripts that can be useful, for example:
 
-Find them here in kali
 
 ```
 ls -l /usr/share/nmap/scripts/smb*
@@ -364,13 +378,15 @@ nmap -p 139,445 192.168.1.1/24 --script smb-enum-shares.nse smb-os-discovery.nse
 ```
 nbtscan -r 192.168.1.1/24
 ```
+
 It can be a bit buggy sometimes so run it several times to make sure it found all users.
 
 ### Enum4linux
 
 Enum4linux can be used to enumerate windows and linux machines with smb-shares. 
 
-The do all option
+The do all option:
+
 ```
 enum4linux -a 192.168.1.120
 ```
@@ -400,7 +416,7 @@ netshareenumall
 
 ## Port 143/993 - IMAP
 
-IMAP lets you access email stored on that server. So imagine that you are on a network at work, the emails you recieve is not stored on your computer but on a specific mail-server. So every time you look inyour inbox your eail-client (like outlook) fetches the emails from the mail-server using imap.
+IMAP lets you access email stored on that server. So imagine that you are on a network at work, the emails you recieve is not stored on your computer but on a specific mail-server. So every time you look in your inbox your email-client (like outlook) fetches the emails from the mail-server using imap.
 
 IMAP is a lot like pop3. But with IMAP you can access your email from various devices. With pop3 you can only access them from one device.
 
@@ -410,7 +426,7 @@ Port 993 is the secure port for IMAP.
 
 Simple Network Management Protocol
 
-SNMP protocols 1,2 and 2c does not encrypt its traffic. So it can be intercepted to steal credencials.
+SNMP protocols 1,2 and 2c does not encrypt its traffic. So it can be intercepted to steal credentials.
 
 SNMP is used to manage devices on a network. It has some funny terminology. For example, instead of using the word password the word community is used instead. But it is kind of the same thing. A common community-string/password is public.
 

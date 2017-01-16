@@ -31,10 +31,10 @@
             * [Finding subdomains](finding_subdomains.md)
             * [DNS Zone Transfer Attack](dns_zone_transfer_attack.md)
 * [Vulnerability analysis](vulnerability_analysi1s.md)
-    * Server-side vulnerabilities
+    * [Server-side vulnerabilities](server-side-vulnerabilities.md)
         * [Common ports\/services and how to use them](list_of_common_ports.md)
         * [Port Knocking](port_knocking.md)
-    * [Client-side vulnerabilities](web-services.md)
+    * [HTTP - Web Vulnerabilities](web-services.md)
         * [Common web-services](common_web-services.md)
         * [WAF - Web application firewall](waf_-_web_application_firewall.md)
         * [Attacking the system](lead_to_compromise.md)
