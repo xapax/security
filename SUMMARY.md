@@ -17,7 +17,6 @@
     * [Transferring Files](transfering_files2.md)
         * [Transfering Files on Linux](transfering_files.md)
         * [Transfering files on Windows](transfering_files_to_windows.md)
-    * [Networking](networking.md)
     * [Firewalls](firewalls.md)
     * [General tips and tricks](general_tips.md)
 * [Recon\/information gathering phase](scanning.md)
