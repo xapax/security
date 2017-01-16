@@ -305,9 +305,9 @@ awk 'BEGIN{printf "IP-address \tPort\n"} /nop/ {print $3} END {printf "End of th
 Here we are printing IP-address    PORT to the first line of the file.
 
 
-## 4. User management
+## 3. User management
 
-To add a user we write:
+To add a user we do:
 
 ```
 adduser NameOfUser
@@ -316,37 +316,37 @@ adduser NameOfUser
 useradd nameOfUser
 ```
 
-To add user to sudo-group
+To add user to sudo-group:
 
 ```
 adduser NameOfUser sudo
 ```
 
-On some machines we might not be able to edit the sudoers file because we don't have an interactive shell, in this case can you can just pipe in the text into the file, like this:
+On some machines we might not be able to edit the sudoers file because we don't have an interactive shell, in this case can you can just redirect the text into the file, like this:
 
 ```
 echo "username ALL=(ALL) ALL" >> /etc/sudoers
 ```
 
-Check which users are in the sudo group
+Check which users are in the sudo group:
 
 ```
 cat /etc/group | grep sudo
 ```
 
-Switch user in terminal
+Switch user in terminal:
 
 ```
 su NameOfUser
 ```
 
-Remove/delete user
+Remove/delete user:
 
 ```
 sudo userdel NameOfUser
 ```
 
-## 5. Permissions
+## 4. Permissions
 
 ```
 ls -la
@@ -358,14 +358,40 @@ Shows all the files and directories and their permission settings.
 drwxrwxrwt 2 root root 4,0K ago  3 17:33 myfile
 ```
 
-Here we have 10 letters in the beginning. The first one `d shows that it is a directory.          
-The next three letters are rfor read, w for write and x for execute. The first three belong to the owner, the second three to the group, and the last three to all users.`
+Here we have 10 letters in the beginning. The first one `d` shows that it is a directory.          
+The next three letters are for read, `w` for write and `x` for execute. The first three belong to the owner, the second three to the group, and the last three to all users.
 
 [https://linuxjourney.com/lesson/file-permissions](https://linuxjourney.com/lesson/file-permissions)
 
-## 6. Processes
+## 5. Processes
 
-A important job for a developer and sysadmin is to monitor process. A great way to do that is to use **htop** instead of **top**. The F1-10 keys might trigger OS-events. So you can use the shortcuts instead.
+To display information regarding the systems processes you can use the `ps` command. 
+
+
+```
+ps -aux
+```
+`-a` stands for all
+`-u` stands for all processes by all users
+`-x` stands for all processes that don't run a `tty` 
+
+If you run this command you will probably see a pretty big output. In the column for **command** you will see what command has been run. Every process has a Process Identification Number (**PID**). Something you will also see in the output.
+
+All of theses processes can actually be found in `/proc`. You just go to `/proc/[pid]`. In `/proc` you can find information about the system, and you can actually change the system if you change those files! But more on that later. What I wanted to explain is that if we look at the output from `ps` we see that some commands are in brackets. Like this:
+
+```
+root        10  0.0  0.0      0     0 ?        S    ene14   0:00 [watchdog/0]
+root        11  0.0  0.0      0     0 ?        S    ene14   0:00 [watchdog/1]
+root        12  0.0  0.0      0     0 ?        S    ene14   0:00 [migration/1]
+root        13  0.0  0.0      0     0 ?        S    ene14   0:00 [ksoftirqd/1]
+```
+
+Those are usually kernel processes, and you can safely assume that no user has started them. 
+
+
+If you want to monitor processes in real time you can use `top` or `htop`. `top` comes preinstalled on most distros. But `htop` is really a lot nicer.
+
+For `htop` the F1-10 keys might trigger OS-events. So you can use the shortcuts instead.
 
 ```
 Shortcut Key    Function Key    Description
