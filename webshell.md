@@ -63,12 +63,13 @@ We can make the commands from above a bit more stealthy. Instead of passing the 
 
 The following functions can be used to obfuscate the code.
 
+```
 eval()
 assert()
 base64()
 gzdeflate()
 str_rot13()
-
+```
 
 ### Weevely - Incredible tool!
 
