@@ -77,7 +77,7 @@
         * [Loot Linux](tcp-dumps_on_pwnd_machines.md)
     * [Persistence](persistence.md)
     * [Cover your tracks](clean_up.md)
-* Password cracking
+* [Password Cracking](password-cracking.md)
     * [Generate custom wordlist](generate_custom_wordlist.md)
     * [Offline password cracking](identify_hash_and_crack_it.md)
     * [Online password cracking](online_password_cracking.md)
