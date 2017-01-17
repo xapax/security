@@ -212,9 +212,9 @@ for /f eol^=^"^ delims^=^" %a in (c:\windows\temp\permissions.txt) do cmd.exe /c
 
 Binaries in system32 are excluded since they are mostly correct, since they are installed by windows.
 
-#### SC.exe
+#### sc.exe
 
-```
+```cmd
 sc query state= all | findstr "SERVICE_NAME:" >> Servicenames.txt
 
 FOR /F %i in (Servicenames.txt) DO echo %i
