@@ -46,7 +46,7 @@ Now you can access all the files from the harddrive in `/media/windows`
 
 ## Umount the disk
 
-Notice that is is **umount** and not unmount.
+Notice that is is `umount` and not unmount.
 
 ```
 umount /media/windows
