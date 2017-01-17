@@ -4,7 +4,8 @@
 Cross-site-scripting, or XSS as it is sometimes abbreviated to, is an attack that let's the attacker execute javascript code in the browser of the victim.
 
 ## So, what's the worst that can happen?
-The attacker is probably not that interestd in changing the color or font of the website the victim is visiting. Although s/he could do that. The worst that can happen is probablt the following:
+
+The attacker is probably not that interested in changing the color or font of the website the victim is visiting. Although s/he could do that. The worst that can happen is probably the following:
 
 1. Complete control over the browser
 The attacker can access plugins. Like password managers. The attacker can trick the user into allowing webcam or audio. 
@@ -16,9 +17,10 @@ This is when the attacker steals the cookie that is saved in the browser. Using 
 The attacker can execute a keylogging-script that steals everything the user inputs in the website. This could be used to steal sensitive information, like passwords, credit cards information, chatlogs or whatever the user inputs.
 
 4. Phishing
-The attacker can insert a fake login. Image that you visit a site, and from that site you are able to login using your facebook or google-account. The attacker could spoof that so that when you enter your credencials, they are then sent to the attacker. 
+The attacker can insert a fake login. Image that you visit a site, and from that site you are able to login using your facebook or google-account. The attacker could spoof that so that when you enter your credentials, they are then sent to the attacker. 
 
-
+5. Browser exploits
+The script can redirect to a another page that issues an attack against the browser, possibly leading to total takeover of the machine.
 
 ### Types of XSS
 
