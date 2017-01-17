@@ -12,10 +12,7 @@ gobuster -u http://192.168.1.101 -w /usr/share/seclists/Discovery/Web_Content/co
 
 ## About
 
-Dirbusting, Forced Browse or whatever you like to call it.
-
-It is when you make requests to a site based on a dictionary in order to find files in directories that are not linked anywhere on the site. If they are linked a spider can easily find it. Otherwise you have to bruteforce it.
-
+There is essentially no way for a user to know which files are found in which directories on a web-server, unless the whole server has directory listing by default. However, if you go directly to the page it will be shown. So what the attacker can do is to brute force hidden files and directories. Just test a bunch of them. There are several tools for doing this. The attack is of course very noisy and will show up fast in the logs.
 
 ### Dirb
 
@@ -28,11 +25,11 @@ dirb http://target.com
 ### Dirbuster
 
 It is a GUI
-You start it with 
+You start it with:
+
 ```
 dirbuster
 ```
-from the terminal
 
 ### OWASP ZAP
 
@@ -50,6 +47,13 @@ wfuzz -h
 
 ```
 wfuzz -c -z file,/root/.ZAP/fuzzers/dirbuster/directory-list-2.3-big.txt --sc 200 http://pegasus.dev:8088/FUZZ.php
+```
+
+### Gobuster 
+
+```
+# Gobuster - remove relevant responde codes (403 for example)
+gobuster -u http://192.168.1.101 -w /usr/share/seclists/Discovery/Web_Content/common.txt -s '200,204,301,302,307,403,500' -e
 ```
 
 ## WAF - Web application firewall
