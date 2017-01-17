@@ -379,10 +379,6 @@ With privileges running script that are editable for other users.
 /var/spool/samba
 ```
 
-#### Binary expoits against root owned binaries
-
-* sudo
-* Chrootkit
 
 ## Keylogger
 
