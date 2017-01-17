@@ -63,6 +63,7 @@ Run the script and save the output in a file, and then grep for warning in it.
 Check the following:
 OS:
 Architecture:
+Kernel version:
 
 ```
 uname -a
@@ -70,15 +71,42 @@ cat /proc/version
 cat /etc/issue
 ```
 
+
+
 ```
 site:exploit-db.com kernel version
-
-perl /root/oscp/useful-tools/privesc/linux/Linux_Exploit_Suggester/Linux_Exploit_Suggester.pl -k 2.6
 
 python linprivchecker.py extended
 ```
 
-**Don't use binary exploits if you can avoid it. If you use it it might crash the machine. So binary exploits should be the last resort. Always use a simpler priv-esc if you can. They can also produce a lot of stuff in the sys.log**
+Don't use binary exploits if you can avoid it. If you use it it might crash the machine. So binary exploits should be the last resort. Always use a simpler priv-esc if you can. They can also produce a lot of stuff in the `sys.log`. So if you find anything good, put it up on your list and keep searching for other ways before exploiting it.
+
+
+### Programs running as root
+
+Look for webserver, mysql or anything else like that. The idea here is that if specific service is running as root and you can make that service execute commands you can execute commands as root. A typical example of this is mysql.
+
+**Check which processes are running**
+
+```
+# Metasploit
+ps
+
+# Linux
+ps aux
+```
+
+**Mysql**
+
+If you find that mysql is running as root and you username and password to log in to the database you can issue the following commands:
+
+```mysql
+select sys_exec('whoami');
+select sys_eval('whoami');
+```
+
+If neither of those won't work you can use a [User Defined Function/](https://infamoussyn.com/2014/07/11/gaining-a-root-shell-using-mysql-user-defined-functions-and-setuid-binaries/)
+
 
 
 
@@ -110,22 +138,6 @@ newsbeauter
 
 ### Configuration mistakes
 
-#### Programs running as root
-
-**Web-server**  
-Running as root
-
-**Mysql**
-
-If you find that mysql is running as root you can eutiher try
-
-```
-select sys_exec('whoami');
-select sys_eval('whoami');
-```
-
-If neither of those won't workyou can use a User Defined Function. UDP. This has worked for me:  
-[https://infamoussyn.com/2014/07/11/gaining-a-root-shell-using-mysql-user-defined-functions-and-setuid-binaries/](https://infamoussyn.com/2014/07/11/gaining-a-root-shell-using-mysql-user-defined-functions-and-setuid-binaries/)
 
 #### Bad path configuration
 
