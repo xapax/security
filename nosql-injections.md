@@ -1,11 +1,12 @@
 # Nosql-injections
 
+Nosql-databases like MongoDB is becoming more and more common. So this needs to be expanded.
 
 ## Login bypass
 
 Basically change the query to this.
 
-```
+```javascript
 {"user":{"$gt": ""},"pass":{"$gt": ""}}
 ```
 

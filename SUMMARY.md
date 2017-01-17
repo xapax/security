@@ -42,7 +42,7 @@
             * [Remote File Inclusion](remote_file_inclusion.md)
             * [Hidden Files and Directories](web-scanning.md)
             * [SQL-Injections](sql-injections.md)
-            * [Nosql-injections](nosql-injections.md)
+            * [Nosql-Injections](nosql-injections.md)
             * [XML External Entity Attack](xml_external_entity_attack.md)
             * [Bypass File Upload Filtering](bypass_image_upload.md)
             * [Dictionary Attacks](dictionary_attacks.md)
