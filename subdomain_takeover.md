@@ -1,5 +1,8 @@
-# Subdomain takeover
+# Subdomain Takeover
 
+This is a really cool attack.
+
+First you looks for all subdomains. Sometimes a company has forgotten about a subdomain. Like and old support system called `support.example.com`. And then the support-system that points to that domain gets removed. That means that we could start a service for support, and like it to that domain. And thereby controlling the domain.
 
 
 
