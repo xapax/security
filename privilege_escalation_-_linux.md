@@ -28,10 +28,9 @@ These are some Linux privilege escalation techniques are common:
 
 ## Enumeration scripts
 
+I have used principally three scripts that are used to enumerate a machine. They are some difference between the scripts, but they output a lot of the same. So test them all out and see which one you like best.
 
 **LinEnum**
-
-This script can be used to speed up our enumeration-process.
 
 [https://github.com/rebootuser/LinEnum](https://github.com/rebootuser/LinEnum)
 
@@ -60,9 +59,14 @@ Run the script and save the output in a file, and then grep for warning in it.
 
 ### Kernel Exploits
 
+By exploiting vulnerabilities in the Linux Kernel we can sometimes escalate our privileges. What we usually need to know to test if a kernel exploit works is the OS, architecture and kernel version.
+
 Check the following:
+
 OS:
+
 Architecture:
+
 Kernel version:
 
 ```
@@ -79,12 +83,12 @@ site:exploit-db.com kernel version
 python linprivchecker.py extended
 ```
 
-Don't use binary exploits if you can avoid it. If you use it it might crash the machine. So binary exploits should be the last resort. Always use a simpler priv-esc if you can. They can also produce a lot of stuff in the `sys.log`. So if you find anything good, put it up on your list and keep searching for other ways before exploiting it.
+Don't use kernel exploits if you can avoid it. If you use it it might crash the machine or put it in an unstable state. So kernel exploits should be the last resort. Always use a simpler priv-esc if you can. They can also produce a lot of stuff in the `sys.log`. So if you find anything good, put it up on your list and keep searching for other ways before exploiting it.
 
 
 ### Programs running as root
 
-Look for webserver, mysql or anything else like that. The idea here is that if specific service is running as root and you can make that service execute commands you can execute commands as root. A typical example of this is mysql.
+The idea here is that if specific service is running as root and you can make that service execute commands you can execute commands as root. Look for webserver, database or anything else like that. A typical example of this is mysql, example is below.
 
 **Check which processes are running**
 
@@ -105,12 +109,12 @@ select sys_exec('whoami');
 select sys_eval('whoami');
 ```
 
-If neither of those won't work you can use a [User Defined Function/](https://infamoussyn.com/2014/07/11/gaining-a-root-shell-using-mysql-user-defined-functions-and-setuid-binaries/)
+If neither of those work you can use a [User Defined Function/](https://infamoussyn.com/2014/07/11/gaining-a-root-shell-using-mysql-user-defined-functions-and-setuid-binaries/)
 
 
 ### User Installed Software
 
-Has the user maybe installed some third party software that might be vulnerable? Check it out. If you find anything google it for exploits.
+Has the user installed some third party software that might be vulnerable? Check it out. If you find anything google it for exploits.
 
 ```
 # Common locations for user installed software
@@ -135,8 +139,8 @@ pkg_info
 ### Weak/reused/plaintext passwords
 
 
-- Check database config-file (`config.php` or similar)
-- Check databases
+- Check file where webserver connect to database (`config.php` or similar)
+- Check databases for admin passwords that might be reused
 - Check weak passwords
 
 ```
@@ -156,9 +160,9 @@ username:password
 
 ### Service only available from inside
 
-It might be that case that the user is running some service that is only abailable from that user. You can't connect to the service from the outside. It might be a development server, a database, or anything else. These services might be running as root, or they might have vulnerabilities in them. They might be even more vulnerable since the developer or user might be thinking "since it is only accessible for the specific user we don't need to spend that much of security"
+It might be that case that the user is running some service that is only available from that host. You can't connect to the service from the outside. It might be a development server, a database, or anything else. These services might be running as root, or they might have vulnerabilities in them. They might be even more vulnerable since the developer or user might be thinking "since it is only accessible for the specific user we don't need to spend that much of security".
 
-Check the netstat and compare it with the scan you did from the outside.
+Check the netstat and compare it with the nmap-scan you did from the outside. Do you find more services available from the inside?
 
 ```
 # Linux
@@ -168,7 +172,7 @@ netstat -ano
 
 ### Suid and Guid Misconfiguration
 
-A binary with suid permission can be run by anyone, but when they are run they are run as the user who set the suid. It could be root, or another user. If the suid-bit is set on a program that can spawn a shell or in another way abuse the rights.
+When a binary with suid permission is run it is run as another user, and therefore with the other users privileges. It could be root, or just another user. If the suid-bit is set on a program that can spawn a shell or in another way be abuse we could use that to escalate our privileges.
 
 For example, these are some programs that can be used to spawn a shell:
 
@@ -200,7 +204,7 @@ find / -perm -g=s -type f 2>/dev/null
 
 ### Abusing sudo-rights
 
-If you have a limited shell that access to some sudo programs you might be able to escalate your privileges with it. Any program that can write or overwrite can be used. If you have `cp` you can overwrite `/etc/shadow` or `/etc/sudoers`.
+If you have a limited shell that has access to some programs using `sudo` you might be able to escalate your privileges with. Any program that can write or overwrite can be used. For example, if you have sudo-rights to `cp` you can overwrite `/etc/shadow` or `/etc/sudoers` with your own malicious file.
 
 
 `awk`
