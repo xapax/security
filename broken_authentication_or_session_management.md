@@ -1,4 +1,4 @@
-# Broken authentication or session management
+# Broken Authentication or Session Management
 
 ### Password reset link does not expire
 
