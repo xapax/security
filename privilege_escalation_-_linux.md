@@ -1,17 +1,8 @@
 # Privilege Escalation
 
-So you have a limited shell on the machine.
+Once we have a limited shell it is useful to escalate that shells privileges. This way it will be easier to hide, read and write any files, and persist between reboots.
 
-You can't hide very effectively.   
-You can't bind ports below 1024.  
-Read and write any file  
-Persist easily between reboots.
-
-These are all things we want to be able to do.  
-
-
-
-These are some Linux privilege escalation techniques are common:
+In this chapter I am going to go over these common Linux privilege escalation techniques:
 
 - Kernel exploits
 - Programs running as root
@@ -21,10 +12,12 @@ These are some Linux privilege escalation techniques are common:
 - Suid misconfiguration
 - Abusing sudo-rights
 - World writable scripts invoked by root
-- Unmounted filesystems
-- Private ssh keys
 - Bad path configuration
 - Cronjobs
+- Unmounted filesystems
+- Private ssh keys
+
+
 
 
 ## Enumeration scripts
@@ -338,8 +331,39 @@ And here
 
 With privileges running script that are editable for other users.
 
+Look for anything that is owned by privileged user but writable for you:
 
-## Keylogger
+```
+crontab -l
+ls -alh /var/spool/cron
+ls -al /etc/ | grep cron
+ls -al /etc/cron*
+cat /etc/cron*
+cat /etc/at.allow
+cat /etc/at.deny
+cat /etc/cron.allow
+cat /etc/cron.deny
+cat /etc/crontab
+cat /etc/anacrontab
+cat /var/spool/cron/crontabs/root
+```
+
+### Unmounted filesystems
+
+Here we are looking for any unmounted filesystems. If we find one we mount it and start the priv-esc process over again.
+
+```
+mount -l
+cat /etc/fstab
+```
+
+### NFS Share
+
+If you find that a machine has a NFS share you might be able to use that to escalate privileges. Depending on how it is configured. 
+
+
+
+## Steal password through a keylogger
 
 If you have access to an account with sudo-rights but you don't have its password you can install a keylogger to get it.
 
