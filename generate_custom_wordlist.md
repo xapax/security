@@ -15,9 +15,6 @@ The target might be a specific company or person.
 The service you want to hack might have specific password rules. Must contain certain characters, must be of certain length etc. 
 
 
-
-
-
 ## Combine a small/semi-small dict with a custom
 
 To combine two wordlists you can just do
@@ -26,7 +23,11 @@ To combine two wordlists you can just do
 cat wordlist.txt >> wordlist2.txt
 ```
 
-## Html2dic - Build dictionary from html
+## Create a custom wordlist
+
+
+
+**Html2dic - Build dictionary from html**
 
 You can build a dictionary from a html-page.
 
@@ -43,21 +44,19 @@ html2dic example.txt
 Then you should probably remove duplicates.
 
 
-## Cewl - Spider and build dictionary
-
-
+**Cewl - Spider and build dictionary**
 
 ```
 cewl -w createWordlist.txt https://www.example.com 
 ```
 
-**Add minimum password length**
+Add minimum password length:
 
 ```
 cewl -w createWordlist.txt -m 6 https://www.example.com 
 ```
 
-## Improve the custom wordlist
+**Improve the custom wordlist**
 
 As we all know few password are just simple words. Many use numbers and special characters. To improve our password list we can use john the ripper. We can input our own rules, or we can just use the standard john-the-ripper rules
 
@@ -67,4 +66,5 @@ john ---wordlist=wordlist.txt --rules --stdout > wordlist-modified.txt
 
 
 ## References
+
 http://null-byte.wonderhowto.com/how-to/hack-like-pro-crack-passwords-part-4-creating-custom-wordlist-with-crunch-0156817/
