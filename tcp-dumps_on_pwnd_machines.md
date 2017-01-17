@@ -1,4 +1,25 @@
-# TCP-Dumps on pwnd machines
+
+# Loot Linux
+
+## Passwords and hashes
+
+First grab the passwd and shadow file.
+
+```bash
+cat /etc/passwd
+cat /etc/shadow
+```
+
+We can crack the password using `john the ripper` like this:
+
+```
+unshadow passwd shadow > unshadowed.txt
+john --rules --wordlist=/usr/share/wordlists/rockyou.txt unshadowed.txt
+```
+
+
+## Tcp-dump
+
 
 
 Fast command:
@@ -65,7 +86,7 @@ tcpdump tcp -w file.pcap
 
 ## Sniffing for passwords
 
-Once we have dumped some of the traffic we can insert it into metasploit and run **psnuffle** on it. It can sniff passwords and usernames from pop3, imap, ftp, and HTTP GET. This is a really easy way to find usernames and passwords from traffic that you have already dumped, or are in the process of dumping.
+Once we have dumped some of the traffic we can insert it into metasploit and run `psnuffle` on it. It can sniff passwords and usernames from pop3, imap, ftp, and HTTP GET. This is a really easy way to find usernames and passwords from traffic that you have already dumped, or are in the process of dumping.
 
 ```
 use auxiliary/sniffer/psnuffle
@@ -73,24 +94,6 @@ use auxiliary/sniffer/psnuffle
 
 https://www.offensive-security.com/metasploit-unleashed/password-sniffing/
 
-
-## Windows
-
-On windows you can use 
-
-````
-netsh trace help
-```. It works on Windows 7 and Windows Server 2008 and newer.
-
-Using metasploit you can also do packetcaptures with the command
-
-```
-run packetrecorder -li
-And then choose a interface.
-run packetrecorder -i 2
-```
-
-https://www.hackthis.co.uk/articles/no-wireshark-no-tcpdump-no-problem
 
 
 ## References

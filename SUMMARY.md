@@ -73,8 +73,8 @@
     * [Escaping Restricted Shell](escaping_restricted_shell.md)
     * [Bypassing antivirus](bypassing_antivirus.md)
     * [Loot](loot.md)
-        * [Loot windows - For credentials and other stuff](loot_windows_-_for_credentials_and_other_stuff.md)
-        * [TCP-dumps on pwnd machines](tcp-dumps_on_pwnd_machines.md)
+        * [Loot Windows](loot_windows_-_for_credentials_and_other_stuff.md)
+        * [Loot Linux](tcp-dumps_on_pwnd_machines.md)
     * [Persistence](persistence.md)
     * [Cover your tracks](clean_up.md)
 * Password cracking
