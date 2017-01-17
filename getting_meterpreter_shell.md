@@ -41,9 +41,11 @@ download
 
 
 ### Migrate
+
 A really common and useful script that is build into metasploit is the migrate script. If you get the shell through some kind of exploits that crashes a program the user might shut down that program and it will close your session. So you need to migrate your session to another process. You can do that with the `migrate` script.
 
 First run this command to output all processes
+
 ```
 ps
 ```
@@ -52,7 +54,7 @@ Now you choose one and run
 ```
 run migrate -p 1327
 ```
-Where the **-p** is the PID of the process.
+Where the `-p` is the PID of the process.
 
 
 ## Post modules
@@ -77,16 +79,19 @@ Background session 2? [y/N]  y
 ```
 
 Now we have that shell running in the background, and you can see it with 
+
 ```
 show sessions
 #or
 sessions -l
 ```
+
 And you can connect to it again with
 
 ```
 sessions -i 1
 ```
+
 Or whatever the number of the session is.
 
 So now we have the shell running in the background. It is time to upgrade
