@@ -39,7 +39,7 @@
         * [WAF - Web application firewall](waf_-_web_application_firewall.md)
         * [Attacking the System](lead_to_compromise.md)
             * [Local File Inclusion](local_file_inclusion.md)
-            * [Remote file inclusion](remote_file_inclusion.md)
+            * [Remote File Inclusion](remote_file_inclusion.md)
             * [Hidden Files and Directories](web-scanning.md)
             * [SQL-injections](sql-injections.md)
             * [Nosql-injections](nosql-injections.md)

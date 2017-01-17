@@ -171,7 +171,7 @@ Found in the home-directory
 
 Under the right circumstances you might be able to get a shell from a LFI
 
-### Log poising
+### Log poisoning
 
 There are some requirements. We need to be able to read log files. In this example we are going to poison the apache log file. You can use either the success.log or the error.log
 
