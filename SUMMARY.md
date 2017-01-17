@@ -89,7 +89,7 @@
     * [DNS-spoofing](dns-spoofing.md)
     * [Wireshark](wireshark.md)
 * [Wifi](wifi.md)
-    * WEP
+    * [WEP](wep.md)
     * [WPS](wps.md)
 * [Physical access to machine](physical_access_to_machine.md)
 * [Literature](littearature.md)
