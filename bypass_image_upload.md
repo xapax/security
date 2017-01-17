@@ -1,10 +1,10 @@
-# Bypass file upload filtering
+# Bypass File Upload Filtering
 
-
+One common way to gain a shell is actually not really a vulnerability, but a feature! Often times it is possible to upload files to the webserver. This can be abused byt just uploading a reverse shell. The ability to upload shells are often hindered by filters that try to filter out files that could potentially be malicious. So that is what we have to bypass.
 
 ## Rename it
 
-But instead we can just rename our shell and upload it as shell.php.jpg. It passed the filter and the file is executed as php.
+We can rename our shell and upload it as shell.php.jpg. It passed the filter and the file is executed as php.
 
 **php**
 phtml, .php, .php3, .php4, .php5, and .inc
