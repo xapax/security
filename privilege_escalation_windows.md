@@ -233,7 +233,7 @@ cacls "C:\path\to\file.exe"
 
 ### Look for Weakness
 
-What we are interested in is binaries that have been installed by the user. In the output you want to look for **BUILTIN\Users:\(F\)**. Or where your user/usergroup has **\(F\)** or **\(C\)** rights.
+What we are interested in is binaries that have been installed by the user. In the output you want to look for `BUILTIN\Users:\(F\)`. Or where your user/usergroup has `(F)` or `(C)` rights.
 
 Example:
 
