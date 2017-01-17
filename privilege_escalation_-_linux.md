@@ -71,7 +71,7 @@ cat /proc/version
 cat /etc/issue
 ```
 
-
+**Search for exploits**
 
 ```
 site:exploit-db.com kernel version
@@ -107,6 +107,65 @@ select sys_eval('whoami');
 
 If neither of those won't work you can use a [User Defined Function/](https://infamoussyn.com/2014/07/11/gaining-a-root-shell-using-mysql-user-defined-functions-and-setuid-binaries/)
 
+
+### User Installed Software
+
+Has the user maybe installed some third party software that might be vulnerable? Check it out. If you find anything google it for exploits.
+
+```
+# Common locations for user installed software
+/usr/local/
+/usr/local/src
+/usr/local/bin
+/opt/
+/home
+/var/
+/usr/src/
+
+# Debian
+dpkg -l
+
+# CentOS, OpenSuse, Fedora, RHEL
+rpm -qa (CentOS / openSUSE )
+
+# OpenBSD, FreeBSD
+pkg_info
+```
+
+### Weak/reused/plaintext passwords
+
+- Check database config-file (`config.php` or similar)
+- Check databases
+- Check weak passwords
+
+```
+username:username
+username:username1
+username:root
+username:admin
+username:qwerty
+username:password
+```
+
+- Check plaintext password
+
+```
+./LinEnum.sh -t -k password
+```
+
+### Service only available from inside
+
+It might be that case that the user is running some service that is only abailable from that user. You can't connect to the service from the outside. It might be a development server, a database, or anything else. These services might be running as root, or they might have vulnerabilities in them. They might be even more vulnerable since the developer or user might be thinking "since it is only accessible for the specific user we don't need to spend that much of security"
+
+Check the netstat and compare it with the scan you did from the outside.
+
+```
+# Linux
+netstat -anlp
+netstat -ano
+```
+
+### Suid Misconfiguration
 
 
 
