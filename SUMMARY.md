@@ -45,7 +45,6 @@
             * [Nosql-Injections](nosql-injections.md)
             * [XML External Entity Attack](xml_external_entity_attack.md)
             * [Bypass File Upload Filtering](bypass_image_upload.md)
-            * [Dictionary Attacks](dictionary_attacks.md)
             * [Exposed Version Control](exposed_version_control.md)
         * [Attacking the user](attacking_the_user.md)
             * [Clickjacking](clickjacking.md)
