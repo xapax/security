@@ -8,7 +8,7 @@ http://www.dankalia.com/tutor/01005/0100501003.htm
 ### Log files
 
 
-**/etc/syslog.conf**
+`/etc/syslog.conf`
 
 In this file you can read all the logs that syslog log. 
 
@@ -25,7 +25,8 @@ For example:
 /var/log/messages
 ```
 
-Here you have failed and successfull login attempts. SSH, SUDO, and much more.
+Here you have failed and successful login attempts. SSH, SUDO, and much more.
+
 ```
 /var/log/auth.log
 ```
@@ -42,6 +43,7 @@ Remove your own ip like this
 ```
 grep -v '<src-ip-address>' /path/to/access_log > a && mv a /path/to/access_log
 ```
+
 What it does is simply to copy all lines except the lines that contain your IP-address. And then move them, and them move them back again.
 
 ```
@@ -72,20 +74,24 @@ All your commands are also stored.
 echo $HISTFILE
 echo $HISTSIZE
 ```
+
 You can set your file-size like this to zero, to avoid storing commands.
+
 ```
 export HISTSIZE=0
 ```
+
 If you set it when you get shell you won't have to worry about cleaning up the history.
 
 ## Shred files
+
 Shredding files lets you remove files in a more secure way.
+
 ```
 shred -zu filename
 ```
 
 ## On windows
-
 
 Clear env
 https://www.offensive-security.com/metasploit-unleashed/event-log-management/
