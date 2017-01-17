@@ -155,6 +155,10 @@ username:password
 
 - Check plaintext password
 
+```bash
+# Anything interesting the the mail?
+/var/spool/mail
+```
 ```
 ./LinEnum.sh -t -k password
 ```
@@ -318,9 +322,7 @@ find / -perm -o x -type d 2>/dev/null
 find / \( -perm -o w -perm -o x \) -type d 2>/dev/null
 ```
 
-
-
-#### Bad path configuration
+### Bad path configuration
 
 Putting `.` in the path  
 If you put a dot in your path you won't have to write `./binary` to be able to execute it. You will be able to execute any script or binary that is in the current directory.
@@ -332,42 +334,18 @@ This explains it
 And here  
 [http://www.dankalia.com/tutor/01005/0100501004.htm](http://www.dankalia.com/tutor/01005/0100501004.htm)
 
-
-
-
-## Communication
-
-### Mail
-
-```
-/var/spool/mail
-```
-
-## Logs
-
-## References
-
-[http://www.rebootuser.com/?p=1758](http://www.rebootuser.com/?p=1758)
-
-[http://netsec.ws/?p=309](http://netsec.ws/?p=309)
-
-
-
-#### **Cronjob**
+### Cronjob
 
 With privileges running script that are editable for other users.
 
 
-#### World/user writable binaries
+## Keylogger
 
-#### Weak permissions on LD\_preload
-
-[https://blog.maleadt.net/2015/02/25/sudo-escalation/](https://blog.maleadt.net/2015/02/25/sudo-escalation/)
+If you have access to an account with sudo-rights but you don't have its password you can install a keylogger to get it.
 
 
 
-
-### Other useful stuff related to privesc
+## Other useful stuff related to privesc
 
 **World writable directories**
 
@@ -380,11 +358,12 @@ With privileges running script that are editable for other users.
 ```
 
 
-## Keylogger
-
-If you have access to an account with sudo-rights but you don't have its password you can install a keylogger to get it.
 
 ## References
+
+[http://www.rebootuser.com/?p=1758](http://www.rebootuser.com/?p=1758)
+
+[http://netsec.ws/?p=309](http://netsec.ws/?p=309)
 
 [https://www.trustwave.com/Resources/SpiderLabs-Blog/My-5-Top-Ways-to-Escalate-Privileges/](https://www.trustwave.com/Resources/SpiderLabs-Blog/My-5-Top-Ways-to-Escalate-Privileges/)
 
@@ -392,8 +371,6 @@ Watch this video!
 [http://www.irongeek.com/i.php?page=videos/bsidesaugusta2016/its-too-funky-in-here04-linux-privilege-escalation-for-fun-profit-and-all-around-mischief-jake-williams](http://www.irongeek.com/i.php?page=videos/bsidesaugusta2016/its-too-funky-in-here04-linux-privilege-escalation-for-fun-profit-and-all-around-mischief-jake-williams)
 
 [http://www.slideshare.net/nullthreat/fund-linux-priv-esc-wprotections](http://www.slideshare.net/nullthreat/fund-linux-priv-esc-wprotections)
-
-[http://netsec.ws/?p=309](http://netsec.ws/?p=309)
 
 [https://www.rebootuser.com/?page\_id=1721](https://www.rebootuser.com/?page_id=1721)
 
