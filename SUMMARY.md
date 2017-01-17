@@ -72,7 +72,7 @@
     * [Privilege Escalation - Windows](privilege_escalation_windows.md)
     * [Escaping Restricted Shell](escaping_restricted_shell.md)
     * [Bypassing antivirus](bypassing_antivirus.md)
-    * [Loot](loot.md)
+    * [Loot and Enumerate](loot.md)
         * [Loot Windows](loot_windows_-_for_credentials_and_other_stuff.md)
         * [Loot Linux](tcp-dumps_on_pwnd_machines.md)
     * [Persistence](persistence.md)
