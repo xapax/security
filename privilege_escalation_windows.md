@@ -186,15 +186,13 @@ sc config upnphost obj= ".\LocalSystem" password= ""
 sc config upnphost depend= ""
 ```
 
-## 
-
 ## Weak Service Permissions
 
 Services on windows are programs that run in the background. Without a GUI.
 
-If you find a service that has write permissions set to everyone you can change that binary into your custom binary and make it execute in the privileged context.
+If you find a service that has write permissions set to `everyone` you can change that binary into your custom binary and make it execute in the privileged context.
 
-First we need to find services. That can be done using **wmci** or **sc.exe**. Wmci is not available on all windows machines, and it might not be available to your user. If you don't have access to it, you can use **sc.exe**.
+First we need to find services. That can be done using `wmci` or `sc.exe`. Wmci is not available on all windows machines, and it might not be available to your user. If you don't have access to it, you can use `sc.exe`.
 
 ### WMCI
 
@@ -202,11 +200,11 @@ First we need to find services. That can be done using **wmci** or **sc.exe**. W
 wmic service list brief
 ```
 
-This will produce a lot out output and we need to know which one of all of these services have weak permissions. In order to check that we can use the **icalcs** program. Notice that **icalcs** is only available from Vista and up. XP and lower has **calcs** instead.
+This will produce a lot out output and we need to know which one of all of these services have weak permissions. In order to check that we can use the `icacls` program. Notice that `icacls` is only available from Vista and up. XP and lower has `cacls` instead.
 
-As you can see in the command below you need to make sure that you have access to wimc, icalcs and write privilege in windows\temp.
+As you can see in the command below you need to make sure that you have access to `wimc`, `icacls` and write privilege in `C:\windows\temp`.
 
-```
+```cmd
 for /f "tokens=2 delims='='" %a in ('wmic service list full^|find /i "pathname"^|find /i /v "system32"') do @echo %a >> c:\windows\temp\permissions.txt
 
 for /f eol^=^"^ delims^=^" %a in (c:\windows\temp\permissions.txt) do cmd.exe /c icacls "%a"
