@@ -1,6 +1,6 @@
 # Privilege Escalation
 
-So you have a limited shell on the machine. But it is limited. For example:
+So you have a limited shell on the machine.
 
 You can't hide very effectively.   
 You can't bind ports below 1024.  
@@ -9,13 +9,29 @@ Persist easily between reboots.
 
 These are all things we want to be able to do.  
 
-**Don't use binary exploits if you can avoid it. If you use it it might crash the machine. So binary exploits should be the last resort. Always use a simpler priv-esc if you can. They can also produce a lot of stuff in the sys.log**
 
-# Internal Enumeration - Linux
 
-We can enumarate the system manually. Or using a script. This is a great script to use for internal enumeration.
+These are some Linux privilege escalation techniques are common:
 
-## LinEnum
+- Kernel exploits
+- Programs running as root
+- Installed software
+- Weak/reused/plaintext passwords
+- Inside service
+- Suid misconfiguration
+- World writable scripts invoked by root
+- Unmounted filesystems
+- Private ssh keys
+- Bad path configuration
+- Cronjobs
+
+
+## Enumeration scripts
+
+
+**LinEnum**
+
+This script can be used to speed up our enumeration-process.
 
 [https://github.com/rebootuser/LinEnum](https://github.com/rebootuser/LinEnum)
 
@@ -29,20 +45,42 @@ Here are the options:
 -h Displays this help text
 ```
 
-If you are wondering how to get the script onto the machine, check out that chapter. [https://bobloblaw.gitbooks.io/security/content/transfering\_files.html](https://bobloblaw.gitbooks.io/security/content/transfering_files.html)
-
-## Unix privesc
+**Unix privesc**
 
 [http://pentestmonkey.net/tools/audit/unix-privesc-check](http://pentestmonkey.net/tools/audit/unix-privesc-check)  
 Run the script and save the output in a file, and then grep for warning in it.
 
-## Linprivchecker.py
+**Linprivchecker.py**
 
 [https://github.com/reider-roque/linpostexp/blob/master/linprivchecker.py](https://github.com/reider-roque/linpostexp/blob/master/linprivchecker.py)
 
-# Manually
 
-If you for whatever reason is not able to run a script and you have to check out stuff manually these might be some stuff worth looking into.
+
+## Privilege Escalation Techniques
+
+### Kernel Exploits
+
+Check the following:
+OS:
+Architecture:
+
+```
+uname -a
+cat /proc/version
+cat /etc/issue
+```
+
+```
+site:exploit-db.com kernel version
+
+perl /root/oscp/useful-tools/privesc/linux/Linux_Exploit_Suggester/Linux_Exploit_Suggester.pl -k 2.6
+
+python linprivchecker.py extended
+```
+
+**Don't use binary exploits if you can avoid it. If you use it it might crash the machine. So binary exploits should be the last resort. Always use a simpler priv-esc if you can. They can also produce a lot of stuff in the sys.log**
+
+
 
 ## Communication
 
