@@ -19,6 +19,7 @@ These are some Linux privilege escalation techniques are common:
 - Weak/reused/plaintext passwords
 - Inside service
 - Suid misconfiguration
+- Abusing sudo-rights
 - World writable scripts invoked by root
 - Unmounted filesystems
 - Private ssh keys
@@ -227,10 +228,12 @@ find / -exec /usr/bin/awk 'BEGIN {system("/bin/bash")}' ;
 ```
    
 `ht`  
+
 The text/binary-editor HT.
 
 `less`
-From less you can go into vi, and then into a shell
+
+From less you can go into vi, and then into a shell.
 
 ```
 sudo less /etc/shadow
@@ -248,6 +251,7 @@ sudo more /home/pelle/myfile
 ```
 
 `mv`
+
 Overwrite `/etc/shadow` or `/etc/sudoers`
 
 `man`
@@ -297,6 +301,39 @@ sudo vi
 
 [How I got root with sudo/](https://www.securusglobal.com/community/2014/03/17/how-i-got-root-with-sudo/)
 
+### World writable scripts invoked as root
+
+If you find a script that is owned by root but is writable by anyone you can add your own malicious code in that script that will escalate your privileges when the script is run as root. It might be part of a cronjob, or otherwise automatized, or it might be run by hand by a sysadmin. You can also check scripts that are called by these scripts.
+
+```bash
+#World writable files directories
+find / -writable -type d 2>/dev/null
+find / -perm -222 -type d 2>/dev/null
+find / -perm -o w -type d 2>/dev/null
+
+# World executable folder
+find / -perm -o x -type d 2>/dev/null
+
+# World writable and executable folders
+find / \( -perm -o w -perm -o x \) -type d 2>/dev/null
+```
+
+
+
+#### Bad path configuration
+
+Putting `.` in the path  
+If you put a dot in your path you won't have to write `./binary` to be able to execute it. You will be able to execute any script or binary that is in the current directory.
+
+Why do people/sysadmins do this? Because they are lazy and won't want to write `./.`
+
+This explains it  
+[https://hackmag.com/security/reach-the-root/](https://hackmag.com/security/reach-the-root/)  
+And here  
+[http://www.dankalia.com/tutor/01005/0100501004.htm](http://www.dankalia.com/tutor/01005/0100501004.htm)
+
+
+
 
 ## Communication
 
@@ -314,46 +351,12 @@ sudo vi
 
 [http://netsec.ws/?p=309](http://netsec.ws/?p=309)
 
-# Privilege Escalation - Linux
 
-
-### Configuration mistakes
-
-
-#### Bad path configuration
-
-Putting . in the path  
-If you put a dot in your path you won't have to write `./binary to be able to execute it. You will be able to execute any script or binary that is in the current directory.`
-
-Why do people/sysadmins do this? Because they are lazy and won't want to write `./.`
-
-This explains it  
-[https://hackmag.com/security/reach-the-root/](https://hackmag.com/security/reach-the-root/)  
-And here  
-[http://www.dankalia.com/tutor/01005/0100501004.htm](http://www.dankalia.com/tutor/01005/0100501004.htm)
 
 #### **Cronjob**
 
 With privileges running script that are editable for other users.
 
-#### World writable scripts invoked as root
-
-World/user writable scripts that are invoked by root can me rewritten to escalate privileges.
-
-Also check scripts that are called by these scripts.
-
-```
-#World writable files directories
-find / -writable -type d 2>/dev/null
-find / -perm -222 -type d 2>/dev/null
-find / -perm -o w -type d 2>/dev/null
-
-# World executable folder
-find / -perm -o x -type d 2>/dev/null
-
-# World writable and executable folders
-find / \( -perm -o w -perm -o x \) -type d 2>/dev/null
-```
 
 #### World/user writable binaries
 
@@ -363,49 +366,10 @@ find / \( -perm -o w -perm -o x \) -type d 2>/dev/null
 
 
 
-### Software vulnerabilites
 
-Software vulnerabilites can lead to priv-esc, like vulnerabiliteis in:
+### Other useful stuff related to privesc
 
-* Kernel
-
-
-  `uname -a`
-  `uname -r`
-  `/etc/issue*`
-  `/etc/release`
-  `cat /proc/version`
-
-# RHEL/CentOS/Suse/Fedora
-
-rpm -q kernel
-
-# Debian
-
-dpkg --list \| grep linux-image
-
-```
-**Tools**
-```
-
-# Programming tools
-
-find / -name perl_  
-find / -name python_  
-find / -name gcc\*  
-find / -name cc
-
-# Upload tools
-
-```
-find / -name wget  
-find / -name nc  
-find / -name netcat  
-find / -name tftp*  
-find / -name ftp  
-```
-
-# Writetable Directories
+**World writable directories**
 
 ``` 
 /tmp
