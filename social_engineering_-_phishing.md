@@ -59,6 +59,7 @@ The most common tool for social engineering is to use Social Engineering Toolkit
 ```
 setoolkit
 ```
+
 ## Spear phishing
 
 ## Word/excel makros
@@ -66,6 +67,10 @@ setoolkit
 An explanation of how to createa malicious makro-wordfile.
 
 https://www.offensive-security.com/metasploit-unleashed/vbscript-infection-methods/
+
+## Embed a executable inside a PowerPoint
+
+You can embed executables inside PowerPoint presentations and then have them execute about animations. 
 
 ## Reference:
 https://www.youtube.com/watch?v=NTdthBQYa1k
