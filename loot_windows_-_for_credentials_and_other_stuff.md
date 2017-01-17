@@ -104,6 +104,35 @@ set session X
 exploit
 ```
 
+## Tcp-dump on winfows
+
+You can use meterpreter to easily take a tcp-dump, like this:
+
+```
+# Meterpreter
+run packetrecorder -li
+run packetrecorder -i 1
+```
+
+### Search for interesting files
+
+```
+#Meterpreter
+search -f *.txt
+search -f *.zip
+search -f *.doc
+search -f *.xls
+search -f config*
+search -f *.rar
+search -f *.docx
+search -f *.sql
+
+# Recursive search
+dir /s
+```
+
+
+
 ## References
 
 This is a great post
