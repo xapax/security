@@ -4,7 +4,7 @@ My notepad about stuff related to IT-security, and specifically penetration test
 
 I have used this book to try to write down how some things work, but at the same time I want to use it as a reference book to find commands and things I just can't remember. Therefore I have tried to create a TLDR section in the beginning of some chapters where I have copy-paste ready commands that are useful. And if you want to know more you can continue to read the rest of the chapter. This is my way of making the book a hybrid between the Red Team Field Manual and a standard introduction book to pentesting.
 
-Also, this book is just a collection of stuff that is available on the interwebz. I am just a simple collector. I have tried to include a reference section to show where I found the technique, but sometimes I have just forgotten about it or I don't know. This book is my way of trying to give something back to the infosec community and I hope it can be useful to someone.
+Also, this book is just a collection of stuff that is available on the interwebz. I am just a simple collector. I have tried to include a reference section to show where I found the technique. This book is my way of trying to give something back to the infosec community and I hope it can be useful to someone.
 
 ## Find practical examples
 
