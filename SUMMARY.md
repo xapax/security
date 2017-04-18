@@ -59,6 +59,7 @@
         * [Examples](examplesXSS.md)
       * [Browser Vulnerabilities](browser_vulnerabilities.md)
       * [Java Applet](java_applet.md)
+      * [Insecure Direct Object Reference \(IDOR\)](insecure-direct-object-reference-idor.md)
   * [Automated Vulnerability Scanners](automated_vulnerability_scanners.md)
 * [Exploiting](exploiting.md)
   * [Social Engineering - Phishing](social_engineering_-_phishing.md)
