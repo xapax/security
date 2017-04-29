@@ -6,6 +6,8 @@ This is a huge chapter. I could divide it up in many subchapters but I like to h
 
 The shell, or the terminal is a really useful tool. Bash is the standard shell on most Linux distros.
 
+One really useful trick when working with bash is to search for old commands that you have used. You can access this search function by doing `ctr-r` in the terminal. 
+
 ### Navigating
 
 `pwd` - Print working directory
@@ -32,7 +34,6 @@ Use `/searchterm` to search. It is the same command as in vim. `n` to scroll to 
 
 `more` - Output file but just little bit at a time. `less` is better.
 
-
 ### Working with files
 
 `touch` - Create a new file.
@@ -56,7 +57,6 @@ rm -rf ./directory
 Watch the command destroy an entire machine: [https://www.youtube.com/watch?v=D4fzInlyYQo](https://www.youtube.com/watch?v=D4fzInlyYQo)
 
 `rmdir` - Remove empty directory
-
 
 ### A little bit of everything
 
@@ -108,22 +108,23 @@ which bash
 # Usually outputs: /bin/bash
 ```
 
-
 ## 2. Editing text
 
-First let's just clear out something about **standard streams**, or **I/O**-streams. Standard streams are the streams that are used to interact between the human computer-user and the machine. There are three standard streams: standard input (stdin), standard output (stdout), and standard error (stderr).The stdin stream can be seen as an abstractions of the real keyboard input. So when you issue a command/program that requires input the program does not read straight from the keyboard input, instead it reads from the file STDIN.
+First let's just clear out something about **standard streams**, or **I/O**-streams. Standard streams are the streams that are used to interact between the human computer-user and the machine. There are three standard streams: standard input \(stdin\), standard output \(stdout\), and standard error \(stderr\).The stdin stream can be seen as an abstractions of the real keyboard input. So when you issue a command/program that requires input the program does not read straight from the keyboard input, instead it reads from the file STDIN.
 
 ### Stdin
+
 Stdin is the data that gets inputed into the program. An example of a program that requires stdin data is `cp`. In order for the program to do anything it needs input data. For example `cp file1 copy_of_file1`. Here `file1` and `copy_of_file1` is the stdin.
 
-So the default Stdin comes from the STDIN-file that is a text-file representation of the keyboard input. But often times we do not want to input stuff from the keyboard, sometimes we want to input something into a program that comes from another file. That is when we can use redirection symbol: `>`. 
+So the default Stdin comes from the STDIN-file that is a text-file representation of the keyboard input. But often times we do not want to input stuff from the keyboard, sometimes we want to input something into a program that comes from another file. That is when we can use redirection symbol: `>`.
 
-So an example could be `cat < my_text_file.txt`. The data from my_text_file.txt will now be used as input instead of the keyboard input. 
+So an example could be `cat < my_text_file.txt`. The data from my\_text\_file.txt will now be used as input instead of the keyboard input.
 
 The file descriptor for **stdin** is: **0**
 
 ### Stdout
-Stdout is the data that get ouputed from the program.
+
+Stdout is the data that get ouputed from the program.  
 For example, when you use the command `cat file1` that data/text that gets outputed is the stdout The same with the program `ls`. Not all programs have stdout. For example when you use `mv` or `cp` successfully you get no stdout back from the program.
 
 The stdout can be redirected to another file by using these symbols `>` and `>>`. So now we can do the following:
@@ -141,11 +142,12 @@ Another incredibly useful feature is the **pipe** feature, reprsented with this 
 ls -la | less
 ```
 
-This will take the stdout from `ls -la` and forward/redirect it into the `less` program. Using the **pipe** you can now chain different commands. 
+This will take the stdout from `ls -la` and forward/redirect it into the `less` program. Using the **pipe** you can now chain different commands.
 
 The file descriptor for **stdout** is: **1**
 
 ### Stderr
+
 Stderr is the stream used for outputting error messages. So if a program fails for whatever reason. For example, if we try to copy a file that does not exist, this will be the stdrr output:
 
 ```
@@ -193,10 +195,7 @@ cat filename | sort -u > newFileName
 
 `sed`
 
-
-
 ### Editing text
-
 
 #### sed
 
@@ -207,9 +206,6 @@ Remove first line of file/stream
 ```
 sed "1d"
 ```
-
-
-
 
 #### cut
 
@@ -228,8 +224,6 @@ cut -d" " -f4
 ```
 
 `-d` stands for delimiter. and `-f` for field.
-
-
 
 #### tr - Translate
 
@@ -253,8 +247,7 @@ cat file.txt | tr "." "_"
 
 [http://www.thegeekstuff.com/2012/12/linux-tr-command/](http://www.thegeekstuff.com/2012/12/linux-tr-command/)
 
-
-#### awk 
+#### awk
 
 So awk is an advanced tool for editing text-files. It is its own programming language to it can become quite complex. Awk iterates over the whole file line by line.
 
@@ -294,7 +287,6 @@ We can use the -F flag to add a custom delimiter.
 awk -F ':' '{print $1}' test.txt
 ```
 
-
 So if you are manipulating some text you might want to start the output with some info about the columns or something like that. To do that we can use the BEGIN-keyword.
 
 ```
@@ -303,7 +295,6 @@ awk 'BEGIN{printf "IP-address \tPort\n"} /nop/ {print $3} END {printf "End of th
 ```
 
 Here we are printing IP-address    PORT to the first line of the file.
-
 
 ## 3. User management
 
@@ -358,24 +349,24 @@ Shows all the files and directories and their permission settings.
 drwxrwxrwt 2 root root 4,0K ago  3 17:33 myfile
 ```
 
-Here we have 10 letters in the beginning. The first one `d` shows that it is a directory.          
+Here we have 10 letters in the beginning. The first one `d` shows that it is a directory.  
 The next three letters are for read, `w` for write and `x` for execute. The first three belong to the owner, the second three to the group, and the last three to all users.
 
 [https://linuxjourney.com/lesson/file-permissions](https://linuxjourney.com/lesson/file-permissions)
 
 ## 5. Processes
 
-To display information regarding the systems processes you can use the `ps` command. 
-
+To display information regarding the systems processes you can use the `ps` command.
 
 ```
 ps -aux
 ```
-`-a` stands for all
-`-u` stands for all processes by all users
-`-x` stands for all processes that don't run a `tty` 
 
-If you run this command you will probably see a pretty big output. In the column for **command** you will see what command has been run. Every process has a Process Identification Number (**PID**). Something you will also see in the output.
+`-a` stands for all  
+`-u` stands for all processes by all users  
+`-x` stands for all processes that don't run a `tty`
+
+If you run this command you will probably see a pretty big output. In the column for **command** you will see what command has been run. Every process has a Process Identification Number \(**PID**\). Something you will also see in the output.
 
 All of theses processes can actually be found in `/proc`. You just go to `/proc/[pid]`. In `/proc` you can find information about the system, and you can actually change the system if you change those files! But more on that later. What I wanted to explain is that if we look at the output from `ps` we see that some commands are in brackets. Like this:
 
@@ -386,8 +377,7 @@ root        12  0.0  0.0      0     0 ?        S    ene14   0:00 [migration/1]
 root        13  0.0  0.0      0     0 ?        S    ene14   0:00 [ksoftirqd/1]
 ```
 
-Those are usually kernel processes, and you can safely assume that no user has started them. 
-
+Those are usually kernel processes, and you can safely assume that no user has started them.
 
 If you want to monitor processes in real time you can use `top` or `htop`. `top` comes preinstalled on most distros. But `htop` is really a lot nicer.
 
@@ -413,7 +403,7 @@ q                    F10         Quit htop
 
 Something that difference Linux from windows is how it handles installing new software. In windows you usually have to google around and then click on random scary download buttons that might fuck up your computer, or not. It's like a constant lottery where you win by no installing malware. In Linux that is usually not really an issue. That is because distros have their own software repositories from where you can download your software. This is kind of like an app-store except everything is free.
 
-The different major branches of teh GNU/Linux OS have their own software repositories. Ubuntu has their own, debian has their own, and so on. 
+The different major branches of teh GNU/Linux OS have their own software repositories. Ubuntu has their own, debian has their own, and so on.
 
 Different distros also have their own package-amangers. For example, Debian and ubuntu uses `apt`, while Redhat uses `rpm`, and Arch uses `pacman`. You should strick to your own package-manager, because even though chaning package-manager is possible it will probably just cause you more headache than benefits.
 
@@ -455,7 +445,6 @@ When you remove some package it might have requires some other dependencies. To 
 sudo apt-get autoremove
 ```
 
-
 ### Organizing your $path variable
 
 I am talking about debian/ubuntu here. On other systems I don't know.
@@ -466,7 +455,7 @@ You can define your path in `/etc/environment`. If you don't have it you can cre
 source /etc/environment && export PATH
 ```
 
-If you are using zsh (which you should) you have to add it here
+If you are using zsh \(which you should\) you have to add it here
 
 ```
 sudo vim /etc/zsh/zshenv
@@ -485,7 +474,6 @@ This is a non-persistent way to add binaries to your path. Might be useful if yo
 ```
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ```
-
 
 ### Installing custom packages
 
@@ -654,13 +642,13 @@ This is a tool to control services more easily, what is running upon boot and so
 
 ## 11. Kernel
 
-The Kernel is responsible for talking between the hardware and the software, and to manage the systems resources. 
+The Kernel is responsible for talking between the hardware and the software, and to manage the systems resources.
 
 The Linux Kernel is a monolithic kernel, unlike the OSX and the Windows kernels which are hybrid.
 
 You can find the kernel file in `/boot`. It might look like something like this`vmlinuz-4.4.0-57-generic`. In the beginning of time the kernel was simply called `linux`. But when Virtual Memory was introduced they changed the name to `vmlinux` to reflect that the kernel could handle virtual memory. When the kernel later became too big it was compressed using zlib , therefore the name was changed to `vmlinuz`.
 
-The Linux Kernel differs from Windows in that it contains drivers by default. So you don't have to go around looking for drivers like you do on windows when you want to install a printer, or something like that. 
+The Linux Kernel differs from Windows in that it contains drivers by default. So you don't have to go around looking for drivers like you do on windows when you want to install a printer, or something like that.
 
 It is really easy to upgrade to the latest Linux kernel, all you have to do tis this:
 
@@ -670,7 +658,7 @@ sudo apt-get update && sudo apt-get dist-upgrade
 sudo apt-get update && sudo apt-get upgrade
 ```
 
-If you are using a distro that is Long Term Supported (LTS). You will not get the latest Kernel version, but you will get the latest Long Term Supported version.
+If you are using a distro that is Long Term Supported \(LTS\). You will not get the latest Kernel version, but you will get the latest Long Term Supported version.
 
 ## 14. Logging
 
