@@ -1,8 +1,6 @@
 ## DOM-based XSS
 
-
-
-In DOM-based XSS the malicious code is never sent to the server. The injection-point is somewhere where javascript has access. 
+In DOM-based XSS the malicious code is never sent to the server. The injection-point is somewhere where javascript has access.
 
 The typical example of how this works is with URLs.
 
@@ -25,10 +23,7 @@ So in order to inject and execute a DOM-based XSS we need a injection-point \(ca
 
 In the example above `document.URL` is our source. Example of other sources are:
 
-
-
 ```
-
     document.URL
     document.documentURI
     document.URLUnencoded (IE 5.5 or later Only)
@@ -38,18 +33,12 @@ In the example above `document.URL` is our source. Example of other sources are:
     location.search
     location.hash
     location.pathname
-    
+
     window.name
     document.referrer
 ```
 
-
-
-
-
 ### Sinks
-
-
 
 ```
 eval    
@@ -67,15 +56,26 @@ anyTag.onEventName
 
 
 
+### Finding it
+
+To find DOM-based XSS you will need to check out the code.
+
+
+
+If the javascript code is bundled and minified you can use js\_beautify to make it readble again.
+
+
+
+```
+ sudo apt-get install libjavascript-beautifier-perl
+ # then invoke js_beautify
+```
+
 
 
 
 
 ## References
 
-https://github.com/wisec/domxsswiki/wiki/location,-documentURI-and-URL-sources
-
-
-
-
+[https://github.com/wisec/domxsswiki/wiki/location,-documentURI-and-URL-sources](https://github.com/wisec/domxsswiki/wiki/location,-documentURI-and-URL-sources)
 
