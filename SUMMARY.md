@@ -57,6 +57,7 @@
       * [Cross Site Request Forgery](cross_site_request_forgery.md)
       * [Cross-site-scripting](cross-site-scripting.md)
         * [Examples](examplesXSS.md)
+        * [DOM-based XSS](dom-based-xss.md)
       * [Browser Vulnerabilities](browser_vulnerabilities.md)
       * [Java Applet](java_applet.md)
       * [Insecure Direct Object Reference \(IDOR\)](insecure-direct-object-reference-idor.md)
