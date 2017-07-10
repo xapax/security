@@ -10,8 +10,6 @@ To define a XML-section/document you need the following tag to begin:
 <?xml version="1.0" encoding="UTF-8"?>
 ```
 
-
-
 Example of valid XML:
 
 ```
@@ -23,15 +21,13 @@ Example of valid XML:
 
 [https://www.owasp.org/index.php/XML\_External\_Entity\_\(XXE\)\_Processing](https://www.owasp.org/index.php/XML_External_Entity_%28XXE%29_Processing)
 
-
-
 ### Syntax rule
 
 * Must have root element
 * Must have XML prolog
 
 ```
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 ```
 
 * All elements must have closing tag
@@ -42,11 +38,26 @@ Example of valid XML:
 | &lt; | &lt; | less than |
 | :--- | :--- | :--- |
 | &gt; | &gt; | greater than |
-| &amp; | & | ampersand  |
-| &apos; | ' | apostrophe |
-| &quot; | " | quotation mark |
+| & | & | ampersand |
+| ' | ' | apostrophe |
+| " | " | quotation mark |
 
 * Whitespace is perserved in XML
-* 
+
+
+
+### Attack
+
+So if an application receives XML to the server the attacker might be able to exploit an XXE. An attack might look like this:
+
+```
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <!DOCTYPE foo [  
+  <!ELEMENT foo ANY >
+  <!ENTITY xxe SYSTEM "file:///dev/random" >]><foo>&xxe;</foo>
+```
+
+The elemet can be whatever, it doesn't matter. The xxe is the "variable" where the content of /dev/random get stored. And by dereferencing it in the foo-tag the content gets outputted.This way an attacker might be able to read files from the local system, like boot.ini or passwd.
+
 
 
