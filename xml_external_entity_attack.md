@@ -46,7 +46,7 @@ Example of valid XML:
 
 ### Attack
 
-So if an application receives XML to the server the attacker might be able to exploit an XXE. An attack might look like this:
+So if an application receives XML to the server the attacker might be able to exploit an XXE. It could be sent as a GET, but it is more likely that it is send in a POST. An attack might look like this:
 
 ```
 <?xml version="1.0" encoding="ISO-8859-1"?>
@@ -56,8 +56,6 @@ So if an application receives XML to the server the attacker might be able to ex
 ```
 
 The elemet can be whatever, it doesn't matter. The xxe is the "variable" where the content of /dev/random get stored. And by dereferencing it in the foo-tag the content gets outputted.This way an attacker might be able to read files from the local system, like boot.ini or passwd.
-
-
 
 In php-applications where the expect module is loaded it is possible to get RCE. It is not a very common vulnerability, but still good to know.
 
@@ -70,6 +68,26 @@ In php-applications where the expect module is loaded it is possible to get RCE.
     <pass>mypass</pass>
 </creds>
 ```
+
+Even if the data is not reflected backto the website it is still possible to exfiltrate files and data from the server. The technique is similar to how you exfiltrate the cookie in a Cross-Site Scripting attack, you send it in the url.
+
+### Test for it
+
+* Input is reflected
+
+```
+<?xml version="1.0"?><!DOCTYPE Any [<!ENTITY xxe "testdata">]><add>&xxe;</add>
+```
+
+If "testdata" gets reflected then it is vulnerable to XXE. If it gets reflected you can try to exfiltrate the data the following way:
+
+
+
+
+
+### References
+
+https://securitytraning.com/xml-external-entity-xxe-xml-injection-web-for-pentester/
 
 
 
