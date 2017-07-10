@@ -1,5 +1,17 @@
 # XML External Entity Attack
 
+With this attack you can do:
+
+* Read local files
+* Denial-of-service
+* Perform port-scan
+
+Where do you find it:
+
+* Anywhere where XML is posted.
+
+* Common with file-uploading functionality. For files that uses XML, like: docx, pptx, gpx, pdf and xml itself.
+
 ### Background XML
 
 XML is a markup language, like HTML. Unlike HTML is does not have any predefined tags. It is the user that create the tags in the XML object. XML is just a format for storing and transporing data. XML uses tags and subtags, just like html. Or parents, children, and syblings. So in that sense it has the same tree-structure as html.
@@ -52,10 +64,10 @@ So if an application receives XML to the server the attacker might be able to ex
 <?xml version="1.0" encoding="ISO-8859-1"?>
  <!DOCTYPE foo [  
   <!ELEMENT foo ANY >
-  <!ENTITY xxe SYSTEM "file:///dev/random" >]><foo>&xxe;</foo>
+  <!ENTITY xxe SYSTEM "file:///etc/passwd" >]><foo>&xxe;</foo>
 ```
 
-The elemet can be whatever, it doesn't matter. The xxe is the "variable" where the content of /dev/random get stored. And by dereferencing it in the foo-tag the content gets outputted.This way an attacker might be able to read files from the local system, like boot.ini or passwd.
+The elemet can be whatever, it doesn't matter. The xxe is the "variable" where the content of /dev/random get stored. And by dereferencing it in the foo-tag the content gets outputted.This way an attacker might be able to read files from the local system, like boot.ini or passwd. SYSTEM means that what is to be included can be found locally on the filesystem.
 
 In php-applications where the expect module is loaded it is possible to get RCE. It is not a very common vulnerability, but still good to know.
 
@@ -81,13 +93,17 @@ Even if the data is not reflected backto the website it is still possible to exf
 
 If "testdata" gets reflected then it is vulnerable to XXE. If it gets reflected you can try to exfiltrate the data the following way:
 
-
+```
+<!DOCTYPE foo [
+<!ELEMENT foo ANY >
+<!ENTITY xxe SYSTEM "file:///etc/passwd" >]><foo>&xxe;</foo>
+```
 
 
 
 ### References
 
-https://securitytraning.com/xml-external-entity-xxe-xml-injection-web-for-pentester/
+[https://securitytraning.com/xml-external-entity-xxe-xml-injection-web-for-pentester/](https://securitytraning.com/xml-external-entity-xxe-xml-injection-web-for-pentester/)
 
-
+https://blog.bugcrowd.com/advice-from-a-researcher-xxe/
 
