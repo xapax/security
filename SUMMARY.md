@@ -33,7 +33,7 @@
   * [Active Information Gathering](active_information_gathering.md)
     * [Port Scanning](port_scanning.md)
 * [Vulnerability analysis](vulnerability_analysi1s.md)
-  * [Server-side Vulnerabilities](server-side-vulnerabilities.md)
+  * [Non-HTTP Vulnerabilities](server-side-vulnerabilities.md)
     * [Common ports\/services and how to use them](list_of_common_ports.md)
     * [Port Knocking](port_knocking.md)
   * [HTTP - Web Vulnerabilities](web-services.md)
@@ -50,6 +50,7 @@
       * [Bypass File Upload Filtering](bypass_image_upload.md)
       * [Exposed Version Control](exposed_version_control.md)
       * Directory Traversal Attack
+      * [Host Header Attack](host-header-attack.md)
     * [Attacking the User](attacking_the_user.md)
       * [Clickjacking](clickjacking.md)
       * [Broken Authentication or Session Management](broken_authentication_or_session_management.md)
