@@ -6,7 +6,7 @@ This is a huge chapter. I could divide it up in many subchapters but I like to h
 
 The shell, or the terminal is a really useful tool. Bash is the standard shell on most Linux distros.
 
-One really useful trick when working with bash is to search for old commands that you have used. You can access this search function by doing `ctr-r` in the terminal. 
+One really useful trick when working with bash is to search for old commands that you have used. You can access this search function by doing `ctr-r` in the terminal.
 
 ### Navigating
 
@@ -599,6 +599,32 @@ umount /media/usb
 ```
 
 Knowing how to mount and unmount might be useful if you want to get access to a remote NFS-directory. You will need to mount it to your filesystem to be able to browse it.
+
+
+
+It is possible that the disk is not known as `/dev/usb`. If that is the case you can run
+
+```
+sudo fdisk -l
+```
+
+ And see if you can find your device, and look for the address. Then you mount it like this \(or with the correct path\)
+
+```
+sudo mount /dev/sda1
+```
+
+#### Mount crypto-volume
+
+```
+cryptsetup open /dev/sda1 backup
+```
+
+Then you mount it:
+
+```
+mount /dev/mapper/backup /media/username/back
+```
 
 ## 10. Controlling services
 
