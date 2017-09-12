@@ -5,6 +5,7 @@ PowerShell is Windows new shell. It comes by default from Windows 7. But can be 
 * PowerShell provides access to almost everything an attacker might want.
 * It is based on the .NET framework.
 * It is basically bash for windows
+* The commands are case-insensitive
 
 ## Basics
 
@@ -34,6 +35,28 @@ Invoke-WebRequest <uri>
 wget <uri>
 ```
 
+**Grep**
+
+```
+Select string can be used like grep
+get-command | select-string blabla
+```
+
+
+
+**General commands that can be used on objects**
+
+```
+measure-object -words
+get-content fil.txt | measure-object words
+```
+
+
+
+
+
+### Working with filesystem
+
 **List all files in current directory**
 
 ```
@@ -45,6 +68,32 @@ List all files recurisvely
 gci -rec
 Count the files
 (get-childitem).count
+List all files but exclude some folders
+gci -exclude AppData | gci -rec -force
+```
+
+
+
+### Working with files
+
+```
+Read a file
+Get-Content
+    gc
+    cat
+Count lines of file
+(get-content .\file).count
+Select specific line in a file (remember that it starts from 0)
+(gc .\file.txt)[10]
+gc .\file.txt | Select -index 10
+       
+```
+
+### Services
+
+```
+List services
+get-service
 ```
 
 ### Network related stuff
@@ -53,6 +102,10 @@ Domain information
 
 ```
 Get-ADDomain
+Get-AdDomainController
+Get-AdComputer
+To see a list of all properties do this
+get-adcomputer ComputerName -prop *
 ```
 
 
