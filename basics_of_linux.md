@@ -83,6 +83,8 @@ Find is slower than locate but a lot more thorough. You can search for files rec
 ```
 # This will send all permissions denied outputs to dev/null.
 find / -name file 2>/dev/null
+# Search incasesensitive, that contains the word file.
+find / -iname *file* 2>/dev/null 
 ```
 
 #### Locate
@@ -298,12 +300,13 @@ Here we are printing IP-address    PORT to the first line of the file.
 
 ## 3. User management
 
+There are two commands to add a user in linux: `adduser` or useradd. `adduser`is a perl-script that facilitate the process, and useradd is the native linux binary.  
+
 To add a user we do:
 
 ```
 adduser NameOfUser
 
-# On some machines it is
 useradd nameOfUser
 ```
 
@@ -311,7 +314,10 @@ To add user to sudo-group:
 
 ```
 adduser NameOfUser sudo
+usermod -aG sudo NameOfUser
 ```
+
+You might have to reboot for it to take effect.
 
 On some machines we might not be able to edit the sudoers file because we don't have an interactive shell, in this case can you can just redirect the text into the file, like this:
 
@@ -513,8 +519,38 @@ crontab -e
 List all devices
 
 ```
+lsblk
 fdisk -l
 ```
+
+
+
+
+
+### Change encryption passphrase
+
+First find out which device is the encrypted device:
+
+
+
+```
+lsblk
+# In type you will see "crypt"
+```
+
+There are  eight slots for passphrases. You can view these slots like this:
+
+```
+sudo cryptsetup luksDump /dev/sda3
+```
+
+Add a key:
+
+```
+sudo cryptsetup luksAddKey /dev/sda5
+```
+
+
 
 ## 9. The Filesystem
 
@@ -600,15 +636,13 @@ umount /media/usb
 
 Knowing how to mount and unmount might be useful if you want to get access to a remote NFS-directory. You will need to mount it to your filesystem to be able to browse it.
 
-
-
 It is possible that the disk is not known as `/dev/usb`. If that is the case you can run
 
 ```
 sudo fdisk -l
 ```
 
- And see if you can find your device, and look for the address. Then you mount it like this \(or with the correct path\)
+And see if you can find your device, and look for the address. Then you mount it like this \(or with the correct path\)
 
 ```
 sudo mount /dev/sda1
