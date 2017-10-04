@@ -520,15 +520,11 @@ First some terminology. A `drive`is a physical storage device, just as a hard di
 
 You can view the devices and their partions with the command `lsblk`
 
-
-
 ### Formating disks
 
 If you want to do it the easy way, just open `gnome-disks`.
 
-To format disks we are going to use the program `parted`. It can be used with its own shell or by running commands. So you can just run parted, and you will enter the parted interface. But here we are going to run the commands instead. 
-
-
+To format disks we are going to use the program `parted`. It can be used with its own shell or by running commands. So you can just run parted, and you will enter the parted interface. But here we are going to run the commands instead.
 
 ```
 # Make sure you know which device you are working with, they can change name between boots
@@ -544,29 +540,31 @@ First we have to choose a partition standard. The modern and mostly used is gpt,
 sudo parted /dev/sda mklabel gpt
 ```
 
-
-
 **Create a new partition**
 
 ```
-sudo parted --align optimal /dev/sda mkpart primary 0% 100%
+sudo parted --align optimal /dev/sda mkpart primary ext4 0% 100%
 ```
 
 This command creates a new partition \(mkpart\), which is of type primary, that takes up the space between 0-100%. Which means we will only have one partition.
-
-
 
 Now you can see your new partition with `lsblk`.
 
 **Format the partition with a specific filesystem**
 
-Now that we have a partition we need to add a filesystem to it.There are many different types of filesystems. ext4 is common for linux. While windows uses NTFS, and mac uses HFS Plus. exFAT can be understood by all three OS:s, something that might be useful to USB:s. 
+Now that we have a partition we need to add a filesystem to it.There are many different types of filesystems. ext4 is common for linux. While windows uses NTFS, and mac uses HFS Plus. exFAT can be understood by all three OS:s, something that might be useful to USB:s.
 
 ```
 # For linux
 sudo mkfs.ext4 /dev/sda1
+
 # Supposedly work on linux, mac and windows. But fails for me on my tests on Mac 
 sudo mkfs.vfat /dev/sda1
+
+# To use UDF (universal disk format) that should also work on all OS
+# You first need to install apt-get install udftools. Then you do:
+mkudffs /dev/sda1
+
 ```
 
 **Remove partition**
@@ -575,8 +573,6 @@ sudo mkfs.vfat /dev/sda1
 # if you want to remove partition 1
 sudo parted /dev/sda rm 1
 ```
-
-
 
 **Mount it**
 
@@ -589,10 +585,7 @@ sudo mount /dev/sda1 /mnt/here
 
 # Unmount it
 sudo umount /mnt/here
-
 ```
-
-
 
 List all devices
 
@@ -600,6 +593,32 @@ List all devices
 lsblk
 fdisk -l
 ```
+
+### Encrypt a partition
+
+```
+sudo cryptsetup luksFormat /dev/sda1
+```
+
+
+
+**Mount an encrypted parition**
+
+```
+cryptsetup open /dev/sda1 backup
+```
+
+Then you mount it:
+
+```
+mount /dev/mapper/backup /media/username/back
+```
+
+
+
+
+
+
 
 ### Change encryption passphrase
 
@@ -736,6 +755,36 @@ Then you mount it:
 ```
 mount /dev/mapper/backup /media/username/back
 ```
+
+
+
+### Create your of filesystem
+
+In some cases it might be useful to create your own disk. Maybe for attaching to a virtual machine, or maybe to facilitate a backup. It is just a easy nice little container to have. It just requires two easy steps.
+
+**Create a chunk in memory**
+
+```
+truncate -s 100MB nameOfFile
+```
+
+**Attach a filesystem to file**
+
+```
+mkfs.ext4 ./nameOfFile
+```
+
+**Mount it to your filesystem**
+
+```
+sudo mount ./nameOfFile /mnt/blabla
+```
+
+
+
+
+
+
 
 ## 10. Controlling services
 
