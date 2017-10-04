@@ -544,6 +544,13 @@ Add a key:
 sudo cryptsetup luksAddKey /dev/sda3
 ```
 
+Remove a key:
+
+```
+sudo cryptsetup luksRemoveKey /dev/sda3
+# You are then prompted to input the key/passphrase you want to remove
+```
+
 ## 9. The Filesystem
 
 ### The Filesystem Hierarchy Standard
