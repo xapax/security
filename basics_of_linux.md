@@ -84,7 +84,7 @@ Find is slower than locate but a lot more thorough. You can search for files rec
 # This will send all permissions denied outputs to dev/null.
 find / -name file 2>/dev/null
 # Search incasesensitive, that contains the word file.
-find / -iname *file* 2>/dev/null 
+find / -iname *file* 2>/dev/null
 ```
 
 #### Locate
@@ -300,7 +300,7 @@ Here we are printing IP-address    PORT to the first line of the file.
 
 ## 3. User management
 
-There are two commands to add a user in linux: `adduser` or useradd. `adduser`is a perl-script that facilitate the process, and useradd is the native linux binary.  
+There are two commands to add a user in linux: `adduser` or useradd. `adduser`is a perl-script that facilitate the process, and useradd is the native linux binary.
 
 To add a user we do:
 
@@ -523,15 +523,9 @@ lsblk
 fdisk -l
 ```
 
-
-
-
-
 ### Change encryption passphrase
 
 First find out which device is the encrypted device:
-
-
 
 ```
 lsblk
@@ -547,10 +541,8 @@ sudo cryptsetup luksDump /dev/sda3
 Add a key:
 
 ```
-sudo cryptsetup luksAddKey /dev/sda5
+sudo cryptsetup luksAddKey /dev/sda3
 ```
-
-
 
 ## 9. The Filesystem
 
