@@ -514,7 +514,85 @@ crontab -l
 crontab -e
 ```
 
-## 8. Devices
+## 8. Devices/disks/partitions
+
+First some terminology. A `drive`is a physical storage device, just as a hard disk, solid state drive, or usb. In Linux these drives are represented as special file system objects called "device". They are found under `/dev`.A physical storage unit, a drive, can be divided up in to multiple logical storage units, these are called `partitions`. So they are just digital divisions of the drive. In linux a device are often named something like sda, sdb, sdc. And the partions of those devices are numbered. So one partion might be called `sda1`, and another `sda2`. These can then be found under `/dev/sda1` and `/dev/sda2`.
+
+You can view the devices and their partions with the command `lsblk`
+
+
+
+### Formating disks
+
+If you want to do it the easy way, just open `gnome-disks`.
+
+To format disks we are going to use the program `parted`. It can be used with its own shell or by running commands. So you can just run parted, and you will enter the parted interface. But here we are going to run the commands instead. 
+
+
+
+```
+# Make sure you know which device you are working with, they can change name between boots
+lsblk
+```
+
+**Partition standard**
+
+First we have to choose a partition standard. The modern and mostly used is gpt, and older is msdos.
+
+```
+# This will destroy all the data on the on the disk
+sudo parted /dev/sda mklabel gpt
+```
+
+
+
+**Create a new partition**
+
+```
+sudo parted --align optimal /dev/sda mkpart primary 0% 100%
+```
+
+This command creates a new partition \(mkpart\), which is of type primary, that takes up the space between 0-100%. Which means we will only have one partition.
+
+
+
+Now you can see your new partition with `lsblk`.
+
+**Format the partition with a specific filesystem**
+
+Now that we have a partition we need to add a filesystem to it.There are many different types of filesystems. ext4 is common for linux. While windows uses NTFS, and mac uses HFS Plus. exFAT can be understood by all three OS:s, something that might be useful to USB:s. 
+
+```
+# For linux
+sudo mkfs.ext4 /dev/sda1
+# Supposedly work on linux, mac and windows. But fails for me on my tests on Mac 
+sudo mkfs.vfat /dev/sda1
+```
+
+**Remove partition**
+
+```
+# if you want to remove partition 1
+sudo parted /dev/sda rm 1
+```
+
+
+
+**Mount it**
+
+Now you can just mount the parition somewhere on your filesystem
+
+```
+# Mount it
+sudo mkdir /mnt/here
+sudo mount /dev/sda1 /mnt/here
+
+# Unmount it
+sudo umount /mnt/here
+
+```
+
+
 
 List all devices
 
