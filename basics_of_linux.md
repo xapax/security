@@ -564,7 +564,6 @@ sudo mkfs.vfat /dev/sda1
 # To use UDF (universal disk format) that should also work on all OS
 # You first need to install apt-get install udftools. Then you do:
 mkudffs /dev/sda1
-
 ```
 
 **Remove partition**
@@ -600,8 +599,6 @@ fdisk -l
 sudo cryptsetup luksFormat /dev/sda1
 ```
 
-
-
 **Mount an encrypted parition**
 
 ```
@@ -613,12 +610,6 @@ Then you mount it:
 ```
 mount /dev/mapper/backup /media/username/back
 ```
-
-
-
-
-
-
 
 ### Change encryption passphrase
 
@@ -756,8 +747,6 @@ Then you mount it:
 mount /dev/mapper/backup /media/username/back
 ```
 
-
-
 ### Create your of filesystem
 
 In some cases it might be useful to create your own disk. Maybe for attaching to a virtual machine, or maybe to facilitate a backup. It is just a easy nice little container to have. It just requires two easy steps.
@@ -779,12 +768,6 @@ mkfs.ext4 ./nameOfFile
 ```
 sudo mount ./nameOfFile /mnt/blabla
 ```
-
-
-
-
-
-
 
 ## 10. Controlling services
 
@@ -851,6 +834,91 @@ If you are using a distro that is Long Term Supported \(LTS\). You will not get 
 Logs can be viewed here on debian distros `/var/log/`
 
 ## 16. Network basics
+
+If you use standard desktop installation for Ubuntu or Debian you get NetworkManager included, which handles your network connections, wire and wireless. NetworkManager is made to be easy to use, and "just work". And most of the time it does. But sometimes when you want to configure stuff on your own, for whatever reason, it can be a hassle. So for the rest of this chapter I am just going to assume that you have removed or disabled NetworkManager. 
+
+
+
+Network cards \(NIC\) are identified by their mac address, hosts by theirip address andapplications by their port number.
+
+
+
+### Configure Network Interface Cards \(NIC\)
+
+On debian NIC:s are defined and configured in `/etc/network/interfaces`.
+
+
+
+**Take a interface up and down / start and stop**
+
+It is recommended to take a interface down before configuring it.
+
+```
+#
+ifup eth0
+ifdown eth0
+
+# You can also use ifconfig to bring an interface up and down. The difference is that ifconfig 
+# will use the current configuration, and not take into account changes from /etc/network/interfaces.
+# So use ifup and ifdown!
+ifconfig eth0 up
+ifconfig eth0 down
+
+```
+
+
+
+**Configure an interface with ip or ifconfig**
+
+If you want to configure an interface only temporarly you can use `ip`and `ifconfig`. The changes will not survive a reboot.
+
+`Ifconfig` is old and deprecated on some systems. So use `ip` instead. But they do basically the same thing.
+
+
+
+### Route
+
+You can configure your routes with the following commands:
+
+```
+ip route
+route
+netstat -r
+```
+
+Remember that these routes will only be temporary
+
+
+
+### Wireless
+
+So if you manage to disable networkManager you can connect to a wireless network using wpa\_supplicant instead. I think that is what NetworkManager actually uses underneith.
+
+First we need to list all Access Points.
+
+```
+sudo iwlist wlan0 scan
+```
+
+Then we need to create a config-file for our specific access-point. 
+
+```
+wpa_supplicant -Dwext -iwlan0 -c/etc/wpa_supplicant/wpa.conf
+```
+
+
+
+
+
+```
+.conf
+```
+
+This page explains it quite well:
+
+http://linux.icydog.net/wpa.php
+
+
 
 ### Netstat - Find outgoing and incoming connections
 
@@ -1095,11 +1163,11 @@ rfkill unblock 0
 
 If there is a **hard block** it means that there is a physical switch on you machine that you need to switch off.
 
-## 17. Subnetting
+## 
 
-## 18. Routing
+### DNS
 
-## 21. DNS
+
 
 ## References
 
