@@ -841,7 +841,13 @@ If you use standard desktop installation for Ubuntu or Debian you get NetworkMan
 # Stop NetworkManager
 sudo systemctl stop NetworkManager.service
 
+# Start NetworkManager
+sudo systemctl start NetworkManager.service
+
 # Disable it so it won't start at boot
+sudo systemctl disable NetworkManager
+
+#Enable it so it will start at boot
 sudo systemctl disable NetworkManager
 ```
 
@@ -871,8 +877,6 @@ sudo ip link set dev eth0 down
 # So use ifup and ifdown!
 ifconfig eth0 up
 ifconfig eth0 down
-
-
 ```
 
 **Configure an interface with ip or ifconfig**
