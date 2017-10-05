@@ -835,19 +835,21 @@ Logs can be viewed here on debian distros `/var/log/`
 
 ## 16. Network basics
 
-If you use standard desktop installation for Ubuntu or Debian you get NetworkManager included, which handles your network connections, wire and wireless. NetworkManager is made to be easy to use, and "just work". And most of the time it does. But sometimes when you want to configure stuff on your own, for whatever reason, it can be a hassle. So for the rest of this chapter I am just going to assume that you have removed or disabled NetworkManager. 
+If you use standard desktop installation for Ubuntu or Debian you get NetworkManager included, which handles your network connections, wire and wireless. NetworkManager is made to be easy to use, and "just work". And most of the time it does. But sometimes when you want to configure stuff on your own, for whatever reason, it can be a hassle. So for the rest of this chapter I am just going to assume that you have stopped, removed or disabled NetworkManager.
 
+```
+# Stop NetworkManager
+sudo systemctl stop NetworkManager.service
 
+# Disable it so it won't start at boot
+sudo systemctl disable NetworkManager
+```
 
 Network cards \(NIC\) are identified by their mac address, hosts by theirip address andapplications by their port number.
-
-
 
 ### Configure Network Interface Cards \(NIC\)
 
 On debian NIC:s are defined and configured in `/etc/network/interfaces`.
-
-
 
 **Take a interface up and down / start and stop**
 
@@ -858,23 +860,26 @@ It is recommended to take a interface down before configuring it.
 ifup eth0
 ifdown eth0
 
+# You can also use ip 
+sudo ip link set dev eth0 down 
+sudo ip link set dev eth0 down
+
+
+
 # You can also use ifconfig to bring an interface up and down. The difference is that ifconfig 
 # will use the current configuration, and not take into account changes from /etc/network/interfaces.
 # So use ifup and ifdown!
 ifconfig eth0 up
 ifconfig eth0 down
 
+
 ```
-
-
 
 **Configure an interface with ip or ifconfig**
 
 If you want to configure an interface only temporarly you can use `ip`and `ifconfig`. The changes will not survive a reboot.
 
 `Ifconfig` is old and deprecated on some systems. So use `ip` instead. But they do basically the same thing.
-
-
 
 ### Route
 
@@ -888,8 +893,6 @@ netstat -r
 
 Remember that these routes will only be temporary
 
-
-
 ### Wireless
 
 So if you manage to disable networkManager you can connect to a wireless network using wpa\_supplicant instead. I think that is what NetworkManager actually uses underneith.
@@ -900,15 +903,11 @@ First we need to list all Access Points.
 sudo iwlist wlan0 scan
 ```
 
-Then we need to create a config-file for our specific access-point. 
+Then we need to create a config-file for our specific access-point.
 
 ```
 wpa_supplicant -Dwext -iwlan0 -c/etc/wpa_supplicant/wpa.conf
 ```
-
-
-
-
 
 ```
 .conf
@@ -916,9 +915,7 @@ wpa_supplicant -Dwext -iwlan0 -c/etc/wpa_supplicant/wpa.conf
 
 This page explains it quite well:
 
-http://linux.icydog.net/wpa.php
-
-
+[http://linux.icydog.net/wpa.php](http://linux.icydog.net/wpa.php)
 
 ### Netstat - Find outgoing and incoming connections
 
@@ -1166,8 +1163,6 @@ If there is a **hard block** it means that there is a physical switch on you mac
 ## 
 
 ### DNS
-
-
 
 ## References
 
