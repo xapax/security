@@ -1164,9 +1164,9 @@ rfkill unblock 0
 
 If there is a **hard block** it means that there is a physical switch on you machine that you need to switch off.
 
-## 
-
 ### DNS
+
+Another rather messy area is DNS. The reason for this is that we have a few different players here, `/etc/resolv.conf`, `resolvconf`, `dnsmasq` and the dreaded `NetworkManager`.
 
 ## References
 
