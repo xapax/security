@@ -853,9 +853,58 @@ sudo systemctl disable NetworkManager
 
 Network cards \(NIC\) are identified by their mac address, hosts by theirip address andapplications by their port number.
 
+### In a nutshell what you need to know
+
+Things you really need to know are:
+
+```
+# Configuration files
+/etc/network/interfaces
+/etc/resolve.config
+
+# Tools
+ip
+ip route
+dhclient
+wpa_supplicant
+iptables
+netstat
+dnsmasq
+```
+
+
+
+
+
 ### Configure Network Interface Cards \(NIC\)
 
 On debian NIC:s are defined and configured in `/etc/network/interfaces`.
+
+```
+# automatically start eth0 on boot
+auto eth0
+# give the eth0 an ip through dhcp
+iface eth0 inet dhcp
+
+# start up the loopback interface
+auto lo 
+iface lo inet loopback
+ 
+ 
+# A bridge called br1 - can be called  whatever.
+# This bridge has a static ip
+auto br1
+iface br1 inet static
+    address 192.168.55.1
+    netmask 255.255.255.0
+    broadcast 192.168.55.255
+    bridge_ports none
+
+```
+
+
+
+
 
 **Take a interface up and down / start and stop**
 
@@ -869,8 +918,6 @@ ifdown eth0
 # You can also use ip 
 sudo ip link set dev eth0 down 
 sudo ip link set dev eth0 down
-
-
 
 # You can also use ifconfig to bring an interface up and down. The difference is that ifconfig 
 # will use the current configuration, and not take into account changes from /etc/network/interfaces.
@@ -897,7 +944,7 @@ netstat -r
 
 Remember that these routes will only be temporary
 
-### Wireless
+### Wireless - wpa\_supplicant
 
 So if you manage to disable networkManager you can connect to a wireless network using wpa\_supplicant instead. I think that is what NetworkManager actually uses underneith.
 
@@ -907,19 +954,30 @@ First we need to list all Access Points.
 sudo iwlist wlan0 scan
 ```
 
-Then we need to create a config-file for our specific access-point.
+Then we need to create a config-file for our specific access-point. We can do that with wpa\_passphrase, after running the command we are asked to write the password, which also gets stored in the config file. In plaintext.
+
+```
+wpa_passphrase NameOfWIfi > wpa.conf
+```
+
+Now we just connect to the AP:
 
 ```
 wpa_supplicant -Dwext -iwlan0 -c/etc/wpa_supplicant/wpa.conf
 ```
 
+After this you do not have an IP-address, or you might not have a updated dhcp lease. So first you need to release the current lease. 
+
 ```
-.conf
+sudo dhclient wlan0 -r
+
+# Then get a new dhcp lease
+sudo dhclient wlan0
 ```
 
-This page explains it quite well:
+Now you should be able to surf the internetz.
 
-[http://linux.icydog.net/wpa.php](http://linux.icydog.net/wpa.php)
+
 
 ### Netstat - Find outgoing and incoming connections
 
