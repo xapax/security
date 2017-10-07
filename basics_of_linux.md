@@ -872,10 +872,6 @@ netstat
 dnsmasq
 ```
 
-
-
-
-
 ### Configure Network Interface Cards \(NIC\)
 
 On debian NIC:s are defined and configured in `/etc/network/interfaces`.
@@ -889,8 +885,8 @@ iface eth0 inet dhcp
 # start up the loopback interface
 auto lo 
 iface lo inet loopback
- 
- 
+
+
 # A bridge called br1 - can be called  whatever.
 # This bridge has a static ip
 auto br1
@@ -899,12 +895,7 @@ iface br1 inet static
     netmask 255.255.255.0
     broadcast 192.168.55.255
     bridge_ports none
-
 ```
-
-
-
-
 
 **Take a interface up and down / start and stop**
 
@@ -934,15 +925,57 @@ If you want to configure an interface only temporarly you can use `ip`and `ifcon
 
 ### Route
 
-You can configure your routes with the following commands:
+Where packets are send in a network depends on the routing of the routing. Every node that  the packet passes in its travel to its destination has a routing table defined, that says where the packet should be directed next. The most simple example is how the traffic of a home network is sent to the router, and then from there forwarded on to somewhere else on the internet. How every host should forward the packets are defined in the linux kernel routing table. You can see the routing table by running this command:
 
 ```
-ip route
 route
+ip route
 netstat -r
 ```
 
-Remember that these routes will only be temporary
+I think that the most useful of these commands is route, since it includes the column names of the table. Here is an example of the output:
+
+```
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         192.168.55.1    0.0.0.0         UG    0      0        0 ens3
+192.168.55.0    0.0.0.0         255.255.255.0   U     0      0        0 ens3
+```
+
+So let's image that we don't have any routing rules at all. It is completely empty. Like this:
+
+```
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+```
+
+But we have network interface connected, called  eth0. If we now try to ping the router \(the gateway\) on the network, we get this result:
+
+```
+~ ping 192.168.55.1
+connect: Network is unreachable 
+```
+
+At this point we can't even add a route to the gateway. Because the network is unreacheable. So we need to hook outselfs up to the network first.
+
+```
+route add -net 192.168.55.0 netmask 255.255.255.0 dev eth0
+```
+
+Now our table looks like this:
+
+```
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.55.0    0.0.0.0         255.255.255.0   U     0      0        0 eth0
+```
+
+We still can't ping anything out in the internetz- That's because we are not reaching our gateway \(router\), since we haven't configured it yet.
+
+```
+route add default gw 192.168.55.1
+```
+
+
+
+Remember that these routes will only be temporary.
 
 ### Wireless - wpa\_supplicant
 
@@ -966,7 +999,7 @@ Now we just connect to the AP:
 wpa_supplicant -Dwext -iwlan0 -c/etc/wpa_supplicant/wpa.conf
 ```
 
-After this you do not have an IP-address, or you might not have a updated dhcp lease. So first you need to release the current lease. 
+After this you do not have an IP-address, or you might not have a updated dhcp lease. So first you need to release the current lease.
 
 ```
 sudo dhclient wlan0 -r
@@ -976,8 +1009,6 @@ sudo dhclient wlan0
 ```
 
 Now you should be able to surf the internetz.
-
-
 
 ### Netstat - Find outgoing and incoming connections
 
