@@ -1,6 +1,5 @@
 # Useful Scripts
 
-
 ## Make Request
 
 Sometimes we might want to make a request to a website programmatically. Instead of having to visit the page in the browser. In Python we can to it the following way.
@@ -51,8 +50,8 @@ values = {'action' : 'whatever'}
 req = requests.get("http://site.com", data=values, headers=headers)
 ```
 
-Here is the documentation
-http://docs.python-requests.org/en/master/user/quickstart/
+Here is the documentation  
+[http://docs.python-requests.org/en/master/user/quickstart/](http://docs.python-requests.org/en/master/user/quickstart/)
 
 ## Read and write to files
 
@@ -65,6 +64,19 @@ for line in file_open:
     if line.strip("\n") == "rad 4":
         print "last line"
 ```
+
+
+
+### Send requests to your proxy \(like Burp\)
+
+
+
+```
+import os
+os.environ['HTTPS_PROXY'] = '<proxyurl>:<port>' 
+# http://127.0.0.1:8080 if it is burp
+```
+
 
 
 ## Basic banner-grabber
@@ -95,8 +107,6 @@ print s.recv(1024)
 
 # Here we close the socket.
 s.close
-
-
 ```
 
 If you need to check all 65535 ports this might take some time. If a packet is sent and recieved that makes it 65535 seconds, it translates into about 18 hours. So to solve that we can run the a function in new threads.
@@ -107,11 +117,11 @@ pool = ThreadPool(300)
 results = pool.map(function, array)
 ```
 
-Read more about parallellism here: http://chriskiehl.com/article/parallelism-in-one-line/
+Read more about parallellism here: [http://chriskiehl.com/article/parallelism-in-one-line/](http://chriskiehl.com/article/parallelism-in-one-line/)
 
 ## Connecting to SMTP
 
-A crappy script to connect to a smtp-server and if you are allowed to test for users with VRFY it goes ahead and test for the users that you input from a file.
+A crappy script to connect to a smtp-server and if you are allowed to test for users with VRFY it goes ahead and test for the users that you input from a file.  
 One very important thing to note here, that had me stuck for quite a while is that you need to send the query strings in raw-format
 
 The `\r` here is fundamental!!
@@ -119,7 +129,6 @@ The `\r` here is fundamental!!
 ```
 s.send('VRFY root \r\n')
 ```
-
 
 ```python
 #!/usr/bin/python
@@ -142,43 +151,44 @@ for line in userfile:
 
 
 for ip in ips:
-	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.connect((ip, 25))
-	banner = s.recv(1024)
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((ip, 25))
+    banner = s.recv(1024)
 
-	print "****************************"
-	print "Report for " + ip
-	print banner
-	s.send('VRFY root \r\n')
-	answerUsername = s.recv(1024)
-	answerAsArray = answerUsername.split(" ")
+    print "****************************"
+    print "Report for " + ip
+    print banner
+    s.send('VRFY root \r\n')
+    answerUsername = s.recv(1024)
+    answerAsArray = answerUsername.split(" ")
 
-	if answerAsArray[0] == "502":
-		print "VRFY failed"
-	if answerAsArray[0] == "250":
-		print "VRFY command succeeded.\nProceeding to test usernames"
-		
-		for username in users:
-			time.sleep(5)
-			s.send("VRFY " + username + "\r\n")
+    if answerAsArray[0] == "502":
+        print "VRFY failed"
+    if answerAsArray[0] == "250":
+        print "VRFY command succeeded.\nProceeding to test usernames"
 
-			answerUsername = s.recv(1024)
-			answerUsernameArray = answerUsername.split(" ")
-			print answerUsernameArray[0]
-			if answerUsernameArray[0] == "250":
-				print "Exists: " + username.strip("\n") 
-			else :
-				print "Does NOT exist: " + username.strip("\n")
-	if answerAsArray[0] == "252":
-		print "FAILED - Cannot verify user"
-	else:
-		"Some other error or whatever here it is: \n" + answerUsername
+        for username in users:
+            time.sleep(5)
+            s.send("VRFY " + username + "\r\n")
+
+            answerUsername = s.recv(1024)
+            answerUsernameArray = answerUsername.split(" ")
+            print answerUsernameArray[0]
+            if answerUsernameArray[0] == "250":
+                print "Exists: " + username.strip("\n") 
+            else :
+                print "Does NOT exist: " + username.strip("\n")
+    if answerAsArray[0] == "252":
+        print "FAILED - Cannot verify user"
+    else:
+        "Some other error or whatever here it is: \n" + answerUsername
 
 
 
-	s.close()
+    s.close()
 ```
 
 ## Client/Server using sockets
 
-http://programmers.stackexchange.com/questions/171734/difference-between-a-socket-and-a-port
+[http://programmers.stackexchange.com/questions/171734/difference-between-a-socket-and-a-port](http://programmers.stackexchange.com/questions/171734/difference-between-a-socket-and-a-port)
+
