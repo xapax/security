@@ -19,6 +19,7 @@
     * [Transfering files on Windows](transfering_files_to_windows.md)
   * [Firewalls](firewalls.md)
   * [General tips and tricks](general_tips.md)
+  * Cryptography
 * [Recon and Information Gathering Phase](scanning.md)
   * [Passive Information Gatherig](passive_information_gatherig.md)
     * Identify IP-addresses and Subdomains
