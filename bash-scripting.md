@@ -1,5 +1,17 @@
 # Bash-scripting
 
+### Variables
+
+```bash
+# There can't be any space between the variable name and the equal sign. It has to be varname=command
+battery_time=$(cat /sys/class/power_supply/BAT0/capacity)
+
+# The variables cna then be used like this
+echo "$battery_time"
+```
+
+
+
 ## Iterate over a file
 
 This script will iterate over a file and echo out every single line:
@@ -47,7 +59,6 @@ done
 `$1` here represent the first argument.
 
 ```bash
-
 if [ "$1" == "" ]; then
     echo "This happens"
 fi
@@ -65,7 +76,6 @@ else
 fi
 ```
 
-
 ## Command line arguments
 
 Command line arguments are represented like this
@@ -75,6 +85,7 @@ Command line arguments are represented like this
 
 $1
 ```
+
 This is the first command line argument.
 
 ## Daemonize an execution
@@ -88,7 +99,6 @@ for ip in $(cat ips.txt); do
     ping -c 1 $ip &
 done
 ```
-
 
 ## Use the output of command
 
@@ -109,5 +119,6 @@ This can be done like this:
 
 cat $(locate 646.c | tail -n 1)
 ```
+
 
 
