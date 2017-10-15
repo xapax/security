@@ -1022,6 +1022,8 @@ ip addr add 192.168.150.2/24 dev ens3
 
 ```
 ip link set ens3 up
+
+# ifup and ifdown will not work
 ```
 
 When we bring up the interface the routing table will automatically get populated.
@@ -1086,6 +1088,12 @@ curl icanhazip.com
 ```
 
 You will see the request in burp suite.
+
+
+
+If you want to mitm windowsyou just need to change the ip and gateway to 192.168.15.2 and 192.168.150.1. 
+
+
 
 ### Wireless - wpa\_supplicant
 
