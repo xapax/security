@@ -1,3 +1,6 @@
+
+---
+
 # Basics of linux
 
 This is a huge chapter. I could divide it up in many subchapters but I like to have it all at one place so I can just do `ctr-f`, and search for whatever I am looking for.
@@ -975,21 +978,15 @@ route add default gw 192.168.55.1
 
 Remember that these routes will only be temporary.
 
-
-
 #### Example - Man in the middle a host
 
 It is often useful to man in the middle all traffic from a machine, to see what requests and stuff it does.
 
 Let's say that the scenario is that the victim-machine is connected to the mitm-machine by ethernet cable. This can be either a physical cable or thought a virtual machine.
 
-
-
 **Victim machine**
 
 On the victim machine we don't have network-manager installed. And out `/etc/network/interfaces` has nothing in it except for:
-
-
 
 ```
 auto lo
@@ -1027,12 +1024,11 @@ ip addr add 192.168.150.2/24 dev ens3
 ip link set ens3 up
 ```
 
-When we bring up the interface the routing table will automatically get populated. 
+When we bring up the interface the routing table will automatically get populated.
 
 ```
 root@deb64:~# ip r
-192.168.150.0/24 dev ens3 proto kernel scope link src 192.168.150.2 
-
+192.168.150.0/24 dev ens3 proto kernel scope link src 192.168.150.2
 ```
 
 **Add default gateway**
@@ -1048,12 +1044,10 @@ If we look at the routing table now we can see our new default gateway.
 ```
 root@deb64:~# ip route
 default via 192.168.150.1 dev ens3 
-192.168.150.0/24 dev ens3 proto kernel scope link src 192.168.150.2 
+192.168.150.0/24 dev ens3 proto kernel scope link src 192.168.150.2
 ```
 
 Now we are done setting up the victim machine.
-
-
 
 **Attacking machine**
 
@@ -1066,16 +1060,12 @@ ip addr add 192.168.150.1/24 dev ens3
 Now we just need to configure the NATing.
 
 ```
-iptables -t nat -A POSTROUTING -j ACCEPT 
+iptables -t nat -A POSTROUTING -j ACCEPT
 ```
 
 This is all we have to do. If we now do a `curl icanhazip.com` from our victim machine, we can see the traffic flying by with tcpdump in our attacker-machine.
 
-
-
 However, we might want to inspect the traffic in burp-suite, or some other proxy tool. In ordet to do that we can redirect specific traffic into our proxy with the help of our friend iptables.
-
-
 
 ```
 iptables -t nat -A PREROUTING -i ens3 -s 192.168.150.2 -p tcp -m tcp --dport 443 -j REDIRECT --to-ports 8080
@@ -1089,8 +1079,6 @@ Go to `Proxy > Options > Proxy Listeners > Edit > Binding > All interfaces`
 
 Go to: `Proxy > Options > Proxy Listeners > Edit > Request handling > Support invisible proxy`
 
-
-
 Now if you do the following from the victim machine:
 
 ```
@@ -1098,8 +1086,6 @@ curl icanhazip.com
 ```
 
 You will see the request in burp suite.
-
-
 
 ### Wireless - wpa\_supplicant
 
