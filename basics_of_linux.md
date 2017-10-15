@@ -951,7 +951,7 @@ But we have network interface connected, called  eth0. If we now try to ping the
 
 ```
 ~ ping 192.168.55.1
-connect: Network is unreachable 
+connect: Network is unreachable
 ```
 
 At this point we can't even add a route to the gateway. Because the network is unreacheable. So we need to hook outselfs up to the network first.
@@ -973,9 +973,133 @@ We still can't ping anything out in the internetz- That's because we are not rea
 route add default gw 192.168.55.1
 ```
 
-
-
 Remember that these routes will only be temporary.
+
+
+
+#### Example - Man in the middle a host
+
+It is often useful to man in the middle all traffic from a machine, to see what requests and stuff it does.
+
+Let's say that the scenario is that the victim-machine is connected to the mitm-machine by ethernet cable. This can be either a physical cable or thought a virtual machine.
+
+
+
+**Victim machine**
+
+On the victim machine we don't have network-manager installed. And out `/etc/network/interfaces` has nothing in it except for:
+
+
+
+```
+auto lo
+iface lo inet loopback
+```
+
+When we run `ip addr`we get the following result:
+
+```
+root@deb64:~# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens3: <BROADCAST,MULTICAST> mtu 1500 qdisc pfifo_fast state DOWN group default qlen 1000
+    link/ether 52:54:00:a9:fc:4a brd ff:ff:ff:ff:ff:ff
+```
+
+So our network interface ens3 does not have an ip-address and it is down. So let's first give it an ip-address, now remember that this ip-address will only be temporary, and will disappear on next reboot. If you want to make it permanent you need to define it in `/etc/network/interface`
+
+**Give interface an ip-address**
+
+```
+ip addr add 192.168.150.2/24 dev ens3
+
+# Here we give it the ip-address 192.168.150.2 with netmask 255.255.255.0 (/24), and we 
+# give it to the device/interface ens3
+```
+
+**Now we can start the interface, or "bring it up" as it is called:**
+
+```
+ip link set ens3 up
+```
+
+When we bring up the interface the routing table will automatically get populated. 
+
+```
+root@deb64:~# ip r
+192.168.150.0/24 dev ens3 proto kernel scope link src 192.168.150.2 
+
+```
+
+**Add default gateway**
+
+But we are still not  able to reach the internet since we have not defined a default gateway yet. So let's do that.
+
+```
+ip route add default via 192.168.150.1 dev ens3
+```
+
+If we look at the routing table now we can see our new default gateway.
+
+```
+root@deb64:~# ip route
+default via 192.168.150.1 dev ens3 
+192.168.150.0/24 dev ens3 proto kernel scope link src 192.168.150.2 
+```
+
+Now we are done setting up the victim machine.
+
+
+
+**Attacking machine**
+
+First we need to give our machine the ip-address of the default gateway, so that the victim will connect to the attacking machine.
+
+```
+ip addr add 192.168.150.1/24 dev ens3
+```
+
+Now we just need to configure the NATing.
+
+```
+iptables -t nat -A POSTROUTING -j ACCEPT 
+```
+
+This is all we have to do. If we now do a `curl icanhazip.com` from our victim machine, we can see the traffic flying by with tcpdump in our attacker-machine.
+
+
+
+However, we might want to inspect the traffic in burp-suite, or some other proxy tool. In ordet to do that we can redirect specific traffic into our proxy with the help of our friend iptables.
+
+
+
+```
+iptables -t nat -A PREROUTING -i ens3 -s 192.168.150.2 -p tcp -m tcp --dport 443 -j REDIRECT --to-ports 8080
+iptables -t nat -A PREROUTING -i ens3 -s 192.168.150.2 -p tcp -m tcp --dport 80  -j REDIRECT --to-ports 8080
+iptables -t nat -A PREROUTING -i ens3 -s 192.168.150.2 -p tcp -m tcp --dport 53  -j REDIRECT --to-ports 53
+```
+
+Now we just have to configure burp-suite a little bit.
+
+Go to `Proxy > Options > Proxy Listeners > Edit > Binding > All interfaces`
+
+Go to: `Proxy > Options > Proxy Listeners > Edit > Request handling > Support invisible proxy`
+
+
+
+Now if you do the following from the victim machine:
+
+```
+curl icanhazip.com
+```
+
+You will see the request in burp suite.
+
+
 
 ### Wireless - wpa\_supplicant
 

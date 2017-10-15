@@ -6,11 +6,9 @@
 # There can't be any space between the variable name and the equal sign. It has to be varname=command
 battery_time=$(cat /sys/class/power_supply/BAT0/capacity)
 
-# The variables cna then be used like this
+# The variables can then be used like this
 echo "$battery_time"
 ```
-
-
 
 ## Iterate over a file
 
