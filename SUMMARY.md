@@ -52,6 +52,7 @@
       * [Exposed Version Control](exposed_version_control.md)
       * Directory Traversal Attack
       * [Host Header Attack](host-header-attack.md)
+      * [Deserialization attacks](deserialization-attacks.md)
     * [Attacking the User](attacking_the_user.md)
       * [Clickjacking](clickjacking.md)
       * [Broken Authentication or Session Management](broken_authentication_or_session_management.md)
