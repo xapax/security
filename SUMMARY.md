@@ -39,6 +39,12 @@
     * [Port Knocking](port_knocking.md)
   * [HTTP - Web Vulnerabilities](web-services.md)
     * [Common Web-services](common_web-services.md)
+    * Authentication
+      * OAuth
+    * Session Management
+      * Ses
+    * [Session Fixation](session-fixation.md)
+    * [Broken Authentication or Session Management](broken_authentication_or_session_management.md)
     * [WAF - Web Application Firewall](waf_-_web_application_firewall.md)
     * [Attacking the System](lead_to_compromise.md)
       * [Local File Inclusion](local_file_inclusion.md)
@@ -53,20 +59,18 @@
       * Directory Traversal Attack
       * [Host Header Attack](host-header-attack.md)
       * [Deserialization attacks](deserialization-attacks.md)
-    * [Attacking the User](attacking_the_user.md)
-      * [Clickjacking](clickjacking.md)
-      * [Broken Authentication or Session Management](broken_authentication_or_session_management.md)
-      * [Text/content-injection](text-injection.md)
-      * [HTML-Injection](html-injection.md)
-      * [Insecure Direct Object Reference \(IDOR\)](insecure-direct-object-reference-idor.md)
-      * [Subdomain Takeover](subdomain_takeover.md)
-      * [Cross Site Request Forgery](cross_site_request_forgery.md)
-      * [Cross-Site Scripting](cross-site-scripting.md)
-        * [Examples](examplesXSS.md)
-        * [DOM-based XSS](dom-based-xss.md)
-      * [Browser Vulnerabilities](browser_vulnerabilities.md)
-      * HTML-Injection
-      * [Session Fixation](session-fixation.md)
+  * [Attacking the User](attacking_the_user.md)
+    * [Clickjacking](clickjacking.md)
+    * [Text/content-injection](text-injection.md)
+    * [HTML-Injection](html-injection.md)
+    * [Insecure Direct Object Reference \(IDOR\)](insecure-direct-object-reference-idor.md)
+    * [Subdomain Takeover](subdomain_takeover.md)
+    * [Cross Site Request Forgery](cross_site_request_forgery.md)
+    * [Cross-Site Scripting](cross-site-scripting.md)
+      * [Examples](examplesXSS.md)
+      * [DOM-based XSS](dom-based-xss.md)
+    * [Browser Vulnerabilities](browser_vulnerabilities.md)
+    * HTML-Injection
   * [Automated Vulnerability Scanners](automated_vulnerability_scanners.md)
 * [Exploiting](exploiting.md)
   * [Social Engineering - Phishing](social_engineering_-_phishing.md)
