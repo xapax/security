@@ -41,10 +41,10 @@
     * [Common Web-services](common_web-services.md)
     * Authentication
       * OAuth
-    * Session Management
+    * [Session Management](session-management.md)
       * Ses
-    * [Session Fixation](session-fixation.md)
     * [Broken Authentication or Session Management](broken_authentication_or_session_management.md)
+    * [Session Fixation](session-fixation.md)
     * [WAF - Web Application Firewall](waf_-_web_application_firewall.md)
     * [Attacking the System](lead_to_compromise.md)
       * [Local File Inclusion](local_file_inclusion.md)
