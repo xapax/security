@@ -974,6 +974,8 @@ We still can't ping anything out in the internetz- That's because we are not rea
 
 ```
 route add default gw 192.168.55.1
+or
+ip route add default via 192.168.55.1
 ```
 
 Remember that these routes will only be temporary.
@@ -1089,11 +1091,7 @@ curl icanhazip.com
 
 You will see the request in burp suite.
 
-
-
-If you want to mitm windowsyou just need to change the ip and gateway to 192.168.15.2 and 192.168.150.1. 
-
-
+If you want to mitm windowsyou just need to change the ip and gateway to 192.168.15.2 and 192.168.150.1.
 
 ### Wireless - wpa\_supplicant
 
