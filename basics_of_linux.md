@@ -11,11 +11,7 @@ The shell, or the terminal is a really useful tool. Bash is the standard shell o
 
 One really useful trick when working with bash is to search for old commands that you have used. You can access this search function by doing `ctr-r` in the terminal.
 
-
-
 The configuration file for the bash shell is `~./bashrc`
-
-
 
 ### Navigating
 
@@ -137,9 +133,7 @@ ssh user@192.168.1.111
 
 Then you need to source the file, so that it becomes updated: `source ./.bashrc`
 
-Now you can just write  connecttossh
-
-
+Now you can just write`connecttossh` and the function will be executed.
 
 
 
@@ -671,6 +665,50 @@ Remove a key:
 sudo cryptsetup luksRemoveKey /dev/sda3
 # You are then prompted to input the key/passphrase you want to remove
 ```
+
+
+
+### Formatting a USB
+
+In order to format a usb drive we have to do the following.
+
+If you have stored sensitive information, or otherwise want to make sure that it is not possible to read removed files from the USB you can overwrite the usb \(or any other kind of disk\) with zeroes, or just random data. So we can start by doing that, however, first we need to know the device name of the usb.
+
+First find out the name of the usb/device. We can to that by looking at the `dmesg` or `tail -f var/log/syslog` when we insert the usb. Another way is to run the command `lsblk` before and after inserting the USB. In my case the usb was called  `sda,`, but for you it might be something else. Make sure you know exactly which device you are working with, otherwise you will completely detroythe wrong device. Then we need to unmount the usb. 
+
+```
+sudo umount /dev/sda
+```
+
+Now we are ready to overwrite it with zeroes. It can be done like this:
+
+```
+sudo dd if=/dev/zero of=/dev/sda bs=1k count=2048 status=progress
+```
+
+Then we just write a new filesystem to the  device:
+
+```
+sudo mkfs.ext4 -L "NameOfVolume" /dev/sda
+```
+
+ext4 works well with linux, vfat and ntfs should work with windows.
+
+```
+sudo mkfs.vfat -n "NameOfVolume" /dev/sda
+```
+
+### Create bootable USB
+
+
+
+
+
+
+
+
+
+
 
 ## 9. The Filesystem
 
