@@ -74,6 +74,19 @@ else
 fi
 ```
 
+### Functions
+
+
+
+```
+#!/bin/bash
+
+function myfunction {
+echo "hello world"
+}
+
+```
+
 ## Command line arguments
 
 Command line arguments are represented like this

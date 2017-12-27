@@ -11,6 +11,12 @@ The shell, or the terminal is a really useful tool. Bash is the standard shell o
 
 One really useful trick when working with bash is to search for old commands that you have used. You can access this search function by doing `ctr-r` in the terminal.
 
+
+
+The configuration file for the bash shell is `~./bashrc`
+
+
+
 ### Navigating
 
 `pwd` - Print working directory
@@ -112,6 +118,30 @@ Outputs the path of the binary that you are looking for. It searches through the
 which bash
 # Usually outputs: /bin/bash
 ```
+
+#### Creating custom bash functions
+
+If you want to create a new command from other commands, and be able to invoke that command from your terminal, there are a few different way of doing that.
+
+One way is write a bash-script, and then move that script to one of your folders in your $PATH variable.
+
+The other way is to simply write a function in your .bashrc file. You can then invoke that function from anywhere in your terminal.
+
+So for example, if you want to ssh into a machine, but you are tired of having to write the whole command, you can just add this function in your .basrhrc file:
+
+```
+function connecttossh {
+ssh user@192.168.1.111
+}
+```
+
+Then you need to source the file, so that it becomes updated: `source ./.bashrc`
+
+Now you can just write  connecttossh
+
+
+
+
 
 ## 2. Editing text
 
