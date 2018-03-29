@@ -65,19 +65,15 @@ for line in file_open:
         print "last line"
 ```
 
-
-
 ### Send requests to your proxy \(like Burp\)
-
-
 
 ```
 import os
 os.environ['HTTPS_PROXY'] = '<proxyurl>:<port>' 
 # http://127.0.0.1:8080 if it is burp
+# Then you need to add verify=False
+requests.get("https://google.com", headers=headers,verify=False)
 ```
-
-
 
 ## Basic banner-grabber
 
