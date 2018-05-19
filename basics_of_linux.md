@@ -135,8 +135,6 @@ Then you need to source the file, so that it becomes updated: `source ./.bashrc`
 
 Now you can just write`connecttossh` and the function will be executed.
 
-
-
 ## 2. Editing text
 
 First let's just clear out something about **standard streams**, or **I/O**-streams. Standard streams are the streams that are used to interact between the human computer-user and the machine. There are three standard streams: standard input \(stdin\), standard output \(stdout\), and standard error \(stderr\).The stdin stream can be seen as an abstractions of the real keyboard input. So when you issue a command/program that requires input the program does not read straight from the keyboard input, instead it reads from the file STDIN.
@@ -666,15 +664,13 @@ sudo cryptsetup luksRemoveKey /dev/sda3
 # You are then prompted to input the key/passphrase you want to remove
 ```
 
-
-
 ### Formatting a USB
 
 In order to format a usb drive we have to do the following.
 
 If you have stored sensitive information, or otherwise want to make sure that it is not possible to read removed files from the USB you can overwrite the usb \(or any other kind of disk\) with zeroes, or just random data. So we can start by doing that, however, first we need to know the device name of the usb.
 
-First find out the name of the usb/device. We can to that by looking at the `dmesg` or `tail -f var/log/syslog` when we insert the usb. Another way is to run the command `lsblk` before and after inserting the USB. In my case the usb was called  `sda,`, but for you it might be something else. Make sure you know exactly which device you are working with, otherwise you will completely detroythe wrong device. Then we need to unmount the usb. 
+First find out the name of the usb/device. We can to that by looking at the `dmesg` or `tail -f var/log/syslog` when we insert the usb. Another way is to run the command `lsblk` before and after inserting the USB. In my case the usb was called  `sda,`, but for you it might be something else. Make sure you know exactly which device you are working with, otherwise you will completely detroythe wrong device. Then we need to unmount the usb.
 
 ```
 sudo umount /dev/sda
@@ -700,13 +696,13 @@ sudo mkfs.vfat -n "NameOfVolume" /dev/sda
 
 ### Create bootable USB
 
+First find out the name of the device. Using `dmesg`, or `lsblk`, or something similar.
 
+```
+ sudo dd bs=4M if=/path/to/input.iso of=/dev/sdX conv=fdatasync status=progress
+```
 
-
-
-
-
-
+That's it.
 
 
 
