@@ -165,5 +165,17 @@ scp /path/to/source/file.ext username@192.168.1.101:/path/to/destination/file.ex
 scp -r /path/to/source/dir username@192.168.1.101:/path/to/destination
 ```
 
+### SSHFS 
 
+```
+# Install sshfs on Debian based distros:
+sudo apt-get update && sudo apt-get install sshfs
+# Syntax for sshfs:
+sshfs [user@]host:[directory] mountpoint [options]
+# Example command where the sshfsExample directory is created locally and any files transferred to it will show up in the /home/user directory on the remote ssh server:
+mkdir sshfsExample
+sshfs user@192.168.0.0:/home/user sshfsExample
+# unmount the directory by using the following command:
+umount sshfsExample
+```
 
