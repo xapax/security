@@ -148,7 +148,7 @@ Local address 192.168.1.9 means that the service is only listening for connectio
 
 ## Kernel exploits
 
-Kernel exploits should be our last resource, since it might but the machine in an unstable state or create some other problem with the machine.
+Kernel exploits should be our last resource, since it might put the machine in an unstable state or create some other problem with the machine.
 
 **Identify the hotfixes/patches**
 
