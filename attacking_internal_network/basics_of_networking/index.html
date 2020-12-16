@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Basics of Networking - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Forward traffic through a windows machine / Bridge connections on windows", url: "#_top", children: [
+              {title: "Bridge", url: "#bridge" },
+              {title: "LAN", url: "#lan" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../active_information_gathering/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../active_information_gathering/" class="btn btn-xs btn-link">
+        Active Information Gathering
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../dns_zone_transfer_attack/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../dns_zone_transfer_attack/" class="btn btn-xs btn-link">
+        Zone Transfer Attack
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="forward-traffic-through-a-windows-machine-bridge-connections-on-windows">Forward traffic through a windows machine / Bridge connections on windows<a class="headerlink" href="#forward-traffic-through-a-windows-machine-bridge-connections-on-windows" title="Permanent link">#</a></h2>
+<p>Case:
+You need to forward traffic from your computer through a windows-computer. This might be because you can't connect your own machine on the network.</p>
+<h3 id="bridge">Bridge<a class="headerlink" href="#bridge" title="Permanent link">#</a></h3>
+<p>You can of course bridge two connections. But that might not be want you want, since that will effectivly add your computer to the local LAN. This will allow other computers on the network to connect to yours. The sysadmins might also wonder what your computer is doing there, which computer it is that has that IP address.</p>
+<p>In windows 7 you do the following to bridge two networks:</p>
+<pre><code>Control Panel / Network and internet / Network and sharing center / Change adapter settings / 
+Mark both Interfaces at the same time, right-click on them and click on &quot;Bridge interfaces&quot;.
+</code></pre>
+
+<p>Now on your client-computer you just have to put the interface in DHCP mode, and you will receive an IP-address.</p>
+<h3 id="lan">LAN<a class="headerlink" href="#lan" title="Permanent link">#</a></h3>
+<p>If you prefer to work from your private LAN that can be arranged too.
+You need two network interfaces for it to work. One connected to the internet (or other LAN) and another connected to your computer (or a switch or whatever).</p>
+<p>Once that is done you go to:</p>
+<pre><code>Control Panel / Network and internet / Network and sharing center
+</code></pre>
+
+<p>Right click on the network interface that is connected to the internet (usually called something like Local Area Connection 1).
+Click on <code>Properties</code> then <code>Sharing</code> then click on <code>Allow other network computer users ...</code>.</p>
+<p>Now if you run ipconfig your other network interface should have a LAN ip. For example <code>192.168.137.1</code>.</p>
+<p>Now you just take your other computer and just configure a static ip address for it, for example</p>
+<pre><code>Maybe delete the previous ip-address:
+
+sudo ip a del 192.168.66.55/24 dev eth0
+
+Then add a new
+sudo ip a add 192.168.137.2/24 dev eth0
+
+Then add some routes:
+sudo ip r add default via 192.168.137.1 dev eth0
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../active_information_gathering/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../active_information_gathering/" class="btn btn-xs btn-link">
+        Active Information Gathering
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../dns_zone_transfer_attack/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../dns_zone_transfer_attack/" class="btn btn-xs btn-link">
+        Zone Transfer Attack
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_internal_network/basics_of_networking.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

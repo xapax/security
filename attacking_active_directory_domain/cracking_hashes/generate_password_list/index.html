@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Generate Password List - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Create wordlist from website", url: "#_top", children: [
+          ]},
+          {title: "Create wordlist from Active Directory", url: "#create-wordlist-from-active-directory", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../powershell/basics_of_powershell/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../powershell/basics_of_powershell/" class="btn btn-xs btn-link">
+        Basics of Powershell
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../cracking_hashes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../cracking_hashes/" class="btn btn-xs btn-link">
+        Cracking Hashes
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <p>No matter if you do an internal, external, AD or even web application test you might need to generate password lists in order to try some brute forcing.</p>
+<h3 id="create-wordlist-from-website">Create wordlist from website<a class="headerlink" href="#create-wordlist-from-website" title="Permanent link">#</a></h3>
+<p>This can be done with wordlist-extractor in burp.</p>
+<h2 id="create-wordlist-from-active-directory">Create wordlist from Active Directory<a class="headerlink" href="#create-wordlist-from-active-directory" title="Permanent link">#</a></h2>
+<p>This oneliner will get the Firstname (givenName), Lastname (sn) and Firstname and Lastname combinend (name) of a user, and the name of all the computers. Remove whitespace, and turn them all into lowercase and remove duplicates. </p>
+<p>Of course you will need to change the <code>-h</code> flag to the correct domain-controller ip/hostname, change <code>-b</code> flag to the correct domain name, and <code>-D</code> to the Distinguished name of your user, and the <code>-w</code> to your users password.</p>
+<pre><code>ldapsearch -h evilcorp.local  -w SecretPassword  -b &quot;dc=evilcorp,dc=local&quot; -D &quot;cn=Philip L,cn=users,dc=evilcorp,dc=local&quot; &quot;(|(objectClass=Computer)(objectClass=User))&quot;  givenName sn name | grep 'givenName\|sn\|name' | cut -d &quot;:&quot; -f 2 | tr -d ' ' | tr '[:upper:]' '[:lower:]' | sort -u
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../powershell/basics_of_powershell/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../powershell/basics_of_powershell/" class="btn btn-xs btn-link">
+        Basics of Powershell
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../cracking_hashes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../cracking_hashes/" class="btn btn-xs btn-link">
+        Cracking Hashes
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/cracking_hashes/generate_password_list.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

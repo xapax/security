@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Check for Misconfigured GPO - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "TLDR", url: "#_top", children: [
+          ]},
+          {title: "Background", url: "#background", children: [
+              {title: "The Components", url: "#the-components" },
+              {title: "GPO Enforcement Logic", url: "#gpo-enforcement-logic" },
+          ]},
+          {title: "How to exploit", url: "#how-to-exploit", children: [
+          ]},
+          {title: "How to check for", url: "#how-to-check-for", children: [
+          ]},
+          {title: "Recommendation", url: "#recommendation", children: [
+          ]},
+          {title: "References", url: "#references", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../check_for_reuse_of_local_admin_password/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../check_for_reuse_of_local_admin_password/" class="btn btn-xs btn-link">
+        Check for Reuse of Local Admin Password
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../check_for_misconfgured_access_control_of_mssql/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../check_for_misconfgured_access_control_of_mssql/" class="btn btn-xs btn-link">
+        Check for Misconfgured Access Control of MSSQL
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="tldr">TLDR<a class="headerlink" href="#tldr" title="Permanent link">#</a></h2>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">#</a></h2>
+<h3 id="the-components">The Components<a class="headerlink" href="#the-components" title="Permanent link">#</a></h3>
+<ul>
+<li>
+<p>Group Policy Object
+All GPOs can be viewed using the Group Policy Management program found in the Server Manager suite.
+GPOs contains policies that affect Users or computers. The actual policies are stored on the Domain Controller, in the share called SYSVOL: ex: <code>\\contoso.local\sysvol\contoso.local\Policies\{6AC1786C-016F-11D2-945F-00C04fB984F9}</code>
+Each GPO has a uniq GUID associated with it.
+A GPO can only apply to Users or Computers.</p>
+</li>
+<li>
+<p>Organizational Units (OU)
+OUs are just LDAP Containers, that can be used a little bit however you like. But it is usually used to logically group together Users, Groups or Computers. They are usually organized around geography (Country/City) or department (IT, Economy, HR, etc).</p>
+</li>
+<li>
+<p>GpLink
+GPOs can be linked to domains, sites, and OUs. For example, the default GPO is called <code>Default Domain Policy</code> and it is linked to the Domain Controller OU.
+The GpLink is stored on the LDAP entry that is linked to a GPO. So if you for example click on an OU, like the "Domain Controller" OU, you will see the attribute GpLink.
+The format of the “gplink” attribute value is <code>[&lt;Distinguished name of the GPO&gt;;&lt;0 if the link is not enforced, 1 if the link is enforced&gt;]</code>.</p>
+</li>
+</ul>
+<h3 id="gpo-enforcement-logic">GPO Enforcement Logic<a class="headerlink" href="#gpo-enforcement-logic" title="Permanent link">#</a></h3>
+<ul>
+<li>GpLinks can be <strong>enforced</strong>, or not.</li>
+<li>OUs can <strong>block inheritance</strong>, or not.</li>
+<li>If a GpLink is enforced, the associated GPO will apply to the linked OU and all child objects, regardless of whether any OU in that tree blocks inheritance.</li>
+<li>If a GpLink is not enforced, the associated GPO will apply to the linked OU and all child objects, unless any OU within that tree blocks inheritance.</li>
+</ul>
+<p>So a GpLink is always on, even though it says that it is not enforced.</p>
+<p>The above mentioned rules apply to most scenarios.
+- WMI Filtering - You can further filter down to where a GPO is applied using "WMI-Filtering". To for example only apply the GPO to Windows 7 machines, or stuff like that.
+- Security Filtering - Filters so that an a GPO is only applied to specific users or computers.</p>
+<p>So who can edit a GPO? It is just a simple ACL as any ACL on any other object. You can specify that a specific GPO can be edited by a specific user or group. The user that can edit that GPO can thus takeover users or computers that that GPO is applied to. </p>
+<h2 id="how-to-exploit">How to exploit<a class="headerlink" href="#how-to-exploit" title="Permanent link">#</a></h2>
+<p>There are at least three different ways that an attacker can abuse GPOs to escalate privileges in a domain:
+- Who can create new GPOs in the domain.
+- Who can link GPOs to which OUs.
+- Who can modify existing GPOs (that may or may not be currently linked).</p>
+<h2 id="how-to-check-for">How to check for<a class="headerlink" href="#how-to-check-for" title="Permanent link">#</a></h2>
+<p>You will want to check for ACLs that are between a low privileged user and a GPO can controls a high privileged object, such as a computer or user.</p>
+<p>This cypher-query will check for user that Own GPOs.</p>
+<pre><code>match path=allShortestPaths((u:User {admincount: false})-[r]-&gt;(g:GPO)) return path
+</code></pre>
+
+<p>Check the default group policy called <code>Default Domain Controllers Policy</code>. Check the setting for <code>Allow Log On Locally</code>. If this is set to, for example, <code>Domain Users</code>, everyone in the domain has the permission to physically log on to the <code>Domain Controllers</code>. So if you have physical access to the DC you can just log in with a <code>Domain User</code> account.</p>
+<p>Also check <code>Allow log on through Remote Desktop Services</code>.</p>
+<p>If you don't have physical access you might be able to log on using a VM console, if that is enabled on the Domain Controller, or using an ILO.</p>
+<p>This issue has been documented by Sean Metcalf <a href="https://adsecurity.org/wp-content/uploads/2019/03/2019-Troopers-SecuringActiveDirectoryAdministration-Metcalf-Final.pdf">here:</a></p>
+<h2 id="recommendation">Recommendation<a class="headerlink" href="#recommendation" title="Permanent link">#</a></h2>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+<p><a href="http://www.harmj0y.net/blog/redteaming/abusing-gpo-permissions/">Seminal blogpost by Will Shroeder (HarmJoy)</a>
+<a href="https://wald0.com/?p=179">A must-read written by Wald0</a></p>
+<p>Map out all GPO:s with powerview:</p>
+<pre><code>Get-NetGPO
+</code></pre>
+
+<ol>
+<li>Check which GPOs i have write access to</li>
+</ol>
+<p>First find out which users that have access.</p>
+<pre><code>grep &quot;IdentityReference&quot; gpoer.txt &gt; ident.txt
+
+</code></pre>
+
+<pre><code>grep -A 10 -i Autentiserade gpoer.txt
+grep -A 10 -i &quot;Domain users&quot; gpoer.txt
+</code></pre>
+
+<ol>
+<li>Check which computer those GPO:s controls
+If I can have write access to a GPO that is applied to </li>
+</ol>
+<p>Inte är standardgrupper
+Vilka användare har write</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../check_for_reuse_of_local_admin_password/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../check_for_reuse_of_local_admin_password/" class="btn btn-xs btn-link">
+        Check for Reuse of Local Admin Password
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../check_for_misconfgured_access_control_of_mssql/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../check_for_misconfgured_access_control_of_mssql/" class="btn btn-xs btn-link">
+        Check for Misconfgured Access Control of MSSQL
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/active_directory_privilege_escalation/check_for_misconfigured_gpo.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

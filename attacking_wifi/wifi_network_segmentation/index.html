@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Testing Network Segmentation - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Testing network segmentation", url: "#_top", children: [
+          ]},
+          {title: "Tests", url: "#tests", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../wifi/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../wifi/" class="btn btn-xs btn-link">
+        Testing Wifi Security
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_mobile_applications/ios/ios_vuln_checklist/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_mobile_applications/ios/ios_vuln_checklist/" class="btn btn-xs btn-link">
+        Vulnerabilities Checklist
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="testing-network-segmentation">Testing network segmentation<a class="headerlink" href="#testing-network-segmentation" title="Permanent link">#</a></h2>
+<p>The idea is to test is users from a Guest-network kan reach another, more sensitive network.</p>
+<p>It might be that the networks are separated by a firewall.</p>
+<h2 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">#</a></h2>
+<ul>
+<li>Test reach to machine using icmp</li>
+</ul>
+<pre><code>sudo hping3 -1 10.10.10.10
+# with tracerroute
+sudo hping3 --traceroute -V -1 10.10.10.10
+</code></pre>
+
+<ul>
+<li>Test reach machine using SYN packet</li>
+</ul>
+<p>You need to test against a machine and port that will respons to a syn packet</p>
+<pre><code>-S is for SYN packet
+-p is for desitnation port
+-s is for source port
+sudo hping3 -V -S -p 80 -s 5050 10.10.10.10
+sudo hping3 -V -S -p 80 -s 53 10.10.10.10
+sudo hping3 --traceroute -V -S -p 80 -s 53 10.10.10.10
+</code></pre>
+
+<ul>
+<li>Test reach machine over icmp with ipv6</li>
+</ul>
+<pre><code>sudo ping6 fe80::7041:baa0:593f:c6a5%11
+
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../wifi/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../wifi/" class="btn btn-xs btn-link">
+        Testing Wifi Security
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_mobile_applications/ios/ios_vuln_checklist/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_mobile_applications/ios/ios_vuln_checklist/" class="btn btn-xs btn-link">
+        Vulnerabilities Checklist
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_wifi/wifi_network_segmentation.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

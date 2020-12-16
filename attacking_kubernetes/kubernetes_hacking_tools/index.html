@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Setting Up Tools - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Setup", url: "#_top", children: [
+              {title: "Generate certificate", url: "#generate-certificate" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../attacking_kubernetes/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../attacking_kubernetes/" class="btn btn-xs btn-link">
+        Attacking Kubernetes
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../basics_of_docker/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../basics_of_docker/" class="btn btn-xs btn-link">
+        Basics of Docker
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">#</a></h2>
+<p>So the scenario is that a customer has setup a kubernetes cluster. In that cluster a docker-containerized application is running in a Pod. That application is vulnerable, and an attacker manages to get rce on that machine. What can he do?</p>
+<p>Here we want to test the kubernetes environment, not the actual application that is running.</p>
+<p>In order to simulate this we are going to ask the customer to deploy a containerized application that will give us a reverse shell, so we can operate from the assumption that the application is owned.</p>
+<h3 id="generate-certificate">Generate certificate<a class="headerlink" href="#generate-certificate" title="Permanent link">#</a></h3>
+<p>We will use the mutual TLS reverse shell found here:</p>
+<p>Our reverse shell will first retreive the server certificate and the client certificate, and then it will connect back and present the client certificate. Our server will verify the client certificate before receving the shell.</p>
+<p>So, we need to create a CA (with a CA Root certificate and a private key). Then create a server certificate (the certificate will contain a public key as well as a signature from the CA Private key). 
+The CA will then create a client certificate.</p>
+<p>Setting up a CA with all certificates can be done using a few different tools.
+- OpenSSL
+- EasyRSA
+- CFSSL</p>
+<h4 id="easyrsa">EasyRSA<a class="headerlink" href="#easyrsa" title="Permanent link">#</a></h4>
+<p>In kali you already have EasyRSA isntalled, in /usr/share/easy-rsa</p>
+<p>Set up PKI directory structure</p>
+<pre><code>easyrsa init-pki
+</code></pre>
+
+<p>This will create your CA's root certificate. This certificate is not secret.
+It will also create a private key, stored in private, called ca.key. This is extremly secret key.</p>
+<pre><code>easyrsa build-ca
+</code></pre>
+
+<p>Create server certificate:</p>
+<pre><code>easyrsa gen-req nameofserver nopass
+</code></pre>
+
+<p>Now sign the certificate with your CA's private key:</p>
+<pre><code>easyrsa sign-req server nameofserver
+</code></pre>
+
+<p>Create client certificate:</p>
+<pre><code>easyrsa gen-req client1 nopass
+</code></pre>
+
+<p>Sign it with your CA's private key:</p>
+<pre><code>easyrsa sign-req client client1
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../attacking_kubernetes/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../attacking_kubernetes/" class="btn btn-xs btn-link">
+        Attacking Kubernetes
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../basics_of_docker/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../basics_of_docker/" class="btn btn-xs btn-link">
+        Basics of Docker
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_kubernetes/kubernetes_hacking_tools.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Find Files - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Find hidden files and directories", url: "#_top", children: [
+              {title: "TLDR", url: "#tldr" },
+              {title: "About", url: "#about" },
+              {title: "WAF - Web application firewall", url: "#waf-web-application-firewall" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_internal_network/network_attacks/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_internal_network/network_attacks/" class="btn btn-xs btn-link">
+        Network Attacks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../cross-site-scripting/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../cross-site-scripting/" class="btn btn-xs btn-link">
+        Cross-site Scripting
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="find-hidden-files-and-directories">Find hidden files and directories<a class="headerlink" href="#find-hidden-files-and-directories" title="Permanent link">#</a></h1>
+<h2 id="tldr">TLDR<a class="headerlink" href="#tldr" title="Permanent link">#</a></h2>
+<pre><code># Dirb
+dirb https://192.168.1.101
+
+# Gobuster - remove relevant responde codes (403 for example)
+gobuster -u http://192.168.1.101 -w /usr/share/seclists/Discovery/Web_Content/common.txt -s '200,204,301,302,307,403,500' -e
+</code></pre>
+
+<h2 id="about">About<a class="headerlink" href="#about" title="Permanent link">#</a></h2>
+<p>There is essentially no way for a user to know which files are found in which directories on a web-server, unless the whole server has directory listing by default. However, if you go directly to the page it will be shown. So what the attacker can do is to brute force hidden files and directories. Just test a bunch of them. There are several tools for doing this. The attack is of course very noisy and will show up fast in the logs.</p>
+<h3 id="dirb">Dirb<a class="headerlink" href="#dirb" title="Permanent link">#</a></h3>
+<p>This is a really easy tool to use:</p>
+<pre><code>dirb http://target.com
+</code></pre>
+
+<h3 id="dirbuster">Dirbuster<a class="headerlink" href="#dirbuster" title="Permanent link">#</a></h3>
+<p>It is a GUI
+You start it with:</p>
+<pre><code>dirbuster
+</code></pre>
+
+<h3 id="owasp-zap">OWASP ZAP<a class="headerlink" href="#owasp-zap" title="Permanent link">#</a></h3>
+<p>Insert your target.
+Add it to the context
+Click the plus-sign
+Click on Forced Browse</p>
+<h3 id="wfuzz">Wfuzz<a class="headerlink" href="#wfuzz" title="Permanent link">#</a></h3>
+<p>You can find the manual by typing: </p>
+<pre><code>wfuzz -h
+</code></pre>
+
+<pre><code>wfuzz -c -z file,/root/.ZAP/fuzzers/dirbuster/directory-list-2.3-big.txt --sc 200 http://pegasus.dev:8088/FUZZ.php
+</code></pre>
+
+<h3 id="gobuster">Gobuster<a class="headerlink" href="#gobuster" title="Permanent link">#</a></h3>
+<pre><code># Gobuster - remove relevant responde codes (403 for example)
+gobuster -u http://192.168.1.101 -w /usr/share/seclists/Discovery/Web_Content/common.txt -s '200,204,301,302,307,403,500' -e
+</code></pre>
+
+<h2 id="waf-web-application-firewall">WAF - Web application firewall<a class="headerlink" href="#waf-web-application-firewall" title="Permanent link">#</a></h2>
+<p>It might be that dirb shows you 403 errors, instead of the expected 404. This might mean that there is a WAF protecting the site. To get around it we might have to change our request header to it looks more like a normal request. </p>
+<pre><code>dirb http://target.com -a &quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36&quot;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_internal_network/network_attacks/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_internal_network/network_attacks/" class="btn btn-xs btn-link">
+        Network Attacks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../cross-site-scripting/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../cross-site-scripting/" class="btn btn-xs btn-link">
+        Cross-site Scripting
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_web_applications/web-scanning.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

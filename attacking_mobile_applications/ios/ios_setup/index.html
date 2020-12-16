@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>IOS Testing Environment Setup - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Pentesting application on iPhone", url: "#_top", children: [
+              {title: "With jailbreak", url: "#with-jailbreak" },
+              {title: "Without jailbreak", url: "#without-jailbreak" },
+              {title: "Getting the application onto the phone", url: "#getting-the-application-onto-the-phone" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../ios_application_vulnerabilities/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../ios_application_vulnerabilities/" class="btn btn-xs btn-link">
+        Vulnerabilities
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../android/android_vuln_checklist/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../android/android_vuln_checklist/" class="btn btn-xs btn-link">
+        Checklist
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="pentesting-application-on-iphone">Pentesting application on iPhone<a class="headerlink" href="#pentesting-application-on-iphone" title="Permanent link">#</a></h1>
+<h2 id="with-jailbreak">With jailbreak<a class="headerlink" href="#with-jailbreak" title="Permanent link">#</a></h2>
+<p>It is possible  to get a application working without rooting it. BUUUT you need a developer certificate. You can get a temprorary though, for just a few days. SO you can certify the application, then send it to the phone.</p>
+<h3 id="with-checkra">With Checkra<a class="headerlink" href="#with-checkra" title="Permanent link">#</a></h3>
+<p>After rooting the device, open up the Checkra icon. And install Cydia.</p>
+<h3 id="openssh">Openssh<a class="headerlink" href="#openssh" title="Permanent link">#</a></h3>
+<p>Open Cydia and search for OpenSSH. Install it. It is a console app so there is no icon for it. Once it is installed you can access it over SSH. So just run root@iphone-ip-address. The default password is <code>alpine</code>.</p>
+<h3 id="ipainstaller">Ipainstaller<a class="headerlink" href="#ipainstaller" title="Permanent link">#</a></h3>
+<p>With cydia you can install <code>ipainstaller</code>. </p>
+<h3 id="extracting-ipa-files">Extracting ipa files<a class="headerlink" href="#extracting-ipa-files" title="Permanent link">#</a></h3>
+<p>With <code>ipainstaller</code> you can extract it like this:
+First list all packages: <code>ipainstaller -l</code>. Then identify the package, and do <code>ipainstaller -b the.app.com</code>.</p>
+<p>Then use scp to transfer it to your machine.</p>
+<pre><code>scp root@10.0.0.1:/private/var/mobile/Documents/package.ipa ./
+</code></pre>
+
+<h2 id="without-jailbreak">Without jailbreak<a class="headerlink" href="#without-jailbreak" title="Permanent link">#</a></h2>
+<h2 id="getting-the-application-onto-the-phone">Getting the application onto the phone<a class="headerlink" href="#getting-the-application-onto-the-phone" title="Permanent link">#</a></h2>
+<p>If the device is rooted you can simply go to Re-activate JB. Click "GO", and then follow the instructions.</p>
+<p>Once that is done you want to enable ssh, in order to install the ipa.
+So you go to "Toggle SSH" and enable ssh deamon.
+Now you can log in to the mobile over ssh with the root-account, and the password that is on the backside of the phone.</p>
+<p>To install an ipa you can use the command "ipainstaller". It can be downloaded thgouh cydia.</p>
+<ul>
+<li>Trust the developer</li>
+</ul>
+<p>AFter the application has finished installing it should pop up among your applications on the phone.
+When you try to open it it might be denied because Apple does not trust the developer of the application.
+To solve that problem you go to Settings/General/Profiles and Device Management/ and then click on the developer of the application. ANd then add "Trust".</p>
+<ul>
+<li>BankdID</li>
+</ul>
+<p>If you proxy all traffic through burp, burp will intercept traffic to the bankid servers. Since the bankid application has certificate pinning, you cannot intercept that traffic. Instead the traffic won't be sent at all. So in order to fix that if your application requrires BankID you can add SSL Passthrough in burp. So that Burp won't intercept traffic to specific host.</p>
+<p>You do that by going to Proxy/Options/SSL Passthrough
+Then add:  <code>.*bankid.com.*$</code></p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../ios_application_vulnerabilities/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../ios_application_vulnerabilities/" class="btn btn-xs btn-link">
+        Vulnerabilities
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../android/android_vuln_checklist/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../android/android_vuln_checklist/" class="btn btn-xs btn-link">
+        Checklist
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_mobile_applications/ios/ios_setup.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

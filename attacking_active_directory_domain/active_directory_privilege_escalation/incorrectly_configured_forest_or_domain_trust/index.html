@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Incorrectly Configured Forest or Domain Trust - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Incorrectly configured Forest - or Domain trust", url: "#_top", children: [
+              {title: "Type of trust / Direction of trust", url: "#type-of-trust-direction-of-trust" },
+          ]},
+          {title: "Using Bloodhound", url: "#using-bloodhound", children: [
+          ]},
+          {title: "How to test for it", url: "#how-to-test-for-it", children: [
+          ]},
+          {title: "Attacking domain trusts", url: "#attacking-domain-trusts", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../misconfigured_access_control_lists/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../misconfigured_access_control_lists/" class="btn btn-xs btn-link">
+        Misconfigured Access Control Lists
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../execssive_amount_of_domain_admins/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../execssive_amount_of_domain_admins/" class="btn btn-xs btn-link">
+        Excessive Amount of Domain Admins
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="incorrectly-configured-forest-or-domain-trust">Incorrectly configured Forest - or Domain trust<a class="headerlink" href="#incorrectly-configured-forest-or-domain-trust" title="Permanent link">#</a></h2>
+<p>A forest consists of two or more domains.</p>
+<p>The domain can have trust between each other. This means that a security principal (a user for example) can access a resource on the other domain. This might be intended. </p>
+<p>Previously the forest was viewed as a security boundry. So even though there was bi-directional trust between forests (so called <em>inter</em>-forest trust) it was not possible for admins in one forest to take over domain controllers in the other forests. Since the "printer-bug" (MS-RPRN) was discovered by Lee Christensen in 2018 this is not longer the case. This mean that if your organisation has a bi-directional trust with another forest, and that forest gets compromised, it is possible for an attacker to compromise your forest as well. </p>
+<h3 id="type-of-trust-direction-of-trust">Type of trust / Direction of trust<a class="headerlink" href="#type-of-trust-direction-of-trust" title="Permanent link">#</a></h3>
+<p>The AD can have specific trust types. The types of trusts are the following:</p>
+<ul>
+<li>Parent/Child - </li>
+<li>Cross-link</li>
+<li>External</li>
+<li>Tree-root</li>
+<li>Forest</li>
+<li>MIT</li>
+</ul>
+<h2 id="using-bloodhound">Using Bloodhound<a class="headerlink" href="#using-bloodhound" title="Permanent link">#</a></h2>
+<p>If there is trust between domains in a forrest, it might be that a user is allowed to retrevie </p>
+<p>You can just click on the default query "Map domain trusts"</p>
+<pre><code>MATCH p=(n:Domain)--&gt;(m:Domain) RETURN p
+</code></pre>
+
+<h2 id="how-to-test-for-it">How to test for it<a class="headerlink" href="#how-to-test-for-it" title="Permanent link">#</a></h2>
+<p>You can identify what types of trusts you have by running the following commands:</p>
+<pre><code>Get-NetForestDomain
+Get-NetDomainTrust 
+</code></pre>
+
+<p>Get-ADObject -SearchBase "cn=system,dc=evilcorp,dc=se" -Filter * -Properties trustType | where {$_.objectClass –eq "trustedDomain"} | select Name,trustType</p>
+<h2 id="attacking-domain-trusts">Attacking domain trusts<a class="headerlink" href="#attacking-domain-trusts" title="Permanent link">#</a></h2>
+<p>https://posts.specterops.io/not-a-security-boundary-breaking-forest-trusts-cd125829518d?gi=43aabaf65628</p>
+<p>Microsofts advistory
+https://portal.msrc.microsoft.com/en-us/security-guidance/advisory/ADV190006</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../misconfigured_access_control_lists/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../misconfigured_access_control_lists/" class="btn btn-xs btn-link">
+        Misconfigured Access Control Lists
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../execssive_amount_of_domain_admins/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../execssive_amount_of_domain_admins/" class="btn btn-xs btn-link">
+        Excessive Amount of Domain Admins
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/active_directory_privilege_escalation/incorrectly_configured_forest_or_domain_trust.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

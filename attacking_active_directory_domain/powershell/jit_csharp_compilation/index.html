@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>JIT CSharp Compilation - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Load native Windows API functions", url: "#_top", children: [
+              {title: "Add-Type cmdlet", url: "#add-type-cmdlet" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../local_machine_recon/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../local_machine_recon/" class="btn btn-xs btn-link">
+        Local Machine Recon
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../activedirectory/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../activedirectory/" class="btn btn-xs btn-link">
+        Active Directory
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="load-native-windows-api-functions">Load native Windows API functions<a class="headerlink" href="#load-native-windows-api-functions" title="Permanent link">#</a></h1>
+<p>Three ways to achieve this:</p>
+<p>1) Use the Add-Type cmdlet to compile C# code
+2) Get reference to private type in .NET framework that calls the method
+3) Use reflection to dynamically define a method that calls the Windows API function</p>
+<h3 id="add-type-cmdlet">Add-Type cmdlet<a class="headerlink" href="#add-type-cmdlet" title="Permanent link">#</a></h3>
+<p>C# signatures can be retrieved from: http://www.pinvoke.net/</p>
+<p>Note the "public" keyword, this is required to properly use the function from PowerShell</p>
+<pre><code>$MethodDefinition = @'
+[DllImport(&quot;kernel32.dll&quot;, CharSet = CharSet.Unicode)]
+public static extern bool CopyFile(string lpExistingFileName, string lpNewFileName, bool bFailIfExists);
+'@
+
+$Kernel32 = Add-Type -MemberDefinition $MethodDefinition -Name 'Kernel32' -Namespace 'Win32' -PassThru
+# You may now call the CopyFile function
+# Copy calc.exe to the user's desktop
+$Kernel32::CopyFile(&quot;$($Env:SystemRoot)\System32\calc.exe&quot;, &quot;$($Env:USERPROFILE)\Desktop\calc.exe&quot;, $False)
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../local_machine_recon/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../local_machine_recon/" class="btn btn-xs btn-link">
+        Local Machine Recon
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../activedirectory/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../activedirectory/" class="btn btn-xs btn-link">
+        Active Directory
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/powershell/jit_csharp_compilation.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>BankID Attacks - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Verify text when signing", url: "#_top", children: [
+          ]},
+          {title: "Log in as one user and sign as another", url: "#log-in-as-one-user-and-sign-as-another", children: [
+          ]},
+          {title: "DOS by queued upp auth requests", url: "#dos-by-queued-upp-auth-requests", children: [
+          ]},
+          {title: "Session fixation", url: "#session-fixation", children: [
+          ]},
+          {title: "Test with user that has not been provided by customer", url: "#test-with-user-that-has-not-been-provided-by-customer", children: [
+          ]},
+          {title: "Check if object can be changed after signing", url: "#check-if-object-can-be-changed-after-signing", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../cache_poisoning/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../cache_poisoning/" class="btn btn-xs btn-link">
+        Cache Poisoning
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../oauth_attacks/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../oauth_attacks/" class="btn btn-xs btn-link">
+        OAuth Attacks
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h3 id="verify-text-when-signing">Verify text when signing<a class="headerlink" href="#verify-text-when-signing" title="Permanent link">#</a></h3>
+<p>When the user signs an action/object make sure that the user is not able to edit the text that pop ups in the BankdID signing view.
+If the user can edit that one user could edit it and more easily trick another user into signing something.</p>
+<h3 id="log-in-as-one-user-and-sign-as-another">Log in as one user and sign as another<a class="headerlink" href="#log-in-as-one-user-and-sign-as-another" title="Permanent link">#</a></h3>
+<p>Check that you can't log in as one user and then sign the result as another user. If this is in fact an issue depends on the application, how it is suppose to work.</p>
+<h3 id="dos-by-queued-upp-auth-requests">DOS by queued upp auth requests<a class="headerlink" href="#dos-by-queued-upp-auth-requests" title="Permanent link">#</a></h3>
+<p>It is always possible to perform a DOS against a user, simply sending new authentication requests to that user. That is not a vulnerability, it is just how BankID works.
+But there exists a scenario where youi perform multiple authentication-requests, and these are then queued up, so when the user dismissed a auth request the enxt one in the queued pops up.
+If multiple requests are made, the previous ones should be invalidated.</p>
+<h3 id="session-fixation">Session fixation<a class="headerlink" href="#session-fixation" title="Permanent link">#</a></h3>
+<p>Session fixation might be possible even with BankID. Sometimes you get a cookie when you enter a page, and when you have then authenticated the same cookie is used to retrieve a new cookie.</p>
+<h3 id="test-with-user-that-has-not-been-provided-by-customer">Test with user that has not been provided by customer<a class="headerlink" href="#test-with-user-that-has-not-been-provided-by-customer" title="Permanent link">#</a></h3>
+<p>If you are provided with a number of users that are meant to have access to the page, test what happens if you authenticate with another user. This might be normal usage, that anyone can log in, and if that is the case then there is nothing to test. But if only limited number of users should be able to autehnticate, test with another user. If it is test-bankdID just generated a new bankid for random user.</p>
+<h3 id="check-if-object-can-be-changed-after-signing">Check if object can be changed after signing<a class="headerlink" href="#check-if-object-can-be-changed-after-signing" title="Permanent link">#</a></h3>
+<p>If you sign objects of some kind, check that you can't change the object aftr the signature.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../cache_poisoning/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../cache_poisoning/" class="btn btn-xs btn-link">
+        Cache Poisoning
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../oauth_attacks/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../oauth_attacks/" class="btn btn-xs btn-link">
+        OAuth Attacks
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_web_applications/bankid_attacks.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

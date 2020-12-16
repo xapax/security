@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Client Certificate Tests - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Background", url: "#_top", children: [
+          ]},
+          {title: "PKCS # 12", url: "#pkcs-12", children: [
+          ]},
+          {title: "PEM", url: "#pem", children: [
+          ]},
+          {title: "Checks", url: "#checks", children: [
+          ]},
+          {title: "Access without certificate", url: "#access-without-certificate", children: [
+          ]},
+          {title: "Send self-signed certificate", url: "#send-self-signed-certificate", children: [
+          ]},
+          {title: "Generate Client Certificate (s/mime) from a trusted CA", url: "#generate-client-certificate-smime-from-a-trusted-ca", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../random_tips_and_tricks/general_tips/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../random_tips_and_tricks/general_tips/" class="btn btn-xs btn-link">
+        Tips and Tricks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../password_cracking/generate_custom_wordlist/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../password_cracking/generate_custom_wordlist/" class="btn btn-xs btn-link">
+        Generate Custom Password List
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">#</a></h2>
+<p>First, in order to validate a client certificate the server (or load balancer) will need to have the root certificate that signed the client certificate installed. So a CA issues a root certificate. The public key of that root certificate signs the client certificate. Typically, the root CA does not sign server or client certificates directly. The root CA is only ever used to create one or more intermediate CAs, which are trusted by the root CA to sign certificates on their behalf. When the client authenticates the server can verify that the client certificate really was signed by the CA. And thereby trust it.</p>
+<p>It is common that load balancers verify the client certificate. You can usually figure out what load balancer it is by looking at response headers and cookies.</p>
+<p>For example F5 load balancers usually tests a cookie that looks something like this:</p>
+<pre><code>TS*******
+TS01*****
+</code></pre>
+
+<p>The load balancers usually verifies the client cerificate, retrieve som information from the certificate and the pass it along to the application. The information sent from the load balancer to the application server is usually sent in a specific header. Here is a list of common headers that carries this information. Copied from here: https://github.com/wallarm/cert-headers/blob/master/headers.list.</p>
+<pre><code>#F5
+SSLClientCertStatus
+SSLClientCertSN
+SSLClientCertb64
+X-Client-Cert
+X-Client-Certificate
+X-Client-Crt
+#HAProxy
+X-SSL
+X-SSL-Client-Cert
+X-SSL-Client-Verify
+X-SSL-Client-SHA1
+X-SSL-Client-DN
+X-SSL-Client-CN
+X-SSL-Issuer
+X-SSL-Client-Not-Before
+X-SSL-Client-Not-After
+X-SSL-Client-Serial
+X-SSL-Client-Version
+X-Valid-Certificate
+#Nginx
+X-SSL-CERT
+X-SSL-VERIFIED
+X-SSL-CLIENT-DN
+X-SSL-ISSUER-DN
+</code></pre>
+
+<h2 id="pkcs-12">PKCS # 12<a class="headerlink" href="#pkcs-12" title="Permanent link">#</a></h2>
+<p>PKCS (Public-Key Cryptography Standard) # 12 is an archive format. Is it used to store two things. A public X509 certificate and a private key, or to bundle all members of a chain of trust. The format is binary and can be read using openssl. It would be nice if the data would be stored in a semi-normal format such as JSON or XML, but it isn't.</p>
+<p>The format is described in RFC 7292: https://tools.ietf.org/html/rfc7292</p>
+<pre><code>openssl pkcs12 -info -in ClientCertificate.pfx
+</code></pre>
+
+<p>It usually has the fileneding .p12 or .pfx. PFX and PKCS12 are sometimes used interchangebly.</p>
+<h2 id="pem">PEM<a class="headerlink" href="#pem" title="Permanent link">#</a></h2>
+<p>Pem is a simpler format than PKCS 12. It usually only includes a certificates and private key as base64 strings.</p>
+<h2 id="checks">Checks<a class="headerlink" href="#checks" title="Permanent link">#</a></h2>
+<h2 id="access-without-certificate">Access without certificate<a class="headerlink" href="#access-without-certificate" title="Permanent link">#</a></h2>
+<p>Applications can be configured to ask for client certificate without actually validating them. For example in F5 is it is configured to "request" and not "required".
+https://devcentral.f5.com/s/articles/How-Client-SSL-Authentication-works-on-BIG-IP</p>
+<h2 id="send-self-signed-certificate">Send self-signed certificate<a class="headerlink" href="#send-self-signed-certificate" title="Permanent link">#</a></h2>
+<p>If the server looks at issuer or subject lines it might be possible to bypass it by simply copying those lines.</p>
+<p>Step 1: Create CA</p>
+<pre><code class="bash">openssl req -newkey rsa:4096 -keyform PEM -keyout ca.key -x509 -days 3650 -outform PEM -out ca.cer
+</code></pre>
+
+<p>Step 2: Generate Client certificate</p>
+<p>Generate a key</p>
+<pre><code>openssl genrsa -out client.key 4096
+</code></pre>
+
+<p>Generate a certificate signing request</p>
+<pre><code>openssl req -new -key client.key -out client.req
+</code></pre>
+
+<p>Sign the CSR:</p>
+<pre><code>openssl x509 -req -in client.req -CA ca.cer -CAkey ca.key -set_serial 101 -extensions client -days 365 -outform PEM -out client.cer
+</code></pre>
+
+<p>Step 3: Convert to PKCS12</p>
+<pre><code>openssl pkcs12 -export -inkey client.key -in client.cer -out client.p12
+</code></pre>
+
+<p>Here is a script that generates client-certificates with your specified issuer, subject and serialnumber.</p>
+<pre><code class="bash">#/bin/bash
+
+
+function generate_certificate {
+
+
+    PASSWORD=&quot;pass&quot;
+    ISSUER=&quot;/C=SE/O=Example/OU=ExampleOU/CN=ExamplePurpose&quot;
+    SERIALNUMBER=&quot;100000000&quot;
+    SUBJECT=&quot;/C=SE/ST=Sweden/L=Stockholm/O=ExampleO/CN=test.test.com&quot;
+
+    echo &quot;[*] Generating CA&quot;
+
+    openssl req -newkey rsa:4096 -keyform PEM -keyout ca.key -x509 -days 3650 -outform PEM -out ca.cer -subj &quot;$ISSUER&quot; -passout pass:$PASSWORD
+
+    echo &quot;[*] Reading the result&quot;
+
+    openssl x509 -in ca.cer -text -noout
+
+    echo &quot;[*] Generating client key&quot;
+
+
+    openssl genrsa -out client.key 4096
+
+
+    echo &quot;[*] Generating CSR from configuration file&quot;
+
+    openssl req -new -key client.key -out client.req -subj &quot;$SUBJECT&quot;
+
+
+    echo &quot;[*] Signing the CSR&quot;
+
+    openssl x509 -req -in client.req -CA ca.cer -CAkey ca.key -set_serial $SERIALNUMBER -extensions client -days 365 -outform PEM -out client.cer -passin pass:$PASSWORD
+
+    echo &quot;[*] Transforming inteo p12 format&quot;
+
+
+    openssl pkcs12 -passout pass:$PASSWORD -export -inkey client.key -in client.cer -out client.p12 
+
+
+    echo &quot;[*] Reading the final p12 certificate&quot;
+
+    openssl pkcs12 -passin pass:$PASSWORD -passout pass:$PASSWORD -info -in client.p12 
+
+    exit
+}
+
+generate_certificate
+
+</code></pre>
+
+<h2 id="generate-client-certificate-smime-from-a-trusted-ca">Generate Client Certificate (s/mime) from a trusted CA<a class="headerlink" href="#generate-client-certificate-smime-from-a-trusted-ca" title="Permanent link">#</a></h2>
+<p>It is possible to create a S/MIME cert for free (or payed) associated with your email address. It might be that the backend only verifies that the client certificate is generated by a public CA. If that is the case it might work. </p>
+<p>The default behaviour in IIS is to trust the windows default CA store. So if you generate a s/mime cert from comodo or whatever it might work.</p>
+<p>You can generate a free s/mime certificate here:</p>
+<p>https://extrassl.actalis.it/portal/uapub/freemail?lang=en</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../random_tips_and_tricks/general_tips/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../random_tips_and_tricks/general_tips/" class="btn btn-xs btn-link">
+        Tips and Tricks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../password_cracking/generate_custom_wordlist/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../password_cracking/generate_custom_wordlist/" class="btn btn-xs btn-link">
+        Generate Custom Password List
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/cryptography/client_certificate_tests.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

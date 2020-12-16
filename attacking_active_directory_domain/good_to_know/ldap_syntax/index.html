@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>LDAP Syntax - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Directory Servers", url: "#_top", children: [
+          ]},
+          {title: "Entries", url: "#entries", children: [
+              {title: "DNs and RDNs", url: "#dns-and-rdns" },
+              {title: "Attributes", url: "#attributes" },
+              {title: "Object Classes", url: "#object-classes" },
+          ]},
+          {title: "Object Identifiers (OIDs)", url: "#object-identifiers-oids", children: [
+          ]},
+          {title: "Search Filters", url: "#search-filters", children: [
+          ]},
+          {title: "Search Base DNs and Scopes", url: "#search-base-dns-and-scopes", children: [
+          ]},
+          {title: "Controls", url: "#controls", children: [
+          ]},
+          {title: "LDAPSEARCH Syntax", url: "#ldapsearch-syntax", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../windows_access_control/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../windows_access_control/" class="btn btn-xs btn-link">
+        Windows Access Control
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../neo4j_and_cypher/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../neo4j_and_cypher/" class="btn btn-xs btn-link">
+        Neo4J and Cypher
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <p>The best way to follow along this article is by downloading <a href="https://docs.microsoft.com/en-us/sysinternals/downloads/adexplorer">ADExplorer.exe from sysinternals</a> and authenticate to your Active Directory.</p>
+<h2 id="directory-servers">Directory Servers<a class="headerlink" href="#directory-servers" title="Permanent link">#</a></h2>
+<p>A directory server (more technically referred to as a Directory Server Agent, a Directory System Agent, or a DSA) is a type of network database that stores information represented as trees of entries. This is different from a relational database, which uses tables comprised of rows and columns, so directory servers may be considered a type of NoSQL database (even though directory servers have been around a lot longer than the term NoSQL has).</p>
+<p>While virtually all directory servers support LDAP, some servers offer support for additional protocols that can be used to interact with the data. Some of these protocols include X.500 (the original Directory Access Protocol, for which LDAP is a much more lightweight version), naming service protocols like DNS and NIS, HTTP-based protocols like DSML and SCIM, and proprietary protocols like Novell’s NDS. </p>
+<p>The Directory Server interesting to us is of course Microsoft Active Directory.</p>
+<h2 id="entries">Entries<a class="headerlink" href="#entries" title="Permanent link">#</a></h2>
+<p>An LDAP entry is a collection of information about an entity (like a user or a computer). Each entry consists of three primary components: </p>
+<ul>
+<li>a distinguished name (DN)</li>
+<li>a collection of attributes</li>
+<li>a collection of object classes.</li>
+</ul>
+<h3 id="dns-and-rdns">DNs and RDNs<a class="headerlink" href="#dns-and-rdns" title="Permanent link">#</a></h3>
+<p>An entry’s distinguished name, often referred to as a DN, uniquely identifies that entry and its position in the directory information tree (DIT) hierarchy. The DN of an LDAP entry is much like the path to a file on a filesystem. </p>
+<p>An LDAP DN is comprised of zero or more elements called relative distinguished names, or RDNs. Each RDN is comprised of one or more (usually just one) attribute-value pairs. For example, "uid=john.doe" represents an RDN comprised of an attribute named "uid" with a value of "john.doe". If an RDN has multiple attribute-value pairs, they are separated by plus signs, like "givenName=John+sn=Doe". </p>
+<p>The special distinguished name comprised of zero RDNs (and therefore has a string representation that is just an empty string) is sometimes called the “null DN” and references a special type of entry called the root DSE which provides information about the content and capabilities of the directory server. </p>
+<p>For DNs with multiple RDNs, the order of the RDNs specifies the position of the associated entry in the DIT. RDNs are separated by commas, and each RDN in a DN represents a level in the hierarchy in descending order (i.e., moving closer to the root of the tree, which is called the naming context). That is, if you remove an RDN from a DN, you get the DN of the entry considered the parent of the former DN. For example, the DN "uid=john.doe,ou=People,dc=example,dc=com" has four RDNs, with the parent DN being "ou=People,dc=example,dc=com". </p>
+<p>A Distinguished Name (DN) should be read from left to right. The RDNs more to the left represent the higher branches of a tree. The RDN to the far right represent the trunk of the tree. </p>
+<p>The Distinguished Name of an active directory : <code>cn=Philip L,cn=users,dc=evilcorp,dc=local</code><br />
+This is a Relative Distinguished Name: <code>dc=local</code>  </p>
+<h3 id="attributes">Attributes<a class="headerlink" href="#attributes" title="Permanent link">#</a></h3>
+<p>Attributes hold the data for an entry. Each attribute has an attribute type, zero or more attribute options, and a set of values that comprise the actual data.</p>
+<p>Attribute types are schema elements that specify how attributes should be treated by LDAP clients and servers. All attribute types must have an object identifier (OID) and zero or more names that can be used to reference attributes of that type. They must also have an attribute syntax, which specifies the type of data that can be stored in attributes of that type, and a set of matching rules, which indicate how comparisons should be performed against values of attributes of that type. Attribute types may also indicate whether an attribute is allowed to have multiple values in the same entry, and whether the attribute is intended for holding user data (a user attribute) or is used for the operation of the server (an operational attribute). Operational attributes are typically used for configuration and/or state information.</p>
+<p>Attribute options are not used all that often, but may be used to provide some metadata about an attribute. For example, attribute options may be used to provide different versions of a value in different languages. </p>
+<p>Examples of attribute types are: <code>OctetString</code>, <code>Integer8</code>, <code>Integer</code>, <code>DirectoryString</code>, <code>Boolean</code>, <code>DN</code>, <code>OID</code>, <code>Sid</code>, <code>GeneralizedTime</code>.  </p>
+<h3 id="object-classes">Object Classes<a class="headerlink" href="#object-classes" title="Permanent link">#</a></h3>
+<p>Object classes are schema elements that specify collections of attribute types that may be related to a particular type of object, process, or other entity. Every entry has a structural object class, which indicates what kind of object an entry represents (e.g., whether it is information about a person, a group, a device, a service, etc.), and may also have zero or more auxiliary object classes that suggest additional characteristics for that entry.</p>
+<p>Like attribute types, object classes must have an object identifier, but they may also have zero or more names. Object classes may also list a set of required attribute types (so that any entry with that object class must also include those attributes) and/or a set of optional attribute types (so that any entry with that object class may optionally include those attributes). </p>
+<h2 id="object-identifiers-oids">Object Identifiers (OIDs)<a class="headerlink" href="#object-identifiers-oids" title="Permanent link">#</a></h2>
+<p>An object identifier (OID) is a string that is used to uniquely identify various elements in the LDAP protocol, as well as in other areas throughout computing. OIDs consist of a sequence of numbers separated by periods (e.g., "1.2.840.113556.1.4.473" is the OID that represents the server-side sort request control). In LDAP, OIDs are used to identify things like schema elements (like attribute types, object classes, syntaxes, matching rules, etc.), controls, and extended requests and responses. In the case of schema elements, there may also be user-friendly names that can be used in place of OIDs. </p>
+<p>When you look at the Active Directory with ADExplorer it will automatically translate the OIDs to more userfriendly-names, so we won't have to lookup each OID to understand what it refers to.</p>
+<h2 id="search-filters">Search Filters<a class="headerlink" href="#search-filters" title="Permanent link">#</a></h2>
+<p>Search filters are used to define criteria for identifying entries that contain certain kinds of information. There are a number of different types of search filters:</p>
+<ul>
+<li>Presence filters may be used to identify entries in which a specified attribute has at least one value.</li>
+<li>Equality filters may be used to identify entries in which a specified attribute has a particular value.</li>
+<li>Substring filters may be used to identify entries in which a specified attribute has at least one value that matches a given substring.</li>
+<li>Greater-or-equal filters may be used to identify entries in which a specified attribute has at least one value that is considered greater than or equal to a given value.</li>
+<li>Less-or-equal filters may be used to identify entries in which a specified attribute has at least one value that is considered less than or equal to a given value.</li>
+<li>Approximate match filters may be used to identify entries in which a specified attribute has a value that is approximately equal to a given value. Note that there is no official definition of “approximately equal to”, and therefore this behavior may vary from one server to another. Some servers use a “sounds like” algorithm like one of the Soundex or Metaphone variants.</li>
+<li>Extensible match filters may be used to provide more advanced types of matching, including the use of custom matching rules and/or matching attributes within an entry’s DN.</li>
+<li>AND filters may be used to identify entries that match all of the filters encapsulated inside the AND.</li>
+<li>OR filters may be used to identify entries that match at least one of the filters encapsulated inside the OR.</li>
+<li>NOT filters may be used to negate the result of the encapsulated filter (i.e., if a filter matches an entry, then a NOT filter encapsulating that matching filter will not match the entry, and if a filter does not match an entry, then a NOT filter encapsulating that non-matching filter will match the entry).</li>
+</ul>
+<p>The logic used to perform the matching is encapsulated in matching rules, which are specified in attribute type definitions. Different matching rules may use different logic for making the determination. For example, the caseIgnoreMatch matching rule will ignore differences in capitalization when comparing two strings, while the caseExactMatch matching rule will not. Many matching rules are specific to certain data types (e.g., the distinguishedNameMatch matching rule expects to operate only on values that are DNs and can do things like ignore insignificant spaces between DN and RDN components, ignore differences in the order of elements in a multivalued RDN, etc.). </p>
+<h2 id="search-base-dns-and-scopes">Search Base DNs and Scopes<a class="headerlink" href="#search-base-dns-and-scopes" title="Permanent link">#</a></h2>
+<p>All search requests include a base DN element, which specifies the portion of the DIT in which to look for matching entries, and a scope, which specifies how much of that subtree should be considered. The defined search scopes include:</p>
+<ul>
+<li>The baseObject scope (often referred to as just “base”) indicates that only the entry specified by the search base DN should be considered.</li>
+<li>The singleLevel scope (often referred to as “one” or “onelevel”) indicates that only entries immediately below the search base DN (but not the base entry itself) should be considered.</li>
+<li>The wholeSubtree scope (often referred to as “sub”) indicates that the entry specified as the search base DN and all entries below it (to any depth) should be considered.</li>
+<li>The subordinateSubtree scope indicates that all entries below the search base DN (to any depth), but not the search base entry itself, should be considered.</li>
+</ul>
+<h2 id="controls">Controls<a class="headerlink" href="#controls" title="Permanent link">#</a></h2>
+<p>A control is a piece of information that can be included in an LDAP request or response to provide additional information about that request or response, or to change the way that it should be interpreted by the server (in the case of a request) or client (in the case of a response). For example, the server-side sort request control can be included in a search request to indicate that the server should sort the matching entries in a particular way before sending them to the client.</p>
+<p>LDAP controls have three elements:</p>
+<ul>
+<li>An object identifier (OID) that uniquely identifies the type of control. This is a required element.</li>
+<li>A criticality. This is a flag that indicates how the server should behave if it does not recognize a provided request control, or if it cannot support the control in the context in which it was requested. A criticality of “true” indicates that the control is a critical part of the request, and that the server should reject the request if it cannot support the control. A criticality of “false” indicates that the control is more a “nice to have” part of the request, and that if the server cannot support the control then it should go ahead and process the operation as if the control had not been included. The criticality does not come into play if the server does support the control within the context of the request.</li>
+<li>An optional value, which can provide additional information for use in processing the control. For example, for a server-side sort request control, the control value should specify the desired sort order. The encoding for a control varies based on the type of control.</li>
+</ul>
+<h2 id="ldapsearch-syntax">LDAPSEARCH Syntax<a class="headerlink" href="#ldapsearch-syntax" title="Permanent link">#</a></h2>
+<p>In order to authenticate to the LDAP server we need a username and password. The username is entered in the form of a Dinstingushed Name (DN) since that is a unique identifier. In the LDAP world this is called "bind dn". For example: <code>-D "cn=Philip L,cn=users,dc=evilcorp,dc=local"</code>.</p>
+<p>The Search Base is specified with the <code>-b</code> flag in ldapsearch. For example: <code>-b "dc=evilcorp,dc=local"</code>.  </p>
+<p>ldapsearch will automatically default to the scope subTree, and the filter <code>objectClass=*</code>.</p>
+<p>This is the basic syntax of a ldapsearch query: <code>usage: ldapsearch [options] [filter [attributes...]]</code>. So first the options, then the filter.</p>
+<pre><code>ldapsearch -h evilcorp.local  -w SecretPassword  -b &quot;dc=evilcorp,dc=local&quot; -D &quot;cn=Philip L,cn=users,dc=evilcorp,dc=local&quot; &quot;(userPassword=*)&quot;
+</code></pre>
+
+<p>In order to be able to include fun operators like this: </p>
+<pre><code>(Operator(filter)(filter)(filter)...)
+</code></pre>
+
+<p>With <code>Operator</code> being <code>&amp;</code> (AND), <code>|</code> (OR) and <code>!</code> (NOT). </p>
+<pre><code>ldapsearch -h evilcorp.local  -w SecretPassword  -b &quot;dc=evilcorp,dc=local&quot; -D &quot;cn=Philip L,cn=users,dc=evilcorp,dc=local&quot; &quot;(|(userPassword=*)(objectClass=*))&quot;
+</code></pre>
+
+<pre><code>ldapsearch -h &lt;ip-address of dc&gt; -w SecretPassword -b &quot;dc=evilcorp,dc=local&quot; -D &quot;cn=Philip L,cn=users,dc=evilcorp,dc=local&quot;
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../windows_access_control/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../windows_access_control/" class="btn btn-xs btn-link">
+        Windows Access Control
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../neo4j_and_cypher/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../neo4j_and_cypher/" class="btn btn-xs btn-link">
+        Neo4J and Cypher
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/good_to_know/ldap_syntax.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

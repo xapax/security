@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Tools - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Tools", url: "#_top", children: [
+          ]},
+          {title: "Android debuging bridge (ADB)", url: "#android-debuging-bridge-adb", children: [
+              {title: "Why am i getting permission denied?", url: "#why-am-i-getting-permission-denied" },
+              {title: "Why is my device getting removed if forwarded via qemu-kvm?", url: "#why-is-my-device-getting-removed-if-forwarded-via-qemu-kvm" },
+              {title: "Drozer", url: "#drozer" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../mobile_application_vulnerabilities_android/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../mobile_application_vulnerabilities_android/" class="btn btn-xs btn-link">
+        Vulnerabilities
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../mobile_application_setup/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../mobile_application_setup/" class="btn btn-xs btn-link">
+        Android Testing Environment Setup
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">#</a></h2>
+<h2 id="android-debuging-bridge-adb">Android debuging bridge (ADB)<a class="headerlink" href="#android-debuging-bridge-adb" title="Permanent link">#</a></h2>
+<p>To interact with the cellphone you can use adb.</p>
+<p>On debian you install it like this.</p>
+<pre><code>sudo apt-get install android-tools-adb
+</code></pre>
+
+<p>Then you connect the phone over usb to your machine. And open the phone, to allow the phone to connect to your computer. </p>
+<p>The you can see the device by running </p>
+<pre><code>adb devices
+adb shell
+</code></pre>
+
+<h3 id="why-am-i-getting-permission-denied">Why am i getting permission denied?<a class="headerlink" href="#why-am-i-getting-permission-denied" title="Permanent link">#</a></h3>
+<p>Add your user to the plugdev group.</p>
+<pre><code>sudo usermod -aG plugdev $LOGNAME
+</code></pre>
+
+<p>Fix the udev rules:</p>
+<pre><code>sudo apt-get install android-sdk-platform-tools-common
+</code></pre>
+
+<p>Not found in kali repo. But in debian repo.</p>
+<p>https://wiki.debian.org/SourcesList</p>
+<p>Add debian sources and update</p>
+<p>vim /etc/apt/sources.list</p>
+<pre><code>deb http://deb.debian.org/debian buster main contrib non-free
+deb-src http://deb.debian.org/debian buster main contrib non-free
+
+deb http://deb.debian.org/debian-security/ buster/updates main contrib non-free
+deb-src http://deb.debian.org/debian-security/ buster/updates main contrib non-free
+
+deb http://deb.debian.org/debian buster-updates main contrib non-free
+deb-src http://deb.debian.org/debian buster-updates main contrib non-free
+</code></pre>
+
+<pre><code>sudo apt update
+</code></pre>
+
+<pre><code>sudo apt-get install android-sdk-platform-tools-common
+</code></pre>
+
+<h3 id="why-is-my-device-getting-removed-if-forwarded-via-qemu-kvm">Why is my device getting removed if forwarded via qemu-kvm?<a class="headerlink" href="#why-is-my-device-getting-removed-if-forwarded-via-qemu-kvm" title="Permanent link">#</a></h3>
+<p>If you have forwarded your mobile device to your VM in qemu-kvm and it keeps getting removed, it might be fixed by adding this to your grub file</p>
+<pre><code>vim /etc/default/grub
+
+GRUB_CMDLINE_LINUX_DEFAULT=&quot;usbcore.autosuspend=-1&quot;
+
+update-grub
+reboot
+</code></pre>
+
+<h3 id="drozer">Drozer<a class="headerlink" href="#drozer" title="Permanent link">#</a></h3>
+<p>https://github.com/mwrlabs/drozer/releases</p>
+<pre><code>dpkg -i drozeretc
+sudo apt -f install
+sudo dpkg -i drozer
+
+
+drozer console connect --server 10.42.0.11 --password
+</code></pre>
+
+<p>If you are using ADB you can run</p>
+<pre><code>adb forward tcp:31415 tcp:31415
+drozer console connect
+</code></pre>
+
+<p>Drozer is not being maintained anymore. So it might be time to move on to other tools.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../mobile_application_vulnerabilities_android/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../mobile_application_vulnerabilities_android/" class="btn btn-xs btn-link">
+        Vulnerabilities
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../mobile_application_setup/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../mobile_application_setup/" class="btn btn-xs btn-link">
+        Android Testing Environment Setup
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_mobile_applications/android/android_tools.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

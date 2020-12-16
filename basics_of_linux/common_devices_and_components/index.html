@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Common Devices and Components - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Load balancer", url: "#_top", children: [
+              {title: "Loan balancing", url: "#loan-balancing" },
+          ]},
+          {title: "Reverse proxy", url: "#reverse-proxy", children: [
+              {title: "Common reverse proxies", url: "#common-reverse-proxies" },
+          ]},
+          {title: "API Gateway", url: "#api-gateway", children: [
+              {title: "Common API gateways", url: "#common-api-gateways" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../basics_of_windows/basics_of_windows/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../basics_of_windows/basics_of_windows/" class="btn btn-xs btn-link">
+        Basics of Windows
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../vim/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../vim/" class="btn btn-xs btn-link">
+        Vim
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="load-balancer">Load balancer<a class="headerlink" href="#load-balancer" title="Permanent link">#</a></h1>
+<p>Load balancers can performs a few different functions. But these are the more common ones.</p>
+<h2 id="loan-balancing">Loan balancing<a class="headerlink" href="#loan-balancing" title="Permanent link">#</a></h2>
+<p>Well a load balancer principally works with load balancing. It initially receives traffic and then direct that traffic onward towards different instances/server of an app. So in order to increase the amount of traffic a webserver can handle you can just add a new instance of your app, and then tell the load balancer to direct the traffic to the new server as well.
+Without a load balancer the way to scale up the capacity of an application would be to buy a bigger server that can handle more traffic, not a very smooth way to scale an application.</p>
+<p>The group of servers that the load balancer directs the traffic to is usually called <strong>server farm</strong> or <strong>server pool</strong>.</p>
+<p>Load balancers can be roughly divided up n those that direct traffic on Layer 4 or Layer 7.
+Layer 4 load balancers act upon network traffic on layer 4, like IP, TCP, UDP.</p>
+<p>Layer 7 load balancers balance the traffic based on data found in the HTTP. It could be HTTP headers, or even URL Paths, or cookie. It is common to see when you remove the Load balancing Cookie that you get different responds. It could for example be that you are authenticated on one server, but not the other.</p>
+<p>Load balancers can assure the health of a server, in order to only direct a request to a server that is up and running.</p>
+<h3 id="common-load-balancers">Common load balancers<a class="headerlink" href="#common-load-balancers" title="Permanent link">#</a></h3>
+<p>The most common load balancers are F5 and Nginx. Also HA Proxy
+Nginx can also work as a webserver or a reverse proxy. It depends on how you configure it.</p>
+<h1 id="reverse-proxy">Reverse proxy<a class="headerlink" href="#reverse-proxy" title="Permanent link">#</a></h1>
+<p>From many to one.</p>
+<p>Deploying a load balancer make sense when you have multiple server.
+Deploying a reverse proxy in front of an application can provide some really nice features. Examples of such features are:</p>
+<ul>
+<li>IP whitelisting/blacklisting</li>
+<li>Limiting number of connetions from each client</li>
+</ul>
+<p>It can also increase the performance by doing the following:
+- Compression (GZIP compression - which decreases the amount of data that needs to be transfered)
+- SSL Terminatation - terminating can be computationally expensive. So it might be beneficial to have a reverse proxy doing that, instead of the web server, which might not be specialized to do that.
+- Caching - By caching certain content, it will reduce the traffic to the actual web server, and generate faster responses to the client.</p>
+<h3 id="common-reverse-proxies">Common reverse proxies<a class="headerlink" href="#common-reverse-proxies" title="Permanent link">#</a></h3>
+<p>F5 BIG-IP, Nginx</p>
+<p>Increased security. </p>
+<h1 id="api-gateway">API Gateway<a class="headerlink" href="#api-gateway" title="Permanent link">#</a></h1>
+<p>API gateway is usually used in order to route request to appropriate microservices. API gateways is usually used with microservices. It has the benefit that a client (or server) only needs to talk to one API server to get some data, instead of having to talk to 20 different microservices, which might be using different protocols. One speaking XML, the other JSON, and another SOAP.</p>
+<p>API gateway works on OSI layer 7 protocols (HTTP)</p>
+<p>Webserver ---&gt; API Gateway --&gt; Microservice 1, 2 or 3</p>
+<p>Configurint the API gateway therefore becomes important. Because you need to translate the webrequest to all those different microservices, which might be using different protocols, and different authentications.</p>
+<p>It performs some or all of the the following functions:
+- Translates protocols. Like from JSON to XML. 
+- Aggregates data from different microservices into one response.</p>
+<ul>
+<li>SSL termination</li>
+<li>Authentication</li>
+<li>IP whitelisting</li>
+<li>Client rate limiting (throttling)</li>
+<li>Logging and monitoring</li>
+<li>Response caching</li>
+<li>Web application firewall</li>
+<li>GZIP compression</li>
+<li>Servicing static content</li>
+</ul>
+<p>What's the difference between an API gateway and a layer 7 load balancer? Well, it is not necessarily clear cut. They can act similar. Difference could be that a load balancer doesn't really translate between protocols.
+An API gateway often performs the same functions as a reverse proxy or a load balancer. Maybe it is good to think of an API gateway as a advanced load balancer.</p>
+<h3 id="common-api-gateways">Common API gateways<a class="headerlink" href="#common-api-gateways" title="Permanent link">#</a></h3>
+<p>Nginx. Nginx is really versitile, and can be used as a load balancer, reverse proxy, web server, or api gateway. In fact Nginx can act as a reverse proxy, load balancer and API gateway all at the same time.
+Kong, Tyk, Amassador, Amazon API gateway, HAPRoxy. Azure API Management (APIM)</p>
+<p>Biztalk is a common windows bases API gateway.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../basics_of_windows/basics_of_windows/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../basics_of_windows/basics_of_windows/" class="btn btn-xs btn-link">
+        Basics of Windows
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../vim/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../vim/" class="btn btn-xs btn-link">
+        Vim
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/basics_of_linux/common_devices_and_components.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

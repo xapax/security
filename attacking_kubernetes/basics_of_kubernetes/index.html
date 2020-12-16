@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Basics of Kubernetes - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Hardware", url: "#_top", children: [
+          ]},
+          {title: "Software", url: "#software", children: [
+              {title: "Pods", url: "#pods" },
+              {title: "Deployment", url: "#deployment" },
+              {title: "Ingress", url: "#ingress" },
+              {title: "Admission controller / PodSecuriyPolicy", url: "#admission-controller-podsecuriypolicy" },
+          ]},
+          {title: "Setting up a kubernetes cluster in GCLoud", url: "#setting-up-a-kubernetes-cluster-in-gcloud", children: [
+          ]},
+          {title: "Components", url: "#components", children: [
+              {title: "Etcd", url: "#etcd" },
+              {title: "Api-server", url: "#api-server" },
+              {title: "Kubelet", url: "#kubelet" },
+          ]},
+          {title: "Lifecycle of a POD", url: "#lifecycle-of-a-pod", children: [
+          ]},
+          {title: "Understanding IP-addresses", url: "#understanding-ip-addresses", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../basics_of_docker/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../basics_of_docker/" class="btn btn-xs btn-link">
+        Basics of Docker
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_cloud_environment/attacking_azure/recon/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_cloud_environment/attacking_azure/recon/" class="btn btn-xs btn-link">
+        Recon
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <p>Random notes about random stuff concerning kubernets.
+Here goes.</p>
+<p>It can be beneficial to divide the componenets of Kubernetes into Software and Hardware. So let's start with the hardware.</p>
+<h2 id="hardware">Hardware<a class="headerlink" href="#hardware" title="Permanent link">#</a></h2>
+<p>A kubernets cluster is the sum of all kubernetes nodes.
+A node will likely be a physical machine or a virtual machine in a datacenter.
+A program can run on any of the nodes. It can change, so the program should not be storing data on a specific node, because the program might end up running on another node.
+To store data persistently Kubernetes uses Persistent volumes. This can be a local or a cloud drive. Think of it has an external harddrive that you plug into your cluster.
+Persistent volumes can be mounted to the kubernetes kluster, at which point it is accessible from all nodes.</p>
+<h2 id="software">Software<a class="headerlink" href="#software" title="Permanent link">#</a></h2>
+<p>Programs running in the kubernetes klusters are package in containers. The most common and popular one is of course Docker.
+You usually have one service per container.</p>
+<h3 id="pods">Pods<a class="headerlink" href="#pods" title="Permanent link">#</a></h3>
+<p>Containers are run in Pods.
+If you application becomes really popular, and can't handle the load, you can simply configure your Pod to have more replicas.
+Pods can hold serveral containers, but it might be better to just have one container in each pod. Since you might want to scale up only one container, and not all the other containers in the pod. You might waste a lot of resources if you scale up a Pod that containes containers that does not need to be scaled up.</p>
+<h3 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">#</a></h3>
+<p>Deployment is an abstraction that defines how many replicas of pods you want. 
+Using deployment you will not deal with pods directly.</p>
+<h3 id="ingress">Ingress<a class="headerlink" href="#ingress" title="Permanent link">#</a></h3>
+<p>Kubernetes provides a firewall between the outside of the kluster and the inside. However between the pods there are not default firewalls.</p>
+<h3 id="admission-controller-podsecuriypolicy">Admission controller / PodSecuriyPolicy<a class="headerlink" href="#admission-controller-podsecuriypolicy" title="Permanent link">#</a></h3>
+<p>Admission controller sits between the client and the master-api, it kind of works as a filter and a check. The most important admission controller, from a security perspective, is PodSecurityPolicy.</p>
+<p>You can list the PSP by running this command:</p>
+<pre><code>kubectl get psp -A
+
+- Read the specifications of a specific PSP
+kubectl describe psp privilege
+</code></pre>
+
+<p>So, how do we implement a PSP?
+It involved three steps:
+1. Create  PSP
+2. Create a Role that is associated with the PSP
+3. Create a Rolebinding that binds the Role to a user, serviceaccount or group.</p>
+<p>After that the PSP will be implmented for those specific users that are associated through the rolebinding. So, PSP is not set in the manifest file of  pod or deployment. The PSP is instead associated to a user through the rolebinding.</p>
+<h2 id="setting-up-a-kubernetes-cluster-in-gcloud">Setting up a kubernetes cluster in GCLoud<a class="headerlink" href="#setting-up-a-kubernetes-cluster-in-gcloud" title="Permanent link">#</a></h2>
+<p>After you have installed GCloud CLI, enabled billing,, and Enabled Kubernets API for your specific project you can create a kluster like this:</p>
+<pre><code>gcloud container clusters create my-cluster --zone us-west1-a
+</code></pre>
+
+<p>You can start to manage your cluster with kubectl, but first you need to setup credentials to do it:</p>
+<pre><code>gcloud container clusters get-credentials my-cluster --zone us-west1-a --project kuberntest
+</code></pre>
+
+<p>If you go to the gcloud console you can see that the Kubernetes cluster is created. And if you go to Computer you can see three VM instances created, these are your nodes. If you want to remove them you should do that through kubernetes and not though gcloud, because if you remove those VMs the cluster will just spin up new VMs.</p>
+<p>Now you can deploy a service to your kluster with the following command</p>
+<p>Where gitea.yaml is a yaml-config file, which incluldes a docker-image from dockerhub.</p>
+<pre><code>kubectl apply -f gitea.yaml
+</code></pre>
+
+<p>The file looks like this:</p>
+<pre><code>apiVersion: v1
+kind: Pod
+metadata:
+  name: gitea-pod
+spec:
+  containers:
+  - name: gitea-container
+    image: gitea/gitea:1.4
+</code></pre>
+
+<p>You can now check your pods with this command:</p>
+<pre><code>kubectl get pods
+</code></pre>
+
+<h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">#</a></h2>
+<p>This image describes the components of kubernetes pretty well:</p>
+<p><img alt="Screenshot" src="../img/kubernetes-control-plane.png" /></p>
+<p>Some interesting things to note here is that the API server is the only component that should talk to etcd.</p>
+<h3 id="etcd">Etcd<a class="headerlink" href="#etcd" title="Permanent link">#</a></h3>
+<p>Etcd contains all the state of the cluster. It contains information, such as cloud metadata, credentials. It is a key-value database. Etcd is the final word of the state of cluster. So if you have write priviliges to the etcd database you basically own the cluster.</p>
+<h3 id="api-server">Api-server<a class="headerlink" href="#api-server" title="Permanent link">#</a></h3>
+<p>If you control the api-server, either through a shell or with a user with high privilige access you have a high degree of control over the cluster.</p>
+<h3 id="kubelet">Kubelet<a class="headerlink" href="#kubelet" title="Permanent link">#</a></h3>
+<p>Kubelet has its own API, and with access to it you can perform a lot of actions.
+Kubelet has historically been used in a lot of attacks.</p>
+<h2 id="lifecycle-of-a-pod">Lifecycle of a POD<a class="headerlink" href="#lifecycle-of-a-pod" title="Permanent link">#</a></h2>
+<p>This image describes pretty well the lifecycle of a pod</p>
+<p><img alt="Screenshot" src="../img/kubernetes-lifecycle.png" /></p>
+<ul>
+<li>kubectl or any other API client submits the Pod spec to the API server.</li>
+<li>The API server writes the Pod object to the etcd data store. Once the write is successful, an acknowledgment is sent back to API server and to the client.</li>
+<li>The API server now reflects the change in state of etcd.</li>
+<li>All Kubernetes components use watches to keep checking API server for relevant changes.</li>
+<li>In this case, the kube-scheduler (via its watcher) sees that a new Pod object is created on API server but is not bound to any node.</li>
+<li>kube-scheduler assigns a node to the pod and updates the API server.</li>
+<li>This change is then propagated to the etcd data store. The API server also reflects this node assignment on its Pod object.</li>
+<li>Kubelet on every node also runs watchers who keep watching API server. Kubelet on the destination node sees that a new Pod is assigned to it.</li>
+<li>Kubelet starts the pod on its node by calling Docker and updates the container state back to the API server.</li>
+<li>The API server persists the pod state into etcd.</li>
+<li>Once etcd sends the acknowledgment of a successful write, the API server sends an acknowledgment back to kubelet indicating that the event is accepted.</li>
+</ul>
+<h2 id="understanding-ip-addresses">Understanding IP-addresses<a class="headerlink" href="#understanding-ip-addresses" title="Permanent link">#</a></h2>
+<ul>
+<li>ExternalIP: An endpoint which can be accessed </li>
+<li>ClusterIP: A Service is created to have a common IP for a service. Since the Pod ips are ephemeral.The service ip is sometimes called ClusterIP.</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../basics_of_docker/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../basics_of_docker/" class="btn btn-xs btn-link">
+        Basics of Docker
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_cloud_environment/attacking_azure/recon/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_cloud_environment/attacking_azure/recon/" class="btn btn-xs btn-link">
+        Recon
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_kubernetes/basics_of_kubernetes.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

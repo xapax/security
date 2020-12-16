@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Passwords in Active Directory Attributes - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Password in Active Directory attributes", url: "#_top", children: [
+              {title: "Using PowerView", url: "#using-powerview" },
+              {title: "Using ldap query", url: "#using-ldap-query" },
+              {title: "Debugging problems", url: "#debugging-problems" },
+          ]},
+          {title: "Using Bloodhound and bash", url: "#using-bloodhound-and-bash", children: [
+              {title: "Using ActiveDirectory module", url: "#using-activedirectory-module" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../smb_shares_mining/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../smb_shares_mining/" class="btn btn-xs btn-link">
+        SMB Shares Mining
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../misconfigured_access_control_lists/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../misconfigured_access_control_lists/" class="btn btn-xs btn-link">
+        Misconfigured Access Control Lists
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="password-in-active-directory-attributes">Password in Active Directory attributes<a class="headerlink" href="#password-in-active-directory-attributes" title="Permanent link">#</a></h2>
+<p>Inb order to search through users or objects you need to </p>
+<p>Interesting attributes to search for, remember these can be for either computer or a user.</p>
+<pre><code>comment
+description
+UserPassword
+UnixUserPassword
+unicodePwd
+msSFU30Password
+</code></pre>
+
+<p>Other interesting might be</p>
+<pre><code>adminDescription
+dBCSPwd
+lmpwdHistory
+nTPwdHistory
+supplementalCredentials
+</code></pre>
+
+<h3 id="using-powerview">Using PowerView<a class="headerlink" href="#using-powerview" title="Permanent link">#</a></h3>
+<pre><code class="PowerShell">Get-DomainUser -Domain evilcorp.local -Properties samaccountname,comment,description,userpassword,unixuserpassword,unicodepwd,mssfu30password,admindescription,dbcspwd,lmpwdhistory,ntpwdhistory,supplementalcredentials -LDAPFilter '(|(comment=*)(description=*)(userpassword=*)(unixuserpassword=*)(unicodepwd=*)(mssfu30password=*)(admindescription=*)(dbcspwd=*)(lmpwdhistory=*)(ntpwdhistory=*)(supplementalcredentials=*))' | fl &gt; C:\attributes.txt
+</code></pre>
+
+<h3 id="using-ldap-query">Using ldap query<a class="headerlink" href="#using-ldap-query" title="Permanent link">#</a></h3>
+<pre><code>ldapsearch -h evilcorp.local  -w SecretPassword  -b &quot;dc=evilcorp,dc=local&quot; -D &quot;cn=Philip L,cn=users,dc=evilcorp,dc=local&quot; &quot;(|(userPassword=*)(UnixUserPassword=*)(unicodePwd=*)(msSFU30Password=*)(adminDescription=*)(lmpwdHistory=*)(nTPwdHistory=*)(supplementalCredentials=*))&quot; userPassword unixUserPassword unicodePwd msSFU30Password adminDescription lmpwdHistory nTPwdHistory supplementalCredentials
+</code></pre>
+
+<p>These will generate a lot of results, and you will have to go through the result one by way, or just grep for relevant words.
+If the LDAP server has a maxsize of results to display, it will cap the response at that size. To get around that, and to not make mega-queries, your can set a size-limit, and then be promped to receive more.</p>
+<p>If the response contains åäö the result is base64-encoded.</p>
+<pre><code>ldapsearch -E pr=500/prompt -h evilcorp.local  -w SecretPassword  -b &quot;dc=evilcorp,dc=local&quot; -D &quot;cn=Philip L,cn=users,dc=evilcorp,dc=local&quot; &quot;(|(description=*)(comment=*)(info=*))&quot; description comment info | tee results.txt 
+
+grep -i 'pwd\|passw\|lösen\|losen\|somma\|vinter\|'
+</code></pre>
+
+<p>Or you can perform the search in the LDAP query itself:</p>
+<pre><code>ldapsearch -h evilcorp.local  -w SecretPassword  -b &quot;dc=evilcorp,dc=local&quot; -D &quot;cn=Philip L,cn=users,dc=evilcorp,dc=local&quot; &quot;(|(description=*passw*)(description=*lösen*)(description=*losen*)(comment=*passw*)(comment=*lösen*)(comment=*losen*))&quot;
+</code></pre>
+
+<h3 id="debugging-problems">Debugging problems<a class="headerlink" href="#debugging-problems" title="Permanent link">#</a></h3>
+<p>If you receive this error it means that you are not allowed to authenticate to the LDAP server from your HOST.</p>
+<pre><code>additional info: 80090308: LdapErr: DSID-0C09042A, comment: AcceptSecurityContext error, data 531, v3839
+</code></pre>
+
+<p>On your AD users there exists an attribute called <code>userWorkstations</code>, this attribute specified from which workstations you are allowed to authenticate to the LDAP server. Since your linux-machines hostname is not among those specified in the <code>userWorkstations</code> attribute you are not allowed.</p>
+<p>A possible workaround, that I have not tested but might work, is to change the hostname to a hostname that is specified in <code>userWorkstations</code> attribute of the user. This presents a catch22, because you need LDAP access to know which <code>userWorksations</code> are allowed.</p>
+<h2 id="using-bloodhound-and-bash">Using Bloodhound and bash<a class="headerlink" href="#using-bloodhound-and-bash" title="Permanent link">#</a></h2>
+<pre><code>echo &quot;match (a) return a.description;&quot;  | /usr/share/neo4j/bin/cypher-shell -u neo4j -p &lt;creds&gt; --format plain  | sort -u 
+</code></pre>
+
+<h3 id="using-activedirectory-module">Using ActiveDirectory module<a class="headerlink" href="#using-activedirectory-module" title="Permanent link">#</a></h3>
+<pre><code># This will only search for a specific OU
+Get-ADUser -Filter * -SearchBase &quot;OU=Users OU,DC=hackdomain,DC=local&quot; -Properties comment
+
+# This will search for the whole domain
+Get-ADUser -Filter * -SearchBase &quot;DC=hackdomain,DC=local&quot; -Properties comment
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../smb_shares_mining/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../smb_shares_mining/" class="btn btn-xs btn-link">
+        SMB Shares Mining
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../misconfigured_access_control_lists/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../misconfigured_access_control_lists/" class="btn btn-xs btn-link">
+        Misconfigured Access Control Lists
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/active_directory_privilege_escalation/passwords_in_active_directory_attributes.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

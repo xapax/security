@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Hardening Bios - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Why hardening bios?", url: "#_top", children: [
+              {title: "Intel Active Management Technology (IAMT)", url: "#intel-active-management-technology-iamt" },
+              {title: "Change boot-order", url: "#change-boot-order" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../hardening_linux/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../hardening_linux/" class="btn btn-xs btn-link">
+        Hardening Linux
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../python/useful_python_commands/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../python/useful_python_commands/" class="btn btn-xs btn-link">
+        Useful Scripts
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="why-hardening-bios">Why hardening bios?<a class="headerlink" href="#why-hardening-bios" title="Permanent link">#</a></h2>
+<p>It is a good idea add a password to enter the BIOS. Why is that? Was is the worst that can happen?</p>
+<h3 id="intel-active-management-technology-iamt">Intel Active Management Technology (IAMT)<a class="headerlink" href="#intel-active-management-technology-iamt" title="Permanent link">#</a></h3>
+<p>IAMT is a hardware and firmware technology used to perform out-of-band access to a computer. This means that if IAMT is enabled a user can remotely start the computer and then access that computer (if the user has credentials). How is it even possible to access a computer that is not even turned on, you might wonder. How can it have an IP if it is not turned on?</p>
+<p>Intel add a separate microprocessor. It does not require an OS to work or any kind of locally installed agent.</p>
+<p>AMT is most often found in business computers, and not as often on regular non-business computers.</p>
+<p>IAMT is usually accessible over the network on the port 16992 or 16993 as a web interface.</p>
+<p><strong>Features</strong></p>
+<ul>
+<li>One feature that is provided by IAMT is Keyboard-Video-Mouse (KVM) over LAN. This means that, if enabled, someone can access the computer over the network.</li>
+<li>Remote boot - you can remotely boot the computer from a different image. You can even boot from an image on a network share.</li>
+</ul>
+<h4 id="risks">Risks<a class="headerlink" href="#risks" title="Permanent link">#</a></h4>
+<p>This means that if an attacker has physical access to a computer and bios password is not set, that person can enter into the BIOS and enable IAMT. If the disk is not encrypted the attacker can go back to anyware on the lan and then just boot the computer. If it requires a password to log in the attacker can bypass that simply by booting the computer from an image remote.</p>
+<h3 id="change-boot-order">Change boot-order<a class="headerlink" href="#change-boot-order" title="Permanent link">#</a></h3>
+<p>If no BIOS password is set then an attacker can change the boot-order, in order to boot the computer from a USB. This way it is possible to bypass the OS authentication. If the computer is encrypted there is nothing that user can do.</p>
+<p>Changing the boot-order is only an interesting attack </p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../hardening_linux/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../hardening_linux/" class="btn btn-xs btn-link">
+        Hardening Linux
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../python/useful_python_commands/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../python/useful_python_commands/" class="btn btn-xs btn-link">
+        Useful Scripts
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/basic_hardening/hardening_bios.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

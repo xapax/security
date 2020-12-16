@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Powershell - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "PowerShell", url: "#_top", children: [
+              {title: "Basics", url: "#basics" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../powershell_scripting2/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../powershell_scripting2/" class="btn btn-xs btn-link">
+        Powershell Scripting
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../basics_of_windows/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../basics_of_windows/" class="btn btn-xs btn-link">
+        Basics of Windows
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="powershell">PowerShell<a class="headerlink" href="#powershell" title="Permanent link">#</a></h1>
+<p>PowerShell is Windows new shell. It comes by default from Windows 7. But can be downloaded and installed in earlier versions.</p>
+<ul>
+<li>PowerShell provides access to almost everything an attacker might want.</li>
+<li>It is based on the .NET framework.</li>
+<li>It is basically bash for windows</li>
+<li>The commands are case-insensitive</li>
+</ul>
+<h2 id="basics">Basics<a class="headerlink" href="#basics" title="Permanent link">#</a></h2>
+<p>So a command in PowerShell is called <strong>cmdlet</strong>. The cmdlets are created using a verb and a noun. Like <code>Get-Command</code>, Get is a  verb and  Command is a noun. Other verbs can be: remove, set, disable, install, etc.</p>
+<p>To get help on how to use a <strong>cmdlet</strong> while in PowerShell, the man-page, you do:</p>
+<pre><code>Get-Help    &lt;cmdlet    name    |    topic    name&gt;
+</code></pre>
+
+<p>Example</p>
+<pre><code>get-help echo
+get-help get-command
+</code></pre>
+
+<p>Find out what flags you can use just write <code>get-command -</code> en then start tabbing.</p>
+<p><strong>Powershell Version and Build</strong></p>
+<pre><code>$PSVersionTable
+</code></pre>
+
+<h3 id="fundamentals">Fundamentals<a class="headerlink" href="#fundamentals" title="Permanent link">#</a></h3>
+<p>With get-member you can list all the properties and methods of the object that the command returns.</p>
+<pre><code>Get-Member
+For example:
+Get-Command | Get-Member
+Get-Process | Get-Member
+</code></pre>
+
+<p>Select-XXX</p>
+<pre><code>Select-object
+</code></pre>
+
+<h4 id="variables">Variables<a class="headerlink" href="#variables" title="Permanent link">#</a></h4>
+<pre><code>$testVar = &quot;blabla&quot;
+</code></pre>
+
+<p><strong>Wget / Download a file</strong></p>
+<pre><code>Invoke-WebRequest &lt;uri&gt;
+wget &lt;uri&gt;
+</code></pre>
+
+<p><strong>Grep</strong></p>
+<pre><code>Select string can be used like grep
+get-command | select-string blabla
+</code></pre>
+
+<p><strong>General commands that can be used on objects</strong></p>
+<pre><code>measure-object -words
+get-content fil.txt | measure-object words
+</code></pre>
+
+<h3 id="working-with-filesystem">Working with filesystem<a class="headerlink" href="#working-with-filesystem" title="Permanent link">#</a></h3>
+<p><strong>List all files in current directory</strong></p>
+<pre><code>get-childitem
+gci
+
+List hidden files too
+gci -Force
+
+List all files recurisvely
+gci -rec
+
+Count the files
+(get-childitem).count
+List all files but exclude some folders
+gci -exclude AppData | gci -rec -force
+</code></pre>
+
+<h3 id="working-with-files">Working with files<a class="headerlink" href="#working-with-files" title="Permanent link">#</a></h3>
+<pre><code>Read a file
+Get-Content
+    gc
+    cat
+Count lines of file
+(get-content .\file).count
+Select specific line in a file (remember that it starts from 0)
+(gc .\file.txt)[10]
+gc .\file.txt | Select -index 10
+</code></pre>
+
+<h3 id="services">Services<a class="headerlink" href="#services" title="Permanent link">#</a></h3>
+<pre><code>List services
+get-service
+</code></pre>
+
+<h3 id="network-related-stuff">Network related stuff<a class="headerlink" href="#network-related-stuff" title="Permanent link">#</a></h3>
+<p>Domain information</p>
+<pre><code>Get-ADDomain
+Get-AdDomainController
+Get-AdComputer
+To see a list of all properties do this
+get-adcomputer ComputerName -prop *
+
+Get AD Users
+Get-ADUser -f {Name -eq 'Karl, Martinez'} -properties *
+
+Get all AD Groups
+Get-ADGroup -filter *
+
+
+
+Resolve DNS
+Resolve-DNSname 10.10.10.10
+
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../powershell_scripting2/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../powershell_scripting2/" class="btn btn-xs btn-link">
+        Powershell Scripting
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../basics_of_windows/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../basics_of_windows/" class="btn btn-xs btn-link">
+        Basics of Windows
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/basics_of_windows/powershell.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

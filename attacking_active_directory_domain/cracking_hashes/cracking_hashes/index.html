@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Cracking Hashes - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Domain Logon Information (DCC2)", url: "#_top", children: [
+          ]},
+          {title: "Kerberoast", url: "#kerberoast", children: [
+          ]},
+          {title: "NTLM", url: "#ntlm", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../generate_password_list/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../generate_password_list/" class="btn btn-xs btn-link">
+        Generate Password List
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../remote_access/remote_access/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../remote_access/remote_access/" class="btn btn-xs btn-link">
+        Remote Access
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="domain-logon-information-dcc2">Domain Logon Information (DCC2)<a class="headerlink" href="#domain-logon-information-dcc2" title="Permanent link">#</a></h2>
+<p>Format</p>
+<pre><code>$DCC2$#user#7eb833ab3baaade155de2bc642debdaa 
+</code></pre>
+
+<pre><code>./hashcat-5.0.0/hashcat64.bin -a 0 -m 2100 -o result.txt -r ./hashcat-5.0.0/rules/dive.rule ./hashes.txt /usr/share/wordlists/rockyou.txt
+</code></pre>
+
+<h2 id="kerberoast">Kerberoast<a class="headerlink" href="#kerberoast" title="Permanent link">#</a></h2>
+<p>Format:</p>
+<pre><code>./hashcat-5.0.0/hashcat64.bin -O -w 3 -a 0 -m 13100 -o result.txt -r ./hashcat-5.0.0/rules/dive.rule ./hashes.txt /usr/share/wordlists/rockyou.txt
+</code></pre>
+
+<h2 id="ntlm">NTLM<a class="headerlink" href="#ntlm" title="Permanent link">#</a></h2>
+<p>Format:</p>
+<pre><code>edb2b435b51404dadad3a445c11404aa
+</code></pre>
+
+<pre><code>./hashcat-5.0.0/hashcat64.bin -a 0 -m 1000 -o result.txt -r ./hashcat-5.0.0/rules/dive.rule ./hashes.txt /usr/share/wordlists/rockyou.txt
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../generate_password_list/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../generate_password_list/" class="btn btn-xs btn-link">
+        Generate Password List
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../remote_access/remote_access/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../remote_access/remote_access/" class="btn btn-xs btn-link">
+        Remote Access
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/cracking_hashes/cracking_hashes.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Attacking Kubernetes Checklist - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "External Pentest", url: "#_top", children: [
+          ]},
+          {title: "Internal Pentest", url: "#internal-pentest", children: [
+              {title: "Basic tests", url: "#basic-tests" },
+              {title: "Authorization / Privilige escalation", url: "#authorization-privilige-escalation" },
+              {title: "Security Audit", url: "#security-audit" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_rfid_cards/basics_of_rfid_hacking/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_rfid_cards/basics_of_rfid_hacking/" class="btn btn-xs btn-link">
+        Basics of RFID Hacking
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../attacking_kubernetes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../attacking_kubernetes/" class="btn btn-xs btn-link">
+        Attacking Kubernetes
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <p>How to list users and service accounts?
+How to list those privikliges? What is ABAC and RBAC?</p>
+<p>This checklist maps to the file "Attacking Kubernetes".</p>
+<h1 id="external-pentest">External Pentest<a class="headerlink" href="#external-pentest" title="Permanent link">#</a></h1>
+<ul>
+<li>
+<p>Check open ports</p>
+<ul>
+<li>443/tcp - Kubernetes API server</li>
+<li>2379/tcp - Etcd</li>
+<li>2380/tcp - Etcd </li>
+<li>6666/tcp - Etcd</li>
+<li>4194/tcp - cAdvisor - Container Metrics</li>
+<li>6443/tcp - Kubernetes API server</li>
+<li>8443/tcp - Minikube API server</li>
+<li>8080/tcp - Kubernetes API server</li>
+<li>10250/tcp - Kubelet - HTTPS API with full node access</li>
+<li>10255/tcp - Kubelet - Unauthenticated readonly. Pods/runnings pods/nodes</li>
+<li>10256/tcp - Kube-proxy - Kube proxy health check server</li>
+<li>9099/tcp - Calico Felix - Health check server for Calico</li>
+<li>6782-4/tcp - Weave</li>
+<li>44134/tcp - Tiller</li>
+<li>44135/tcp - Tiller</li>
+<li>30000-32767/TCP - Nodeport</li>
+</ul>
+</li>
+<li>
+<p>[ ] Check if API-server is exposed externally</p>
+</li>
+<li>[ ] Check kubelet port 10255 (read only) for Information disclosure</li>
+</ul>
+<h1 id="internal-pentest">Internal Pentest<a class="headerlink" href="#internal-pentest" title="Permanent link">#</a></h1>
+<h2 id="basic-tests">Basic tests<a class="headerlink" href="#basic-tests" title="Permanent link">#</a></h2>
+<ul>
+<li>[ ] Check for anonymous access to <code>kube-apiserver</code></li>
+<li>[ ] Check for anonymous access to etcd</li>
+<li>[ ] Check if kubelet port 10250 is accessible unauthenticated</li>
+<li>[ ] Check if kubelet port 10255 (read only) for Information disclosure</li>
+<li>[ ] Check for Service account secret / token</li>
+<li>[ ] Check for CVE-2018–1002105</li>
+<li>[ ] Check för usage of Helm</li>
+<li>[ ] HostPath - Mount Worker node root to pod</li>
+<li>[ ] Check if running Kubelet on master node</li>
+<li>[ ] Check for Docker-in-Docker</li>
+<li>[ ] Check for HostPid allow</li>
+<li>[ ] Check which services are exposed</li>
+<li>[ ] Check which versions kubernetes components are running</li>
+</ul>
+<h2 id="authorization-privilige-escalation">Authorization / Privilige escalation<a class="headerlink" href="#authorization-privilige-escalation" title="Permanent link">#</a></h2>
+<ul>
+<li>[ ] Check for interesting user and service account rights</li>
+<li>[ ] Check for CVE: CVE-2018-18264 Privilege Escalation</li>
+<li>[ ] Create Pod in Kube-system namespace and automount service account</li>
+<li>[ ] Deploy Pods using Create/update deployment, Daemonsets, statefulsets, ReplicationsControllers, Replicasets, Jobs, Cronjobs</li>
+<li>[ ] Privilege to use Pods/exec</li>
+<li>[ ] Privilege to Get/Patch rolebindings</li>
+<li>[ ] Check for impersonation privileges</li>
+<li>[ ] Check if RBAC is used</li>
+</ul>
+<h2 id="security-audit">Security Audit<a class="headerlink" href="#security-audit" title="Permanent link">#</a></h2>
+<ul>
+<li>[ ] Check if PodSecurityPolicy is supported</li>
+<li>[ ] Check if PodSecurityPolicy is used</li>
+<li>[ ] Static analysis of YAML files</li>
+<li>[ ] Check that pods are running as non-root users</li>
+<li>[ ] Check the usage of network policies</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_rfid_cards/basics_of_rfid_hacking/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_rfid_cards/basics_of_rfid_hacking/" class="btn btn-xs btn-link">
+        Basics of RFID Hacking
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../attacking_kubernetes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../attacking_kubernetes/" class="btn btn-xs btn-link">
+        Attacking Kubernetes
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_kubernetes/attacking_kubernetes_checklist.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

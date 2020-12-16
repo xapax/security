@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>About Active Directory - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Terminology", url: "#_top", children: [
+              {title: "Active Directory Domain Services - AD DS", url: "#active-directory-domain-services-ad-ds" },
+              {title: "Design Principles of an Active Directory", url: "#design-principles-of-an-active-directory" },
+              {title: "Organizational Unit (OU)", url: "#organizational-unit-ou" },
+              {title: "Containers", url: "#containers" },
+              {title: "Active Directory Groups", url: "#active-directory-groups" },
+              {title: "Security Principal", url: "#security-principal" },
+              {title: "Security identifiers (SID)", url: "#security-identifiers-sid" },
+              {title: "Access token", url: "#access-token" },
+              {title: "ACL - Access Control List", url: "#acl-access-control-list" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../domain_controller/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../domain_controller/" class="btn btn-xs btn-link">
+        Domain Controller
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../good_to_know/windows_access_control/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../good_to_know/windows_access_control/" class="btn btn-xs btn-link">
+        Windows Access Control
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="terminology">Terminology<a class="headerlink" href="#terminology" title="Permanent link">#</a></h1>
+<h2 id="active-directory-domain-services-ad-ds">Active Directory Domain Services - AD DS<a class="headerlink" href="#active-directory-domain-services-ad-ds" title="Permanent link">#</a></h2>
+<p>Active Directory uses the anology of a forest to explain the structure of an Active Directory.<br />
+So you have: Forest, Tree, Branch, Leaf</p>
+<p><strong>Forest</strong>
+The forest is the absolut top level of your AD structure.
+The forest means: all the domains. A forest can contain multiple domain container objects. Ie, many domains.
+In a company you can a have multiple forests.</p>
+<p><strong>Tree</strong>
+A tree in AD referes to a Domain.<br />
+The first domain in the forest is called the forest root domain.</p>
+<p><strong>Leaf</strong>
+A leaf object is any objects that cannot contain another object. Examples of these are: Users, Computers, Groups.</p>
+<h2 id="design-principles-of-an-active-directory">Design Principles of an Active Directory<a class="headerlink" href="#design-principles-of-an-active-directory" title="Permanent link">#</a></h2>
+<p>An AD can be organized in many different ways, and there is not right answer, but there are many wrong answers. But a good idea is to structure the AD in the same way as the organisation is structured. These principles aren't mutually exclusive, usually they are combined. OUs are flexible objects, and the structure can be changed fairly easily.</p>
+<ul>
+<li>Map the organizations structure - OUs for major business units (HR, Economy, Sales, etc)</li>
+<li>Map the geographical structure - Create OUs based on geography, for example OU for each country, with sub-OUs in each city.</li>
+<li>Create separate OU for workstations and servers</li>
+<li>Create separate OUs for workstations and user - makes it easier to apply relevant GPOs.</li>
+</ul>
+<p><strong>Good ideas:</strong> 
+- Use a Standardize Naming Convention
+For example letter of first name + lastname. or "svc_name" for service accounts.</p>
+<ul>
+<li>Don't nest to many levels of OUs. How many is to many? If each OU has a separate GPO, it might taker longer time for the user to log in, because to many GPOs will be applied.</li>
+</ul>
+<h2 id="organizational-unit-ou">Organizational Unit (OU)<a class="headerlink" href="#organizational-unit-ou" title="Permanent link">#</a></h2>
+<p>OUs are containers of other AD objects.</p>
+<p>OUs are often used to logically separate users into managable units. For example, to have OU for each country where the company has offices. That country OU might then be separated into city specifc OUs. You can thus have an OU inside an OU.<br />
+A user cannot belong to two OUs at the same time.<br />
+An OU is a container. It is a container because an OU can contain other elements, such as users or computer. A group is not a container. A group is just a simple entry with the attribute "members". The value of that attribute defines who is a member of the group. The group can therefore not contain other entries/objects, like a OU can.</p>
+<p>There are basically two reasons to use OU:
+- Control the delegation of administrative responsibility. So that one user is able to administer all the users in one OU, but no other users.
+- To apply GPOs on a limited number of users the GPO can be associated with a specific OU.</p>
+<p>The OU is the smallest unit to which you can assign a GPO. You can't, for example assign a GPO to a generic container (such as Users and Computers). Those containers inherit the root GPOs though.</p>
+<p>It is best practice to not mix computer objects with user objects in OUs.</p>
+<p><strong>Managed by</strong></p>
+<p>This might seem as an intriguing attribute that all OUs have. Unfortunatly, it is not that interesting as it sounds. It doesn't give the user any additional permissions over the OU. It is more a label to know who is the business owner of that group. So maybe the boss over that business area. </p>
+<h2 id="containers">Containers<a class="headerlink" href="#containers" title="Permanent link">#</a></h2>
+<p>There are a few differences between a OU and a Container. The main difference is that you can't apply GPOs on containers, only on OUs.
+A container cannot be created using Active Directory Administrative Center (ADAC) or Active Directory Users and Computers (ADUC). Instead you need to use ADSI Edit, and you user must belong to the Schema Admins security group. By default the only user belonging to that group is the AD account Administrator.</p>
+<p>There are some containers that is good to know:
+- Builtin - stores a number of the default groups
+- Users - stores other default groups (such as Domain Admins). This is where new users are create if no OU is specified.
+- Computers - stores computer accounts when a new accounts is created, for example when a computer is joined to the domain.</p>
+<h2 id="active-directory-groups">Active Directory Groups<a class="headerlink" href="#active-directory-groups" title="Permanent link">#</a></h2>
+<p>Groups are used to collect user accounts, computer accounts, and other groups into manageable units. Working with groups instead of with individual users helps simplify network maintenance and administration.</p>
+<p>There are two types of groups in Active Directory:</p>
+<ul>
+<li>Distribution groups - Used to create email distribution lists.</li>
+<li>Security groups - Used to assign permissions to shared resources.</li>
+</ul>
+<p>For a security perspective it is of course the Security Groups that are of interest to use.</p>
+<h2 id="security-principal">Security Principal<a class="headerlink" href="#security-principal" title="Permanent link">#</a></h2>
+<p>You hear this term quite a bit.
+In Java and Microsoft terminology a <code>Security Principal</code> is an entity that can be authenticated. In practice this means user account, service account, computer account, or thread or process that runs in of a user account or computer account.
+Each security principal is represented by a unique Security Identifier (SID).</p>
+<p>Local Security Principals are managed by the Security Account Manager (SAM).</p>
+<h2 id="security-identifiers-sid">Security identifiers (SID)<a class="headerlink" href="#security-identifiers-sid" title="Permanent link">#</a></h2>
+<p>A SID is a value that is used to identify a unique Security Principal. Every time a user signs in the an access token is created for that Security Principal. If you come from a Web background you can simply understand the token as a cookie or a JWT. The token contains the user's SID, user rights, and the SIDs for the groups that the user belongs to.</p>
+<p>Apart from these specific SIDs there are also some well known SIDs, like <code>Everyone</code> and <code>World</code>.</p>
+<h2 id="access-token">Access token<a class="headerlink" href="#access-token" title="Permanent link">#</a></h2>
+<p>An access token is a protected object that contains information about a users SID, suer rights and SIDs for groups the user belongs to.</p>
+<p>When a user authenticates to a computer the whole authentication is performed. If the authentication is successful the process returns a SID and list of SIDs for the users security groups. The <code>Local Security Authority</code> (LSA) uses those SIDs to create an access token.</p>
+<p>After LSA create the primary access token a copy of that access token is attached to every process that the user initiates. Whenever an action needs to be performed that requires user rights the operating system need to check that the user has those priviliges. So it checks the associated token to see if it has the correct level of privilige.</p>
+<p>So it is just like a web-application.</p>
+<p>There are two types of access tokens: <code>primary</code> and <code>impersonating</code>.</p>
+<h2 id="acl-access-control-list">ACL - Access Control List<a class="headerlink" href="#acl-access-control-list" title="Permanent link">#</a></h2>
+<p>So when we talk about the possibility to edit an ACL, it is the ACL of a AD object (user, group, computer), not specific files.
+Access priviliges to certain AD resrouces are configured through Access Control Entries (ACE).
+An ACL is the collection of Access control entries for a specific object. So each object, such as a computer has an Access Control Entry, which is included in the Access Control List.</p>
+<p>So it is basically just a list of who gets access to the object, and what type of access (read, write,modify, delete, etc).</p>
+<p>An ACE refers to a specific security principal (User, Group, Computer,e tc).</p>
+<p>Example of interesting permissions a user can have of another object is: owner, writeOwner, genericALl, writeDACL.</p>
+<p>All these permissions can be abused to escalate priviliges.</p>
+<h3 id="dacl">DACL/<a class="headerlink" href="#dacl" title="Permanent link">#</a></h3>
+<p>Discretionary Access Control Lists (DACL).
+DACL is just the group of ACEs.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../domain_controller/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../domain_controller/" class="btn btn-xs btn-link">
+        Domain Controller
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../good_to_know/windows_access_control/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../good_to_know/windows_access_control/" class="btn btn-xs btn-link">
+        Windows Access Control
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/understanding_active_directory/about_active_directory.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

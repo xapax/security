@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Pivoting - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Pivoting", url: "#_top", children: [
+              {title: "Ipconfig", url: "#ipconfig" },
+              {title: "Metasploit", url: "#metasploit" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../tools/wireshark/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../tools/wireshark/" class="btn btn-xs btn-link">
+        Wireshark
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../port_forwarding_and_tunneling/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../port_forwarding_and_tunneling/" class="btn btn-xs btn-link">
+        Port Forwarding and Tunneling
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="pivoting">Pivoting<a class="headerlink" href="#pivoting" title="Permanent link">#</a></h1>
+<p>Let's say that you have compromised one machine on a network and you want to keep going to another machine. You will use the first machine as a staging point/plant/foothold to break into machine 2. Thid technique of using one compromised machine to access another is called pivoting. Machine one is the <code>pivot</code> in the example. The <code>pivot</code> is just used as a way to channel/tunnel our attack. </p>
+<h4 id="ipconfig">Ipconfig<a class="headerlink" href="#ipconfig" title="Permanent link">#</a></h4>
+<p>We are looking for machines that have at least THREE network interfaces (loopback, eth0, and eth1 (or something)). These machines are connected to other networks, so we can use them to pivot.</p>
+<pre><code># Windows
+ipconfig /all
+route print
+
+#Linux
+ifconfig
+ifconfig -a
+</code></pre>
+
+<h2 id="metasploit">Metasploit<a class="headerlink" href="#metasploit" title="Permanent link">#</a></h2>
+<h3 id="ping-sweep-the-network">Ping-sweep the network<a class="headerlink" href="#ping-sweep-the-network" title="Permanent link">#</a></h3>
+<p>First we want to scan the network to see what devices we can target. In this example we already have a meterpreter shell on a windows machine with SYSTEM-privileges.</p>
+<pre><code>meterpreter &gt; run arp_scanner -r 192.168.1.0/24
+</code></pre>
+
+<p>This command will output all the devices on the netowork.</p>
+<h3 id="scan-each-host">Scan each host<a class="headerlink" href="#scan-each-host" title="Permanent link">#</a></h3>
+<p>Now that we have a list of all available machines. We want to portscan them.</p>
+<p>We will to that portscan through metasploit. Using this module:</p>
+<pre><code>use auxiliary/scanner/portscan/tcp
+</code></pre>
+
+<p>If we run that module now it will only scan machines in the network we are already on. So first we need to connect us into the second network.</p>
+<p>On the already pwn machine we do</p>
+<pre><code>ipconfig
+</code></pre>
+
+<p>Now we add the second network as a new route in metasploit. First we background our session, and then do this:</p>
+<pre><code># the ip addres and the subnet mask, and then the meterpreter session
+route add 192.168.11.1 255.255.255.0 1
+</code></pre>
+
+<p>Now we can run our portsanning module:</p>
+<pre><code>use auxiliary/scanner/portscan/tcp
+</code></pre>
+
+<h3 id="attack-a-specific-port">Attack a specific port<a class="headerlink" href="#attack-a-specific-port" title="Permanent link">#</a></h3>
+<p>In order to attack a specific port we need to forwards it like this</p>
+<pre><code>portfwd add -l 3389 -p 3389 -r 192.168.1.222
+</code></pre>
+
+<p>This is a good video-explanation:
+https://www.youtube.com/watch?v=c0XiaNAkjJA</p>
+<p>https://www.offensive-security.com/metasploit-unleashed/pivoting/</p>
+<p>http://ways2hack.com/how-to-do-pivoting-attack/</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../tools/wireshark/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../tools/wireshark/" class="btn btn-xs btn-link">
+        Wireshark
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../port_forwarding_and_tunneling/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../port_forwarding_and_tunneling/" class="btn btn-xs btn-link">
+        Port Forwarding and Tunneling
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/random_tips_and_tricks/pivoting.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

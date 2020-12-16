@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>CMD - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "CMD - Windows commands", url: "#_top", children: [
+              {title: "Dealing with files and stuff", url: "#dealing-with-files-and-stuff" },
+              {title: "Network", url: "#network" },
+              {title: "Processes", url: "#processes" },
+              {title: "Users", url: "#users" },
+              {title: "Other", url: "#other" },
+              {title: "Mounting - Mapping", url: "#mounting-mapping" },
+              {title: "References and Stuff", url: "#references-and-stuff" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../default_windows_files/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../default_windows_files/" class="btn btn-xs btn-link">
+        Default Windows Files
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../powershell_scripting2/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../powershell_scripting2/" class="btn btn-xs btn-link">
+        Powershell Scripting
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="cmd-windows-commands">CMD - Windows commands<a class="headerlink" href="#cmd-windows-commands" title="Permanent link">#</a></h1>
+<p>The equivalent to the Linux command <code>;</code> as in</p>
+<pre><code>echo &quot;command 1&quot; ; echo &quot;command 2&quot;
+</code></pre>
+
+<p>is</p>
+<pre><code>dir &amp; whoami
+</code></pre>
+
+<h3 id="dealing-with-files-and-stuff">Dealing with files and stuff<a class="headerlink" href="#dealing-with-files-and-stuff" title="Permanent link">#</a></h3>
+<p><strong>Delete file</strong></p>
+<pre><code>del
+</code></pre>
+
+<p><strong>Create folder/directory</strong></p>
+<pre><code>md folderName
+</code></pre>
+
+<p><strong>Show hidden files</strong></p>
+<pre><code>dir /A
+</code></pre>
+
+<p><strong>Print out file content, like cat</strong></p>
+<pre><code>type file.txt
+</code></pre>
+
+<p><strong>grep files</strong></p>
+<pre><code>findstr file.txt
+</code></pre>
+
+<h3 id="network">Network<a class="headerlink" href="#network" title="Permanent link">#</a></h3>
+<p><strong>Show network information</strong></p>
+<p><code>netstat -an</code></p>
+<p><strong>Show network adapter info</strong></p>
+<p><code>ipconfig</code></p>
+<p><strong>Ping another machine</strong> </p>
+<p><code>ping 192.168.1.101</code> </p>
+<p><strong>Traceroute</strong></p>
+<p><code>tracert</code></p>
+<h3 id="processes">Processes<a class="headerlink" href="#processes" title="Permanent link">#</a></h3>
+<p><strong>List processes</strong></p>
+<p><code>tasklist</code></p>
+<p><strong>Kill a process</strong></p>
+<p><code>taskkill /PID 1532 /F</code></p>
+<h3 id="users">Users<a class="headerlink" href="#users" title="Permanent link">#</a></h3>
+<pre><code>net users
+
+:: Add user
+net user hacker my_password /add
+net localgroup Administrator hacker /add
+
+:: Check if you are part of a domain
+net localgroup /domain
+
+:: List all users in a domain
+net users /domain
+</code></pre>
+
+<h3 id="other">Other<a class="headerlink" href="#other" title="Permanent link">#</a></h3>
+<p><strong>Shutdown</strong></p>
+<pre><code>:: Shutdown now
+shutdown /s /t 0
+
+:: Restart
+shutdown /r /t 0
+</code></pre>
+
+<p><strong>cipher - Clear data/shred</strong></p>
+<pre><code>:: Shreds the whole machine
+cipher /w:C:\
+</code></pre>
+
+<p><strong>Show environmental variables</strong></p>
+<pre><code>set
+</code></pre>
+
+<p><strong>Show options for commands</strong></p>
+<p>The "man"-pages in windows is simply:</p>
+<pre><code>help dir
+</code></pre>
+
+<h3 id="mounting-mapping">Mounting - Mapping<a class="headerlink" href="#mounting-mapping" title="Permanent link">#</a></h3>
+<p>In the windows world mounting is called mapping.</p>
+<p>If you want to see which drives are mapped/mounted to your file-system you can use any of these commands:</p>
+<pre><code>::This is the most thorough
+
+wmic logicaldisk get deviceid, volumename, description
+
+::But this works too
+wmic logicaldisk get name
+wmic logicaldisk get caption
+
+::This can be slow. So don't kill your shell!
+fsutil fsinfo drives
+
+::With powershell
+get-psdrive -psprovider filesystem
+
+::This works too, but it is interacive. So it might be dangerous work hackers
+diskpart
+list volume
+
+::Map only network drives
+net use
+</code></pre>
+
+<p>The command to deal with mounting/mapping is <strong>net use</strong></p>
+<p>Using <code>net use</code> we can connect to other shared folder, on other systems. Many windows machines have a default-share called IPC (Interprocess communication share). It does not contain any files. But we can usually connect to it without authentication. This is called a <strong>null-session</strong>. Although the share does not contain any files it contains a lot of data that is useful for enumeration.
+The Linux-equivalent of <code>net use</code> is usually <code>smbclient</code>. </p>
+<pre><code>net use \\IP address\IPC$ &quot;&quot; /u:&quot;&quot;
+net use \\192.168.1.101\IPC$ &quot;&quot; /u:&quot;&quot;
+</code></pre>
+
+<p>If you want to map a drive from another network to your filesystem you can do that like this:</p>
+<pre><code>:: This will map it to drive z
+net use z: \\192.168.1.101\SYSVOL
+
+:: This will map it to the first available drive-letter
+net use * \\192.168.1.101\SYSVOL
+</code></pre>
+
+<p>Here you map the drive to the letter <code>z</code>. If the command is successful you should now be able to access those files by entering the <code>z</code> drive.</p>
+<p>You enter the z-drive by doing this:</p>
+<pre><code>C:\&gt;z:
+Z:\
+
+:: Now we switch back to c
+Z:\&gt;c:
+C:\
+</code></pre>
+
+<p><strong> Remove a network drive - umount it</strong></p>
+<p>First leave the drive if you are in it:</p>
+<pre><code>c:
+net use z: /del
+</code></pre>
+
+<h3 id="references-and-stuff">References and Stuff<a class="headerlink" href="#references-and-stuff" title="Permanent link">#</a></h3>
+<p>This might come in handy for the linux-users: http://www.lemoda.net/windows/windows2unix/windows2unix.html</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../default_windows_files/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../default_windows_files/" class="btn btn-xs btn-link">
+        Default Windows Files
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../powershell_scripting2/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../powershell_scripting2/" class="btn btn-xs btn-link">
+        Powershell Scripting
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/basics_of_windows/cmd.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

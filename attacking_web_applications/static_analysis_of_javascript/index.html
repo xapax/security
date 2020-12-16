@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Static Analysis of JavaScript - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Step 1. Identify all javascript files", url: "#_top", children: [
+          ]},
+          {title: "Step 2. Find URL:s", url: "#step-2-find-urls", children: [
+          ]},
+          {title: "Step 3. Find sensitive information", url: "#step-3-find-sensitive-information", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../sql-injections/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../sql-injections/" class="btn btn-xs btn-link">
+        SQL Injections
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../local_file_inclusion/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../local_file_inclusion/" class="btn btn-xs btn-link">
+        Local File Inclusion
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <p>When we get a javacript-heavy application we want to do a few different things.</p>
+<ul>
+<li>Increase the attack-surface - Find URL:s or domains</li>
+<li>Sensitive information - API-keys, passwords</li>
+<li>Potentially dangerous areas of code - eval, setDangerousInnerHTML</li>
+<li>Component with known vulnerabilities</li>
+</ul>
+<p>Luckily this can be done using static analysis.</p>
+<h2 id="step-1-identify-all-javascript-files">Step 1. Identify all javascript files<a class="headerlink" href="#step-1-identify-all-javascript-files" title="Permanent link">#</a></h2>
+<p>First navigate through the entire application manually while using burp.
+When you are done go to:</p>
+<pre><code>Site map - select target - engagement tools - find scripts
+</code></pre>
+
+<h2 id="step-2-find-urls">Step 2. Find URL:s<a class="headerlink" href="#step-2-find-urls" title="Permanent link">#</a></h2>
+<pre><code>python linkfinder.py -i https://example.com -d -o cli
+</code></pre>
+
+<h2 id="step-3-find-sensitive-information">Step 3. Find sensitive information<a class="headerlink" href="#step-3-find-sensitive-information" title="Permanent link">#</a></h2>
+<p>TruffleHog can find sensitive information.</p>
+<pre><code>truffleHog
+
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../sql-injections/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../sql-injections/" class="btn btn-xs btn-link">
+        SQL Injections
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../local_file_inclusion/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../local_file_inclusion/" class="btn btn-xs btn-link">
+        Local File Inclusion
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_web_applications/static_analysis_of_javascript.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

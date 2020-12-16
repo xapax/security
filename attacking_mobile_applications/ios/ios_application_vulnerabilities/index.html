@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Vulnerabilities - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Data storage", url: "#_top", children: [
+              {title: "Check that snapshots of sensitive data is not stored", url: "#check-that-snapshots-of-sensitive-data-is-not-stored" },
+              {title: "Check for secrets or sensitive information in plist files", url: "#check-for-secrets-or-sensitive-information-in-plist-files" },
+              {title: "Check for other sensitive data in documents", url: "#check-for-other-sensitive-data-in-documents" },
+              {title: "Check for sensitive data in sqlite databases", url: "#check-for-sensitive-data-in-sqlite-databases" },
+              {title: "Check for sensitive data in keyboard cache", url: "#check-for-sensitive-data-in-keyboard-cache" },
+              {title: "Check that sensitive data is not persistent in keychain", url: "#check-that-sensitive-data-is-not-persistent-in-keychain" },
+          ]},
+          {title: "Unintended data leaks", url: "#unintended-data-leaks", children: [
+              {title: "Check for Firebase access control", url: "#check-for-firebase-access-control" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../ios_vuln_checklist/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../ios_vuln_checklist/" class="btn btn-xs btn-link">
+        Vulnerabilities Checklist
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../ios_setup/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../ios_setup/" class="btn btn-xs btn-link">
+        IOS Testing Environment Setup
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="data-storage">Data storage<a class="headerlink" href="#data-storage" title="Permanent link">#</a></h2>
+<p>Data is stored in the application directory. Which is found like this:</p>
+<pre><code>/var/mobile/Containers/Data/Application/$APP_ID/
+</code></pre>
+
+<p>In order to find the APP_ID you can do the following:</p>
+<p>First you list all applications, and identify your application:</p>
+<pre><code>ipainstaller -l
+</code></pre>
+
+<p>Then search all directories for that name</p>
+<pre><code>find ./ -iname PACKAGE-Name
+</code></pre>
+
+<p>References: http://www.securitylearn.net/2013/04/15/penetration-testing-of-iphone-applications-part-4/</p>
+<h3 id="check-that-snapshots-of-sensitive-data-is-not-stored">Check that snapshots of sensitive data is not stored<a class="headerlink" href="#check-that-snapshots-of-sensitive-data-is-not-stored" title="Permanent link">#</a></h3>
+<p>Whenever a user backgrounds an application a snaopshot i taken. </p>
+<p>You can find them here:</p>
+<pre><code>/private/var/mobile/Containers/Data/Application/&lt;GUID&gt;/Library/Caches/Snapshots
+</code></pre>
+
+<p>In order to view the file you can use this script to convert it to PNG: https://github.com/ydkhatri/MacForensics/blob/master/IOS_KTX_TO_PNG/ios_ktx2png.py</p>
+<h3 id="check-for-secrets-or-sensitive-information-in-plist-files">Check for secrets or sensitive information in plist files<a class="headerlink" href="#check-for-secrets-or-sensitive-information-in-plist-files" title="Permanent link">#</a></h3>
+<p><code>plist</code> is a structured binary formatted file. It can contain interesting data. You can't read plist files with cat, put you can read them with plistutils</p>
+<pre><code>sudo aptitude install libplist-utils
+plistutil -i file.plist
+</code></pre>
+
+<p>The files are usually stored in <code>[Application’s Home Directory]/documents/preferences</code>. The files are usually used to store applications and configurations. But they can be used to store session information, passwords or whatever.</p>
+<p>Authorisation and authention can be decided based on entries in a plist.</p>
+<p>Find plist the following way:</p>
+<pre><code>find ./ -iname *plist
+</code></pre>
+
+<p>However, note that the file might not end with the plist fileending.</p>
+<h3 id="check-for-other-sensitive-data-in-documents">Check for other sensitive data in documents<a class="headerlink" href="#check-for-other-sensitive-data-in-documents" title="Permanent link">#</a></h3>
+<p>Browse around and see if they are storing sensitive stuff here.</p>
+<h3 id="check-for-sensitive-data-in-sqlite-databases">Check for sensitive data in sqlite databases<a class="headerlink" href="#check-for-sensitive-data-in-sqlite-databases" title="Permanent link">#</a></h3>
+<pre><code>find ./ -iname *sqlite -o -iname *db -o -iname *sqlitedb
+</code></pre>
+
+<h3 id="check-for-sensitive-data-in-keyboard-cache">Check for sensitive data in keyboard cache<a class="headerlink" href="#check-for-sensitive-data-in-keyboard-cache" title="Permanent link">#</a></h3>
+<h3 id="check-that-sensitive-data-is-not-persistent-in-keychain">Check that sensitive data is not persistent in keychain<a class="headerlink" href="#check-that-sensitive-data-is-not-persistent-in-keychain" title="Permanent link">#</a></h3>
+<h2 id="unintended-data-leaks">Unintended data leaks<a class="headerlink" href="#unintended-data-leaks" title="Permanent link">#</a></h2>
+<h3 id="check-for-firebase-access-control">Check for Firebase access control<a class="headerlink" href="#check-for-firebase-access-control" title="Permanent link">#</a></h3>
+<p>Look for a string looking like this <code>somethingsomething.firebaseio.com</code>. Check if you can access sensitive data in:
+ <code>somethingsomething.firebaseio.com/.json</code></p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../ios_vuln_checklist/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../ios_vuln_checklist/" class="btn btn-xs btn-link">
+        Vulnerabilities Checklist
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../ios_setup/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../ios_setup/" class="btn btn-xs btn-link">
+        IOS Testing Environment Setup
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_mobile_applications/ios/ios_application_vulnerabilities.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

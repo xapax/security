@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Check for Insecure Usage of High Privileged Accounts - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Unsafe usage of high priviliged accounts", url: "#_top", children: [
+          ]},
+          {title: "Background", url: "#background", children: [
+          ]},
+          {title: "Pre-requisites", url: "#pre-requisites", children: [
+          ]},
+          {title: "Risks", url: "#risks", children: [
+          ]},
+          {title: "How to check for", url: "#how-to-check-for", children: [
+          ]},
+          {title: "How to exploit", url: "#how-to-exploit", children: [
+          ]},
+          {title: "Recommendation", url: "#recommendation", children: [
+          ]},
+          {title: "Related Vulnerabilities", url: "#related-vulnerabilities", children: [
+          ]},
+          {title: "References", url: "#references", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../check_for_local_admin_privileges/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../check_for_local_admin_privileges/" class="btn btn-xs btn-link">
+        Check for Local Admin Privileges
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../abusing_unconstrained_delegation/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../abusing_unconstrained_delegation/" class="btn btn-xs btn-link">
+        Abusing Unconstrained Delegation
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="unsafe-usage-of-high-priviliged-accounts">Unsafe usage of high priviliged accounts<a class="headerlink" href="#unsafe-usage-of-high-priviliged-accounts" title="Permanent link">#</a></h2>
+<p>Authenticating with a high privileged account</p>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">#</a></h2>
+<h2 id="pre-requisites">Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permanent link">#</a></h2>
+<h2 id="risks">Risks<a class="headerlink" href="#risks" title="Permanent link">#</a></h2>
+<h2 id="how-to-check-for">How to check for<a class="headerlink" href="#how-to-check-for" title="Permanent link">#</a></h2>
+<p>To collect sessions we can run Sharphound in a loop to gather new sessions.</p>
+<pre><code>Collect new sessions every 10 minutes for 5 hours.
+invoke-bloodhound -CollectionMethod session -Loop -LoopInterval 00:10:00 -LoopDuration 05:00:00
+</code></pre>
+
+<p>After importing the Sharphound results to bloodhound we can run the following cypher-queryto see where admin-users have sessions. </p>
+<pre><code>MATCH p=(c:Computer)-[r:HasSession]-&gt;(n:User {admincount : true}) RETURN p
+MATCH (c:Computer)-[r:HasSession]-&gt;(n:User {admincount : true}) RETURN n
+</code></pre>
+
+<p>The result can be returned as a CSV-file.</p>
+<pre><code>echo &quot;MATCH p=(c:Computer)-[r:HasSession]-&gt;(n:User {admincount : true}) RETURN n.name,c.name;&quot; | /usr/share/neo4j/bin/cypher-shell -u neo4j -p &lt;NEO4jPASSWORD&gt; --format plain &gt; res.txt
+</code></pre>
+
+<p>If you don't want to single out which users have used their admin-accounts in an insecure way you can just remove that.</p>
+<pre><code>echo &quot;MATCH p=(c:Computer)-[r:HasSession]-&gt;(n:User {admincount : true}) RETURN n.name,c.name;&quot; | /usr/share/neo4j/bin/cypher-shell -u neo4j -p &lt;NEO4jPASSWORD&gt; --format plain &gt; res.txt
+</code></pre>
+
+<p>If you are using <code>latex-utils</code> you can do the following:</p>
+<pre><code>echo &quot;MATCH p=(c:Computer)-[r:HasSession]-&gt;(n:User {admincount : true}) RETURN n.name,c.name;&quot; | /usr/share/neo4j/bin/cypher-shell -u neo4j -p &lt;NEO4jPASSWORD&gt; --format plain | latex-convert-csv
+</code></pre>
+
+<h2 id="how-to-exploit">How to exploit<a class="headerlink" href="#how-to-exploit" title="Permanent link">#</a></h2>
+<h2 id="recommendation">Recommendation<a class="headerlink" href="#recommendation" title="Permanent link">#</a></h2>
+<h2 id="related-vulnerabilities">Related Vulnerabilities<a class="headerlink" href="#related-vulnerabilities" title="Permanent link">#</a></h2>
+<ul>
+<li>Insecure Usage of high privileged accounts</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../check_for_local_admin_privileges/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../check_for_local_admin_privileges/" class="btn btn-xs btn-link">
+        Check for Local Admin Privileges
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../abusing_unconstrained_delegation/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../abusing_unconstrained_delegation/" class="btn btn-xs btn-link">
+        Abusing Unconstrained Delegation
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/active_directory_privilege_escalation/check_for_insecure_usage_of_high_privileged_accounts.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

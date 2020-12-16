@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>AD Physical topology - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Site", url: "#_top", children: [
+          ]},
+          {title: "Subnet", url: "#subnet", children: [
+          ]},
+          {title: "Site link", url: "#site-link", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../default_groups/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../default_groups/" class="btn btn-xs btn-link">
+        Default Groups
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../group_policies/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../group_policies/" class="btn btn-xs btn-link">
+        Group Policies
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <p>The Active Directory physical topology consists of three main components: <strong>site</strong>, <strong>subnet</strong>, and <strong>site link</strong></p>
+<h2 id="site">Site<a class="headerlink" href="#site" title="Permanent link">#</a></h2>
+<p>A collection of machines connected of a LAN. This usually means a physical building. A site usually contains a <a href="../domain_controller/">domain controller</a>, but it doesn't have to. If the site is in an unsecure location, where the physical security of a domain controller can't be assured, the DC might be a Read-only Domain Controller (RODC).</p>
+<p>Some services, such as Distributed File System (DFS) and SharePoint are site aware and use the site information-</p>
+<p>AD needs at least one site configured. The default site is created when the first domain in your forest is created. </p>
+<h2 id="subnet">Subnet<a class="headerlink" href="#subnet" title="Permanent link">#</a></h2>
+<h2 id="site-link">Site link<a class="headerlink" href="#site-link" title="Permanent link">#</a></h2>
+<p>A site link is used to configure which domain controller on a site a user should authenticate against. </p>
+<p>The two main functions it serves are the following:
+- The site links control the AD replication between domain controllers.
+- Provide a mechanism for a client to discover domain controllers if the DC on site is unavailable.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../default_groups/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../default_groups/" class="btn btn-xs btn-link">
+        Default Groups
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../group_policies/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../group_policies/" class="btn btn-xs btn-link">
+        Group Policies
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/understanding_active_directory/ad_physical_topology.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

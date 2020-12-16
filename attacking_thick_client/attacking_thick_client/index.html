@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Attacking Thick Client - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Setup", url: "#_top", children: [
+              {title: "Proxy settings", url: "#proxy-settings" },
+          ]},
+          {title: "Decompile the executable", url: "#decompile-the-executable", children: [
+          ]},
+          {title: "Things to test", url: "#things-to-test", children: [
+          ]},
+          {title: "Recon", url: "#recon", children: [
+          ]},
+          {title: "Network communication", url: "#network-communication", children: [
+          ]},
+          {title: "Client side", url: "#client-side", children: [
+              {title: "Check for sensitive information", url: "#check-for-sensitive-information" },
+              {title: "Data storage", url: "#data-storage" },
+              {title: "Local privileged escalation", url: "#local-privileged-escalation" },
+              {title: "Access control", url: "#access-control" },
+              {title: "Injection", url: "#injection" },
+          ]},
+          {title: "Server side attacks", url: "#server-side-attacks", children: [
+          ]},
+          {title: "Misc", url: "#misc", children: [
+          ]},
+          {title: "References:", url: "#references", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_cloud_environment/attacking_azure/abuse_application_administrator_role/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_cloud_environment/attacking_azure/abuse_application_administrator_role/" class="btn btn-xs btn-link">
+        Abuse Application Administrator Role
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_wifi/wifi/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_wifi/wifi/" class="btn btn-xs btn-link">
+        Testing Wifi Security
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">#</a></h2>
+<h3 id="proxy-settings">Proxy settings<a class="headerlink" href="#proxy-settings" title="Permanent link">#</a></h3>
+<ol>
+<li>
+<p>Using the applications own proxy settings (if available)
+A good first step is to check if the application itself supports proxy. If it does, and it communicates over HTTPS you can proxy the traffic to burp.
+Remeber that if the application is running over HTTPS you need to install your burp root certificate if you want to be able to intercept the traffic.</p>
+</li>
+<li>
+<p>If the application does not provide their own proxy settings you can set them in the OS.
+On windows you do this by searching for "Proxy settings" in the search bar. Then you click on "Lan manager" or something like that. There you can define your port and ip.</p>
+</li>
+<li>
+<p>Using TCP-dump
+If it is not possible to to set the OS proxy you can use tcpdump, and dump the traffic to a pcap file, and then load it up in burp.
+In order to load it up in burp you need need the Burp extender "Pcap importer", remember that you can only use this for HTTP traffic, and not HTTPS traffic.</p>
+</li>
+</ol>
+<h2 id="decompile-the-executable">Decompile the executable<a class="headerlink" href="#decompile-the-executable" title="Permanent link">#</a></h2>
+<p>If the application is built in .Net you can use the program ILSpy to decompile it, to read the source-code.</p>
+<h2 id="things-to-test">Things to test<a class="headerlink" href="#things-to-test" title="Permanent link">#</a></h2>
+<p>http/https
+SQL-authentication? SQL injection?
+Authentication</p>
+<h2 id="recon">Recon<a class="headerlink" href="#recon" title="Permanent link">#</a></h2>
+<ul>
+<li>
+<p>Is the application three-tier (client-server-database) or two tier (client-database)?</p>
+</li>
+<li>
+<p>Language used</p>
+</li>
+<li>
+<p>Check if the application is proxy-aware or not. Note that an application might be proxy aware for most parts, but not all parts. So run all traffic through an invisible proxy.</p>
+</li>
+</ul>
+<p>Follow these instructions: https://docs.mitmproxy.org/stable/howto-transparent-vms/</p>
+<ul>
+<li></li>
+</ul>
+<h2 id="network-communication">Network communication<a class="headerlink" href="#network-communication" title="Permanent link">#</a></h2>
+<p>Sniff traffic while using the application
+Use Wireshark and Sysinternals TCPView.</p>
+<ul>
+<li>
+<p>Identify protocols used by the application - is there anything more than just http?</p>
+</li>
+<li>
+<p>Check if anything is transfer unencrypted</p>
+</li>
+<li>
+<p>Check that the applications updating method is run over HTTPS</p>
+</li>
+<li>
+<p>Check that the updating process is actually validating the server certificate.</p>
+</li>
+</ul>
+<h2 id="client-side">Client side<a class="headerlink" href="#client-side" title="Permanent link">#</a></h2>
+<h3 id="check-for-sensitive-information">Check for sensitive information<a class="headerlink" href="#check-for-sensitive-information" title="Permanent link">#</a></h3>
+<ul>
+<li>
+<p>Check for sensitive information contained in the application. It might be API keys, username/password, connection strings.</p>
+<ul>
+<li>USe procmon to see which files are being used by the application.</li>
+</ul>
+</li>
+<li>
+<p>Check the configuration files for sensitive data</p>
+</li>
+<li>
+<p>Check the registry for sensitive data</p>
+<ul>
+<li>Use regshot maybe.</li>
+</ul>
+</li>
+<li>
+<p>Check the source code for sensitive information. It might be hardcoded passwords or things like that.</p>
+</li>
+<li>
+<p>Check for database credentials in memory. It is common tha two-tier applications store database credentials in memory. (Check memory)[https://resources.infosecinstitute.com/damn-vulnerable-thick-client-app-part-3/#article]</p>
+</li>
+</ul>
+<h3 id="data-storage">Data storage<a class="headerlink" href="#data-storage" title="Permanent link">#</a></h3>
+<ul>
+<li>Is data cached or stored on the computer? Making it available to unauthenticated users with access to the computer?</li>
+</ul>
+<h3 id="local-privileged-escalation">Local privileged escalation<a class="headerlink" href="#local-privileged-escalation" title="Permanent link">#</a></h3>
+<ul>
+<li>Check for DLL hijacking privilege escalation</li>
+</ul>
+<h3 id="access-control">Access control<a class="headerlink" href="#access-control" title="Permanent link">#</a></h3>
+<ul>
+<li>Check that access control is performed on the backend side and not only on the front-end.</li>
+</ul>
+<h3 id="injection">Injection<a class="headerlink" href="#injection" title="Permanent link">#</a></h3>
+<ul>
+<li>CSV - is it possible to import a CSV file?</li>
+</ul>
+<h2 id="server-side-attacks">Server side attacks<a class="headerlink" href="#server-side-attacks" title="Permanent link">#</a></h2>
+<p>All the standard OWASP stuff. XML, injections, access control etc.</p>
+<h2 id="misc">Misc<a class="headerlink" href="#misc" title="Permanent link">#</a></h2>
+<ul>
+<li>
+<p>If all actions in the system are logged, can those logs be manipulated? For example simply by reconfiguring the clock of the computer?</p>
+</li>
+<li>
+<p>Check if sensitive information is put in logs on the computer. Information that might be of interest to another user on the computer that has not authenticated to the application.</p>
+</li>
+<li>
+<p>Check for hidden functionality - this might be found in the code for example.</p>
+</li>
+<li>
+<p>Has the application been compiled with security mechanisms such as DEP and ASLR? <a href="https://resources.infosecinstitute.com/damn-vulnerable-thick-client-app-part-8/#article">Source</a></p>
+</li>
+</ul>
+<h2 id="references">References:<a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+<p>https://www.cyberark.com/resources/threat-research-blog/thick-client-penetration-testing-methodology</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../attacking_cloud_environment/attacking_azure/abuse_application_administrator_role/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../attacking_cloud_environment/attacking_azure/abuse_application_administrator_role/" class="btn btn-xs btn-link">
+        Abuse Application Administrator Role
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_wifi/wifi/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_wifi/wifi/" class="btn btn-xs btn-link">
+        Testing Wifi Security
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_thick_client/attacking_thick_client.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

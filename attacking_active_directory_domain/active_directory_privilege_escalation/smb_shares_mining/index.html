@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>SMB Shares Mining - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Background", url: "#_top", children: [
+              {title: "Enumerateusing smbmap", url: "#enumerateusing-smbmap" },
+              {title: "Enumerate with PowerView", url: "#enumerate-with-powerview" },
+              {title: "Access the files", url: "#access-the-files" },
+              {title: "Search the files", url: "#search-the-files" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../ntlm_relaying_and_theft/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../ntlm_relaying_and_theft/" class="btn btn-xs btn-link">
+        NTLM Relaying and Theft
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../passwords_in_active_directory_attributes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../passwords_in_active_directory_attributes/" class="btn btn-xs btn-link">
+        Passwords in Active Directory Attributes
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">#</a></h2>
+<p>Windows shares are exposed on port 445, and access with the SMB protocol.</p>
+<h3 id="enumerateusing-smbmap">Enumerateusing smbmap<a class="headerlink" href="#enumerateusing-smbmap" title="Permanent link">#</a></h3>
+<p>A good tool to map available shares from linux is the following way. You can enumerate just one host if you like. Otherwise you can use nmap to scan the network for open smb ports, save those IP:s in a list. And then scane the entire list with smbmap.</p>
+<p>Remember that this will check write permission. smbmap checks write-permissions by creating a folder, and the deleting it. Sometimes it is possible to create a folder, but not remove it, then it will leave a folder with some random name. smbmap tells you when this happens, so you need to ask someone with correct privileges to remove it.</p>
+<p>Find shares that are accessible for anonymous users:</p>
+<pre><code>smbmap --host-file hosts.txt &gt; smbmapresults.txt
+</code></pre>
+
+<pre><code>smbmap -u domainusername -p 'supersecretpassword' -d domain.local --host-file /home/&lt;user&gt;/Documents/smbmap/hosts.txt &gt; result.txt
+</code></pre>
+
+<pre><code>smbmap -u domainusername -p 'supersecretpassword' -d domain.local --host-file /home/&lt;user&gt;/mappashares/testdownload/test2.txt -R -A '.\.bat\b'
+</code></pre>
+
+<h3 id="enumerate-with-powerview">Enumerate with PowerView<a class="headerlink" href="#enumerate-with-powerview" title="Permanent link">#</a></h3>
+<p>See chapter <a href="../../good_to_know/tools/#powerview">tools</a> to see how to install PowerSploit.</p>
+<p>First we can list all the shares on the domain: </p>
+<pre><code class="powershell"># Finding all shares that exists on the domain. Not very useful.
+find-domainshare
+
+# Enumerate all shares that the current user has access to
+find-domainshare -CheckShareAccess | export-csv domainshares.csv
+
+# If you get another users account you can test what smb-access that users has. You run the command, and a popup lets you insert the password and then enumerate from that perspective
+find-domainshare -Credential hackdomain\user
+
+</code></pre>
+
+<p>However, it might be faster to search for specific files.</p>
+<pre><code>find-interestingDomainShareFile -Include ('*.pfx','*.cer','*.pvk','*.pem','*.key','*.crt','*.skr','*.txt','*.rtf','*.cnf','*.cf','*.conf','*.cfg','*.config','*.yml','*.xml','*.json','*.pp','*.vbs','*.bat','*.cmd','*.wsf','*.ps1','*.sql','*.py','*.rb','*.pl','*.sh','*.vmdk','*.vhd','*.vhdx','*.bak','*.mdf','*.sdf','*.dump','*.zip','*.tar','*.gz','*.7z','*cred','*pass','*login','*konto','*lösen','*användar','*inlogg','*user','*nyckel','*hemlig','*backup','*dump','*config','*setting')
+</code></pre>
+
+<h3 id="access-the-files">Access the files<a class="headerlink" href="#access-the-files" title="Permanent link">#</a></h3>
+<p>From a windows machine on the same network with domain credentials you can use the following to map a network drive.</p>
+<pre><code># First just run `net use` to list all the currently mapped network shares
+net use
+# Then map a share to a specific name, in the case `x`, but it can be anything.
+net use x: \\192.168.xx.x\nameofshare
+# Now access the share by running this command
+x:
+
+# In order to disconnect from the network share you run this command. Delete here refers to deleting the network connection, not the drive, of course.
+
+net use x: /delete
+</code></pre>
+
+<h3 id="search-the-files">Search the files<a class="headerlink" href="#search-the-files" title="Permanent link">#</a></h3>
+<pre><code>get-childitem -recurse | select-string -pattern &quot;password&quot; -list | Out-file test.txt
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../ntlm_relaying_and_theft/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../ntlm_relaying_and_theft/" class="btn btn-xs btn-link">
+        NTLM Relaying and Theft
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../passwords_in_active_directory_attributes/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../passwords_in_active_directory_attributes/" class="btn btn-xs btn-link">
+        Passwords in Active Directory Attributes
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/active_directory_privilege_escalation/smb_shares_mining.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

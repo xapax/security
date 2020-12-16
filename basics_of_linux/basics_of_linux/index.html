@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Basics of Linux - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Basics of linux", url: "#_top", children: [
+              {title: "1. The Shell - Bash", url: "#1-the-shell-bash" },
+              {title: "2. Editing text", url: "#2-editing-text" },
+              {title: "3. User management", url: "#3-user-management" },
+              {title: "4. Permissions", url: "#4-permissions" },
+              {title: "5. Processes", url: "#5-processes" },
+              {title: "6. Packages", url: "#6-packages" },
+              {title: "7. Cronjobs", url: "#7-cronjobs" },
+              {title: "8. Devices/disks/partitions", url: "#8-devicesdiskspartitions" },
+              {title: "9. The Filesystem", url: "#9-the-filesystem" },
+              {title: "10. Controlling services", url: "#10-controlling-services" },
+              {title: "11. Kernel", url: "#11-kernel" },
+              {title: "14. Logging", url: "#14-logging" },
+              {title: "16. Network basics", url: "#16-network-basics" },
+              {title: "References", url: "#references" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../bash_scripting/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../bash_scripting/" class="btn btn-xs btn-link">
+        Bash Scripting
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../linux/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../linux/" class="btn btn-xs btn-link">
+        Linux
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <hr />
+<h1 id="basics-of-linux">Basics of linux<a class="headerlink" href="#basics-of-linux" title="Permanent link">#</a></h1>
+<p>This is a huge chapter. I could divide it up in many subchapters but I like to have it all at one place so I can just do <code>ctr-f</code>, and search for whatever I am looking for.</p>
+<h2 id="1-the-shell-bash">1. The Shell - Bash<a class="headerlink" href="#1-the-shell-bash" title="Permanent link">#</a></h2>
+<p>The shell, or the terminal is a really useful tool. Bash is the standard shell on most Linux distros.</p>
+<p>One really useful trick when working with bash is to search for old commands that you have used. You can access this search function by doing <code>ctr-r</code> in the terminal.</p>
+<p>The configuration file for the bash shell is <code>~./bashrc</code></p>
+<h3 id="navigating">Navigating<a class="headerlink" href="#navigating" title="Permanent link">#</a></h3>
+<p><code>pwd</code> - Print working directory</p>
+<p><code>cd</code> - Change directory</p>
+<p><code>cd ~</code> - Change directory to your home directory</p>
+<p><code>cd -</code> - Go back to previous directory</p>
+<h3 id="looking-at-files">Looking at files<a class="headerlink" href="#looking-at-files" title="Permanent link">#</a></h3>
+<p><code>ls</code> - List files in directory</p>
+<p><code>ls -ltr</code> - Sort list by last modified. -time -reverse</p>
+<p><code>file</code> - Show info about file. What type of file it is. If it is a binary or text file for example.</p>
+<p><code>cat</code> - Output content of file.</p>
+<p><code>less</code> - Output file but just little bit at a time. Use this one. Not <code>more</code>.</p>
+<p>Use <code>/searchterm</code> to search. It is the same command as in vim. <code>n</code> to scroll to next search result. Press <code>q</code> to quit.</p>
+<p><code>more</code> - Output file but just little bit at a time. <code>less</code> is better.</p>
+<h3 id="working-with-files">Working with files<a class="headerlink" href="#working-with-files" title="Permanent link">#</a></h3>
+<p><code>touch</code> - Create a new file.</p>
+<p><code>cp</code> - Copy</p>
+<p><code>mkdir</code> - Make directory.</p>
+<pre><code class="bash"># Make entire directory structure
+mkdir -p new/thisonetoo/and/this/one
+</code></pre>
+
+<p><code>rm</code> - Remove file</p>
+<pre><code class="bash"># Remove recursively and its content. Very dangerous command!
+rm -rf ./directory
+</code></pre>
+
+<p>Watch the command destroy an entire machine: <a href="https://www.youtube.com/watch?v=D4fzInlyYQo">https://www.youtube.com/watch?v=D4fzInlyYQo</a></p>
+<p><code>rmdir</code> - Remove empty directory</p>
+<h3 id="a-little-bit-of-everything">A little bit of everything<a class="headerlink" href="#a-little-bit-of-everything" title="Permanent link">#</a></h3>
+<p><code>history</code> - Show commands history</p>
+<p><code>sudo</code></p>
+<p>List what rights the sudo user has.</p>
+<pre><code>sudo -l
+</code></pre>
+
+<p>Sudo config file is usually <strong>/etc/sudoers</strong></p>
+<h3 id="finding-files">Finding files<a class="headerlink" href="#finding-files" title="Permanent link">#</a></h3>
+<p>There are mainly three ways to find files on Linux: <strong>find</strong>, <strong>locate</strong>, and <strong>which</strong>.</p>
+<h4 id="find">Find<a class="headerlink" href="#find" title="Permanent link">#</a></h4>
+<p>Find is slower than locate but a lot more thorough. You can search for files recursively and with regex and a lot of other features.</p>
+<pre><code># This will send all permissions denied outputs to dev/null.
+find / -name file 2&gt;/dev/null
+# Search incasesensitive, that contains the word file.
+find / -iname *file* 2&gt;/dev/null
+</code></pre>
+
+<h4 id="locate">Locate<a class="headerlink" href="#locate" title="Permanent link">#</a></h4>
+<p>Locate is really fast because it relies on an internal database. So in order to have it updated you need to run:</p>
+<pre><code>sudo updatedb
+</code></pre>
+
+<p>Then you can easily find stuff like this:</p>
+<pre><code>locate filename
+</code></pre>
+
+<h4 id="which">Which<a class="headerlink" href="#which" title="Permanent link">#</a></h4>
+<p>Outputs the path of the binary that you are looking for. It searches through the directories that are defined in your $PATH variable.</p>
+<pre><code class="bash">which bash
+# Usually outputs: /bin/bash
+</code></pre>
+
+<h4 id="creating-custom-bash-functions">Creating custom bash functions<a class="headerlink" href="#creating-custom-bash-functions" title="Permanent link">#</a></h4>
+<p>If you want to create a new command from other commands, and be able to invoke that command from your terminal, there are a few different way of doing that.</p>
+<p>One way is write a bash-script, and then move that script to one of your folders in your $PATH variable.</p>
+<p>The other way is to simply write a function in your .bashrc file. You can then invoke that function from anywhere in your terminal.</p>
+<p>So for example, if you want to ssh into a machine, but you are tired of having to write the whole command, you can just add this function in your .basrhrc file:</p>
+<pre><code>function connecttossh {
+ssh user@192.168.1.111
+}
+</code></pre>
+
+<p>Then you need to source the file, so that it becomes updated: <code>source ./.bashrc</code></p>
+<p>Now you can just write<code>connecttossh</code> and the function will be executed.</p>
+<h2 id="2-editing-text">2. Editing text<a class="headerlink" href="#2-editing-text" title="Permanent link">#</a></h2>
+<p>First let's just clear out something about <strong>standard streams</strong>, or <strong>I/O</strong>-streams. Standard streams are the streams that are used to interact between the human computer-user and the machine. There are three standard streams: standard input (stdin), standard output (stdout), and standard error (stderr).The stdin stream can be seen as an abstractions of the real keyboard input. So when you issue a command/program that requires input the program does not read straight from the keyboard input, instead it reads from the file STDIN.</p>
+<h3 id="stdin">Stdin<a class="headerlink" href="#stdin" title="Permanent link">#</a></h3>
+<p>Stdin is the data that gets inputed into the program. An example of a program that requires stdin data is <code>cp</code>. In order for the program to do anything it needs input data. For example <code>cp file1 copy_of_file1</code>. Here <code>file1</code> and <code>copy_of_file1</code> is the stdin.</p>
+<p>So the default Stdin comes from the STDIN-file that is a text-file representation of the keyboard input. But often times we do not want to input stuff from the keyboard, sometimes we want to input something into a program that comes from another file. That is when we can use redirection symbol: <code>&gt;</code>.</p>
+<p>So an example could be <code>cat &lt; my_text_file.txt</code>. The data from my_text_file.txt will now be used as input instead of the keyboard input.</p>
+<p>The file descriptor for <strong>stdin</strong> is: <strong>0</strong></p>
+<h3 id="stdout">Stdout<a class="headerlink" href="#stdout" title="Permanent link">#</a></h3>
+<p>Stdout is the data that get ouputed from the program.<br />
+For example, when you use the command <code>cat file1</code> that data/text that gets outputed is the stdout The same with the program <code>ls</code>. Not all programs have stdout. For example when you use <code>mv</code> or <code>cp</code> successfully you get no stdout back from the program.</p>
+<p>The stdout can be redirected to another file by using these symbols <code>&gt;</code> and <code>&gt;&gt;</code>. So now we can do the following:</p>
+<pre><code>ls &gt; result_of_ls.txt
+# now the result will be written to the file result_of_ls.txt
+ls &gt;&gt; result_of_ls.txt
+# This will append the data to the bottom of the file result_of_ls.txt
+</code></pre>
+
+<p>Another incredibly useful feature is the <strong>pipe</strong> feature, reprsented with this symbol <code>|</code>. It will take the stdout and redirect it into another program. Here is an example:</p>
+<pre><code class="bash">ls -la | less
+</code></pre>
+
+<p>This will take the stdout from <code>ls -la</code> and forward/redirect it into the <code>less</code> program. Using the <strong>pipe</strong> you can now chain different commands.</p>
+<p>The file descriptor for <strong>stdout</strong> is: <strong>1</strong></p>
+<h3 id="stderr">Stderr<a class="headerlink" href="#stderr" title="Permanent link">#</a></h3>
+<p>Stderr is the stream used for outputting error messages. So if a program fails for whatever reason. For example, if we try to copy a file that does not exist, this will be the stdrr output:</p>
+<pre><code>cp thisfiledoesnotexist aaaaaaaaaa
+cp: cannot stat 'thisfiledoesnotexist': No such file or directory
+</code></pre>
+
+<p>This is a common way for stderr to present itself, just straight out into the terminal. But sometimes stderr gets sent to a log file.</p>
+<p>Stderr is useful because with it we can separate between <strong>stdout</strong> and <strong>stderr</strong>. However, to the eye it might be difficult to distinguish what output is <strong>stdout</strong> and what output is <strong>stderr</strong>.</p>
+<p>One easy way to determine is the output is <strong>stderr</strong> or <strong>stdout</strong> is to simply redirect it into a file. Because by default you only redirect <strong>stdout</strong>, and not <strong>stderr</strong>.</p>
+<pre><code class="bash">cp thisfiledoesnotexist aaaaaaaaaa &gt; result.txt
+cp: cannot stat 'thisfiledoesnotexist': No such file or directory
+# If we now look at result.txt we will find that it is empty. Since the error-text we recieved could not be redirected into the textfile, since it is stderr and not stdout.
+</code></pre>
+
+<h3 id="filters">Filters<a class="headerlink" href="#filters" title="Permanent link">#</a></h3>
+<p>There are certain programs that are especially useful to use together with pipes. They can also be used as stand-alone programs but you will often see them together with pipes.</p>
+<p><code>sort</code></p>
+<pre><code>sort test.txt
+</code></pre>
+
+<p><code>uniq</code></p>
+<p>To remove any duplicated lines and output all lines but only once.</p>
+<pre><code>sort -u test.txt
+sort test.txt | uniq
+cat filename | sort -u &gt; newFileName
+</code></pre>
+
+<p><code>grep</code></p>
+<p><code>head</code></p>
+<p><code>tail</code></p>
+<p><code>tr</code></p>
+<p><code>sed</code></p>
+<h3 id="editing-text">Editing text<a class="headerlink" href="#editing-text" title="Permanent link">#</a></h3>
+<h4 id="sed">sed<a class="headerlink" href="#sed" title="Permanent link">#</a></h4>
+<p>Can perform basic editing on streams, that is to say, text.</p>
+<p>Remove first line of file/stream</p>
+<pre><code>sed &quot;1d&quot;
+</code></pre>
+
+<h4 id="cut">cut<a class="headerlink" href="#cut" title="Permanent link">#</a></h4>
+<p>Cut by column</p>
+<p>This is a useful command to cut in text.</p>
+<p>Let's say that we have the following text, and we want to cut out the ip-address.</p>
+<pre><code>64 bytes from 192.168.0.1: icmp_req=1 ttl=255 time=4.86 ms
+</code></pre>
+
+<pre><code>cut -d&quot; &quot; -f4
+</code></pre>
+
+<p><code>-d</code> stands for delimiter. and <code>-f</code> for field.</p>
+<h4 id="tr-translate">tr - Translate<a class="headerlink" href="#tr-translate" title="Permanent link">#</a></h4>
+<p>Transform all letter into capital letters</p>
+<pre><code>tr &quot;[:lower:]&quot; &quot;[:upper:]&quot; &lt; file1 &gt; file2
+</code></pre>
+
+<p>Example<br />
+Remove character</p>
+<pre><code># Remove characters
+cat file.txt | tr -d &quot;.&quot;
+
+# Remove and replace
+# Remove all dots and replace them with underscore.
+cat file.txt | tr &quot;.&quot; &quot;_&quot;
+</code></pre>
+
+<p><a href="http://www.thegeekstuff.com/2012/12/linux-tr-command/">http://www.thegeekstuff.com/2012/12/linux-tr-command/</a></p>
+<h4 id="awk">awk<a class="headerlink" href="#awk" title="Permanent link">#</a></h4>
+<p>So awk is an advanced tool for editing text-files. It is its own programming language to it can become quite complex. Awk iterates over the whole file line by line.</p>
+<p>This is the basic structure of an awk command</p>
+<pre><code>awk '/search_pattern/ { action_to_take_on_matches; another_action; }' file_to_parse
+</code></pre>
+
+<p>The search pattern takes regex.<br />
+You can exclude the search portion or the action portion.</p>
+<p>This just prints every line of the file.</p>
+<pre><code>awk '{print}' filename
+</code></pre>
+
+<p>Filtering out specific ip-address:</p>
+<pre><code>awk '/172.16.40.10.81/' error.log
+</code></pre>
+
+<p>Now we want to print out the fourth column of that file, we can just pipe this to cut, but we can also use awk for it, like this:</p>
+<pre><code>awk '/172.16.40.10.81/ {print $4}' error.log
+# Another example
+awk '{print $2,$5;}' error.txt
+This prints columns 2 and 5.
+</code></pre>
+
+<p>We can use the -F flag to add a custom delimiter.</p>
+<pre><code>awk -F ':' '{print $1}' test.txt
+</code></pre>
+
+<p>So if you are manipulating some text you might want to start the output with some info about the columns or something like that. To do that we can use the BEGIN-keyword.</p>
+<pre><code>awk 'BEGIN {printf &quot;IP-address \tPort\n&quot;} /nop/ {print $3}' test.txt | head
+awk 'BEGIN{printf &quot;IP-address \tPort\n&quot;} /nop/ {print $3} END {printf &quot;End of the file\n&quot;}' test.txt | tail
+</code></pre>
+
+<p>Here we are printing IP-address    PORT to the first line of the file.</p>
+<h2 id="3-user-management">3. User management<a class="headerlink" href="#3-user-management" title="Permanent link">#</a></h2>
+<p>There are two commands to add a user in linux: <code>adduser</code> or useradd. <code>adduser</code>is a perl-script that facilitate the process, and useradd is the native linux binary.</p>
+<p>To add a user we do:</p>
+<pre><code>adduser NameOfUser
+
+useradd nameOfUser
+</code></pre>
+
+<p>To add user to sudo-group:</p>
+<pre><code>adduser NameOfUser sudo
+usermod -aG sudo NameOfUser
+</code></pre>
+
+<p>You might have to reboot for it to take effect.</p>
+<p>On some machines we might not be able to edit the sudoers file because we don't have an interactive shell, in this case can you can just redirect the text into the file, like this:</p>
+<pre><code>echo &quot;username ALL=(ALL) ALL&quot; &gt;&gt; /etc/sudoers
+</code></pre>
+
+<p>Check which users are in the sudo group:</p>
+<pre><code>cat /etc/group | grep sudo
+</code></pre>
+
+<p>Switch user in terminal:</p>
+<pre><code>su NameOfUser
+</code></pre>
+
+<p>Remove/delete user:</p>
+<pre><code>sudo userdel NameOfUser
+</code></pre>
+
+<h2 id="4-permissions">4. Permissions<a class="headerlink" href="#4-permissions" title="Permanent link">#</a></h2>
+<pre><code>ls -la
+</code></pre>
+
+<p>Shows all the files and directories and their permission settings.</p>
+<pre><code>drwxrwxrwt 2 root root 4,0K ago  3 17:33 myfile
+</code></pre>
+
+<p>Here we have 10 letters in the beginning. The first one <code>d</code> shows that it is a directory.<br />
+The next three letters are for read, <code>w</code> for write and <code>x</code> for execute. The first three belong to the owner, the second three to the group, and the last three to all users.</p>
+<p><a href="https://linuxjourney.com/lesson/file-permissions">https://linuxjourney.com/lesson/file-permissions</a></p>
+<h2 id="5-processes">5. Processes<a class="headerlink" href="#5-processes" title="Permanent link">#</a></h2>
+<p>To display information regarding the systems processes you can use the <code>ps</code> command.</p>
+<pre><code>ps -aux
+</code></pre>
+
+<p><code>-a</code> stands for all<br />
+<code>-u</code> stands for all processes by all users<br />
+<code>-x</code> stands for all processes that don't run a <code>tty</code></p>
+<p>If you run this command you will probably see a pretty big output. In the column for <strong>command</strong> you will see what command has been run. Every process has a Process Identification Number (<strong>PID</strong>). Something you will also see in the output.</p>
+<p>All of theses processes can actually be found in <code>/proc</code>. You just go to <code>/proc/[pid]</code>. In <code>/proc</code> you can find information about the system, and you can actually change the system if you change those files! But more on that later. What I wanted to explain is that if we look at the output from <code>ps</code> we see that some commands are in brackets. Like this:</p>
+<pre><code>root        10  0.0  0.0      0     0 ?        S    ene14   0:00 [watchdog/0]
+root        11  0.0  0.0      0     0 ?        S    ene14   0:00 [watchdog/1]
+root        12  0.0  0.0      0     0 ?        S    ene14   0:00 [migration/1]
+root        13  0.0  0.0      0     0 ?        S    ene14   0:00 [ksoftirqd/1]
+</code></pre>
+
+<p>Those are usually kernel processes, and you can safely assume that no user has started them.</p>
+<p>If you want to monitor processes in real time you can use <code>top</code> or <code>htop</code>. <code>top</code> comes preinstalled on most distros. But <code>htop</code> is really a lot nicer.</p>
+<p>For <code>htop</code> the F1-10 keys might trigger OS-events. So you can use the shortcuts instead.</p>
+<pre><code>Shortcut Key    Function Key    Description
+h                    F1           Invoke htop Help
+S                    F2           Htop Setup Menu
+/                    F3           Search for a Process
+I                    F4           Invert Sort Order
+t                    F5           Tree View
+&gt;                    F6           Sort by a column
+[                    F7           Nice – (change priority)
+]                    F8           Nice + (change priority)
+k                    F9           Kill a Process
+q                    F10         Quit htop
+</code></pre>
+
+<p><a href="http://www.thegeekstuff.com/2011/09/linux-htop-examples/">http://www.thegeekstuff.com/2011/09/linux-htop-examples/</a></p>
+<h2 id="6-packages">6. Packages<a class="headerlink" href="#6-packages" title="Permanent link">#</a></h2>
+<p>Something that difference Linux from windows is how it handles installing new software. In windows you usually have to google around and then click on random scary download buttons that might fuck up your computer, or not. It's like a constant lottery where you win by no installing malware. In Linux that is usually not really an issue. That is because distros have their own software repositories from where you can download your software. This is kind of like an app-store except everything is free.</p>
+<p>The different major branches of teh GNU/Linux OS have their own software repositories. Ubuntu has their own, debian has their own, and so on.</p>
+<p>Different distros also have their own package-amangers. For example, Debian and ubuntu uses <code>apt</code>, while Redhat uses <code>rpm</code>, and Arch uses <code>pacman</code>. You should strick to your own package-manager, because even though chaning package-manager is possible it will probably just cause you more headache than benefits.</p>
+<h3 id="install-package">Install package<a class="headerlink" href="#install-package" title="Permanent link">#</a></h3>
+<p>Example of how to install something with apt:</p>
+<pre><code>sudo apt-get install nmap
+</code></pre>
+
+<p>If you only have a .deb file you do this to install from the terminal:</p>
+<pre><code>sudo dpkg -i /path/to/deb/file
+</code></pre>
+
+<pre><code>sudo apt-get install -f
+</code></pre>
+
+<h3 id="remove-packages">Remove packages<a class="headerlink" href="#remove-packages" title="Permanent link">#</a></h3>
+<p>This can be tricky. First find the package</p>
+<pre><code>dpkg --list
+</code></pre>
+
+<p>Then you find it in your list.</p>
+<pre><code>sudo apt-get --purge remove nameOfProgram
+</code></pre>
+
+<p>When you remove some package it might have requires some other dependencies. To remove those you run</p>
+<pre><code>sudo apt-get autoremove
+</code></pre>
+
+<h3 id="organizing-your-path-variable">Organizing your $path variable<a class="headerlink" href="#organizing-your-path-variable" title="Permanent link">#</a></h3>
+<p>I am talking about debian/ubuntu here. On other systems I don't know.</p>
+<p>You can define your path in <code>/etc/environment</code>. If you don't have it you can create it and add the path like this:</p>
+<pre><code>source /etc/environment &amp;&amp; export PATH
+</code></pre>
+
+<p>If you are using zsh (which you should) you have to add it here</p>
+<pre><code>sudo vim /etc/zsh/zshenv
+</code></pre>
+
+<p>And add this line somewhere:</p>
+<pre><code>source /etc/environment
+</code></pre>
+
+<h3 id="adding-a-path">Adding a path<a class="headerlink" href="#adding-a-path" title="Permanent link">#</a></h3>
+<p>This is a non-persistent way to add binaries to your path. Might be useful if you have entered a system that has limited binaries in the path.</p>
+<pre><code>export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+</code></pre>
+
+<h3 id="installing-custom-packages">Installing custom packages<a class="headerlink" href="#installing-custom-packages" title="Permanent link">#</a></h3>
+<p>If you download a package that is not in the official repository you can put the binary in <code>/opt</code>. That is good place to put your binaries.</p>
+<p>Now you need to add that path to your path-variable. Remember how we set that in <code>/etc/environment</code>. So now open up that file and add <code>/opt</code> to it, so i looks like this.</p>
+<pre><code>PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt&quot;
+</code></pre>
+
+<p>I always add custom binaries last. That means that if we have two binaries with the same name the machine will first select the original binary. This way you won't have to fear screwing up, by accidentally creating a new <code>ls</code> binary for example.</p>
+<h2 id="7-cronjobs">7. Cronjobs<a class="headerlink" href="#7-cronjobs" title="Permanent link">#</a></h2>
+<p>There are two ways to configure cronjobs. The first one is by putting scripts in the following folders.</p>
+<pre><code>/etc/cron.daily
+/etc/cron.hourly
+/etc/cron.weekly
+/etc/cron.monthly
+</code></pre>
+
+<p>The second way is to write the command in the crontab</p>
+<pre><code># list cronjobs
+crontab -l
+
+# Edit or create new cronjobs
+crontab -e
+</code></pre>
+
+<h2 id="8-devicesdiskspartitions">8. Devices/disks/partitions<a class="headerlink" href="#8-devicesdiskspartitions" title="Permanent link">#</a></h2>
+<p>First some terminology. A <code>drive</code>is a physical storage device, just as a hard disk, solid state drive, or usb. In Linux these drives are represented as special file system objects called "device". They are found under <code>/dev</code>.A physical storage unit, a drive, can be divided up in to multiple logical storage units, these are called <code>partitions</code>. So they are just digital divisions of the drive. In linux a device are often named something like sda, sdb, sdc. And the partions of those devices are numbered. So one partion might be called <code>sda1</code>, and another <code>sda2</code>. These can then be found under <code>/dev/sda1</code> and <code>/dev/sda2</code>.</p>
+<p>You can view the devices and their partions with the command <code>lsblk</code></p>
+<h3 id="formating-disks">Formating disks<a class="headerlink" href="#formating-disks" title="Permanent link">#</a></h3>
+<p>If you want to do it the easy way, just open <code>gnome-disks</code>.</p>
+<p>To format disks we are going to use the program <code>parted</code>. It can be used with its own shell or by running commands. So you can just run parted, and you will enter the parted interface. But here we are going to run the commands instead.</p>
+<pre><code># Make sure you know which device you are working with, they can change name between boots
+lsblk
+</code></pre>
+
+<p><strong>Partition standard</strong></p>
+<p>First we have to choose a partition standard. The modern and mostly used is gpt, and older is msdos.</p>
+<pre><code># This will destroy all the data on the on the disk
+sudo parted /dev/sda mklabel gpt
+</code></pre>
+
+<p><strong>Create a new partition</strong></p>
+<pre><code>sudo parted --align optimal /dev/sda mkpart primary ext4 0% 100%
+</code></pre>
+
+<p>This command creates a new partition (mkpart), which is of type primary, that takes up the space between 0-100%. Which means we will only have one partition.</p>
+<p>Now you can see your new partition with <code>lsblk</code>.</p>
+<p><strong>Format the partition with a specific filesystem</strong></p>
+<p>Now that we have a partition we need to add a filesystem to it.There are many different types of filesystems. ext4 is common for linux. While windows uses NTFS, and mac uses HFS Plus. exFAT can be understood by all three OS:s, something that might be useful to USB:s.</p>
+<pre><code># For linux
+sudo mkfs.ext4 /dev/sda1
+
+# Supposedly work on linux, mac and windows. But fails for me on my tests on Mac 
+sudo mkfs.vfat /dev/sda1
+
+# To use UDF (universal disk format) that should also work on all OS
+# You first need to install apt-get install udftools. Then you do:
+mkudffs /dev/sda1
+</code></pre>
+
+<p><strong>Remove partition</strong></p>
+<pre><code># if you want to remove partition 1
+sudo parted /dev/sda rm 1
+</code></pre>
+
+<p><strong>Mount it</strong></p>
+<p>Now you can just mount the parition somewhere on your filesystem</p>
+<pre><code># Mount it
+sudo mkdir /mnt/here
+sudo mount /dev/sda1 /mnt/here
+
+# Unmount it
+sudo umount /mnt/here
+</code></pre>
+
+<p>List all devices</p>
+<pre><code>lsblk
+fdisk -l
+</code></pre>
+
+<h3 id="encrypt-a-partition">Encrypt a partition<a class="headerlink" href="#encrypt-a-partition" title="Permanent link">#</a></h3>
+<pre><code>sudo cryptsetup luksFormat /dev/sda1
+</code></pre>
+
+<p><strong>Mount an encrypted parition</strong></p>
+<pre><code>cryptsetup open /dev/sda1 backup
+</code></pre>
+
+<p>Then you mount it:</p>
+<pre><code>mount /dev/mapper/backup /media/username/back
+</code></pre>
+
+<h3 id="change-encryption-passphrase">Change encryption passphrase<a class="headerlink" href="#change-encryption-passphrase" title="Permanent link">#</a></h3>
+<p>First find out which device is the encrypted device:</p>
+<pre><code>lsblk
+# In type you will see &quot;crypt&quot;
+</code></pre>
+
+<p>There are  eight slots for passphrases. You can view these slots like this:</p>
+<pre><code>sudo cryptsetup luksDump /dev/sda3
+</code></pre>
+
+<p>Add a key:</p>
+<pre><code>sudo cryptsetup luksAddKey /dev/sda3
+</code></pre>
+
+<p>Remove a key:</p>
+<pre><code>sudo cryptsetup luksRemoveKey /dev/sda3
+# You are then prompted to input the key/passphrase you want to remove
+</code></pre>
+
+<h3 id="formatting-a-usb">Formatting a USB<a class="headerlink" href="#formatting-a-usb" title="Permanent link">#</a></h3>
+<p>In order to format a usb drive we have to do the following.</p>
+<p>If you have stored sensitive information, or otherwise want to make sure that it is not possible to read removed files from the USB you can overwrite the usb (or any other kind of disk) with zeroes, or just random data. So we can start by doing that, however, first we need to know the device name of the usb.</p>
+<p>First find out the name of the usb/device. We can to that by looking at the <code>dmesg</code> or <code>tail -f var/log/syslog</code> when we insert the usb. Another way is to run the command <code>lsblk</code> before and after inserting the USB. In my case the usb was called  <code>sda,</code>, but for you it might be something else. Make sure you know exactly which device you are working with, otherwise you will completely detroythe wrong device. Then we need to unmount the usb.</p>
+<pre><code>sudo umount /dev/sda
+</code></pre>
+
+<p>Now we are ready to overwrite it with zeroes. It can be done like this:</p>
+<pre><code>sudo dd if=/dev/zero of=/dev/sda bs=1k count=2048 status=progress
+</code></pre>
+
+<p>Then we just write a new filesystem to the  device:</p>
+<pre><code>sudo mkfs.ext4 -L &quot;NameOfVolume&quot; /dev/sda
+</code></pre>
+
+<p>ext4 works well with linux, vfat and ntfs should work with windows.</p>
+<pre><code>sudo mkfs.vfat -n &quot;NameOfVolume&quot; /dev/sda
+</code></pre>
+
+<h3 id="create-bootable-usb">Create bootable USB<a class="headerlink" href="#create-bootable-usb" title="Permanent link">#</a></h3>
+<p>First find out the name of the device. Using <code>dmesg</code>, or <code>lsblk</code>, or something similar.</p>
+<pre><code> sudo dd bs=4M if=/path/to/input.iso of=/dev/sdX conv=fdatasync status=progress
+</code></pre>
+
+<p>That's it.</p>
+<h2 id="9-the-filesystem">9. The Filesystem<a class="headerlink" href="#9-the-filesystem" title="Permanent link">#</a></h2>
+<h3 id="the-filesystem-hierarchy-standard">The Filesystem Hierarchy Standard<a class="headerlink" href="#the-filesystem-hierarchy-standard" title="Permanent link">#</a></h3>
+<p><img alt="" src="../fss.jpg" /><br />
+This image is copied from here: <a href="http://askubuntu.com/questions/138547/how-to-understand-the-ubuntu-file-system-layout/138551#138551">http://askubuntu.com/questions/138547/how-to-understand-the-ubuntu-file-system-layout/138551#138551</a></p>
+<h4 id="difference-between-sbin-and-bin">Difference between sbin and bin<a class="headerlink" href="#difference-between-sbin-and-bin" title="Permanent link">#</a></h4>
+<p>sbin is system binaries. A normal user do not have access to these binaries. It is only root and users with sudo privileges that do.</p>
+<pre><code>pelle@mymachine:/bin$ ls -la /bin
+total 4092
+drwxr-xr-x  2 root root   4096 2012-02-04 19:12 .
+drwxr-xr-x 21 root root   4096 2012-02-06 18:41 ..
+
+--snip--
+
+-rwxr-xr-x  1 root root  27312 2008-04-04 02:42 cat
+-rwxr-xr-x  1 root root  45824 2008-04-04 02:42 chgrp
+-rwxr-xr-x  1 root root  42816 2008-04-04 02:42 chmod
+-rwxr-xr-x  1 root root  47868 2008-04-04 02:42 chown
+-rwxr-xr-x  1 root root  71664 2008-04-04 02:42 cp
+-rwxr-xr-x  1 root root 110540 2007-11-13 05:54 cpio
+-rwxr-xr-x  1 root root  79988 2009-03-09 09:03 dash
+-rwxr-xr-x  1 root root  24684 2008-04-04 02:42 echo
+-rwxr-xr-x  1 root root  40560 2008-02-29 02:19 ed
+-rwxr-xr-x  1 root root  96440 2007-10-23 16:58 egrep
+-rwxr-xr-x  1 root root  22192 2008-04-04 02:42 false
+-rwxr-xr-x  1 root root   5740 2008-02-06 17:49 fgconsole
+-rwxr-xr-x  1 root root  53396 2007-10-23 16:58 fgrep
+-rwxr-xr-x  1 root root   8796 2007-11-15 13:01 hostname
+</code></pre>
+
+<p>We have echo, cp, grep. The normal stuff a user needs.</p>
+<p>In sbin we have binaries that control the system.</p>
+<pre><code>ls -la /sbin
+total 5884
+drwxr-xr-x  2 root root     4096 2012-02-04 10:01 .
+drwxr-xr-x 21 root root     4096 2012-02-06 18:41 ..
+-rwxr-xr-x  3 root root    23840 2008-03-27 13:25 findfs
+-rwxr-xr-x  1 root root    20020 2008-03-27 13:25 fsck
+-rwxr-xr-x  1 root root    15168 2008-09-26 08:43 getty
+-rwxr-xr-x  1 root root      375 2009-12-10 10:55 grub-install
+lrwxrwxrwx  1 root root        6 2012-02-04 09:51 halt -&gt; reboot
+-rwxr-xr-x  1 root root    69228 2008-03-28 18:26 hdparm
+-rwxr-xr-x  1 root root    31620 2008-09-26 08:43 hwclock
+-rwxr-xr-x  1 root root    61808 2007-12-13 05:51 ifconfig
+-rwxr-xr-x  2 root root    27372 2007-09-19 20:25 ifdown
+-rwxr-xr-x  2 root root    27372 2007-09-19 20:25 ifup
+-rwxr-xr-x  1 root root    89604 2008-04-11 09:50 init
+-rwxr-xr-x  1 root root    47448 2008-01-28 08:49 ip6tables
+-rwxr-xr-x  1 root root    51680 2008-01-28 08:49 ip6tables-restore
+-rwxr-xr-x  1 root root    51644 2008-01-28 08:49 ip6tables-save
+-rwxr-xr-x  1 root root    10948 2007-12-13 05:51 ipmaddr
+-rwxr-xr-x  1 root root    47480 2008-01-28 08:49 iptables
+</code></pre>
+
+<h3 id="mount">Mount<a class="headerlink" href="#mount" title="Permanent link">#</a></h3>
+<p>So everything on the linux-filesystem belongs to some part of the filesystem-tree. So if we plug in some device we need to mount it to the filesystem. That pretty much means that we need to connect it to the filesystem. Mount is like another word for connect.</p>
+<p>So if you want to connect a CD-rom or USB to your machine. You need to mount it to a specific path on the filesystem.</p>
+<p>So if you plug in the usb it might be accessible at <strong>/dev/usb</strong>. But that it not enough for you to be able to browse the usb content. You need to mount it. You do this by writing</p>
+<pre><code>mount /dev/usb /media/usb
+</code></pre>
+
+<p>Or whereever you want to mount it.</p>
+<p>So when you click on Eject or Safetly remove you are just unmounting.</p>
+<pre><code>umount /media/usb
+</code></pre>
+
+<p>Knowing how to mount and unmount might be useful if you want to get access to a remote NFS-directory. You will need to mount it to your filesystem to be able to browse it.</p>
+<p>It is possible that the disk is not known as <code>/dev/usb</code>. If that is the case you can run</p>
+<pre><code>sudo fdisk -l
+</code></pre>
+
+<p>And see if you can find your device, and look for the address. Then you mount it like this (or with the correct path)</p>
+<pre><code>sudo mount /dev/sda1
+</code></pre>
+
+<h4 id="mount-crypto-volume">Mount crypto-volume<a class="headerlink" href="#mount-crypto-volume" title="Permanent link">#</a></h4>
+<pre><code>cryptsetup open /dev/sda1 backup
+</code></pre>
+
+<p>Then you mount it:</p>
+<pre><code>mount /dev/mapper/backup /media/username/back
+</code></pre>
+
+<h3 id="create-your-of-filesystem">Create your of filesystem<a class="headerlink" href="#create-your-of-filesystem" title="Permanent link">#</a></h3>
+<p>In some cases it might be useful to create your own disk. Maybe for attaching to a virtual machine, or maybe to facilitate a backup. It is just a easy nice little container to have. It just requires two easy steps.</p>
+<p><strong>Create a chunk in memory</strong></p>
+<pre><code>truncate -s 100MB nameOfFile
+</code></pre>
+
+<p><strong>Attach a filesystem to file</strong></p>
+<pre><code>mkfs.ext4 ./nameOfFile
+</code></pre>
+
+<p><strong>Mount it to your filesystem</strong></p>
+<pre><code>sudo mount ./nameOfFile /mnt/blabla
+</code></pre>
+
+<h2 id="10-controlling-services">10. Controlling services<a class="headerlink" href="#10-controlling-services" title="Permanent link">#</a></h2>
+<h3 id="systemctl">Systemctl<a class="headerlink" href="#systemctl" title="Permanent link">#</a></h3>
+<p>Systemctl can be used to enable and disable various services on your linux machine.<br />
+Start ssh</p>
+<pre><code>systemctl start ssh
+systemctl status ssh
+systemctl stop ssh
+</code></pre>
+
+<p>You can verify that the service is listening for connection by running network status.</p>
+<pre><code>netstat -apnt
+</code></pre>
+
+<p>Make ssh start upon boot</p>
+<pre><code>systemctl enable ssh
+systemctl enable apache2
+</code></pre>
+
+<h3 id="initd">Init.d<a class="headerlink" href="#initd" title="Permanent link">#</a></h3>
+<p>Init.d is just a wrapper around Systemctl. I prefer it.</p>
+<pre><code>/etc/init.d/cron status
+/etc/init.d/cron start
+/etc/init.d/cron stop
+</code></pre>
+
+<h3 id="rcconf">rcconf<a class="headerlink" href="#rcconf" title="Permanent link">#</a></h3>
+<p>This is a tool to control services more easily, what is running upon boot and so on.</p>
+<h2 id="11-kernel">11. Kernel<a class="headerlink" href="#11-kernel" title="Permanent link">#</a></h2>
+<p>The Kernel is responsible for talking between the hardware and the software, and to manage the systems resources.</p>
+<p>The Linux Kernel is a monolithic kernel, unlike the OSX and the Windows kernels which are hybrid.</p>
+<p>You can find the kernel file in <code>/boot</code>. It might look like something like this<code>vmlinuz-4.4.0-57-generic</code>. In the beginning of time the kernel was simply called <code>linux</code>. But when Virtual Memory was introduced they changed the name to <code>vmlinux</code> to reflect that the kernel could handle virtual memory. When the kernel later became too big it was compressed using zlib , therefore the name was changed to <code>vmlinuz</code>.</p>
+<p>The Linux Kernel differs from Windows in that it contains drivers by default. So you don't have to go around looking for drivers like you do on windows when you want to install a printer, or something like that.</p>
+<p>It is really easy to upgrade to the latest Linux kernel, all you have to do tis this:</p>
+<pre><code class="bash">sudo apt-get update &amp;&amp; sudo apt-get dist-upgrade
+# or
+sudo apt-get update &amp;&amp; sudo apt-get upgrade
+</code></pre>
+
+<p>If you are using a distro that is Long Term Supported (LTS). You will not get the latest Kernel version, but you will get the latest Long Term Supported version.</p>
+<h2 id="14-logging">14. Logging<a class="headerlink" href="#14-logging" title="Permanent link">#</a></h2>
+<p>Logs can be viewed here on debian distros <code>/var/log/</code></p>
+<h2 id="16-network-basics">16. Network basics<a class="headerlink" href="#16-network-basics" title="Permanent link">#</a></h2>
+<p>If you use standard desktop installation for Ubuntu or Debian you get NetworkManager included, which handles your network connections, wire and wireless. NetworkManager is made to be easy to use, and "just work". And most of the time it does. But sometimes when you want to configure stuff on your own, for whatever reason, it can be a hassle. So for the rest of this chapter I am just going to assume that you have stopped, removed or disabled NetworkManager.</p>
+<pre><code># Stop NetworkManager
+sudo systemctl stop NetworkManager.service
+
+# Start NetworkManager
+sudo systemctl start NetworkManager.service
+
+# Disable it so it won't start at boot
+sudo systemctl disable NetworkManager
+
+#Enable it so it will start at boot
+sudo systemctl disable NetworkManager
+</code></pre>
+
+<p>Network cards (NIC) are identified by their mac address, hosts by theirip address andapplications by their port number.</p>
+<h3 id="in-a-nutshell-what-you-need-to-know">In a nutshell what you need to know<a class="headerlink" href="#in-a-nutshell-what-you-need-to-know" title="Permanent link">#</a></h3>
+<p>Things you really need to know are:</p>
+<pre><code># Configuration files
+/etc/network/interfaces
+/etc/resolve.config
+
+# Tools
+ip
+ip route
+dhclient
+wpa_supplicant
+iptables
+netstat
+dnsmasq
+</code></pre>
+
+<h3 id="configure-network-interface-cards-40nic41">Configure Network Interface Cards (NIC)<a class="headerlink" href="#configure-network-interface-cards-40nic41" title="Permanent link">#</a></h3>
+<p>On debian NIC:s are defined and configured in <code>/etc/network/interfaces</code>.</p>
+<pre><code># automatically start eth0 on boot
+auto eth0
+# give the eth0 an ip through dhcp
+iface eth0 inet dhcp
+
+# start up the loopback interface
+auto lo 
+iface lo inet loopback
+
+
+# A bridge called br1 - can be called  whatever.
+# This bridge has a static ip
+auto br1
+iface br1 inet static
+    address 192.168.2.1
+    netmask 255.255.255.0
+    broadcast 192.168.2.255
+    bridge_ports none
+</code></pre>
+
+<p><strong>Take a interface up and down / start and stop</strong></p>
+<p>It is recommended to take a interface down before configuring it.</p>
+<pre><code>#
+ifup eth0
+ifdown eth0
+
+# You can also use ip 
+sudo ip link set dev eth0 down 
+sudo ip link set dev eth0 down
+
+# You can also use ifconfig to bring an interface up and down. The difference is that ifconfig 
+# will use the current configuration, and not take into account changes from /etc/network/interfaces.
+# So use ifup and ifdown!
+ifconfig eth0 up
+ifconfig eth0 down
+</code></pre>
+
+<p><strong>Configure an interface with ip or ifconfig</strong></p>
+<p>If you want to configure an interface only temporarly you can use <code>ip</code>and <code>ifconfig</code>. The changes will not survive a reboot.</p>
+<p><code>Ifconfig</code> is old and deprecated on some systems. So use <code>ip</code> instead. But they do basically the same thing.</p>
+<h3 id="route">Route<a class="headerlink" href="#route" title="Permanent link">#</a></h3>
+<p>Where packets are send in a network depends on the routing of the routing. Every node that  the packet passes in its travel to its destination has a routing table defined, that says where the packet should be directed next. The most simple example is how the traffic of a home network is sent to the router, and then from there forwarded on to somewhere else on the internet. How every host should forward the packets are defined in the linux kernel routing table. You can see the routing table by running this command:</p>
+<pre><code>route
+ip route
+netstat -r
+</code></pre>
+
+<p>I think that the most useful of these commands is route, since it includes the column names of the table. Here is an example of the output:</p>
+<pre><code>Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         192.168.2.1    0.0.0.0         UG    0      0        0 ens3
+192.168.2.0    0.0.0.0         255.255.255.0   U     0      0        0 ens3
+</code></pre>
+
+<p>So let's image that we don't have any routing rules at all. It is completely empty. Like this:</p>
+<pre><code>Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+</code></pre>
+
+<p>But we have network interface connected, called  eth0. If we now try to ping the router (the gateway) on the network, we get this result:</p>
+<pre><code>~ ping 192.168.2.1
+connect: Network is unreachable
+</code></pre>
+
+<p>At this point we can't even add a route to the gateway. Because the network is unreacheable. So we need to hook outselfs up to the network first.</p>
+<pre><code>route add -net 192.168.2.0 netmask 255.255.255.0 dev eth0
+</code></pre>
+
+<p>Now our table looks like this:</p>
+<pre><code>Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.2.0    0.0.0.0         255.255.255.0   U     0      0        0 eth0
+</code></pre>
+
+<p>We still can't ping anything out in the internetz- That's because we are not reaching our gateway (router), since we haven't configured it yet.</p>
+<pre><code>route add default gw 192.168.2.1
+or
+ip route add default via 192.168.2.1
+</code></pre>
+
+<p>Remember that these routes will only be temporary.</p>
+<h4 id="example-man-in-the-middle-a-host">Example - Man in the middle a host<a class="headerlink" href="#example-man-in-the-middle-a-host" title="Permanent link">#</a></h4>
+<p>It is often useful to man in the middle all traffic from a machine, to see what requests and stuff it does.</p>
+<p>Let's say that the scenario is that the victim-machine is connected to the mitm-machine by ethernet cable. This can be either a physical cable or thought a virtual machine.</p>
+<p><strong>Victim machine</strong></p>
+<p>On the victim machine we don't have network-manager installed. And out <code>/etc/network/interfaces</code> has nothing in it except for:</p>
+<pre><code>auto lo
+iface lo inet loopback
+</code></pre>
+
+<p>When we run <code>ip addr</code>we get the following result:</p>
+<pre><code>root@deb64:~# ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: ens3: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc pfifo_fast state DOWN group default qlen 1000
+    link/ether 12:34:00:a9:fc:4a brd ff:ff:ff:ff:ff:ff
+</code></pre>
+
+<p>So our network interface ens3 does not have an ip-address and it is down. So let's first give it an ip-address, now remember that this ip-address will only be temporary, and will disappear on next reboot. If you want to make it permanent you need to define it in <code>/etc/network/interface</code></p>
+<p><strong>Give interface an ip-address</strong></p>
+<pre><code>ip addr add 192.168.150.2/24 dev ens3
+
+# Here we give it the ip-address 192.168.150.2 with netmask 255.255.255.0 (/24), and we 
+# give it to the device/interface ens3
+</code></pre>
+
+<p><strong>Now we can start the interface, or "bring it up" as it is called:</strong></p>
+<pre><code>ip link set ens3 up
+
+# ifup and ifdown will not work
+</code></pre>
+
+<p>When we bring up the interface the routing table will automatically get populated.</p>
+<pre><code>root@deb64:~# ip r
+192.168.150.0/24 dev ens3 proto kernel scope link src 192.168.150.2
+</code></pre>
+
+<p><strong>Add default gateway</strong></p>
+<p>But we are still not  able to reach the internet since we have not defined a default gateway yet. So let's do that.</p>
+<pre><code>ip route add default via 192.168.150.1 dev ens3
+</code></pre>
+
+<p>If we look at the routing table now we can see our new default gateway.</p>
+<pre><code>root@deb64:~# ip route
+default via 192.168.150.1 dev ens3 
+192.168.150.0/24 dev ens3 proto kernel scope link src 192.168.150.2
+</code></pre>
+
+<p>Now we are done setting up the victim machine.</p>
+<p><strong>Attacking machine</strong></p>
+<p>First we need to give our machine the ip-address of the default gateway, so that the victim will connect to the attacking machine.</p>
+<pre><code>ip addr add 192.168.150.1/24 dev ens3
+</code></pre>
+
+<p>Now we just need to configure the NATing.</p>
+<pre><code>iptables -t nat -A POSTROUTING -j ACCEPT
+</code></pre>
+
+<p>This is all we have to do. If we now do a <code>curl icanhazip.com</code> from our victim machine, we can see the traffic flying by with tcpdump in our attacker-machine.</p>
+<p>However, we might want to inspect the traffic in burp-suite, or some other proxy tool. In ordet to do that we can redirect specific traffic into our proxy with the help of our friend iptables.</p>
+<pre><code>iptables -t nat -A PREROUTING -i ens3 -s 192.168.150.2 -p tcp -m tcp --dport 443 -j REDIRECT --to-ports 8080
+iptables -t nat -A PREROUTING -i ens3 -s 192.168.150.2 -p tcp -m tcp --dport 80  -j REDIRECT --to-ports 8080
+iptables -t nat -A PREROUTING -i ens3 -s 192.168.150.2 -p tcp -m tcp --dport 53  -j REDIRECT --to-ports 53
+</code></pre>
+
+<p>Now we just have to configure burp-suite a little bit.</p>
+<p>Go to <code>Proxy &gt; Options &gt; Proxy Listeners &gt; Edit &gt; Binding &gt; All interfaces</code></p>
+<p>Go to: <code>Proxy &gt; Options &gt; Proxy Listeners &gt; Edit &gt; Request handling &gt; Support invisible proxy</code></p>
+<p>Now if you do the following from the victim machine:</p>
+<pre><code>curl icanhazip.com
+</code></pre>
+
+<p>You will see the request in burp suite.</p>
+<p>If you want to mitm windowsyou just need to change the ip and gateway to 192.168.15.2 and 192.168.150.1.</p>
+<h3 id="wireless-wpa95supplicant">Wireless - wpa_supplicant<a class="headerlink" href="#wireless-wpa95supplicant" title="Permanent link">#</a></h3>
+<p>So if you manage to disable networkManager you can connect to a wireless network using wpa_supplicant instead. I think that is what NetworkManager actually uses underneith.</p>
+<p>First we need to list all Access Points.</p>
+<pre><code>sudo iwlist wlan0 scan
+</code></pre>
+
+<p>Then we need to create a config-file for our specific access-point. We can do that with wpa_passphrase, after running the command we are asked to write the password, which also gets stored in the config file. In plaintext.</p>
+<pre><code>wpa_passphrase NameOfWIfi &gt; wpa.conf
+</code></pre>
+
+<p>Now we just connect to the AP:</p>
+<pre><code>wpa_supplicant -Dwext -iwlan0 -c/etc/wpa_supplicant/wpa.conf
+</code></pre>
+
+<p>After this you do not have an IP-address, or you might not have a updated dhcp lease. So first you need to release the current lease.</p>
+<pre><code>sudo dhclient wlan0 -r
+
+# Then get a new dhcp lease
+sudo dhclient wlan0
+</code></pre>
+
+<p>Now you should be able to surf the internetz.</p>
+<h3 id="netstat-find-outgoing-and-incoming-connections">Netstat - Find outgoing and incoming connections<a class="headerlink" href="#netstat-find-outgoing-and-incoming-connections" title="Permanent link">#</a></h3>
+<p>Netstat is a multiplatform tool. So it works on both mac, windows and linux.</p>
+<pre><code>$ netstat -antlp
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 mymachine:domain        *:*                     LISTEN      -               
+tcp        0      0 localhost:ipp           *:*                     LISTEN      -               
+tcp        0      0 localhost:27017         *:*                     LISTEN      -               
+tcp        0      0 localhost:mysql         *:*                     LISTEN      -               
+</code></pre>
+
+<p>A few interesting things to observe here is that my machine is using any port over 1024 to connect to the outside. So it is not like just because we communicate with https and connect to port 443 that we use that port on our machine. On our machine it can be any port (over 1024) and usually any port over 10000.</p>
+<p>Find out what services are listening for connection on your machine<br />
+Flags</p>
+<pre><code>-a # All
+-n # show numeric addresses
+-p # show port
+-t # tcp
+</code></pre>
+
+<pre><code>netstat -anpt
+</code></pre>
+
+<p>To easily check out what process is using lots of bandwidth you can use nethogs.</p>
+<pre><code>sudo apt-get install nethogs
+nethogs
+</code></pre>
+
+<p>Or you can use tcpdump, or iptables.</p>
+<p>Every listening process of course has a PID, but unless you are root you can't might not see them all.</p>
+<h3 id="firewall-iptables">Firewall - Iptables<a class="headerlink" href="#firewall-iptables" title="Permanent link">#</a></h3>
+<p>Iptables is a firewall tool in linux. A firewall is basically a tool that scans incoming and/or outgoing traffic. You can add rules to the iptables to filter for certain traffic.</p>
+<h4 id="types-of-chains">Types of chains<a class="headerlink" href="#types-of-chains" title="Permanent link">#</a></h4>
+<p>So you can filter traffic in three different ways <strong>input</strong>, <strong>forward</strong>, and <strong>output</strong>. These are called three different chains.</p>
+<p><strong>INPUT</strong><br />
+This is for incoming connections. If someone wants to ssh into your machine. Or a web-server responds to your request.</p>
+<p><strong>FORWARD</strong><br />
+This chain is used for traffic that is not aimed at your machine. A router for example usually just passes information on. Most connections are just passing through. As you can see this will probably not be used so much on your machine, as a normal desktop or a server doesn't router that much traffic.</p>
+<p><strong>OUTPUT</strong></p>
+<p>This chain is used for outgoing traffic.</p>
+<h5 id="active-rules">Active rules<a class="headerlink" href="#active-rules" title="Permanent link">#</a></h5>
+<p>To view your active rules you do</p>
+<pre><code>iptables -L
+# It will output something like this
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+</code></pre>
+
+<p>So as we can see the current policy is to accept all traffic in all directions.</p>
+<p>If you for some reason has been tampering with the iptables and maybe fucked up. This is how you return it to the default setting, accepting all connections</p>
+<pre><code>iptables --policy INPUT ACCEPT
+iptables --policy OUTPUT ACCEPT
+iptables --policy FORWARD ACCEPT
+</code></pre>
+
+<p>If you instead want to forbid all traffic you do</p>
+<pre><code>iptables --policy INPUT DROP
+iptables --policy OUTPUT DROP
+iptables --policy FORWARD DROP
+</code></pre>
+
+<p>Okay, so let's block out some connections. To do that we want to add/append a new rule. We want to block all connections from our enemy 192.168.1.30.</p>
+<pre><code># A for append, and S for source. 
+iptables -A INPUT -s 192.168.1.30 -j DROP
+# Block an entire range
+iptables -A INPUT -s 192.168.1.0/24 -j DROP
+</code></pre>
+
+<p>Now if we want to see our current rules we just do</p>
+<pre><code>iptables -L
+</code></pre>
+
+<p>And we can now see our new rule.</p>
+<p>To add line-numbers for each rule, so that you can then specify which rule you want to reset or change or something you can output the rluels with line-numbers</p>
+<pre><code>iptables -L -v --line-numbers
+</code></pre>
+
+<p><strong>Remove/delete a rule</strong><br />
+To remove a rule you just do</p>
+<pre><code># Remove one specific rule
+iptables -D INPUT 2
+# Remove all rules
+iptables -F
+</code></pre>
+
+<p><strong>Save your changes</strong><br />
+Your changes will only be saved and therefore in action until you restart iptables. So they will disappear every time you reboot unless you save the changes. To save the changes on ubuntu you do</p>
+<pre><code>sudo /sbin/iptables-save
+</code></pre>
+
+<h4 id="measuring-bandwidth-usage">Measuring bandwidth usage<a class="headerlink" href="#measuring-bandwidth-usage" title="Permanent link">#</a></h4>
+<p>There are a few different tools in hour arsenal that we can use to  measure bandwidth usage. We will start with iptables.</p>
+<p>To view the input and output traffic we just list the rules with some verbosity.</p>
+<pre><code>iptables -L -v
+# Stdout
+Chain INPUT (policy ACCEPT 6382 packets, 1900K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 4266 packets, 578K bytes)
+ pkts bytes target     prot opt in     out     source               destination
+</code></pre>
+
+<p>So clean this up and reset the count we can do the following</p>
+<pre><code># Restar the count
+iptables -Z
+# Remove all the rules, FLUSH them
+iptables -F
+</code></pre>
+
+<p>So now we just need to add our rules. A simple script for this would be</p>
+<pre><code>#!/bin/bash
+iptables -F
+iptables -I INPUT 1 -p tcp -j ACCEPT
+</code></pre>
+
+<p>Then check out the traffc with</p>
+<pre><code>iptables -L -v --line-numbers
+</code></pre>
+
+<h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h4>
+<p><strong>Block outgoing connections to a specific ip</strong></p>
+<pre><code>iptables -A OUTPUT -d 198.1.1.1 -j DROP
+</code></pre>
+
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules">https://www.digitalocean.com/community/tutorials/how-to-list-and-delete-iptables-firewall-rules</a></p>
+<h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">#</a></h3>
+<h4 id="have-you-tried-turning-it-on-and-off">Have you tried turning it on and off?<a class="headerlink" href="#have-you-tried-turning-it-on-and-off" title="Permanent link">#</a></h4>
+<p>I have had problems with the network-adapter not starting or something like that, on Ubuntu. You can try to restart the network manager if this happens:</p>
+<pre><code class="bash">sudo service network-manager restart
+</code></pre>
+
+<h4 id="magical-rfkill">Magical rfkill<a class="headerlink" href="#magical-rfkill" title="Permanent link">#</a></h4>
+<p>If for some reason the wifi is blocked you can unblock it (or block it) with rfkill.</p>
+<pre><code>$ rfkill list
+0: phy0: Wireless LAN
+    Soft blocked: no
+    Hard blocked: no
+2: hci0: Bluetooth
+    Soft blocked: no
+    Hard blocked: no
+</code></pre>
+
+<p>To block or unblock the <strong>phy0</strong> from the example above you do:</p>
+<pre><code># Block
+rfkill block 0
+# Unblock
+rfkill unblock 0
+</code></pre>
+
+<p>If there is a <strong>hard block</strong> it means that there is a physical switch on you machine that you need to switch off.</p>
+<h3 id="dns">DNS<a class="headerlink" href="#dns" title="Permanent link">#</a></h3>
+<p>Another rather messy area is DNS. The reason for this is that we have a few different players here, <code>/etc/resolv.conf</code>, <code>resolvconf</code>, <code>dnsmasq</code> and the dreaded <code>NetworkManager</code>.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+<p><a href="https://linuxjourney.com/">https://linuxjourney.com/</a><br />
+<a href="https://github.com/jlevy/the-art-of-command-line">https://github.com/jlevy/the-art-of-command-line</a></p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../bash_scripting/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../bash_scripting/" class="btn btn-xs btn-link">
+        Bash Scripting
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../linux/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../linux/" class="btn btn-xs btn-link">
+        Linux
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/basics_of_linux/basics_of_linux.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

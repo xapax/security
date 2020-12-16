@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Basics of RFID Hacking - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "RFID", url: "#_top", children: [
+          ]},
+          {title: "NFC", url: "#nfc", children: [
+          ]},
+          {title: "Trademarks", url: "#trademarks", children: [
+          ]},
+          {title: "MIFARE", url: "#mifare", children: [
+          ]},
+          {title: "Identify your card", url: "#identify-your-card", children: [
+              {title: "Clone the EM410", url: "#clone-the-em410" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../physical_attacks/physical_access_to_machine/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../physical_attacks/physical_access_to_machine/" class="btn btn-xs btn-link">
+        Pysical Attacks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_kubernetes/attacking_kubernetes_checklist/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_kubernetes/attacking_kubernetes_checklist/" class="btn btn-xs btn-link">
+        Attacking Kubernetes Checklist
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="rfid">RFID<a class="headerlink" href="#rfid" title="Permanent link">#</a></h2>
+<p>A Radio Frequency Identifiers (RFID) card transmits bits over radio. It uses electromagentic  field to communicate.
+Some tags are passive, which means that they are activated by the reader.
+Some tags are active and does therefore require a local powersource (like a battery).
+The higher the frequency the more bits can be sent per second. </p>
+<p>RFID always implied the following:
+- a tag
+- a reader
+- an antenna</p>
+<h2 id="nfc">NFC<a class="headerlink" href="#nfc" title="Permanent link">#</a></h2>
+<p>NFC - Near Field Communication is a set of protocols. These protocols allows to devices to exchange information within 4 centimeters. They operate  on the same range as RFID.
+The main purpose of NFC was to allow both the tag and the reader to send and recieve information. With RFID a tag can only send information, but not receive it.</p>
+<h2 id="trademarks">Trademarks<a class="headerlink" href="#trademarks" title="Permanent link">#</a></h2>
+<p>There are many known trademarks. Producers of chips that use RFID technology. </p>
+<p>Some common ones are EM, HID and MIFARE</p>
+<h2 id="mifare">MIFARE<a class="headerlink" href="#mifare" title="Permanent link">#</a></h2>
+<p>MIFARE is a trademark for a series of chips. MIFARE is owned by NXP semiconductors which was previously Philips Electronics. So it is  just a chip, which uses RFID  technology.</p>
+<p>MIFARE is split into four main groups.</p>
+<ol>
+<li>MIFARE Classic 1k/4k. It can store 1025 bytes or 4096 bytes. The memory/disk is divided into different sectors and blocks. It is used for access badges.</li>
+<li>MIFARE ultralight - A 64 byte version fo MIFARE Classic. Is cheap to make. So it is used for disposable ticketsfor events and transportation.</li>
+<li>MIFARE Plus - The replacement for Classic. With 128-bit AES encryption.</li>
+<li>MIFARE DESFire - Comes with the OS DESFire, which contains a filestructure and files. The best in terms of security.</li>
+</ol>
+<h2 id="identify-your-card">Identify your card<a class="headerlink" href="#identify-your-card" title="Permanent link">#</a></h2>
+<p>You place the card on the reader and run <code>lf search</code>.</p>
+<p>If it responds like this:</p>
+<pre><code>EM410x pattern found:           
+</code></pre>
+
+<p>You have found a tag with EM410x. It runs on 125 kHz. It is a low frequency chip.</p>
+<p>You will probably see something like this:</p>
+<pre><code>EM410x pattern found:           
+
+EM TAG ID      : 00002A3B26    
+</code></pre>
+
+<p>If you have gotten the TAG ID, you can choose to either Emulate it, which tells Proxmark to act like that tag. It will then send out the same pattern as the card itself, and you can get into the door.
+Or you can simply clone it.</p>
+<p>With this knowledge you can now use more specific EM410 commands.</p>
+<pre><code>lf help
+
+[...]
+em               { EM4X CHIPs &amp; RFIDs...      }          
+[...]
+</code></pre>
+
+<pre><code>proxmark3&gt; lf em
+help             This help          
+410xread         [findone] -- Extract ID from EM410x tag (option 0 for continuous loop, 1 for only 1 tag)          
+410xdemod        [clock] [invert&lt;0|1&gt;] [maxErr] -- Demodulate an EM410x tag from GraphBuffer (args optional)          
+410xsim          &lt;UID&gt; [clock rate] -- Simulate EM410x tag          
+410xbrute        ids.txt [d (delay in ms)] [c (clock rate)] -- Reader bruteforce attack by simulating EM410x tags          
+410xwatch        ['h'] -- Watches for EM410x 125/134 kHz tags (option 'h' for 134)          
+410xspoof        ['h'] --- Watches for EM410x 125/134 kHz tags, and replays them. (option 'h' for 134)          
+410xwrite        &lt;UID&gt; &lt;'0' T5555&gt; &lt;'1' T55x7&gt; [clock rate] -- Write EM410x UID to T5555(Q5) or T55x7 tag, optionally setting clock rate          
+</code></pre>
+
+<h3 id="clone-the-em410">Clone the EM410<a class="headerlink" href="#clone-the-em410" title="Permanent link">#</a></h3>
+<p>You need to first read the data of the tag, and then write it somewhere. You can use a T55x7 tag to write it to. I got a T5577 with my proxmark.
+So just put your T5577 tag on your proxmark, and then run the following command:</p>
+<p>You take the TAG ID, that was previously identified and you run it like this:</p>
+<pre><code>proxmark3&gt; lf em4x em410xwrite 00002A3B26 1 
+</code></pre>
+
+<p>Now it should have been written to your tag, and it should work.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../physical_attacks/physical_access_to_machine/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../physical_attacks/physical_access_to_machine/" class="btn btn-xs btn-link">
+        Pysical Attacks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_kubernetes/attacking_kubernetes_checklist/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_kubernetes/attacking_kubernetes_checklist/" class="btn btn-xs btn-link">
+        Attacking Kubernetes Checklist
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_rfid_cards/basics_of_rfid_hacking.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

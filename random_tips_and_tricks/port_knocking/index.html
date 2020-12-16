@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Port Knocking - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Port knocking", url: "#_top", children: [
+              {title: "Software to implement port-knocking", url: "#software-to-implement-port-knocking" },
+              {title: "Opening", url: "#opening" },
+              {title: "Break it", url: "#break-it" },
+              {title: "Pitfalls", url: "#pitfalls" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../port_forwarding_and_tunneling/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../port_forwarding_and_tunneling/" class="btn btn-xs btn-link">
+        Port Forwarding and Tunneling
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../setuid_c-code/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../setuid_c-code/" class="btn btn-xs btn-link">
+        Setuid With C
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="port-knocking">Port knocking<a class="headerlink" href="#port-knocking" title="Permanent link">#</a></h1>
+<p>Port-knocking the a obfuscation-as-security technique. It basically means that after knocking on ports in a specific sequence a certain port will open automatically. It seems to be more popular in Capture-the-flag contests than real life networks. But I have included it anyways, since CTF:s are great.</p>
+<p>This is a way to hide certain ports, so you don't get unwanted intrusion-intents. </p>
+<p>So for example, imagine you access your server through <code>ssh</code>. But you are tired of getting unwanted bruteforce attempts all day long. You can just have the SSH-port closed and when you knock on certain ports in a specific order the ssh-port opens up, maybe for a few minutes, or maybe indefinitely until you close it again.</p>
+<p>When you "knock" on a port you are really just sending TCP-packets with <code>SYN</code>-flag to that port. The closed port will then respond with a <code>ACK/RST</code>. Which basically means that the host has received the <code>TCP</code>-packet, and it ACKnolwdge it, but responds with a Reset (<code>RST</code>) flag. <code>RST</code> just means that the port is closed.</p>
+<h2 id="software-to-implement-port-knocking">Software to implement port-knocking<a class="headerlink" href="#software-to-implement-port-knocking" title="Permanent link">#</a></h2>
+<p>I have seen the Knock software implemented.</p>
+<h2 id="opening">Opening<a class="headerlink" href="#opening" title="Permanent link">#</a></h2>
+<p>So, how do we actually knock?
+As mentioned before a knock is essentially just sending a packet to a specific port. 
+I guess there are quite a few ways to do this. But here are three ways.</p>
+<ol>
+<li>Knock</li>
+<li><code>apt-get install knockd</code></li>
+<li>Then you simply type: <code>knock [ip] [port]</code>. For example: <code>knock 192.168.1.102 4000 5000 6000</code></li>
+<li>After that you have to scan the network to see if any new port is open.</li>
+<li>
+<p>If you know what port is open you can connect to the port using netcat. The following command would work <code>nc 192.168.1.102 8888</code>. This would then connect to the port.</p>
+</li>
+<li>
+<p>Nmap/bash</p>
+</li>
+<li><code>for x in 4000 5000 6000; do nmap -Pn --host_timeout 201 --max-retries 0 -p $x server_ip_address; done</code></li>
+<li>Netcat</li>
+</ol>
+<pre><code>nc 192.168.1.102 4000
+nc 192.168.1.102 5000
+nc 192.168.1.102 6000
+nc 192.168.1.102 8888
+</code></pre>
+
+<h2 id="break-it">Break it<a class="headerlink" href="#break-it" title="Permanent link">#</a></h2>
+<p>One way hack a server with port-knocking implemented would be to sniff for packets on the network. So if you are on the same network and able to make MITM, you can just sniff that traffic and then find the sequence.</p>
+<h2 id="pitfalls">Pitfalls<a class="headerlink" href="#pitfalls" title="Permanent link">#</a></h2>
+<p>Using port-knocking as a way to secure your service might come with some risk. The biggest risk I suppose is that if the knock-daemon fails, for whatever reason. You will be shut out of you machine. There are of course ways to just restart the knock-daemon if it fails. But maybe that daemon fails as well.</p>
+<h3 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h3>
+<p>This wikipedia-article is really worth reading.
+https://en.wikipedia.org/wiki/Port_knocking</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../port_forwarding_and_tunneling/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../port_forwarding_and_tunneling/" class="btn btn-xs btn-link">
+        Port Forwarding and Tunneling
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../setuid_c-code/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../setuid_c-code/" class="btn btn-xs btn-link">
+        Setuid With C
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/random_tips_and_tricks/port_knocking.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

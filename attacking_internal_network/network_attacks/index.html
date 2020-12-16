@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Network Attacks - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "About the Components", url: "#_top", children: [
+              {title: "Switch - Layer 2 device", url: "#switch-layer-2-device" },
+              {title: "Router - layer 3 device", url: "#router-layer-3-device" },
+          ]},
+          {title: "VLAN", url: "#vlan", children: [
+          ]},
+          {title: "Protocols and terminology", url: "#protocols-and-terminology", children: [
+              {title: "HSRP", url: "#hsrp" },
+              {title: "SNMP - Simple Network Management Protocol", url: "#snmp-simple-network-management-protocol" },
+              {title: "VRF - Virtual Routing and Forwarding", url: "#vrf-virtual-routing-and-forwarding" },
+          ]},
+          {title: "Some Network Attacks", url: "#some-network-attacks", children: [
+              {title: "VLAN hopping using DTP", url: "#vlan-hopping-using-dtp" },
+              {title: "Attack", url: "#attack" },
+              {title: "Cisco insecure password type", url: "#cisco-insecure-password-type" },
+              {title: "Background", url: "#background_1" },
+              {title: "Weak password", url: "#weak-password" },
+              {title: "SNMP Configurations", url: "#snmp-configurations" },
+              {title: "Check for ACL on SNMP", url: "#check-for-acl-on-snmp" },
+              {title: "Exploiting spanning-tree protocol", url: "#exploiting-spanning-tree-protocol" },
+              {title: "Patch level", url: "#patch-level" },
+              {title: "ARP spoofing / ARP poisoning", url: "#arp-spoofing-arp-poisoning" },
+              {title: "Background", url: "#background_4" },
+              {title: "Rouge DHCP attack", url: "#rouge-dhcp-attack" },
+              {title: "IP/MAC spoofing", url: "#ipmac-spoofing" },
+              {title: "IPv6 Man in the middle", url: "#ipv6-man-in-the-middle" },
+              {title: "CAM overflow attack", url: "#cam-overflow-attack" },
+              {title: "DHCP starvation attacks", url: "#dhcp-starvation-attacks" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../dns_zone_transfer_attack/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../dns_zone_transfer_attack/" class="btn btn-xs btn-link">
+        Zone Transfer Attack
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_web_applications/web-scanning/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_web_applications/web-scanning/" class="btn btn-xs btn-link">
+        Find Files
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="about-the-components">About the Components<a class="headerlink" href="#about-the-components" title="Permanent link">#</a></h2>
+<h3 id="switch-layer-2-device">Switch - Layer 2 device<a class="headerlink" href="#switch-layer-2-device" title="Permanent link">#</a></h3>
+<p>A switch basically has table that maps the MAC address of a device to the port of the switch. This table is called a CAM table. Using this table it can forward traffic without the traffic having to go through a router.</p>
+<ul>
+<li>Backbone/core/tandem switch is a switch with high capacity located in the physical core of the network. A backbone switch serves to interconnect edge switches. A core switch can sometimes operate on layer 3. Aggregation switches are usually connected to the core switch. It can have routing features as well. A normal port on a core switch might handle up to 10Gbps. You might connect the core switch to the aggregation switches using fiber, since those cables will carry a lot of traffic. The core switch usually server as a gateway to the WAN.</li>
+<li>Aggregation/distribution switch - basically a switch that servers as a connection between a core switch and an edge switch.</li>
+<li>Access/edge/normal switch - smaller capacity that are on the edges of the network. Usually used to connect end devices, like a computer.</li>
+</ul>
+<h3 id="router-layer-3-device">Router - layer 3 device<a class="headerlink" href="#router-layer-3-device" title="Permanent link">#</a></h3>
+<p>A router is a layer 3 device. While a switch is a layer 2 device.
+Therefore you won't find subnets configured on a switch, but you will find it on a router. Since the router deals with layer 3 (IP)</p>
+<h2 id="vlan">VLAN<a class="headerlink" href="#vlan" title="Permanent link">#</a></h2>
+<p>A VLAN is fundamentally a layer 2 virtual lan. This means that it does not concern IP-addresses, as one might initially think. We usually think of a VLAN as a subnet. But a VLAN is a layer 2 segmentation, and subnet is a layer 3. However, it is common with a one-to-one relationship between a VLAN and a subnet. That is: <code>VLAN 10</code> is related to <code>192.168.11.1/24</code>. This is why you might enter a cisco switch and you won't find subnet information.</p>
+<p>On cisco router <code>show vlans</code> will show the IP-address. On a switch however <code>show vlans</code> does not exist.</p>
+<p>A VLAN is simply a tag that is added to each ethernet frame. That is why a switch does not really need to look at traffic above the ethernet frame. This tag is the <code>IEEE 802.1Q</code> header (also known as <code>Dot1q</code>) of the ethernet frame. However if you sniff the traffic on your computer you will likely not see the Dot1q tag, because it is removed when sent to the end user. It is only used between switches, I think.</p>
+<p>A basic switch that does not have VLANs enabled will have a default VLAN enabled that contains all the ports of the switch. The default VLAN usually uses the ID 1.</p>
+<p>A trunk is a network link that carries multiple VLANs. In cisco world the word channel is sometimes used to say trunk.</p>
+<h2 id="protocols-and-terminology">Protocols and terminology<a class="headerlink" href="#protocols-and-terminology" title="Permanent link">#</a></h2>
+<h3 id="hsrp">HSRP<a class="headerlink" href="#hsrp" title="Permanent link">#</a></h3>
+<p>Hot Standby Router Protocol (HSRP) is a cisco protocol which provides redudancy for a local subnet. In HSRP two or more routers gives an illusion of one virtual router. It allows you to configure one router to be the active router, and others to be the standby router. All routers in a single HSRP group share a MAC address and IP address. The active router is responsible for forwarding the traffic, if that router fails the standby router takes over.</p>
+<h3 id="snmp-simple-network-management-protocol">SNMP - Simple Network Management Protocol<a class="headerlink" href="#snmp-simple-network-management-protocol" title="Permanent link">#</a></h3>
+<p>SNMP is a protocol used to manage and monitor network devices. SNMP is used to monitor your network. It does this by sending out messages to devices on the network that speak SNMP. These are SNMP get-requests. </p>
+<p><strong>Managed device</strong> - the device that can be queried for information.</p>
+<p><strong>Agent</strong> - the service/agent running on a device that collects the data that can be queried over SNMP.</p>
+<p><strong>Network Managemet station</strong></p>
+<h3 id="vrf-virtual-routing-and-forwarding">VRF - Virtual Routing and Forwarding<a class="headerlink" href="#vrf-virtual-routing-and-forwarding" title="Permanent link">#</a></h3>
+<p>VRF is used to create many virtual routing tables. 
+A typical example would be ISP's using same router to route traffic for various customers and configure VRF to separate the various customer traffics with the router.</p>
+<h2 id="some-network-attacks">Some Network Attacks<a class="headerlink" href="#some-network-attacks" title="Permanent link">#</a></h2>
+<h3 id="vlan-hopping-using-dtp">VLAN hopping using DTP<a class="headerlink" href="#vlan-hopping-using-dtp" title="Permanent link">#</a></h3>
+<h4 id="background">Background<a class="headerlink" href="#background" title="Permanent link">#</a></h4>
+<p>A switch has a number of ports. Those ports can be either <strong>access port</strong> or <strong>trunking port</strong>. An access port is usually used when connecting a host to the switch. Just like a regular computer. Each access port is assigned one VLAN, and only one. A trunking port is used when conneting two switches or connecting a switch and a router. Trunking ports allow traffic from multiple lans. A trunk port can be configured manually. But there is also a protocol that can do this over the network, Dynamic Trunk Protocol.</p>
+<p>So, as you can understand the attack is to transform the access port that you are connected to into a trunking port, in order to be able to access other VLANS.</p>
+<p>So an attack can be performed against ports that are configured to be <strong>dynamic desirable</strong>, <strong>dynamic auto</strong>, or <strong>trunk</strong> mode.</p>
+<p>A port can be in a number of different states:</p>
+<ul>
+<li><strong>AUTO</strong> - if the port is configured to listen for DTP frames it can convert the port to a trunk port of the other switch decides sends the DTP frame.</li>
+<li><strong>DESIRABLE</strong> - DTP is spoken to the neighbor switch with the desire that the other switch form a trunk.</li>
+<li><strong>ON</strong> - </li>
+</ul>
+<h3 id="attack">Attack<a class="headerlink" href="#attack" title="Permanent link">#</a></h3>
+<p>Since it is a protocol an attacker can simply send a DTP packet and instruct the switch to becomes a trunk.
+If an attacker is successfull it will turn that port into a trunk.</p>
+<h3 id="cisco-insecure-password-type">Cisco insecure password type<a class="headerlink" href="#cisco-insecure-password-type" title="Permanent link">#</a></h3>
+<h3 id="background_1">Background<a class="headerlink" href="#background_1" title="Permanent link">#</a></h3>
+<p>There exists multiple password types in Cisco. </p>
+<p>The passwords can be stored in a number of different ways, or Types as cisco calls them.
+Type 0 is plaintext.
+Etc.
+Type 9 is the secure version.</p>
+<p>Passwords are stored in configurations and can be read with commands like</p>
+<pre><code>show running-config
+</code></pre>
+
+<p><strong>Username</strong></p>
+<p>Check that it is using type 9.</p>
+<pre><code>show running-config | incl username
+</code></pre>
+
+<p>Check that it is using "secret 9"</p>
+<p><strong>HSRP</strong></p>
+<p>Check for usage of encrypted password for HSRP. ALthough this is pretty shitty security.</p>
+<pre><code>show standby
+</code></pre>
+
+<p><strong>SNMP</strong></p>
+<p><strong>TACTACS</strong></p>
+<p>Look for the tactac-configuration. Check that it is key 7.</p>
+<pre><code>show running-config
+server-private 1.1.1.1 key 7 45weg45345345345
+</code></pre>
+
+<p><strong>BGP</strong></p>
+<pre><code>
+</code></pre>
+
+<h3 id="weak-password">Weak password<a class="headerlink" href="#weak-password" title="Permanent link">#</a></h3>
+<p>In some protocols a password is used. You need to make sure that the password is not superweak. If you run</p>
+<pre><code>show running-config
+</code></pre>
+
+<p>You can check for passwords and see if they are really weak. They might be encrypted, but if they are of <code>type 7</code> they can easily be decrypted.</p>
+<p><strong>BGP</strong>
+For example, with BGP it is possible to configure BGP peer authentication. BGP authentication can be used by entering the neighbor command in cisco.</p>
+<p>It will look something like this:</p>
+<pre><code>show running-config
+neighbor 8.8.9.1 password 7 1511021F0725
+</code></pre>
+
+<p><code>Password 7</code> means that it is is encrypted. But it can easily be decrypted by anyone. It is just to store the password in non-plaintext.
+But the password will be hashed into MD5 when used with BGP.
+So if it uses <code>password 7</code> there is nothing really to complain about, but what you can do is simply decrypt it and check that the password is not very weak.</p>
+<p>You can do this with this script: https://github.com/theevilbit/ciscot7/blob/master/ciscot7.py</p>
+<p><strong>SNMP</strong></p>
+<p>Community string is just another word for password. The default community string is public or private. This should be set to something else.</p>
+<pre><code>show running-config | incl snmp
+</code></pre>
+
+<h3 id="snmp-configurations">SNMP Configurations<a class="headerlink" href="#snmp-configurations" title="Permanent link">#</a></h3>
+<h4 id="check-for-weakdefault-passwords">Check for weak/default passwords<a class="headerlink" href="#check-for-weakdefault-passwords" title="Permanent link">#</a></h4>
+<p>How to do that can be found in the section about weak passwords.</p>
+<h4 id="check-for-read-write">Check for read write<a class="headerlink" href="#check-for-read-write" title="Permanent link">#</a></h4>
+<p>CIS 1.5.4</p>
+<p>SNMP should not be used in Read write mode unless absolutley necessary.</p>
+<p>Check for RW whe you run the following command.</p>
+<pre><code>show run | incl snmp-server community
+</code></pre>
+
+<h3 id="check-for-acl-on-snmp">Check for ACL on SNMP<a class="headerlink" href="#check-for-acl-on-snmp" title="Permanent link">#</a></h3>
+<p>CIS 1.5.5</p>
+<h3 id="exploiting-spanning-tree-protocol">Exploiting spanning-tree protocol<a class="headerlink" href="#exploiting-spanning-tree-protocol" title="Permanent link">#</a></h3>
+<h4 id="background_2">Background<a class="headerlink" href="#background_2" title="Permanent link">#</a></h4>
+<p>STP is a layer 2 protocol. STP is used to prevent layer 2 switching loops. It does so by shutting down redudant links. So say you have two links between two switches. STP makes sure that you in fact only have one, so that a packet won't enter into a loop. Redudant links are however important to server at a backup. If two links are active at the same time it will create a loop.</p>
+<p>If a switch recive a unicast, multicast or broadcast. These frames will be forwarded to all ports on the switch except for the port it recieved the frame on. This means that the frame will be sent to another switch, which will send it back to the first swich. Thereby creating a loop. An infinite loop is sometimes called a <strong>broadcast storm</strong>.</p>
+<p>STP activly monitors all links on the network. It uses an algorithm called spanning-tree algorithm in order to find redudant links. The protocol disabled redudant links.</p>
+<p>STP decides on which switch should be the root bridge. It does this by looking at bridge priority value. On cisco this is always 32768.</p>
+<ul>
+<li>Root Bridge - The switch that is the root in the spanning tree</li>
+<li>Root Port - All switches choose a root port. which is the port with the lowest cost to the root bridge.</li>
+</ul>
+<p>Ports that do not participate in the tree are blocked.</p>
+<p>In order to implement STP you need to specify your most centralized switch to be the root. This is often the core/backbone switch.</p>
+<h4 id="exploit">Exploit<a class="headerlink" href="#exploit" title="Permanent link">#</a></h4>
+<p>So since STP is just a protocol that switches uses, and there is no authentication you might see where this is going. An attacker can simply set itself to become the root bridge, this means that the other switches would forward traffic to your host. An attacker can flood the network with BPDU packets advertising that your own host has the lowest bridge cost.</p>
+<p>You can also advertise your link of having a lower cost. This will direct traffic through you.</p>
+<p>These attacks can be performed with <code>yersinia</code>. You should probably look up how much traffic might be sent over your link.</p>
+<p>Note that you might bring down the network if you perform this attack.</p>
+<h4 id="how-to-check-for">How to check for<a class="headerlink" href="#how-to-check-for" title="Permanent link">#</a></h4>
+<pre><code>show spanning-tree summary
+</code></pre>
+
+<p><strong>Root Guard</strong></p>
+<p>Checking for root guard has to be done on each port</p>
+<pre><code>show interface summary
+show spanning-tree interface TenGigabitEthernet1/0/4 detail
+
+This syntax is also possible:
+show spanning-tree interface Te1/0/4 detail
+
+</code></pre>
+
+<p>If it says "Root guard is enabled on the port" Root guard is enabled, if it doesn't say anything I think it means that is is not enabled.</p>
+<h4 id="recommendation">Recommendation<a class="headerlink" href="#recommendation" title="Permanent link">#</a></h4>
+<p>For Cisco devices that are primarpily two defence mechanisms against these attacks: Root Guard and BPDU Guard.
+BPDU guard is enabled on a switch, and root guard on a port basis.</p>
+<h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h4>
+<p>https://flylib.com/books/en/3.418.1.75/1/</p>
+<h3 id="patch-level">Patch level<a class="headerlink" href="#patch-level" title="Permanent link">#</a></h3>
+<h4 id="background_3">Background<a class="headerlink" href="#background_3" title="Permanent link">#</a></h4>
+<p>Cisco devices are very prone to security issues.</p>
+<h4 id="how-to-check">How to check<a class="headerlink" href="#how-to-check" title="Permanent link">#</a></h4>
+<p>Check which version of the OS the device is running.</p>
+<pre><code>show version
+</code></pre>
+
+<h3 id="arp-spoofing-arp-poisoning">ARP spoofing / ARP poisoning<a class="headerlink" href="#arp-spoofing-arp-poisoning" title="Permanent link">#</a></h3>
+<h3 id="background_4">Background<a class="headerlink" href="#background_4" title="Permanent link">#</a></h3>
+<p>One classic attack is called ARP poisoning. </p>
+<h4 id="recommendation_1">Recommendation<a class="headerlink" href="#recommendation_1" title="Permanent link">#</a></h4>
+<p>Enable Dynamic ARP Inspection</p>
+<h3 id="rouge-dhcp-attack">Rouge DHCP attack<a class="headerlink" href="#rouge-dhcp-attack" title="Permanent link">#</a></h3>
+<h4 id="background_5">Background<a class="headerlink" href="#background_5" title="Permanent link">#</a></h4>
+<h4 id="recommendation_2">Recommendation<a class="headerlink" href="#recommendation_2" title="Permanent link">#</a></h4>
+<p>Enable DHCP snooping</p>
+<h3 id="ipmac-spoofing">IP/MAC spoofing<a class="headerlink" href="#ipmac-spoofing" title="Permanent link">#</a></h3>
+<h4 id="background_6">Background<a class="headerlink" href="#background_6" title="Permanent link">#</a></h4>
+<h4 id="recommendation_3">Recommendation<a class="headerlink" href="#recommendation_3" title="Permanent link">#</a></h4>
+<p>Can be prevented by IP source guard - in Cisco</p>
+<h3 id="ipv6-man-in-the-middle">IPv6 Man in the middle<a class="headerlink" href="#ipv6-man-in-the-middle" title="Permanent link">#</a></h3>
+<h4 id="background_7">Background<a class="headerlink" href="#background_7" title="Permanent link">#</a></h4>
+<h4 id="recommendation_4">Recommendation<a class="headerlink" href="#recommendation_4" title="Permanent link">#</a></h4>
+<p>IPv6 Router Advertisment Guard can be used to protect.</p>
+<h3 id="cam-overflow-attack">CAM overflow attack<a class="headerlink" href="#cam-overflow-attack" title="Permanent link">#</a></h3>
+<h4 id="background_8">Background<a class="headerlink" href="#background_8" title="Permanent link">#</a></h4>
+<p>Switches work by building a reference table between a switch port and a MAC address. Based on the destination MAC address the switch knows which port to send the traffic to.</p>
+<p>This table is called context-addressable memory (CAM) table.</p>
+<p>The switch can only hold a limited amount of MAC addresses in this table. An attacker can abuse this by performing a CAM overflow attack. The attacker mimics the existence of thousdands of random MAC addresses on one (or more) ports. The switch enters all these MAC addresses in the CAM table, and eventually the table overflows. </p>
+<p>Since the table is full the switch doesn't can't know where to send other traffic, legitimate traffic. So the switch turns into a hub, and sends the traffic out to all hosts that are connected to the switch. This allows an attacker to sniff traffic performed by other users.</p>
+<h3 id="dhcp-starvation-attacks">DHCP starvation attacks<a class="headerlink" href="#dhcp-starvation-attacks" title="Permanent link">#</a></h3>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../dns_zone_transfer_attack/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../dns_zone_transfer_attack/" class="btn btn-xs btn-link">
+        Zone Transfer Attack
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_web_applications/web-scanning/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_web_applications/web-scanning/" class="btn btn-xs btn-link">
+        Find Files
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_internal_network/network_attacks.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

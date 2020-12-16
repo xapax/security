@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Session Fixation - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Session Fixation", url: "#_top", children: [
+              {title: "How to set the cookie?", url: "#how-to-set-the-cookie" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../remote_file_inclusion/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../remote_file_inclusion/" class="btn btn-xs btn-link">
+        Remote File Inclusion
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../subdomain_takeover/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../subdomain_takeover/" class="btn btn-xs btn-link">
+        Subdomain Takerovers
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="session-fixation">Session Fixation<a class="headerlink" href="#session-fixation" title="Permanent link">#</a></h2>
+<p>Session fixation is a pretty small but common vulnerability.</p>
+<p>A common way to handle the fact that HTTP is a stateless protocol is you store cookies in the users browser, and then have that cookie send to the web server on each subsequent request. This way the web server can know that the user has visited the website before. So when a user logs in to a web application a cookie for that session is usually created, in order for the web-server to know that the session is active.</p>
+<p>Session fixation happens when the session-identifier (in this case the cookie) is setbefore the user has authenticated itself (which is usually done with a simple username/password login), and then not changed when the user authenticates itself.</p>
+<p>For example, let's say you want to log in to a web application. When you first visit the site the following cookie is set:</p>
+<pre><code>SessionID=123ad76dab97b23ba8d76a
+</code></pre>
+
+<p>You then authenticate with your username and password and make a successful login. But the SessionID-cookie does not change. Then you have a session fixation vulnerability on your hands. Because this means that if an attacker can set the SessionID-cookie to a value the attacker knows it will then know the SessionID-cookie once the user actually authenticates.</p>
+<h3 id="how-to-set-the-cookie">How to set the cookie?<a class="headerlink" href="#how-to-set-the-cookie" title="Permanent link">#</a></h3>
+<p><strong>In GET request</strong> - if the session-token is sent in the URL of a GET-request the attacker can simply send a link which contains the attacker-controlled session-token.</p>
+<p><strong>XSS</strong> - If the attacker has also found a XSS vulnerability she can use it to set the cookie. This can of course be mitigated by setting the HttpOnly attribute to the cookie.</p>
+<p><strong>META-tag</strong> - If the attacker has the ability to inject html-code she can use the META-tag to set the cookie.</p>
+<pre><code>http://website.kon/&lt;meta http-equiv=Set-Cookie content=”sessionid=abcd”&gt;
+</code></pre>
+
+<p><strong>MITM</strong> - By being MITM the attacker can set the cookie.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../remote_file_inclusion/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../remote_file_inclusion/" class="btn btn-xs btn-link">
+        Remote File Inclusion
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../subdomain_takeover/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../subdomain_takeover/" class="btn btn-xs btn-link">
+        Subdomain Takerovers
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_web_applications/session-fixation.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

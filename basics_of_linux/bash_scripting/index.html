@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Bash Scripting - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Bash-scripting", url: "#_top", children: [
+              {title: "Variables", url: "#variables" },
+              {title: "Iterate over a file", url: "#iterate-over-a-file" },
+              {title: "For-loops", url: "#for-loops" },
+              {title: "If statement", url: "#if-statement" },
+              {title: "If/Else", url: "#ifelse" },
+              {title: "Command line arguments", url: "#command-line-arguments" },
+              {title: "Daemonize an execution", url: "#daemonize-an-execution" },
+              {title: "Use the output of command", url: "#use-the-output-of-command" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../vim/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../vim/" class="btn btn-xs btn-link">
+        Vim
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../basics_of_linux/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../basics_of_linux/" class="btn btn-xs btn-link">
+        Basics of Linux
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="bash-scripting">Bash-scripting<a class="headerlink" href="#bash-scripting" title="Permanent link">#</a></h1>
+<h3 id="variables">Variables<a class="headerlink" href="#variables" title="Permanent link">#</a></h3>
+<pre><code class="bash"># There can't be any space between the variable name and the equal sign. It has to be varname=command
+battery_time=$(cat /sys/class/power_supply/BAT0/capacity)
+
+# The variables can then be used like this
+echo &quot;$battery_time&quot;
+</code></pre>
+
+<h2 id="iterate-over-a-file">Iterate over a file<a class="headerlink" href="#iterate-over-a-file" title="Permanent link">#</a></h2>
+<p>This script will iterate over a file and echo out every single line:</p>
+<pre><code class="bash">#!/bin/bash
+
+for line in $(cat file.txt);do
+    echo $line
+done
+</code></pre>
+
+<p>Another way of writing is this:</p>
+<pre><code class="bash">#!/bin/bash
+
+while read p; do
+    echo  $p
+done &lt;file.txt
+</code></pre>
+
+<h2 id="for-loops">For-loops<a class="headerlink" href="#for-loops" title="Permanent link">#</a></h2>
+<pre><code class="bash">#!/bin/bash
+
+for ((i = 0; i &lt; 10; i++)); do
+    echo $i
+done
+</code></pre>
+
+<p>Another way to write this is by using the program <code>seq</code>. Seq is pretty much like <code>range()</code> in python. So it can be used like this:</p>
+<pre><code class="bash">#!/bin/bash
+
+for x in `seq 1 100`; do
+    echo $x
+done
+</code></pre>
+
+<h2 id="if-statement">If statement<a class="headerlink" href="#if-statement" title="Permanent link">#</a></h2>
+<p><code>$1</code> here represent the first argument.</p>
+<pre><code class="bash">if [ &quot;$1&quot; == &quot;&quot; ]; then
+    echo &quot;This happens&quot;
+fi
+</code></pre>
+
+<h2 id="ifelse">If/Else<a class="headerlink" href="#ifelse" title="Permanent link">#</a></h2>
+<pre><code class="bash">#!/bin/bash
+
+if [ &quot;$1&quot; == &quot;&quot; ]; then
+    echo &quot;This happens&quot;
+else
+    echo &quot;Something else happens&quot;
+fi
+</code></pre>
+
+<h3 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">#</a></h3>
+<pre><code>#!/bin/bash
+
+function myfunction {
+echo &quot;hello world&quot;
+}
+
+</code></pre>
+
+<h2 id="command-line-arguments">Command line arguments<a class="headerlink" href="#command-line-arguments" title="Permanent link">#</a></h2>
+<p>Command line arguments are represented like this</p>
+<pre><code class="bash">#!/bin/bash
+
+$1
+</code></pre>
+
+<p>This is the first command line argument.</p>
+<h2 id="daemonize-an-execution">Daemonize an execution<a class="headerlink" href="#daemonize-an-execution" title="Permanent link">#</a></h2>
+<p>If you do a ping-sweep with host the command will take about a second to complete. And if you run that against 255 hosts I will take a long time to complete. To avoid this we can just deamonize every execution to make it faster. We use the <code>&amp;</code> to daemonize it.</p>
+<pre><code class="bash">#!/bin/bash
+
+for ip in $(cat ips.txt); do
+    ping -c 1 $ip &amp;
+done
+</code></pre>
+
+<h2 id="use-the-output-of-command">Use the output of command<a class="headerlink" href="#use-the-output-of-command" title="Permanent link">#</a></h2>
+<p>It has happened to me several times that I want to input the output of a command into a new command, for example:</p>
+<p>I search for a file, find three, and take the last line, which is a path. Now I want to cat that path:</p>
+<pre><code class="bash">#!/bin/bash
+
+locate 646.c | tail -n 1
+</code></pre>
+
+<p>This can be done like this:</p>
+<pre><code class="bash">#!/bin/bash
+
+cat $(locate 646.c | tail -n 1)
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../vim/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../vim/" class="btn btn-xs btn-link">
+        Vim
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../basics_of_linux/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../basics_of_linux/" class="btn btn-xs btn-link">
+        Basics of Linux
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/basics_of_linux/bash_scripting.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

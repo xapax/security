@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Initial Access - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Goal", url: "#_top", children: [
+              {title: "First stage loader - Dropper", url: "#first-stage-loader-dropper" },
+              {title: "Ways too load into memory - Fileless stager", url: "#ways-too-load-into-memory-fileless-stager" },
+          ]},
+          {title: "- PreProcessor", url: "#-preprocessor", children: [
+              {title: "Persistence", url: "#persistence" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../initial_access_dropper/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../initial_access_dropper/" class="btn btn-xs btn-link">
+        Initial Dropper
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../social_engineering_-_phishing/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../social_engineering_-_phishing/" class="btn btn-xs btn-link">
+        Social Engineering and Phishing
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="goal">Goal<a class="headerlink" href="#goal" title="Permanent link">#</a></h2>
+<p>The type of malware we develop depends completely on the goal of the mission. If the goal is to hijack web-traffic of a users that use banks it might be better to write the malware to disk, and have it execute on boot and then lay silent until the suer authenticates to his bank.
+If the goal is to encrypt the entire disk, well then that is what the malware will do.
+If the goal is gain an entrance to network, it might be useful with a shell.
+Do you want it to spread automatically, like a virus? Then you need those functionalities.
+Do you want it to be more like a backdoor? So you get a shell whenever you want.</p>
+<p>We want to build a Backdoor, more than a specific malware.</p>
+<ol>
+<li>We want to write as little to disk as possible. Instead of writing a payload to disk we will activate it on boot, and the dropper will be executed everytime. This is good because if the malware is discovered it will not reveal the actual payload, only the dropper. This is assuming that the target is a user that produces a lot of network traffic, so another request will not make much of a differece.</li>
+<li>We want persistence.</li>
+<li>We want a shell. Simple as that.</li>
+</ol>
+<h3 id="first-stage-loader-dropper">First stage loader - Dropper<a class="headerlink" href="#first-stage-loader-dropper" title="Permanent link">#</a></h3>
+<p>The idea is to have a lightwight first stage payload. The first stage payload will only load in the second stage payload  in memory.</p>
+<p>See the next chapter on how to generate Droppers.</p>
+<h3 id="ways-too-load-into-memory-fileless-stager">Ways too load into memory - Fileless stager<a class="headerlink" href="#ways-too-load-into-memory-fileless-stager" title="Permanent link">#</a></h3>
+<p>The traditional way has been to download the second stager to disk somewhere. But new research has found more efficient ways to do this, not having to write anything to disk.
+The new way to only load into memory is somtimes calld a fileless stager.
+- Using PowerShell
+This is the most common way. And we have all used it, invoke-expression.</p>
+<ul>
+<li>Using WMI</li>
+</ul>
+<h2 id="-preprocessor">- PreProcessor<a class="headerlink" href="#-preprocessor" title="Permanent link">#</a></h2>
+<h3 id="persistence">Persistence<a class="headerlink" href="#persistence" title="Permanent link">#</a></h3>
+<h4 id="wmi">WMI<a class="headerlink" href="#wmi" title="Permanent link">#</a></h4>
+<p>WMI is often used. You can create events that are executed when the event is triggered. An event can be anything, like when the screensaver runs, when the computer is locked. 
+It requires Administrative priviliges in order to create a permanent event subscription.</p>
+<p>You can also create a new WMI class. And in that class store a base64-encrypted property, which is in fact a powershell command.</p>
+<p>Then you create a WMI event subscripting. When the event is triggered the base64-encoded property is retrieved and the powershell command is excecuted.</p>
+<p>This way the only backdoor that is left is in the WMI repository, nothing else on disk.</p>
+<p>This was documented here:
+https://www.fireeye.com/blog/threat-research/2017/03/dissecting_one_ofap.html
+There are a few ways 
+https://blog.netspi.com/getting-started-wmi-weaponization-part-5/</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../initial_access_dropper/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../initial_access_dropper/" class="btn btn-xs btn-link">
+        Initial Dropper
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../social_engineering_-_phishing/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../social_engineering_-_phishing/" class="btn btn-xs btn-link">
+        Social Engineering and Phishing
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/initial_access/initial_access.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

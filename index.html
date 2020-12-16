@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Stuff I don't feel like googeling again">
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="./img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Notes</title>
+    <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="./css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/bootstrap-3.3.7.min.js"></script>
+    <script src="./js/highlight.pack.js"></script>
+    
+      <script src="./js/elasticlunr.min.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '.';
+      var is_top_frame = (window === window.parent);
+        
+        var pageToc = [
+          {title: "Documentation and documentation and documentation", url: "#_top", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="./js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<nav class="navbar wm-page-top-frame">
+  <div class="container-fluid wm-top-container">
+    
+    <div class="wm-top-tool pull-right wm-vcenter">
+      <form class="dropdown wm-vcentered" id="wm-search-form" action="./search.html">
+        
+        <button id="wm-search-show" class="btn btn-sm btn-default" type="submit"
+          ><i class="fa fa-search" aria-hidden="true"></i></button>
+
+        <div class="input-group input-group-sm wm-top-search">
+          <input type="text" name="q" class="form-control" id="mkdocs-search-query" placeholder="Search" autocomplete="off">
+          <span class="input-group-btn" role="search">
+            
+            <button class="btn btn-default dropdown-toggle collapse" data-toggle="dropdown" type="button"><span class="caret"></span></button>
+            <ul id="mkdocs-search-results" class="dropdown-menu dropdown-menu-right"></ul>
+            <button id="wm-search-go" class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </span>
+        </div>
+      </form>
+    </div>
+
+    
+    <div class="wm-top-tool wm-vcenter pull-right wm-small-left">
+      <button id="wm-toc-button" type="button" class="btn btn-sm btn-default wm-vcentered"><i class="fa fa-th-list" aria-hidden="true"></i></button>
+    </div>
+
+    
+    
+    <div class="wm-top-tool pull-right wm-vcenter">
+      <div class="btn-group wm-vcentered" role="group" aria-label="back">
+        <button id="hist-back" type="button" class="btn btn-sm btn-default"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        <button id="hist-fwd" type="button" class="btn btn-sm btn-default"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+    
+
+    
+    <a href="" class="wm-top-brand wm-top-link wm-vcenter">
+      
+      <div class="wm-top-title">
+        Notes<br>
+        
+          <span class="wm-top-version">v1.0.0</span>
+        
+      </div>
+    </a>
+  </div>
+</nav>
+
+  <div id="main-content" class="wm-page-top-frame">
+    
+<nav class="wm-toc-pane">
+  
+    <ul class="wm-toctree wm-toc-repo">
+      <li class="wm-toc-li wm-toc-lev1">
+      <a class="wm-article-link wm-toc-text" href="https://github.com/xapax/">
+        <i class="fa fa-github"></i>
+
+        GitHub
+      </a>
+      </li>
+    </ul>
+  <ul class="wm-toctree">
+        <li class="wm-toc-li wm-toc-lev1 "><a href="" class="wm-article-link wm-toc-text">Documentation and documentation and documentation</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Basics of Linux</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="basics_of_linux/linux/" class="wm-article-link wm-toc-text">Linux</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="basics_of_linux/basics_of_linux/" class="wm-article-link wm-toc-text">Basics of Linux</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="basics_of_linux/bash_scripting/" class="wm-article-link wm-toc-text">Bash Scripting</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="basics_of_linux/vim/" class="wm-article-link wm-toc-text">Vim</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="basics_of_linux/common_devices_and_components/" class="wm-article-link wm-toc-text">Common Devices and Components</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Basics of Windows</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="basics_of_windows/basics_of_windows/" class="wm-article-link wm-toc-text">Basics of Windows</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="basics_of_windows/powershell/" class="wm-article-link wm-toc-text">Powershell</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="basics_of_windows/powershell_scripting2/" class="wm-article-link wm-toc-text">Powershell Scripting</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="basics_of_windows/cmd/" class="wm-article-link wm-toc-text">CMD</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="basics_of_windows/default_windows_files/" class="wm-article-link wm-toc-text">Default Windows Files</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Python</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="python/python_fundamentals/" class="wm-article-link wm-toc-text">Python Fundamentals</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="python/useful_python_commands/" class="wm-article-link wm-toc-text">Useful Scripts</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Basic Hardening</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="basic_hardening/hardening_bios/" class="wm-article-link wm-toc-text">Hardening Bios</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="basic_hardening/hardening_linux/" class="wm-article-link wm-toc-text">Hardening Linux</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Recon</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="recon/google_hacking/" class="wm-article-link wm-toc-text">Google Hacking</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="recon/passive_information_gathering/" class="wm-article-link wm-toc-text">Passive Information Gathering</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="recon/port_scanning/" class="wm-article-link wm-toc-text">Port Scanning</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="recon/finding_subdomains/" class="wm-article-link wm-toc-text">Finding Subdomains</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Initial Access</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="initial_access/phishing_server/" class="wm-article-link wm-toc-text">Setting Up Email-phishing-server</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="initial_access/social_engineering_-_phishing/" class="wm-article-link wm-toc-text">Social Engineering and Phishing</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="initial_access/initial_access/" class="wm-article-link wm-toc-text">Initial Access</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="initial_access/initial_access_dropper/" class="wm-article-link wm-toc-text">Initial Dropper</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="initial_access/reverse_shell/" class="wm-article-link wm-toc-text">Generate Payload - Reverse shells</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Post Exploitation</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="post_exploitation/spawning_shells/" class="wm-article-link wm-toc-text">Spawning Shells</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="post_exploitation/getting_meterpreter_shell/" class="wm-article-link wm-toc-text">Meterpreter for Post-exploitation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="post_exploitation/privilege_escalation_-_linux/" class="wm-article-link wm-toc-text">Local Privilege Escalation - Linux</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Transferring Files</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="transferring_files/transfering_files/" class="wm-article-link wm-toc-text">Transferring Files Linux</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Attacking Web Applications</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/oauth_attacks/" class="wm-article-link wm-toc-text">OAuth Attacks</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/bankid_attacks/" class="wm-article-link wm-toc-text">BankID Attacks</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/cache_poisoning/" class="wm-article-link wm-toc-text">Cache Poisoning</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/csv_injection/" class="wm-article-link wm-toc-text">CSV Injection</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/cross_site_web_socket_hijack/" class="wm-article-link wm-toc-text">Cross-Site Web Socket Hijack (CSHSH)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/deserialization_attacks/" class="wm-article-link wm-toc-text">Deserialization Attacks</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/dom_based_xss/" class="wm-article-link wm-toc-text">DOM XSS</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/local_file_inclusion/" class="wm-article-link wm-toc-text">Local File Inclusion</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/static_analysis_of_javascript/" class="wm-article-link wm-toc-text">Static Analysis of JavaScript</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/sql-injections/" class="wm-article-link wm-toc-text">SQL Injections</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/xml_external_entity_attack/" class="wm-article-link wm-toc-text">XML External Entity (XXE)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/subdomain_takeover/" class="wm-article-link wm-toc-text">Subdomain Takerovers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/session-fixation/" class="wm-article-link wm-toc-text">Session Fixation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/remote_file_inclusion/" class="wm-article-link wm-toc-text">Remote File Inclusion</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/nosql-injections/" class="wm-article-link wm-toc-text">NoSQL Injection</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/host-header-attack/" class="wm-article-link wm-toc-text">Host-header Attacks</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/bypass_image_upload/" class="wm-article-link wm-toc-text">Bypassing File Upload</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/cross_site_request_forgery/" class="wm-article-link wm-toc-text">Cross-site Request Forgery</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/cross-site-scripting/" class="wm-article-link wm-toc-text">Cross-site Scripting</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_web_applications/web-scanning/" class="wm-article-link wm-toc-text">Find Files</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Attacking Internal Network</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_internal_network/network_attacks/" class="wm-article-link wm-toc-text">Network Attacks</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_internal_network/dns_zone_transfer_attack/" class="wm-article-link wm-toc-text">Zone Transfer Attack</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_internal_network/basics_of_networking/" class="wm-article-link wm-toc-text">Basics of Networking</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_internal_network/active_information_gathering/" class="wm-article-link wm-toc-text">Active Information Gathering</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_internal_network/arp-spoofing/" class="wm-article-link wm-toc-text">ARP Spoofing</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_internal_network/infrastructure_pentest_scanning_networks/" class="wm-article-link wm-toc-text">Scanning Networks</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_internal_network/list_of_common_ports/" class="wm-article-link wm-toc-text">List of Common Ports</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Attacking External Network</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_external_network/attacking_external_networks/" class="wm-article-link wm-toc-text">Attacking External Networks</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_internal_network/list_of_common_ports/" class="wm-article-link wm-toc-text">List of Common Ports</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Attacking Active Directory</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Active Directory - Good to Know</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/good_to_know/active_directory_help_commands/" class="wm-article-link wm-toc-text">Helpful Commands and Scripts</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/good_to_know/transferring_files/" class="wm-article-link wm-toc-text">Transferring Files</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/good_to_know/tools/" class="wm-article-link wm-toc-text">Tools</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/good_to_know/neo4j_and_cypher/" class="wm-article-link wm-toc-text">Neo4J and Cypher</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/good_to_know/ldap_syntax/" class="wm-article-link wm-toc-text">LDAP Syntax</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/good_to_know/windows_access_control/" class="wm-article-link wm-toc-text">Windows Access Control</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Active Directory - Basics of Active Directory</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/understanding_active_directory/about_active_directory/" class="wm-article-link wm-toc-text">About Active Directory</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/understanding_active_directory/domain_controller/" class="wm-article-link wm-toc-text">Domain Controller</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/understanding_active_directory/kerberos/" class="wm-article-link wm-toc-text">Kerberos</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/understanding_active_directory/group_policies/" class="wm-article-link wm-toc-text">Group Policies</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/understanding_active_directory/ad_physical_topology/" class="wm-article-link wm-toc-text">AD Physical topology</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/understanding_active_directory/default_groups/" class="wm-article-link wm-toc-text">Default Groups</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Active Directory - Reconnaissance</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/recon/active_directory_recon/" class="wm-article-link wm-toc-text">Reconnaissance</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Active Directory - Initial Access</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/initial_access/llmnr_and_nbtns_poisoning/" class="wm-article-link wm-toc-text">LLMNR and NBT-NS Poisoning</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/initial_access/password_spraying/" class="wm-article-link wm-toc-text">Password Spraying</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/initial_access/mitm6/" class="wm-article-link wm-toc-text">Mitm6</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/initial_access/wpad_spoofing/" class="wm-article-link wm-toc-text">WPAD Spoofing</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Active Directory - Local Privilege Escalation</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/local_privilege_escalation/local_privilege_escalation/" class="wm-article-link wm-toc-text">Local Privilige Escalation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/local_privilege_escalation/shutdown_windows_defender/" class="wm-article-link wm-toc-text">Disable Windows Defender</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Active Directory - Domain Privilege Escalation</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/abusing_constrained_delegation/" class="wm-article-link wm-toc-text">Abusing Constrained Delegation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/abusing_unconstrained_delegation/" class="wm-article-link wm-toc-text">Abusing Unconstrained Delegation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/check_for_insecure_usage_of_high_privileged_accounts/" class="wm-article-link wm-toc-text">Check for Insecure Usage of High Privileged Accounts</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/check_for_local_admin_privileges/" class="wm-article-link wm-toc-text">Check for Local Admin Privileges</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/check_for_misconfgured_access_control_of_mssql/" class="wm-article-link wm-toc-text">Check for Misconfgured Access Control of MSSQL</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/check_for_misconfigured_gpo/" class="wm-article-link wm-toc-text">Check for Misconfigured GPO</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/check_for_reuse_of_local_admin_password/" class="wm-article-link wm-toc-text">Check for Reuse of Local Admin Password</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/check_for_unsupported_os/" class="wm-article-link wm-toc-text">Check for Unsupported OS</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/kerberoasting/" class="wm-article-link wm-toc-text">Kerberos TGS Service Ticket Cracking (Kerberoast)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/execssive_amount_of_domain_admins/" class="wm-article-link wm-toc-text">Excessive Amount of Domain Admins</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/incorrectly_configured_forest_or_domain_trust/" class="wm-article-link wm-toc-text">Incorrectly Configured Forest or Domain Trust</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/misconfigured_access_control_lists/" class="wm-article-link wm-toc-text">Misconfigured Access Control Lists</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/passwords_in_active_directory_attributes/" class="wm-article-link wm-toc-text">Passwords in Active Directory Attributes</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/smb_shares_mining/" class="wm-article-link wm-toc-text">SMB Shares Mining</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/ntlm_relaying_and_theft/" class="wm-article-link wm-toc-text">NTLM Relaying and Theft</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/credential_extraction/" class="wm-article-link wm-toc-text">Credential Extraction (LSASS/SAM)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/check_for_lockout_threshold/" class="wm-article-link wm-toc-text">Check for Lockout Policy</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/check_for_scripts_on_sysvol/" class="wm-article-link wm-toc-text">Check for Scripts in SYSVOL</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/check_for_writable_executables_on_shares/" class="wm-article-link wm-toc-text">Check for Writable Executables in Shares</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/aseproasting/" class="wm-article-link wm-toc-text">AS-REP roasting</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/check_for_misconfigured_laps/" class="wm-article-link wm-toc-text">Misconfigured LAPS</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/misconfigured_read_only_domain_controller/" class="wm-article-link wm-toc-text">Misconfigured RODC</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/passwords_in_group_policy_preferences/" class="wm-article-link wm-toc-text">Password in GPO</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/attacking_windows_domain_domain_trust/" class="wm-article-link wm-toc-text">Attacking Domain Trust</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/domain_privilege_escalation_checklist/" class="wm-article-link wm-toc-text">Domain Privilege Escalation Checklist</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/active_directory_privilege_escalation/template/" class="wm-article-link wm-toc-text">Template</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Active Directory - Remote Access</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/remote_access/remote_access/" class="wm-article-link wm-toc-text">Remote Access</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Active Directory - Cracking Hashes</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/cracking_hashes/cracking_hashes/" class="wm-article-link wm-toc-text">Cracking Hashes</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/cracking_hashes/generate_password_list/" class="wm-article-link wm-toc-text">Generate Password List</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Active Directory - Powershell</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/powershell/basics_of_powershell/" class="wm-article-link wm-toc-text">Basics of Powershell</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/powershell/activedirectory/" class="wm-article-link wm-toc-text">Active Directory</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/powershell/jit_csharp_compilation/" class="wm-article-link wm-toc-text">JIT CSharp Compilation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/powershell/local_machine_recon/" class="wm-article-link wm-toc-text">Local Machine Recon</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/powershell/networking/" class="wm-article-link wm-toc-text">Networking</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/powershell/running_program_as_user_without_guiinteraction/" class="wm-article-link wm-toc-text">Running Program as User Without GUI Interaction</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/powershell/amsi_bypass/" class="wm-article-link wm-toc-text">AMSI Bypass</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_active_directory_domain/attacking_windows_domain_local_privilege_escalation/" class="wm-article-link wm-toc-text">Local Privilige Escalation</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Attacking Mobile Application</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Android</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_mobile_applications/android/mobile_application_setup/" class="wm-article-link wm-toc-text">Android Testing Environment Setup</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_mobile_applications/android/android_tools/" class="wm-article-link wm-toc-text">Tools</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_mobile_applications/android/mobile_application_vulnerabilities_android/" class="wm-article-link wm-toc-text">Vulnerabilities</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_mobile_applications/android/android_vuln_checklist/" class="wm-article-link wm-toc-text">Checklist</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">IOS</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_mobile_applications/ios/ios_setup/" class="wm-article-link wm-toc-text">IOS Testing Environment Setup</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_mobile_applications/ios/ios_application_vulnerabilities/" class="wm-article-link wm-toc-text">Vulnerabilities</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_mobile_applications/ios/ios_vuln_checklist/" class="wm-article-link wm-toc-text">Vulnerabilities Checklist</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Attacking Wifi</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_wifi/wifi_network_segmentation/" class="wm-article-link wm-toc-text">Testing Network Segmentation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_wifi/wifi/" class="wm-article-link wm-toc-text">Testing Wifi Security</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Attacking Thick Client</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_thick_client/attacking_thick_client/" class="wm-article-link wm-toc-text">Attacking Thick Client</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Attacking Cloud Environment</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Azure</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_cloud_environment/attacking_azure/abuse_application_administrator_role/" class="wm-article-link wm-toc-text">Abuse Application Administrator Role</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_cloud_environment/attacking_azure/abuse_azure_ad_sso/" class="wm-article-link wm-toc-text">Abuse Azure AD SSO</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_cloud_environment/attacking_azure/check_for_blobs/" class="wm-article-link wm-toc-text">Check for Blobs</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_cloud_environment/attacking_azure/check_for_misconfigured_azuread_groups/" class="wm-article-link wm-toc-text">Check for Misconfigured AzureAD groups</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_cloud_environment/attacking_azure/check_for_passwords_azure/" class="wm-article-link wm-toc-text">Check for Passwords Azure</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_cloud_environment/attacking_azure/check_for_sso_enabled_services/" class="wm-article-link wm-toc-text">Check for SSO Enabled Services</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_cloud_environment/attacking_azure/password_hash_syncronization/" class="wm-article-link wm-toc-text">Password Hash Syncronization</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_cloud_environment/attacking_azure/password_spraying/" class="wm-article-link wm-toc-text">Password Spraying</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_cloud_environment/attacking_azure/passwords_in_active_directory_attribute/" class="wm-article-link wm-toc-text">Password in Active Directory Attribute</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="attacking_cloud_environment/attacking_azure/recon/" class="wm-article-link wm-toc-text">Recon</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Attacking Kubernetes</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_kubernetes/basics_of_kubernetes/" class="wm-article-link wm-toc-text">Basics of Kubernetes</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_kubernetes/basics_of_docker/" class="wm-article-link wm-toc-text">Basics of Docker</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_kubernetes/kubernetes_hacking_tools/" class="wm-article-link wm-toc-text">Setting Up Tools</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_kubernetes/attacking_kubernetes/" class="wm-article-link wm-toc-text">Attacking Kubernetes</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_kubernetes/attacking_kubernetes_checklist/" class="wm-article-link wm-toc-text">Attacking Kubernetes Checklist</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Attacking RFID Cards</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="attacking_rfid_cards/basics_of_rfid_hacking/" class="wm-article-link wm-toc-text">Basics of RFID Hacking</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Physical Attacks</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="physical_attacks/physical_access_to_machine/" class="wm-article-link wm-toc-text">Pysical Attacks</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Password Cracking</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="password_cracking/offline_password_cracking/" class="wm-article-link wm-toc-text">Offline Password Cracking</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="password_cracking/online_password_cracking/" class="wm-article-link wm-toc-text">Online Password Cracking (Brute force)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="password_cracking/generate_password_list/" class="wm-article-link wm-toc-text">Generate Password List</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="password_cracking/generate_custom_wordlist/" class="wm-article-link wm-toc-text">Generate Custom Password List</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Cryptography</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cryptography/client_certificate_tests/" class="wm-article-link wm-toc-text">Client Certificate Tests</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Random Tips and Tricks</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="random_tips_and_tricks/general_tips/" class="wm-article-link wm-toc-text">Tips and Tricks</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="random_tips_and_tricks/setuid_c-code/" class="wm-article-link wm-toc-text">Setuid With C</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="random_tips_and_tricks/port_knocking/" class="wm-article-link wm-toc-text">Port Knocking</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="random_tips_and_tricks/port_forwarding_and_tunneling/" class="wm-article-link wm-toc-text">Port Forwarding and Tunneling</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="random_tips_and_tricks/pivoting/" class="wm-article-link wm-toc-text">Pivoting</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Tools</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="tools/wireshark/" class="wm-article-link wm-toc-text">Wireshark</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="tools/wget/" class="wm-article-link wm-toc-text">Wget</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="tools/webshell/" class="wm-article-link wm-toc-text">Webshells</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="tools/gdb/" class="wm-article-link wm-toc-text">GDB</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</nav>
+
+    <div class="wm-content-pane">
+      <iframe class="wm-article" name="article"></iframe>
+    </div>
+  </div>
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="basics_of_linux/linux/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="basics_of_linux/linux/" class="btn btn-xs btn-link">
+        Linux
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="documentation-and-documentation-and-documentation">Documentation and documentation and documentation<a class="headerlink" href="#documentation-and-documentation-and-documentation" title="Permanent link">#</a></h1>
+<p>This is some documentation I have build up over the years. Everything is work in progress, some stuff is years old and might not be relevant. Other stuff is new and not so bad.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="basics_of_linux/linux/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="basics_of_linux/linux/" class="btn btn-xs btn-link">
+        Linux
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/index.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
+<!--
+MkDocs version : 1.0.4
+Build Date UTC : 2020-12-16 22:58:01
+-->

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>WPAD Spoofing - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "TLDR", url: "#_top", children: [
+          ]},
+          {title: "Background", url: "#background", children: [
+              {title: "PAC delivered over DHCP", url: "#pac-delivered-over-dhcp" },
+              {title: "NBT-NS", url: "#nbt-ns" },
+          ]},
+          {title: "How to exploit", url: "#how-to-exploit", children: [
+              {title: "Why is it not working?", url: "#why-is-it-not-working" },
+          ]},
+          {title: "How to test for", url: "#how-to-test-for", children: [
+          ]},
+          {title: "Recommendation", url: "#recommendation", children: [
+          ]},
+          {title: "References", url: "#references", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../local_privilege_escalation/local_privilege_escalation/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../local_privilege_escalation/local_privilege_escalation/" class="btn btn-xs btn-link">
+        Local Privilige Escalation
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../mitm6/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../mitm6/" class="btn btn-xs btn-link">
+        Mitm6
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="tldr">TLDR<a class="headerlink" href="#tldr" title="Permanent link">#</a></h2>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">#</a></h2>
+<p>WPAD is short for Web Proxy Autodiscovery Protocol, and it is a protocol used by web browsers to discover the Proxy Auto Config (PAC) file.
+Web Browser traffic is usually directed through a proxy in many corporate environments. This might be done in order to terminate TLS, to be able to log or filter the workers web traffic. But when a computer is connected to a network, how does the webbrowser know where the proxy is?</p>
+<p>WPAD is supported by most Web Browsers and OS, but is only endabled by default on Windows and Explorer/Edge.</p>
+<p>Where the proxy can be found is defined in a file called PAC (Proxy Auto Config).</p>
+<p>The browser discovers the PAC file in the following order:</p>
+<ol>
+<li>It received the addrss to the PAC-file from the DHCP server.</li>
+<li>I asks the local DNS server, in this order:</li>
+</ol>
+<p>A computer with the following network name computer.team.division.company.example would look in the following locations, in order:</p>
+<p>wpad.team.division.company.example/wpad.dat
+wpad.division.company.example/wpad.dat
+wpad.company.example/wpad.dat</p>
+<ol>
+<li>It uses LLMNR/NBT-NS to ask for the wpad-subdomain.</li>
+</ol>
+<h3 id="pac-delivered-over-dhcp">PAC delivered over DHCP<a class="headerlink" href="#pac-delivered-over-dhcp" title="Permanent link">#</a></h3>
+<p>If a machine performs a DHCP request with the code 252, the DHCP server till respond with the URL to the PAC file. For example: http://server.domain/proxyconfig.pac.
+The client then proceeds to request this JavaScript file, and the browser executes the file. When the JavaScript inside the PAC file is executed the Browser is instructed to use the, from the PAC defined, proxy server.</p>
+<p>The obvious attack then becomes to set up a rouge DHCP server that responds with a malicious PAC file that instruct the web browser to send traffic the attackers proxy.</p>
+<h3 id="nbt-ns">NBT-NS<a class="headerlink" href="#nbt-ns" title="Permanent link">#</a></h3>
+<p>If the local DNS server cannot resolve wpad.example.local the computer will use the NBT-NS protocol to try to resolve it. And any computer on the network can respond to the NBT-NS DNS request. So the malicious user can simply respond and say that the wpad.example.local can be found at the attackers IP-address.</p>
+<h2 id="how-to-exploit">How to exploit<a class="headerlink" href="#how-to-exploit" title="Permanent link">#</a></h2>
+<h3 id="why-is-it-not-working">Why is it not working?<a class="headerlink" href="#why-is-it-not-working" title="Permanent link">#</a></h3>
+<p>On windows 10 and Windows Server 2008 R2 and later, 
+https://www.alexandreviot.net/2015/01/03/dns-remove-wpad-filtering/</p>
+<h2 id="how-to-test-for">How to test for<a class="headerlink" href="#how-to-test-for" title="Permanent link">#</a></h2>
+<p>In order to check </p>
+<h2 id="recommendation">Recommendation<a class="headerlink" href="#recommendation" title="Permanent link">#</a></h2>
+<p>Create a DNS entry for wpad.</p>
+<p>If no web proxy is used it is possible to disable the default usage of "Autodetect Proxy Settings".</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../local_privilege_escalation/local_privilege_escalation/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../local_privilege_escalation/local_privilege_escalation/" class="btn btn-xs btn-link">
+        Local Privilige Escalation
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../mitm6/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../mitm6/" class="btn btn-xs btn-link">
+        Mitm6
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/initial_access/wpad_spoofing.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

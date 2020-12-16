@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Google Hacking - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Search Engine Discovery", url: "#_top", children: [
+              {title: "Finding specific filetypes", url: "#finding-specific-filetypes" },
+              {title: "Exclude words", url: "#exclude-words" },
+              {title: "Examples", url: "#examples" },
+              {title: "More", url: "#more" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../passive_information_gathering/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../passive_information_gathering/" class="btn btn-xs btn-link">
+        Passive Information Gathering
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../basic_hardening/hardening_linux/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../basic_hardening/hardening_linux/" class="btn btn-xs btn-link">
+        Hardening Linux
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="search-engine-discovery">Search Engine Discovery<a class="headerlink" href="#search-engine-discovery" title="Permanent link">#</a></h1>
+<p>Search engines can be very useful for finding information about the target. Search engines can be used for two things:</p>
+<ul>
+<li>Finding sensitive information on the domain that you are attacking</li>
+<li>Finding sensitive information about the company and its employees in on other parts of the internet. Like forums, newsgroups etc.</li>
+</ul>
+<p>Remember that the world is bigger than google. So test out the other search engines.</p>
+<p>Baidu, binsearch.info, Bing, DuckDuckGo, ixquick/Startpage, Shodan,PunkSpider</p>
+<p>Google is a good tool to learn more about a website.</p>
+<h2 id="finding-specific-filetypes">Finding specific filetypes<a class="headerlink" href="#finding-specific-filetypes" title="Permanent link">#</a></h2>
+<pre><code>filetype:pdf
+</code></pre>
+
+<h3 id="search-within-webaddress">Search within webaddress<a class="headerlink" href="#search-within-webaddress" title="Permanent link">#</a></h3>
+<pre><code>site:example.com myword
+</code></pre>
+
+<h3 id="find-in-url">Find in url<a class="headerlink" href="#find-in-url" title="Permanent link">#</a></h3>
+<pre><code>inurl:test.com
+</code></pre>
+
+<h3 id="wild-cards">Wild cards<a class="headerlink" href="#wild-cards" title="Permanent link">#</a></h3>
+<p>You can use the asterisk to as a wildcard:</p>
+<pre><code>*
+</code></pre>
+
+<p>Example:</p>
+<pre><code>&quot;I've been * for a heart&quot;
+</code></pre>
+
+<p>This will return answers where * is anything.</p>
+<h2 id="exclude-words">Exclude words<a class="headerlink" href="#exclude-words" title="Permanent link">#</a></h2>
+<pre><code>-
+</code></pre>
+
+<p>the dash excludes a specific word</p>
+<p>This query searches for pages that used the word bananasplit.</p>
+<pre><code>-banana bananasplit
+</code></pre>
+
+<h3 id="cached-version">Cached version<a class="headerlink" href="#cached-version" title="Permanent link">#</a></h3>
+<p>So if a website has been taken down you can still find the cached version, of the last time google visited the site</p>
+<pre><code>cache:website.com
+</code></pre>
+
+<p><a href="https://www.blackhat.com/presentations/bh-europe-05/BH_EU_05-Long.pdf">https://www.blackhat.com/presentations/bh-europe-05/BH_EU_05-Long.pdf</a></p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">#</a></h2>
+<pre><code>site:com inurl:admin.php
+</code></pre>
+
+<h2 id="more">More<a class="headerlink" href="#more" title="Permanent link">#</a></h2>
+<p>Here are some more</p>
+<p>Great guide for google dorks<br />
+<a href="https://www.blackhat.com/presentations/bh-europe-05/BH_EU_05-Long.pdf">https://www.blackhat.com/presentations/bh-europe-05/BH_EU_05-Long.pdf</a></p>
+<p><a href="http://www.googleguide.com/advanced_operators_reference.html">http://www.googleguide.com/advanced_operators_reference.html</a></p>
+<p><a href="http://www.searchcommands.com/">http://www.searchcommands.com/</a></p>
+<p><a href="https://support.google.com/websearch/answer/2466433?hl=en">https://support.google.com/websearch/answer/2466433?hl=en</a></p>
+<p><a href="https://www.exploit-db.com/google-hacking-database/">https://www.exploit-db.com/google-hacking-database/</a></p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../passive_information_gathering/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../passive_information_gathering/" class="btn btn-xs btn-link">
+        Passive Information Gathering
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../basic_hardening/hardening_linux/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../basic_hardening/hardening_linux/" class="btn btn-xs btn-link">
+        Hardening Linux
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/recon/google_hacking.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

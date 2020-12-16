@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Active Directory - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Powershell - Active Directory", url: "#_top", children: [
+              {title: "Raw LDAP queries", url: "#raw-ldap-queries" },
+              {title: "Module", url: "#module" },
+              {title: "Get information about users", url: "#get-information-about-users" },
+              {title: "Get informaton about computers", url: "#get-informaton-about-computers" },
+              {title: "Get information about groups for a user", url: "#get-information-about-groups-for-a-user" },
+              {title: "Get information abouts Access Control Lists Locally", url: "#get-information-abouts-access-control-lists-locally" },
+              {title: "Access control lists in an AD", url: "#access-control-lists-in-an-ad" },
+              {title: "Add user to group", url: "#add-user-to-group" },
+              {title: "Active Directory Drive", url: "#active-directory-drive" },
+              {title: "Search AD objects by SID", url: "#search-ad-objects-by-sid" },
+              {title: "Queriying trusted domains (i.e. not your current domain)", url: "#queriying-trusted-domains-ie-not-your-current-domain" },
+              {title: "Get ACLs for objects in trusted domains", url: "#get-acls-for-objects-in-trusted-domains" },
+              {title: "Combination", url: "#combination" },
+              {title: "GPO handling", url: "#gpo-handling" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../jit_csharp_compilation/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../jit_csharp_compilation/" class="btn btn-xs btn-link">
+        JIT CSharp Compilation
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../basics_of_powershell/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../basics_of_powershell/" class="btn btn-xs btn-link">
+        Basics of Powershell
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="powershell-active-directory">Powershell - Active Directory<a class="headerlink" href="#powershell-active-directory" title="Permanent link">#</a></h1>
+<h2 id="raw-ldap-queries">Raw LDAP queries<a class="headerlink" href="#raw-ldap-queries" title="Permanent link">#</a></h2>
+<pre><code>$searcher = New-Object System.DirectoryServices.DirectorySearcher
+$searcher.SearchRoot = New-Object System.DirectoryServices.DirectoryEntry(&quot;LDAP://dc=....&quot;)
+$searcher.SearchScope = &quot;Subtree&quot;
+$searcher.Filter = &quot;&lt;ldap filter&gt;&quot;
+
+foreach($result in $results) {
+  $item = $results.Properties
+}
+</code></pre>
+
+<h2 id="module">Module<a class="headerlink" href="#module" title="Permanent link">#</a></h2>
+<p>Install active directory module and then</p>
+<pre><code>Import-Module activedirectory
+</code></pre>
+
+<h2 id="get-information-about-users">Get information about users<a class="headerlink" href="#get-information-about-users" title="Permanent link">#</a></h2>
+<p>Below command retrieves information about administrator</p>
+<pre><code>Get-ADUser administrator
+</code></pre>
+
+<p>All users</p>
+<pre><code>Get-ADUser -filter &quot;*&quot;
+</code></pre>
+
+<h2 id="get-informaton-about-computers">Get informaton about computers<a class="headerlink" href="#get-informaton-about-computers" title="Permanent link">#</a></h2>
+<p>All computers</p>
+<pre><code>Get-ADComputers -filter &quot;*&quot;
+</code></pre>
+
+<h2 id="get-information-about-groups-for-a-user">Get information about groups for a user<a class="headerlink" href="#get-information-about-groups-for-a-user" title="Permanent link">#</a></h2>
+<p>Below command retrieves all groups for the administrator account</p>
+<pre><code>Get-ADPrincipalGroupMembership -Identity administrator
+</code></pre>
+
+<h2 id="get-information-abouts-access-control-lists-locally">Get information abouts Access Control Lists Locally<a class="headerlink" href="#get-information-abouts-access-control-lists-locally" title="Permanent link">#</a></h2>
+<p>Get object information from local computer:</p>
+<pre><code>Get-ACL
+</code></pre>
+
+<p>Get Security Descriptor for "C:\Windows"</p>
+<pre><code>Get-Acl C:\Windows
+</code></pre>
+
+<p>Get Security Descrpitor for log files starting with k in windows folder</p>
+<pre><code>Get-Acl -Path &quot;C:\Windows\k*.log&quot; 
+</code></pre>
+
+<p>Get Security Descriptor for Registry key</p>
+<pre><code>Get-Acl -Path &quot;HKLM:\System\CurrentControlSet\Control&quot; 
+</code></pre>
+
+<p>Get Security Descriptor for an object</p>
+<pre><code>Get-Acl -InputObject (Get-StorageSubsystem -Name S087)
+</code></pre>
+
+<h2 id="access-control-lists-in-an-ad">Access control lists in an AD<a class="headerlink" href="#access-control-lists-in-an-ad" title="Permanent link">#</a></h2>
+<p>Get object information from AD: (Spawns a new shell). Running comands in this
+new location retrieves ifnroamtion from AD (like Get-Acl)</p>
+<pre><code>Import-Module activedirectory
+set-location ad:
+Get-ACL ...
+</code></pre>
+
+<p>Otherwise you can use the distinguished name with the active directory drive mount point as prefix:</p>
+<pre><code>Get-Acl &quot;AD:\CN=qw...,DC=....&quot;
+</code></pre>
+
+<p><em>Everything below is run after setting location to AD drive</em></p>
+<p>Get ACL information by using distinguished name</p>
+<pre><code>Get-Acl &quot;OU=aaa,DC=somedomain,DC=tld&quot;
+Get-Acl (Get-ADOrganizationalUnit -filter &quot;Name -eq 'aaa'&quot;)
+</code></pre>
+
+<p>Creates a table of permissions for the Organizational Unit aaa, in domain somedomain.tld</p>
+<pre><code>(Get-Acl (Get-ADOrganizationalUnit -filter &quot;Name -eq 'aaa'&quot;)).Access | Format-Table IdentityReference, AccessControlType -AutoSize
+</code></pre>
+
+<h2 id="add-user-to-group">Add user to group<a class="headerlink" href="#add-user-to-group" title="Permanent link">#</a></h2>
+<pre><code>Add-ADGroupMember &lt;adgroup&gt; &lt;adprincipal&gt;
+Add-ADGroupMember SomeGroup SomUser
+</code></pre>
+
+<h2 id="active-directory-drive">Active Directory Drive<a class="headerlink" href="#active-directory-drive" title="Permanent link">#</a></h2>
+<p>When loading the AD module, it creates an AD drive.</p>
+<p>Set your working location to the AD drive (makes commands run in the AD context instead, like dir)</p>
+<pre><code>Set-Location ad:
+</code></pre>
+
+<p>Set your working location to a specific domain in the AD drive</p>
+<pre><code>Set-Location &quot;dc=somedomain,dc=local&quot;
+</code></pre>
+
+<h2 id="search-ad-objects-by-sid">Search AD objects by SID<a class="headerlink" href="#search-ad-objects-by-sid" title="Permanent link">#</a></h2>
+<pre><code>Get-ADObject -Filter &quot;objectSid -eq 'S-1-5-321-...'&quot;
+</code></pre>
+
+<h2 id="queriying-trusted-domains-ie-not-your-current-domain">Queriying trusted domains (i.e. not your current domain)<a class="headerlink" href="#queriying-trusted-domains-ie-not-your-current-domain" title="Permanent link">#</a></h2>
+<pre><code>Get-ADUser -Server other.domain.tld &quot;username&quot;
+</code></pre>
+
+<h2 id="get-acls-for-objects-in-trusted-domains">Get ACLs for objects in trusted domains<a class="headerlink" href="#get-acls-for-objects-in-trusted-domains" title="Permanent link">#</a></h2>
+<pre><code>New-PSDrive -Name AD2 -PSProvider ActiveDirectory -Server other.domain.tld -root &quot;//RootDSE/&quot;
+Get-ACL (&quot;AD2:\\&quot; + (Get-ADUser -Server other.domain.tld &quot;username&quot;).DistinguishedName)
+</code></pre>
+
+<h2 id="combination">Combination<a class="headerlink" href="#combination" title="Permanent link">#</a></h2>
+<p>Retreives all permissions on object for a user, and eveyr permission with only a SID, it performs a lookup to check what these SIDs are</p>
+<pre><code>(Get-Acl &quot;AD:\$((Get-ADUser vlad).DistinguishedName)&quot;).Acess | Where-Object { $_.IdentityReference -like &quot;s-1-*&quot; } | Foreach { Get-ADObject -Filter &quot;objectSid -eq '$($_.IdentityReference)' }
+</code></pre>
+
+<h2 id="gpo-handling">GPO handling<a class="headerlink" href="#gpo-handling" title="Permanent link">#</a></h2>
+<p>Retrieves all GPOs (Use -Domain to specify for a specific domain)</p>
+<pre><code>Get-GPO -All
+</code></pre>
+
+<p>Retreives all inherited GPOs for a domain or OU</p>
+<pre><code>Get-GPInheritance -Target &quot;OU=aaa,DC=somedomain,DC=local&quot; -Domain somedomain.local
+</code></pre>
+
+<p>Retrieves applied settings from a GPO named Test (Use -All for all GPOs)</p>
+<pre><code>Get-GPOReport -Name Test -ReportType [XML|HTML] -Path C:\GPOReports\test.html
+</code></pre>
+
+<p>Retreives all permissions for a GPO named Test</p>
+<pre><code>Get-GPPermissions -Name Test -All
+</code></pre>
+
+<p>Retreives the resultant set of policy applied to a user or computer, or both</p>
+<pre><code>Get-GPResultantSetofPolicy -Path C:\GPOReports\sop.xml -ReportType XML [-Computer &lt;&gt;] [-User &lt;&gt;]
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../jit_csharp_compilation/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../jit_csharp_compilation/" class="btn btn-xs btn-link">
+        JIT CSharp Compilation
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../basics_of_powershell/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../basics_of_powershell/" class="btn btn-xs btn-link">
+        Basics of Powershell
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/powershell/activedirectory.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

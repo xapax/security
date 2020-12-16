@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Port Scanning - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Port Scanning", url: "#_top", children: [
+              {title: "TLDR", url: "#tldr" },
+              {title: "Nmap", url: "#nmap" },
+              {title: "Metasploit", url: "#metasploit" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../finding_subdomains/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../finding_subdomains/" class="btn btn-xs btn-link">
+        Finding Subdomains
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../passive_information_gathering/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../passive_information_gathering/" class="btn btn-xs btn-link">
+        Passive Information Gathering
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="port-scanning">Port Scanning<a class="headerlink" href="#port-scanning" title="Permanent link">#</a></h1>
+<h2 id="tldr">TLDR<a class="headerlink" href="#tldr" title="Permanent link">#</a></h2>
+<pre><code># Stealthy
+nmap -sS 10.11.1.X
+
+# Scan all ports, might take a while.
+nmap 10.11.1.X -p-
+
+# Scan for UDP
+nmap 10.11.1.X -sU
+unicornscan -mU -v -I 10.11.1.X
+
+# Scan for version, with NSE-scripts and trying to identify OS
+nmap 10.11.1.X -sV -sC -O
+
+# All out monsterscan
+nmap -vvv -Pn -A -iL listOfIP.txt
+
+# Fast scan
+nmap 10.11.1.X -F
+
+# Only scan the 100 most common ports
+nmap 10.11.1.X --top-ports 100
+</code></pre>
+
+<h2 id="nmap">Nmap<a class="headerlink" href="#nmap" title="Permanent link">#</a></h2>
+<p>Now that you have gathered some IP addresses from your subdomain scanning it is time to scan those addresses. You just copy-paste those addresses and add them to a file, line by line. Then you can scan all of them with nmap at the same time. Using the <code>-iL</code> flag.</p>
+<h3 id="basics-tcp-connect-scan">Basics - tcp-connect scan<a class="headerlink" href="#basics-tcp-connect-scan" title="Permanent link">#</a></h3>
+<p>Okay, so a bit of the basics of Nmap and how it works. When one machine initiate a connection with another machine using the <strong>transmission-control protocol (tcp)</strong> it performs what is know as a three-way handshake. That means:</p>
+<pre><code>machine1 sends a syn packet to machine2
+machine2 send a syn-ack packet to machine1
+machine1 sends a ack packet to machine2.
+</code></pre>
+
+<p>If machine2 responds with a syn-ack we know that that port is open. This is basically what nmap does when it scans for a port.
+If machine1 omits the last ack packet the connection is not made. This can be a way to make less noise. </p>
+<p>This is the default mode for nmap. If you do not add any flags and scan a machine this is the type of connection it creates.</p>
+<h3 id="stealthy-ss">"Stealthy" -sS<a class="headerlink" href="#stealthy-ss" title="Permanent link">#</a></h3>
+<p>By adding the <code>-sS</code> flag we are telling nmap to not finalize the three way handshake. It will send a <code>syn</code>, receive <code>syn-ack</code> (if the port is open), and then terminate the connection. This used to be considered stealthy before, since it was often not logged. However it should not be considered stealthy anymore.</p>
+<p>In the flag I imagine that the first <code>s</code> stands for scan/scantype and the second <code>S</code> stands for <code>syn</code>.</p>
+<p>So <code>-sS</code> can be read as <strong>scantype syn</strong></p>
+<h3 id="udp-scan">UDP scan<a class="headerlink" href="#udp-scan" title="Permanent link">#</a></h3>
+<p>UDP is after TCP the most common protocol. DNS (53), SNMP (161/162) and DHCP (67/68) are some common ones. Scanning for it is slow and unreliable.</p>
+<pre><code>-sU
+</code></pre>
+
+<h4 id="output-scan-to-a-textfile">Output scan to a textfile<a class="headerlink" href="#output-scan-to-a-textfile" title="Permanent link">#</a></h4>
+<p>Not all output works with grepable format. For example NSE does not work with grepable. So you might want to use xml instead.</p>
+<pre><code># To text-file
+-oN nameOfFile
+
+# To grepable format
+-oG nameOfFile
+
+# To xml
+-oX nameOfFile
+
+</code></pre>
+
+<h3 id="scan-an-entire-ip-range">Scan an entire IP-range<a class="headerlink" href="#scan-an-entire-ip-range" title="Permanent link">#</a></h3>
+<p>You might find that a site has several machines on the same ip-range. You can then use nmap to scan the whole range.</p>
+<p>The <code>-sn</code> flag stops nmap from running port-scans. So it speeds up the process.</p>
+<pre><code>nmap -vvv -sn 201.210.67.0/24
+</code></pre>
+
+<p>You can also specify a specific range, like this</p>
+<pre><code>nmap -sP 201.210.67.0-100
+````
+
+#### Sort out the machines that are up
+
+So let's say you find that 40 machine exists in that range. We can use grep to output those IP:s.
+
+First let's find the IPs that were online. Ip-range is the output from previous command. You can of course combine them all.
+
+```bash
+cat ip-range.txt | grep -B 1 &quot;Host is up&quot;
+</code></pre>
+
+<p>Now let's sort out the ips from that file.</p>
+<pre><code class="bash">grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' ip-range.txt &gt; only-ip.txt
+</code></pre>
+
+<p>Now you can input all those ips to nmap and scan them.</p>
+<h4 id="scan-a-range-and-output-if-a-specific-port-is-open">Scan a range and output if a specific port is open<a class="headerlink" href="#scan-a-range-and-output-if-a-specific-port-is-open" title="Permanent link">#</a></h4>
+<p>Nmap has a command to make the output grepable.</p>
+<pre><code class="bash">nmap -vvv -p 80 201.210.67.0-100 -oG - | grep 80/open
+</code></pre>
+
+<h3 id="nmap-scripts">Nmap scripts<a class="headerlink" href="#nmap-scripts" title="Permanent link">#</a></h3>
+<p>This chapter could also be placed in Vulnerability-analysis and Exploitation. Because nmap scripting is a really versatile tool that can do many things. Here we will focus on it's ability to retrieve information that can be useful in the process to <strong>find vulnerabilities</strong> </p>
+<p>First locate the nmap scripts. Nmap scripts end in <code>.nse</code>. For Nmap script engine.</p>
+<pre><code>locate *.nse
+</code></pre>
+
+<p>The syntax for running a script is:</p>
+<pre><code>nmap --script scriptname 192.168.1.101
+</code></pre>
+
+<p>To find the "man"-pages, the info about a script we write:</p>
+<pre><code>nmap -script-help http-vuln-cve2013-0156.nse
+</code></pre>
+
+<p><strong>Run multiple scripts</strong></p>
+<p>Can be run by separating the script with a comma</p>
+<pre><code>nmap --script scriptone.nse,sciprt2.nse,script3.nse 192.168.1.101
+</code></pre>
+
+<p>Run the default scripts</p>
+<pre><code>nmap -sC example.com
+</code></pre>
+
+<h2 id="metasploit">Metasploit<a class="headerlink" href="#metasploit" title="Permanent link">#</a></h2>
+<p>We can do port-scanning with metasploit and nmap. And we can even integrate nmap into metasploit. This might be a good way to keep your process neat and organized. </p>
+<h3 id="db_nmap">db_nmap<a class="headerlink" href="#db_nmap" title="Permanent link">#</a></h3>
+<p>You can run <code>db_nmap</code> and all the output will be stored in the metasploit database and available with </p>
+<pre><code>hosts
+services
+</code></pre>
+
+<p>You can also import nmap scans. But you must first output it in xml-format with the following flag  </p>
+<pre><code>nmap 192.168.1.107 -oX result.xml
+</code></pre>
+
+<p>Good practice would be to output the scan-results in xml, grepable and normal format. You do that with</p>
+<pre><code>nmap 192.168.1.107 -oA result
+</code></pre>
+
+<p>Then you can load it into the database with the following command. </p>
+<pre><code>db_import /path/to/file.xml
+</code></pre>
+
+<h3 id="metasploit-portscan-modules">Metasploit PortScan modules<a class="headerlink" href="#metasploit-portscan-modules" title="Permanent link">#</a></h3>
+<p>If you for some reason don't have access to nmap you can run metasploits modules that does portscans</p>
+<pre><code>use auxiliary/scanner/portscan/
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../finding_subdomains/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../finding_subdomains/" class="btn btn-xs btn-link">
+        Finding Subdomains
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../passive_information_gathering/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../passive_information_gathering/" class="btn btn-xs btn-link">
+        Passive Information Gathering
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/recon/port_scanning.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

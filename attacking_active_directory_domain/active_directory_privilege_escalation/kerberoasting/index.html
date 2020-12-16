@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Kerberos TGS Service Ticket Cracking (Kerberoast) - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Kerberos TGS Service Ticket Cracking (Kerberoast)", url: "#_top", children: [
+              {title: "Background and terminology", url: "#background-and-terminology" },
+              {title: "How to test", url: "#how-to-test" },
+              {title: "Crack the hashes", url: "#crack-the-hashes" },
+              {title: "Generate passwordlist", url: "#generate-passwordlist" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../execssive_amount_of_domain_admins/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../execssive_amount_of_domain_admins/" class="btn btn-xs btn-link">
+        Excessive Amount of Domain Admins
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../check_for_unsupported_os/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../check_for_unsupported_os/" class="btn btn-xs btn-link">
+        Check for Unsupported OS
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="kerberos-tgs-service-ticket-cracking-kerberoast">Kerberos TGS Service Ticket Cracking (Kerberoast)<a class="headerlink" href="#kerberos-tgs-service-ticket-cracking-kerberoast" title="Permanent link">#</a></h2>
+<p>Kerberoast attack was presented 2014 by Tim at Sans HackFest.</p>
+<p>This is a easy and stealthy attack that is great to get started with.</p>
+<h3 id="background-and-terminology">Background and terminology<a class="headerlink" href="#background-and-terminology" title="Permanent link">#</a></h3>
+<p>SPN - Service Principal Name</p>
+<p>"A service principal name (SPN) is a unique identifier of a service instance. SPNs are used by Kerberos authentication to associate a service instance with a service logon account. This allows a client application to request that the service authenticate an account even if the client does not have the account name."</p>
+<p>SPN is an identifier for a particular service offered by a particular host.
+The common form for a SPN is the following format: <code>service class/fqdn@REALM</code>. So for an example:
+<code>IMAP/mail.example.com@EXAMPLE.COM</code>. So this is the identifier.</p>
+<p>Service Principal Name (SPN) is used in the domain to associate the service with a login account.
+So a SPN is associated with a domain login account. So an account is running the service.
+The service account runs the service. The service account is usually a Administrator, or belongs to admin group, or the machine. Which is good for an attacker.</p>
+<ul>
+<li>
+<p>A user wants to interact with a service</p>
+</li>
+<li>
+<p>User sends a request to DC</p>
+</li>
+<li>DC responds with TGT</li>
+<li>User sends TGS request to DC</li>
+<li>DC sends inter-realm TGT</li>
+<li>User sends TGS request to DC</li>
+<li>DC responds with TGS for the specified server. It is encrypted with the servers hash.</li>
+<li>User sends TGS to server. The server can decrypt the TGS because it is encrypted with a hash that the server knows.</li>
+</ul>
+<p>This means that everytime a user tried to access a specific servicer, for example by going to a share, the user recieves a TGS. The user can then offline crack the TGS to find the servers password. An attacker can do this even if the attacker does not have access to the service.</p>
+<p>You can see all the TGS-tickets that is on a computer by simply running this command:</p>
+<pre><code class="powershell">klist
+</code></pre>
+
+<p>You will not see the actual TGS, as it is stored in memory.
+So the OLD-SCHOOL attack scenario was:</p>
+<ol>
+<li>Request access to all services on the domain</li>
+<li>Extact the TGS from memory</li>
+<li>Crack the TGS</li>
+</ol>
+<p>This was simplified. but some stuff that manages to remove the mimikatz part. No need to actually retrieve the TGS from memory, as it can be retrieved straight from the request.</p>
+<pre><code>klist
+</code></pre>
+
+<p>Offline brute force of passwords of service accounts with service tickets
+- No risk of detection
+- No account lockouts</p>
+<h3 id="how-to-test">How to test<a class="headerlink" href="#how-to-test" title="Permanent link">#</a></h3>
+<p>Using impacket:  </p>
+<pre><code>python GetUserSPNs.py -dc-ip 192.168.66.87 -request hackdomain.local/FilipAdmin
+</code></pre>
+
+<p>The resulting hashes are already in hashcat format.  </p>
+<p>Using invoke-kerberoast from PowerView:  </p>
+<pre><code>Invoke-Kerberoast -OutputFormat Hashcat | Select-Object Hash | Out-File -filepath ‘c:\users\public\HashCapture.txt’ -Width 8000
+</code></pre>
+
+<h3 id="crack-the-hashes">Crack the hashes<a class="headerlink" href="#crack-the-hashes" title="Permanent link">#</a></h3>
+<p>Remember to add some words that are specific to the domain. Maybe company name and stuff like that.
+Look at the services that are running.</p>
+<p>See the chapter on <a href="/cracking_hashes/cracking_hashes/">cracking hashes</a> for how to crack the hashes.</p>
+<h3 id="generate-passwordlist">Generate passwordlist<a class="headerlink" href="#generate-passwordlist" title="Permanent link">#</a></h3>
+<p>See the chapter on <a href="/cracking_hashes/generate_password_list.md">Generate password list</a> for how to generate custom password lists.</p>
+<h4 id="brute-force">Brute force<a class="headerlink" href="#brute-force" title="Permanent link">#</a></h4>
+<p>If you want to do a brute force attack it is a good idea to first understand the AD password requirements. You can check the minimum pasword length by running this command:</p>
+<pre><code>net accounts /domain
+net accounts
+</code></pre>
+
+<ul>
+<li>References
+https://room362.com/post/2016/kerberoast-pt2/
+https://room362.com/post/2016/kerberoast-pt1/</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../execssive_amount_of_domain_admins/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../execssive_amount_of_domain_admins/" class="btn btn-xs btn-link">
+        Excessive Amount of Domain Admins
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../check_for_unsupported_os/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../check_for_unsupported_os/" class="btn btn-xs btn-link">
+        Check for Unsupported OS
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/active_directory_privilege_escalation/kerberoasting.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Excessive Amount of Domain Admins - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Active directory - Excessive amount of domain admins", url: "#_top", children: [
+              {title: "Description", url: "#description" },
+              {title: "Recommendation", url: "#recommendation" },
+              {title: "How to test for", url: "#how-to-test-for" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../incorrectly_configured_forest_or_domain_trust/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../incorrectly_configured_forest_or_domain_trust/" class="btn btn-xs btn-link">
+        Incorrectly Configured Forest or Domain Trust
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../kerberoasting/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../kerberoasting/" class="btn btn-xs btn-link">
+        Kerberos TGS Service Ticket Cracking (Kerberoast)
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h2 id="active-directory-excessive-amount-of-domain-admins">Active directory - Excessive amount of domain admins<a class="headerlink" href="#active-directory-excessive-amount-of-domain-admins" title="Permanent link">#</a></h2>
+<h3 id="description">Description<a class="headerlink" href="#description" title="Permanent link">#</a></h3>
+<h3 id="recommendation">Recommendation<a class="headerlink" href="#recommendation" title="Permanent link">#</a></h3>
+<h3 id="how-to-test-for">How to test for<a class="headerlink" href="#how-to-test-for" title="Permanent link">#</a></h3>
+<p>Domain admins can be counted in several different ways. For example between enabled and disabled users. Or by including users who are admins through inheretance of group memberships.</p>
+<p>Within Active Directory, there are three built-in groups that comprise the highest privilege groups in the directory: the Enterprise Admins (EA) group, the Domain Admins (DA) group, and the built-in Administrators (BA) group.</p>
+<p>There are many more groups that can be sensitive. You can read about those here: https://adsecurity.org/?p=3700. But we will only list users of these three groups. This is kind of a bare minimum test.</p>
+<p>Therefore we will check who are members in these groups.
+If the query is run in Neo4j it can be exported using </p>
+<pre><code>MATCH p=(n:User )-[r:MemberOf]-&gt;(m:Group {name : &quot;ADMINISTRATORS@domain.local&quot;}) RETURN n.displayname, n.name,n.description,n.lastlogontimestamp,n.enabled,m.name;
+MATCH p=(n:User )-[r:MemberOf]-&gt;(m:Group {name : &quot;DOMAIN ADMINS@domain.local&quot;}) RETURN n.displayname, n.name,n.description,n.lastlogontimestamp,n.enabled,m.name;
+MATCH p=(n:User )-[r:MemberOf]-&gt;(m:Group {name : &quot;ENTERPRISE ADMINS@domain.local&quot;}) RETURN n.displayname, n.name,n.description,n.lastlogontimestamp,n.enabled,m.name;
+</code></pre>
+
+<p>The query can then be run executed like this, but of course with the correct domain name</p>
+<pre><code>cat query.txt |  /usr/share/neo4j/bin/cypher-shell --non-interactive -u neo4j -p PASSWORD --format plain &gt; file.csv
+</code></pre>
+
+<p>This will check for all objects that are members of the Domain admins group. This will include other groups and computers.</p>
+<pre><code>MATCH (n:Group) WHERE n.objectsid =~ &quot;(?i)S-1-5-.*-512&quot; WITH n MATCH p=(n)&lt;-[r:MemberOf]-(m) RETURN p
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../incorrectly_configured_forest_or_domain_trust/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../incorrectly_configured_forest_or_domain_trust/" class="btn btn-xs btn-link">
+        Incorrectly Configured Forest or Domain Trust
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../kerberoasting/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../kerberoasting/" class="btn btn-xs btn-link">
+        Kerberos TGS Service Ticket Cracking (Kerberoast)
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/active_directory_privilege_escalation/execssive_amount_of_domain_admins.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

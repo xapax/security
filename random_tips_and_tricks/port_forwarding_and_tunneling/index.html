@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Port Forwarding and Tunneling - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Pivoting", url: "#_top", children: [
+              {title: "Ipconfig", url: "#ipconfig" },
+          ]},
+          {title: "Port forwarding and tunneling", url: "#port-forwarding-and-tunneling", children: [
+              {title: "Port forwarding", url: "#port-forwarding" },
+              {title: "SSH Tunneling - Port forwarding on SSH", url: "#ssh-tunneling-port-forwarding-on-ssh" },
+              {title: "SShuttle", url: "#sshuttle" },
+              {title: "Port forward with metasploit", url: "#port-forward-with-metasploit" },
+              {title: "References", url: "#references" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../pivoting/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../pivoting/" class="btn btn-xs btn-link">
+        Pivoting
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../port_knocking/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../port_knocking/" class="btn btn-xs btn-link">
+        Port Knocking
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="pivoting">Pivoting<a class="headerlink" href="#pivoting" title="Permanent link">#</a></h1>
+<p>Let's say that you have compromised one machine on a network and you want to keep going to another machine. You will use the first machine as a staging point/plant/foothold to break into machine 2. The technique of using one compromised machine to access another is called pivoting. Machine one is the <code>pivot</code> in the example. The <code>pivot</code> is just used as a way to channel/tunnel our attack. </p>
+<h2 id="ipconfig">Ipconfig<a class="headerlink" href="#ipconfig" title="Permanent link">#</a></h2>
+<p>We are looking for machines that have at least THREE network interfaces (loopback, eth0, and eth1 (or something)). These machines are connected to other networks, so we can use them to pivot.</p>
+<pre><code># Windows
+ipconfig /all
+route print
+
+#Linux
+ifconfig
+ifconfig -a
+</code></pre>
+
+<h1 id="port-forwarding-and-tunneling">Port forwarding and tunneling<a class="headerlink" href="#port-forwarding-and-tunneling" title="Permanent link">#</a></h1>
+<h2 id="port-forwarding">Port forwarding<a class="headerlink" href="#port-forwarding" title="Permanent link">#</a></h2>
+<p>So imagine that you are on a network and you want to connect to a ftp server (or any other port) to upload or download some files. But someone has put some crazy firewall rules (egress filters) that prohibits outgoing traffics on all ports except for port 80. So how are we going to be able to connect to our ftp-server?</p>
+<p>What we can do is add a machine that redirect/forward all traffic that it receives on port 80 to port 21 on a different machine.</p>
+<p>So instead of having this kind of traffic </p>
+<pre><code>home-computer/port-21 ----&gt; ftp-server/port-21
+</code></pre>
+
+<p>we will have</p>
+<pre><code>home-computer/port-80 ----&gt; port-80/proxy-machine/port-21 ----&gt; ftp-server
+</code></pre>
+
+<p>And the other way around of course, to receive the traffic.</p>
+<p>Okay, so how do we go about actually implementing this?</p>
+<h3 id="rinetd-port-forwardredirect">Rinetd - Port forward/redirect<a class="headerlink" href="#rinetd-port-forwardredirect" title="Permanent link">#</a></h3>
+<p>So we can set up this port forwarding machine with the help of rinetd.</p>
+<p>To make it clear, we have the following machines:
+Machine1 - IP: 111.111.111.111 - Behind firewall, and wants to connect to Machine3.
+Machine2 - IP: 222.222.222.222 - Forwards incomming connections to Machine3 
+Machine3 - IP: 333.333.333.333 - Hosts the ftp-server that machine1 wants to connect to.</p>
+<pre><code>apt-get install rinetd
+</code></pre>
+
+<p>This is the default config file <code>/etc/rinetd.conf</code>: </p>
+<pre><code class="bash">#
+# this is the configuration file for rinetd, the internet redirection server
+#
+# you may specify global allow and deny rules here
+# only ip addresses are matched, hostnames cannot be specified here
+# the wildcards you may use are * and ?
+#
+# allow 192.168.2.*
+# deny 192.168.2.1?
+
+
+#
+# forwarding rules come here
+#
+# you may specify allow and deny rules after a specific forwarding rule
+# to apply to only that forwarding rule
+#
+# bindadress    bindport  connectaddress  connectport
+
+
+# logging information
+logfile /var/log/rinetd.log
+
+# uncomment the following line if you want web-server style logfile format
+# logcommon
+</code></pre>
+
+<p>This is the essential part of the configuration file, this is where we create the port-forwarding</p>
+<pre><code># bindadress    bindport  connectaddress  connectport
+111.111.111.111    80     333.333.333.333       21
+</code></pre>
+
+<pre><code>/etc/init.d/rinetd restart
+</code></pre>
+
+<p>So the bind-address is where the proxy receieves the connection, and the connectaddress is the machine it forwards the connection to.</p>
+<h2 id="ssh-tunneling-port-forwarding-on-ssh">SSH Tunneling - Port forwarding on SSH<a class="headerlink" href="#ssh-tunneling-port-forwarding-on-ssh" title="Permanent link">#</a></h2>
+<p><strong>Use cases</strong>
+- You want to encrypt traffic that uses unencrypted protocols. Like VNC, IMAP, IRC.
+- You are on a public network and want to encrypt all your http traffic.
+- You want to bypass firewall rules.</p>
+<h3 id="local-port-forwarding">Local port forwarding<a class="headerlink" href="#local-port-forwarding" title="Permanent link">#</a></h3>
+<p>Now facebook will be available on address localhost:8080.</p>
+<pre><code>ssh -L 8080:www.facebook.com:80 localhost
+</code></pre>
+
+<p>You can also forward ports like this:</p>
+<pre><code>ssh username@&lt;remote-machine&gt; -L localport:target-ip:target-port
+
+ssh username@192.168.1.111 -L 5000:192.168.1.222:5000
+</code></pre>
+
+<p>Now this port will be available on your localhost.
+So you go to:</p>
+<pre><code>nc localhost:10000
+</code></pre>
+
+<h3 id="remote-port-forwarding">Remote port forwarding<a class="headerlink" href="#remote-port-forwarding" title="Permanent link">#</a></h3>
+<p>Remote port forwarding is crazy, yet very simple concept. So imagine that you have compromised a machine, and that machine has like MYSQL running but it is only accessible for localhost. And you can't access it because you have a really crappy shell. So what we can do is just forward that port to our attacking machine. The steps are as following:</p>
+<p>Here is how you create a remote port forwarding:</p>
+<pre><code>ssh &lt;gateway&gt; -R &lt;remote port to bind&gt;:&lt;local host&gt;:&lt;local port&gt;
+</code></pre>
+
+<p>By the way, plink is a ssh-client for windows that can be run from the terminal. The ip of the attacking machine is <strong>111.111.111.111</strong>.</p>
+<p><strong>Step 1</strong>
+So on our compromised machine we do:</p>
+<pre><code>plink.exe -l root -pw mysecretpassword 111.111.111.111 -R 3307:127.0.0.1:3306
+</code></pre>
+
+<p><strong>Step 2</strong>
+Now we can check netstat on our attacking machine, we should see something like this:</p>
+<pre><code>tcp        0      0 127.0.0.1:3307          0.0.0.0:*               LISTEN      19392/sshd: root@pt 
+</code></pre>
+
+<p>That means what we can connect to that port on the attacking machine from the attacking machine.</p>
+<p><strong>Step 3</strong>
+Connect using the following command:</p>
+<pre><code>mysql -u root -p -h 127.0.0.1 --port=3307
+</code></pre>
+
+<h3 id="dynamic-port-forwarding">Dynamic port forwarding<a class="headerlink" href="#dynamic-port-forwarding" title="Permanent link">#</a></h3>
+<p>This can be used to dynamically forward all traffic from a specific application. This is really cool. With remote and local port forwarding you are only forwarding a single port. But that can be a hassle if your target machine has 10 ports open that you want to connect to. So instad we can use a dynamic port forwarding technique. </p>
+<p>Dynamic port forwarding sounds really complicated, but it is incredibly easy to set up.
+Just set up the tunnel like this. After it is set up do not run any commands in that session.</p>
+<pre><code># We connect to the machine we want to pivot from
+ssh -D 9050 user@192.168.1.111
+</code></pre>
+
+<p>Since proxychains uses 9050 by defualt (the default port for tor) we don't even need to configure proxychains. But if you want to change the port you can do that in <code>/etc/proxychains.conf</code>.</p>
+<pre><code>proxychains nc 192.168.2.222 21
+</code></pre>
+
+<p>So supress all the logs from proxychains you can configure it in the config file.</p>
+<h4 id="tunnel-all-httphttps-traffic-through-ssh">Tunnel all http/https traffic through ssh<a class="headerlink" href="#tunnel-all-httphttps-traffic-through-ssh" title="Permanent link">#</a></h4>
+<p>For this we need two machines.
+Machine1 - 111.111.1111.111 - The server that works as our proxy.
+Machine2 - The computer with the web browser.</p>
+<p>First we check out what out public IP adress is, so that we know the IP address before and after, so we can verify that it works.
+First you set ssh to:</p>
+<pre><code># On Machine2 we run
+ssh -D localhost:9999 root@111.111.111.111
+
+# Can also be run with the -N flag
+ssh -D localhost:9999 root@111.111.111.111 -N
+
+</code></pre>
+
+<p>Now you go to Firefox/settings/advanced/network and <strong>SOCKS</strong> you add 
+<strong>127.0.0.1</strong> and port <strong>9999</strong></p>
+<p>Notice that this setup probably leaks DNS. So don't use it if you need opsec.</p>
+<p>To fix the DNS-leak you can go to <strong>about:config</strong> in firefox (in the addressbar) then look for <strong>network.proxy.socks_remote_dns</strong>, and switch it to <strong>TRUE</strong>. Now you can check: https://ipleak.net/</p>
+<p>But we are not done yet. It still says that we have <strong>WebRTC leaks</strong>. In order to solve this you can go to about:config again and set the following to <strong>FALSE</strong></p>
+<p><strong>media.peerconnection.enabled</strong></p>
+<h2 id="sshuttle">SShuttle<a class="headerlink" href="#sshuttle" title="Permanent link">#</a></h2>
+<p>I haven't used this, but it might work.</p>
+<pre><code>sshuttle -r root@192.168.1.101 192.168.1.0/24
+</code></pre>
+
+<h2 id="port-forward-with-metasploit">Port forward with metasploit<a class="headerlink" href="#port-forward-with-metasploit" title="Permanent link">#</a></h2>
+<p>We can also forward ports using metasploit. Say that the compromised machine is running services that are only accessible from within the network, from within that machine. To access that port we can do this in meterpreter:</p>
+<pre><code>portfwd add -l &lt;attacker port&gt; -p &lt;victim port&gt; -r &lt;victim ip&gt;
+portfwd add -l 3306 -p 3306 -r 192.168.222
+</code></pre>
+
+<p>Now we can access this port on our machine locally like this.</p>
+<pre><code>nc 127.0.0.1 3306
+</code></pre>
+
+<h3 id="ping-sweep-the-network">Ping-sweep the network<a class="headerlink" href="#ping-sweep-the-network" title="Permanent link">#</a></h3>
+<p>First we want to scan the network to see what devices we can target. In this example we already have a meterpreter shell on a windows machine with SYSTEM-privileges.</p>
+<pre><code>meterpreter &gt; run arp_scanner -r 192.168.1.0/24
+</code></pre>
+
+<p>This command will output all the devices on the netowork.</p>
+<h3 id="scan-each-host">Scan each host<a class="headerlink" href="#scan-each-host" title="Permanent link">#</a></h3>
+<p>Now that we have a list of all available machines. We want to portscan them.</p>
+<p>We will to that portscan through metasploit. Using this module:</p>
+<pre><code>use auxiliary/scanner/portscan/tcp
+</code></pre>
+
+<p>If we run that module now it will only scan machines in the network we are already on. So first we need to connect us into the second network.</p>
+<p>On the already pwn machine we do</p>
+<pre><code>ipconfig
+</code></pre>
+
+<p>Now we add the second network as a new route in metasploit. First we background our session, and then do this:</p>
+<pre><code># the ip addres and the subnet mask, and then the meterpreter session
+route add 192.168.1.101 255.255.255.0 1
+</code></pre>
+
+<p>Now we can run our portscanning module:</p>
+<pre><code>use auxiliary/scanner/portscan/tcp
+</code></pre>
+
+<h3 id="attack-a-specific-port">Attack a specific port<a class="headerlink" href="#attack-a-specific-port" title="Permanent link">#</a></h3>
+<p>In order to attack a specific port we need to forwards it like this</p>
+<pre><code>portfwd add -l 3389 -p 3389 -r 192.168.1.222
+</code></pre>
+
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+<p>This is a good video-explanation:</p>
+<p>https://www.youtube.com/watch?v=c0XiaNAkjJA</p>
+<p>https://www.offensive-security.com/metasploit-unleashed/pivoting/</p>
+<p>http://ways2hack.com/how-to-do-pivoting-attack/</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../pivoting/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../pivoting/" class="btn btn-xs btn-link">
+        Pivoting
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../port_knocking/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../port_knocking/" class="btn btn-xs btn-link">
+        Port Knocking
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/random_tips_and_tricks/port_forwarding_and_tunneling.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

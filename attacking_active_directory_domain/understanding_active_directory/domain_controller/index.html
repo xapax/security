@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Domain Controller - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Primary/backup vs Multimaster domain controllers", url: "#_top", children: [
+          ]},
+          {title: "Flexible Single Master Operation (FSMO) / Single Master Operation / Operations Master", url: "#flexible-single-master-operation-fsmo-single-master-operation-operations-master", children: [
+          ]},
+          {title: "Writable DC vs Read-only DC (RODC)", url: "#writable-dc-vs-read-only-dc-rodc", children: [
+          ]},
+          {title: "Forest Function Level", url: "#forest-function-level", children: [
+          ]},
+          {title: "References", url: "#references", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../kerberos/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../kerberos/" class="btn btn-xs btn-link">
+        Kerberos
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../about_active_directory/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../about_active_directory/" class="btn btn-xs btn-link">
+        About Active Directory
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <p>The Domain Controller (DC) is the server that is running the Active Directory Domain Services.</p>
+<h2 id="primarybackup-vs-multimaster-domain-controllers">Primary/backup vs Multimaster domain controllers<a class="headerlink" href="#primarybackup-vs-multimaster-domain-controllers" title="Permanent link">#</a></h2>
+<p>There are often at least two domain controllers in a forest. 
+In Windows NT t
+Before Active Directory was introduced with Windows 2000 the Domain Controllers were structured in a master-worker relationship where you had one DC functioning as the Primary DC and all other DCs were backup domain controllers. Back then it was only possible for the Primary DC to make domain changes - such as adding new users. The changes were then replicated to the backup domain controllers. This structure was deprecated when Active Directory was introduced in Windows 2000. Instead the architecure is based on a multimaster replication. That means that any writable DC can make changes, like adding a user, and that change will then be replicated to the other domain controllers.</p>
+<h2 id="flexible-single-master-operation-fsmo-single-master-operation-operations-master">Flexible Single Master Operation (FSMO) / Single Master Operation / Operations Master<a class="headerlink" href="#flexible-single-master-operation-fsmo-single-master-operation-operations-master" title="Permanent link">#</a></h2>
+<p>So Domain Controllers in modern Active Directory use a multi-master structure, they replicate between each other all the time. However, there are certain tasks that are not so well suited for multi-master replication. These activities are called FSMO Roles, and there are five roles. </p>
+<p>Two on the forest level, and three on the domain level.</p>
+<p><strong>FSMO Roles</strong></p>
+<ul>
+<li>Schema Master         - Forest    - Schema updates are processed on this DC.</li>
+<li>Domain Naming Master  - Forst     - Controls changes to the forest, such as addition and removal of domains.</li>
+<li>PDC Emulator          - Domain    - See below</li>
+<li>RID Master            - Domain    - Relative Identifier (RID) Master issues pools of unique identifiers to domain controllers for them to use when new objects are created.</li>
+<li>Infrastructure Master - Domain    - Maintains references to objects in other domains; for example, users in another domain who are member of a group in the current domain.</li>
+</ul>
+<p>The first DC that is create in a in a forest performs all these roles. When a new domain is created the three domain-level services are hosted on the domain controller in that domain.  </p>
+<p><strong>Primary Domain Controller (PDC) Service</strong></p>
+<p>Originally the Emulated Primary Domain Controller (PDC) service was created to be backwards compatible with pre-Window 2000 systems. On one DC there is a service running which is called <code>PDC</code>. You can find out which Domain Controller that is emulating the role of Primary DC with the following command:</p>
+<pre><code class="powershell">get-addomaincontroller -discover -service PrimaryDC
+</code></pre>
+
+<p>The PDC Emulator have some new responsibilities.</p>
+<ul>
+<li>Responsible for changing passwords and monitoring user locks for password errors.</li>
+<li>The Group Policy Editor by default connects to the PDC Emulator server and all changes to the GPO in reality occur on it.</li>
+<li>By default, the PDC Emulator is the time server for the clients in the domain. </li>
+<li>Changes to the Distributed File System (DFS) namespace are made on the domain controller with the PDC Emulator role. </li>
+<li>The process of increasing the domain or forest functional level is performed on the Primary Domain Controller Emulator.</li>
+<li>Active Directory has so-called Well Known Security principals. Examples are the Everyone, Authenticated Users, System, Self, and Creator Owner. They are all managed by a domain controller with the PDC Emulator role.</li>
+</ul>
+<h2 id="writable-dc-vs-read-only-dc-rodc">Writable DC vs Read-only DC (RODC)<a class="headerlink" href="#writable-dc-vs-read-only-dc-rodc" title="Permanent link">#</a></h2>
+<p>There are two types of Domain controllers <strong>Writable DC</strong> and a <strong>Read-only DC</strong></p>
+<p><strong>Writable DC</strong> 
+This is just the standard Domain Controller.</p>
+<p><strong>Read-only DC (RODC)</strong></p>
+<h2 id="forest-function-level">Forest Function Level<a class="headerlink" href="#forest-function-level" title="Permanent link">#</a></h2>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+<p>https://adsecurity.org/?p=3592</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../kerberos/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../kerberos/" class="btn btn-xs btn-link">
+        Kerberos
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../about_active_directory/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../about_active_directory/" class="btn btn-xs btn-link">
+        About Active Directory
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/understanding_active_directory/domain_controller.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Offline Password Cracking - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Offline password cracking", url: "#_top", children: [
+              {title: "Identify hash", url: "#identify-hash" },
+              {title: "Windows domain - Checking password complexity", url: "#windows-domain-checking-password-complexity" },
+              {title: "Cracking the hash", url: "#cracking-the-hash" },
+              {title: "SPN - Kerberoasting", url: "#spn-kerberoasting" },
+              {title: "Using Online Tools", url: "#using-online-tools" },
+              {title: "Windows", url: "#windows" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../online_password_cracking/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../online_password_cracking/" class="btn btn-xs btn-link">
+        Online Password Cracking (Brute force)
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../physical_attacks/physical_access_to_machine/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../physical_attacks/physical_access_to_machine/" class="btn btn-xs btn-link">
+        Pysical Attacks
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="offline-password-cracking">Offline password cracking<a class="headerlink" href="#offline-password-cracking" title="Permanent link">#</a></h1>
+<p>We might find passwords or other credentials in databases. These are often hashed, so we need to first identify which hash it is and then try to crack it. The first step is to identify the hash-algorithm that was used to hash the password.</p>
+<h2 id="identify-hash">Identify hash<a class="headerlink" href="#identify-hash" title="Permanent link">#</a></h2>
+<p>There are generally speaking three pieces of data we can use to identify a hash.
+- The length of the hash
+- The character set
+- Any special characters</p>
+<p>In order to identify a hash we can either use specialized tools that analyze the hash and then return a guess on which algorithm it is. An easier way is of course to just look in the documentation of the software where you found the hashes. It usually says in the documentation or the source code which type of hash is being used.</p>
+<p>In kali we can use <code>hash-identifier</code> or <code>hashid</code>:</p>
+<pre><code>hash-identifier 
+hashid
+</code></pre>
+
+<p>Or try these online services:</p>
+<p>http://www.onlinehashcrack.com/hash-identification.php</p>
+<p>https://md5hashing.net/hash_type_checker</p>
+<h2 id="windows-domain-checking-password-complexity">Windows domain - Checking password complexity<a class="headerlink" href="#windows-domain-checking-password-complexity" title="Permanent link">#</a></h2>
+<p>Find out the password complexity in windows.</p>
+<pre><code>net accounts /domain
+net accounts
+</code></pre>
+
+<h2 id="cracking-the-hash">Cracking the hash<a class="headerlink" href="#cracking-the-hash" title="Permanent link">#</a></h2>
+<p>Okay so now we know what hash it is, let's get cracking.</p>
+<p>If you want to try out the functionality of hashcat or john the ripper you can find example hashes here: http://openwall.info/wiki/john/sample-hashes.</p>
+<h3 id="hashcat">Hashcat<a class="headerlink" href="#hashcat" title="Permanent link">#</a></h3>
+<p>Look for the specific type of hash you want to crack in the list produced by the following command:</p>
+<pre><code>hashcat --help
+</code></pre>
+
+<p>My hash was a Apache md5, so I will use the corresponding code for it, <code>1600</code></p>
+<p><code>-a 0</code> - straight</p>
+<p><code>-o found.txt</code> - where the cracked hash outputs</p>
+<p>`admin.hash" - the hash you want to crack.</p>
+<p><code>/usr/share/hashcat/rules/rockyou-30000.rule</code> - the wordlist we use</p>
+<pre><code>hashcat -m 11 -a 0 -o found.txt admin.hash /usr/share/hashcat/rules/rockyou-30000.rule
+</code></pre>
+
+<h3 id="john-the-ripper">John the ripper<a class="headerlink" href="#john-the-ripper" title="Permanent link">#</a></h3>
+<p>So this is how you usually crack passwords with john</p>
+<pre><code>john --wordlist=wordlist.txt dump.txt
+</code></pre>
+
+<p>If you do not find the password you can add the john-rules. Which add numbers and such things to each password.</p>
+<pre><code>john --rules --wordlist=wordlist.txt dump.txt
+</code></pre>
+
+<h4 id="linux-shadow-password">Linux shadow password<a class="headerlink" href="#linux-shadow-password" title="Permanent link">#</a></h4>
+<p>First you need to combine the passwd file with the shadow file using the unshadow-program.</p>
+<pre><code>unshadow passwd-file.txt shadow-file.txt &gt; unshadowed.txt
+john --rules --wordlist=wordlist.txt unshadowed.txt
+</code></pre>
+
+<h3 id="rainbow-tables">Rainbow tables<a class="headerlink" href="#rainbow-tables" title="Permanent link">#</a></h3>
+<p>So basically a rainbow table is a precalculated list of passwords. So instead of having to hash the word you want to try you create a list of hashes. So you do not have to hash them before comparing. This might take a long time to do, hashing a whole wordlist, but when you do the comparison between the password and the test-word it will go a lot faster.</p>
+<h2 id="spn-kerberoasting">SPN - Kerberoasting<a class="headerlink" href="#spn-kerberoasting" title="Permanent link">#</a></h2>
+<pre><code>./hashcat-5.0.0/hashcat64.bin -a 0 -m 13100 -o result.txt -r ./hashcat-5.0.0/rules/dive.rule ./hashar.txt /usr/share/wordlists/rockyou.txt
+</code></pre>
+
+<h2 id="using-online-tools">Using Online Tools<a class="headerlink" href="#using-online-tools" title="Permanent link">#</a></h2>
+<h3 id="findmyhash">findmyhash<a class="headerlink" href="#findmyhash" title="Permanent link">#</a></h3>
+<p>You can use findmyhash </p>
+<p>Here is an example of how to use it:</p>
+<pre><code>findmyhash LM -h 6c3d4c343f999422aad3b435b51404ee:bcd477bfdb45435a34c6a38403ca4364
+</code></pre>
+
+<h3 id="cracking">Cracking<a class="headerlink" href="#cracking" title="Permanent link">#</a></h3>
+<p>Crackstation
+https://crackstation.net/</p>
+<p>Hashkiller
+https://hashkiller.co.uk/</p>
+<p>Google hashes
+Search pastebin.</p>
+<h2 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">#</a></h2>
+<p>If you find a local file inclusion vulnerability you might be able to retrieve two fundamental files from it. the <code>system</code> registry and the <code>SAM</code> registry. There two files/registries are all we need to get the machines hashes.
+These files can be found in several different locations in windows. Here they are:</p>
+<pre><code>Systemroot can be windows
+%SYSTEMROOT%\repair\SAM
+windows\repair\SAM
+%SYSTEMROOT%\System32\config\RegBack\SAM
+
+System file can be found here
+SYSTEMROOT%\repair\system
+%SYSTEMROOT%\System32\config\RegBack\system
+</code></pre>
+
+<p>So if the manage to get your hands on both of these files you can extract the password hashed like this:</p>
+<pre><code>pwdump system sam 
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../online_password_cracking/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../online_password_cracking/" class="btn btn-xs btn-link">
+        Online Password Cracking (Brute force)
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../physical_attacks/physical_access_to_machine/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../physical_attacks/physical_access_to_machine/" class="btn btn-xs btn-link">
+        Pysical Attacks
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/password_cracking/offline_password_cracking.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

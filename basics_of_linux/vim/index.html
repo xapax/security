@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Vim - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Vim", url: "#_top", children: [
+              {title: "Core concepts", url: "#core-concepts" },
+              {title: "Movement - Motion commands", url: "#movement-motion-commands" },
+              {title: "Operators", url: "#operators" },
+              {title: "Combining Motions and Operators", url: "#combining-motions-and-operators" },
+              {title: "Count - Numbers", url: "#count-numbers" },
+              {title: "Replace", url: "#replace" },
+              {title: "Clipboard", url: "#clipboard" },
+              {title: "Substitute - Search and replace", url: "#substitute-search-and-replace" },
+              {title: "Entering insert-mode", url: "#entering-insert-mode" },
+              {title: ".vimrc", url: "#vimrc" },
+              {title: "Plugins", url: "#plugins" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../common_devices_and_components/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../common_devices_and_components/" class="btn btn-xs btn-link">
+        Common Devices and Components
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../bash_scripting/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../bash_scripting/" class="btn btn-xs btn-link">
+        Bash Scripting
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="vim">Vim<a class="headerlink" href="#vim" title="Permanent link">#</a></h1>
+<p><a href="http://www.viemu.com/a-why-vi-vim.html">http://www.viemu.com/a-why-vi-vim.html</a><br />
+And also this classic answer: <a href="https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim">https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim</a></p>
+<h2 id="core-concepts">Core concepts<a class="headerlink" href="#core-concepts" title="Permanent link">#</a></h2>
+<p>In vim you have the concept of buffers.</p>
+<pre><code class="bash"># List buffers
+:buffers
+
+# Switch buffer
+# By number
+b1
+b2
+# By name
+b [name]
+
+
+# Close/delete a buffer
+:bdelete
+:bd
+</code></pre>
+
+<h2 id="movement-motion-commands">Movement - Motion commands<a class="headerlink" href="#movement-motion-commands" title="Permanent link">#</a></h2>
+<p><strong>Left,up,down,right</strong></p>
+<p><code>hjkl</code></p>
+<p><strong>start of line</strong></p>
+<p><code>0</code> (zero)</p>
+<p><strong>end of line</strong></p>
+<p><code>$</code></p>
+<p><strong>beginning of next word</strong></p>
+<p><code>w</code></p>
+<p><strong>beginning of next word, defined by white space</strong></p>
+<p><code>W</code></p>
+<p><strong>end of the next word</strong></p>
+<p><code>e</code></p>
+<p><strong>end of the next word, defined by white space</strong></p>
+<p><code>E</code></p>
+<p><strong>back to the beginning of previous word</strong></p>
+<p><code>b</code></p>
+<p><strong>back to the end of previous word</strong></p>
+<p><code>B</code></p>
+<p><strong>go to next character of your choice</strong></p>
+<p>If you want to go to the next comma</p>
+<p><code>f,</code></p>
+<p><strong>start of file</strong></p>
+<p><code>gg</code></p>
+<p><strong>end of file</strong></p>
+<p><code>G</code></p>
+<h2 id="operators">Operators<a class="headerlink" href="#operators" title="Permanent link">#</a></h2>
+<p>Operators are commands that do things. Like delete, change or copy.</p>
+<p><code>c</code> - change<br />
+<code>ce</code> - change until end of the word.<br />
+<code>c$</code> - change until end of line.</p>
+<h2 id="combining-motions-and-operators">Combining Motions and Operators<a class="headerlink" href="#combining-motions-and-operators" title="Permanent link">#</a></h2>
+<p>Now that you know some motion commands and operator commands. You can start combining them.</p>
+<p><code>dw</code> - delete word<br />
+<code>d$</code> - delete to the end of the line</p>
+<h2 id="count-numbers">Count - Numbers<a class="headerlink" href="#count-numbers" title="Permanent link">#</a></h2>
+<p>You can add numbers before motion commands. To move faster.</p>
+<p><code>4w</code> - move cursor three words forward<br />
+<code>0</code> - move curso to the start of the line</p>
+<p>You can use numbers to perform operations.<br />
+<code>d3w</code> - delete three words</p>
+<p><code>3dd</code> - delete three lines</p>
+<h2 id="replace">Replace<a class="headerlink" href="#replace" title="Permanent link">#</a></h2>
+<p>If you need to replace a character, there is no need to enter insert-mode. You can just use replace</p>
+<p>Go to a character and the press <code>r</code> followed by the character you want instead.</p>
+<p><code>rp</code> if you want to replace p.</p>
+<p><code>R</code></p>
+<h2 id="clipboard">Clipboard<a class="headerlink" href="#clipboard" title="Permanent link">#</a></h2>
+<p>In order to copy something FROM vim to the OS-clipboard you can do this:</p>
+<p>The <code>"</code> means that we are not entering a registry. And the <code>*</code> means the OS-clipboard. So we are yanking something and putting it in the OS-clipboard registry.</p>
+<pre><code>&quot;*y
+</code></pre>
+
+<h2 id="substitute-search-and-replace">Substitute - Search and replace<a class="headerlink" href="#substitute-search-and-replace" title="Permanent link">#</a></h2>
+<p>:s/thee/the/g</p>
+<h2 id="entering-insert-mode">Entering insert-mode<a class="headerlink" href="#entering-insert-mode" title="Permanent link">#</a></h2>
+<p><code>i</code> - current character<br />
+<code>o</code> - next line<br />
+<code>O</code> - line before<br />
+<code>a</code> - end of word<br />
+<code>A</code> - end of line</p>
+<h2 id="vimrc">.vimrc<a class="headerlink" href="#vimrc" title="Permanent link">#</a></h2>
+<p>Here is all your vim-configuration.</p>
+<h2 id="plugins">Plugins<a class="headerlink" href="#plugins" title="Permanent link">#</a></h2>
+<p>Install vundle here<br />
+<a href="https://github.com/VundleVim/Vundle.vim">https://github.com/VundleVim/Vundle.vim</a></p>
+<p><strong>Add plugin</strong></p>
+<p>Add plugin to your .vimrc-file and then open vim and write</p>
+<p><code>:PluginInstall</code></p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../common_devices_and_components/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../common_devices_and_components/" class="btn btn-xs btn-link">
+        Common Devices and Components
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../bash_scripting/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../bash_scripting/" class="btn btn-xs btn-link">
+        Bash Scripting
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/basics_of_linux/vim.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

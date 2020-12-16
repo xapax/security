@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>GDB - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Tools", url: "#_top", children: [
+              {title: "Nasm to opcode", url: "#nasm-to-opcode" },
+              {title: "Objdump", url: "#objdump" },
+              {title: "GDB - GNU Debugger", url: "#gdb-gnu-debugger" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav">
+      <a href="../webshell/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../webshell/" class="btn btn-xs btn-link">
+        Webshells
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">#</a></h1>
+<p>These are our tools:
+- ltrace
+- strings
+- file
+- objdump
+- gdb</p>
+<p>This is a great little trick. If you are working a lot with hexadecimal and you want to easily convert it to ascii you can write this in bash</p>
+<pre><code>echo 6a6548 | xxd -r -p
+</code></pre>
+
+<p>will print out: <strong>jeH</strong>
+xxd is a program that makes ascii into hexdumps. with the -r we can reverse it. </p>
+<h2 id="nasm-to-opcode">Nasm to opcode<a class="headerlink" href="#nasm-to-opcode" title="Permanent link">#</a></h2>
+<p>If we want to convert an assembly instruction to opcode we can use this tool</p>
+<pre><code>/usr/share/metasploit-framework/tools/exploit/nasm_shell.rb
+
+nasm &gt; JMP ESP
+00000000  FFE4              jmp esp
+</code></pre>
+
+<h2 id="objdump">Objdump<a class="headerlink" href="#objdump" title="Permanent link">#</a></h2>
+<p>Objdump is a program that outputs the assembly code of a compiled program. It ca be executed like this.
+example: </p>
+<pre><code>objdump -D myProgram
+objdump -M intel -d program_name ;This is to read the assembly in intel-syntax
+
+
+</code></pre>
+
+<h2 id="gdb-gnu-debugger">GDB - GNU Debugger<a class="headerlink" href="#gdb-gnu-debugger" title="Permanent link">#</a></h2>
+<h3 id="setting-breakpoints">Setting breakpoints<a class="headerlink" href="#setting-breakpoints" title="Permanent link">#</a></h3>
+<p>Sometimes you want the debugger to stop at a certain point in the program, so that you can investigate memory and stuff. We can set these breakpoints with the following command:</p>
+<p>Set a break at the main-function</p>
+<pre><code>break main
+</code></pre>
+
+<p>Set a break at that line. I think it is set before the line is executed.</p>
+<pre><code>break 10
+</code></pre>
+
+<p><strong>Show breakpoints</strong>
+If you want to know which breakpoints you have set you can run:</p>
+<pre><code>info breakpoint
+info break
+info b
+</code></pre>
+
+<p><strong>Remove breakpoints</strong> 
+Will delete all breakpoints on line 9</p>
+<pre><code>clear 9
+</code></pre>
+
+<p>Run the program</p>
+<pre><code>run
+</code></pre>
+
+<p>Show code</p>
+<pre><code>list ; show code if you have compile it with the -g flag
+list 10` ; will show the code around line 10. five lines before, and five lines after.
+list 1,20 ; will list all lines between the numbers.
+</code></pre>
+
+<p>This shows the code in assembly. It is pretty much the same as running objdump.</p>
+<pre><code>disassemble main
+</code></pre>
+
+<p>Show info about instruct pointer</p>
+<pre><code>info register eip
+i r eip
+</code></pre>
+
+<p>On 64bit machines it is called <code>rip</code>instead of <code>eip</code>. It basically shows to what address eip is pointing at. So the output might be something like this:</p>
+<pre><code>(gdb) i r rip
+rip            0x4004aa 0x4004aa &lt;main+4&gt;
+</code></pre>
+
+<p>Which means that rip at this moment is pointing at 0x4004aa. Which means that this is going to be the next instruct that gets executed.</p>
+<p>The structure is like this:</p>
+<pre><code>examine/[format] address
+x/
+</code></pre>
+
+<p>Format is how you want to display the memory. Here are the following formats:</p>
+<pre><code>    o - octal
+    x - hexadecimal
+    d - decimal
+    u - unsigned decimal
+    t - binary
+    f - floating point
+    a - address
+    c - char
+    s - string
+    i - instruction
+</code></pre>
+
+<p>Example:</p>
+<pre><code>x/s myVariable
+</code></pre>
+
+<p>This means: examine myVariable, and output the content in that memory in the form of a string.
+Now this does not work for values that does not have a memory address. It will just give you `</p>
+<pre><code>0x16:   Cannot access memory at address 0x16
+</code></pre>
+
+<p>That is because the variable is not a pointer (it does not point to an memory-address), but instead it is a hardcoded value.</p>
+<pre><code>x/i $rip
+</code></pre>
+
+<p>Examine/info instruction pointer register. This command can be used to examine a specific part of memory. In this example it was the instruct pointer, but it can also be a specific address in memory. </p>
+<h3 id="show-all-functions">Show all functions<a class="headerlink" href="#show-all-functions" title="Permanent link">#</a></h3>
+<pre><code>info funcions
+</code></pre>
+
+<p><strong>Python</strong>
+Python can be quite useful go generate strings as input. Of course this can be done with a lot of other languages. so it would work like this.</p>
+<pre><code>./myProgram $(python -c 'print &quot;\x41&quot; * 30')
+</code></pre>
+
+<p>Basically, the <code>$(python)</code> creates a shell within our command. And in that shell we run the normal python command. The <code>-c</code> flag tells python that we are going to run a command instead of opening up the interactive shell. You can test this in the terminal like this:</p>
+<pre><code>$ python -c 'print &quot;hello&quot; * 100'
+hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello
+</code></pre>
+
+<h4 id="gcc">GCC<a class="headerlink" href="#gcc" title="Permanent link">#</a></h4>
+<p>Compile the program in debugger mode, so that the debugger has access to the code.</p>
+<pre><code>gcc -g program.c
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav">
+      <a href="../webshell/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../webshell/" class="btn btn-xs btn-link">
+        Webshells
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/tools/gdb.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

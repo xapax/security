@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Pysical Attacks - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Physical access to machine", url: "#_top", children: [
+              {title: "Create linux-usb", url: "#create-linux-usb" },
+              {title: "Boot into live-usb on victim machine", url: "#boot-into-live-usb-on-victim-machine" },
+              {title: "Mount disk", url: "#mount-disk" },
+              {title: "Umount the disk", url: "#umount-the-disk" },
+              {title: "Dump the hashes", url: "#dump-the-hashes" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../password_cracking/offline_password_cracking/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../password_cracking/offline_password_cracking/" class="btn btn-xs btn-link">
+        Offline Password Cracking
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_rfid_cards/basics_of_rfid_hacking/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_rfid_cards/basics_of_rfid_hacking/" class="btn btn-xs btn-link">
+        Basics of RFID Hacking
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="physical-access-to-machine">Physical access to machine<a class="headerlink" href="#physical-access-to-machine" title="Permanent link">#</a></h1>
+<p>So if you have physical access to a machine that is not encrypted it is really trivial to gain access to the hard-drive and all files on it.</p>
+<p>This is how you do it</p>
+<h2 id="create-linux-usb">Create linux-usb<a class="headerlink" href="#create-linux-usb" title="Permanent link">#</a></h2>
+<p>Just follow this guide for ubuntu
+http://www.ubuntu.com/download/desktop/create-a-usb-stick-on-ubuntu</p>
+<h2 id="boot-into-live-usb-on-victim-machine">Boot into live-usb on victim machine<a class="headerlink" href="#boot-into-live-usb-on-victim-machine" title="Permanent link">#</a></h2>
+<p>If the machine doesn't automatically detect the usb you might have to enter into the bios. This can usually be done by pressing F12 or F1 on boot. Bios looks different from machine to machine. But you need to just choose to boot from the USB-device.</p>
+<h2 id="mount-disk">Mount disk<a class="headerlink" href="#mount-disk" title="Permanent link">#</a></h2>
+<p>Now you have booted into the live-usb, now we need to mount the hard-drive to the usb-linux-filesystem.
+First we want to find out what partitions we have:</p>
+<pre><code>sudo su
+fdisk -l
+</code></pre>
+
+<p>This will give you a list of partitions. They will look something like this</p>
+<pre><code>/dev/sda1
+/dev/sda2
+</code></pre>
+
+<p>Identify from the list the partition you want to mount.</p>
+<p>Here we create a space for where we want to mount the partition.</p>
+<pre><code>mkdir /media/windows
+</code></pre>
+
+<pre><code>mount -t ntfs /dev/sda1 /media/windows
+</code></pre>
+
+<p><code>-t</code>means type, and refers to the filesystem-type. And we choose ntfs which is the windows-filesystem.</p>
+<p>Now you can access all the files from the harddrive in <code>/media/windows</code></p>
+<h2 id="umount-the-disk">Umount the disk<a class="headerlink" href="#umount-the-disk" title="Permanent link">#</a></h2>
+<p>Notice that is is <code>umount</code> and not unmount.</p>
+<pre><code>umount /media/windows
+</code></pre>
+
+<h2 id="dump-the-hashes">Dump the hashes<a class="headerlink" href="#dump-the-hashes" title="Permanent link">#</a></h2>
+<p>https://prakharprasad.com/windows-password-cracking-using-john-the-ripper/</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../../password_cracking/offline_password_cracking/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../../password_cracking/offline_password_cracking/" class="btn btn-xs btn-link">
+        Offline Password Cracking
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../attacking_rfid_cards/basics_of_rfid_hacking/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../attacking_rfid_cards/basics_of_rfid_hacking/" class="btn btn-xs btn-link">
+        Basics of RFID Hacking
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/physical_attacks/physical_access_to_machine.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

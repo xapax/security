@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="xapax">
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Local Machine Recon - Notes</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Windows - Local recon", url: "#_top", children: [
+              {title: "System information", url: "#system-information" },
+              {title: "All hotfixes applied", url: "#all-hotfixes-applied" },
+              {title: "OS Information", url: "#os-information" },
+              {title: "Logon Sessions", url: "#logon-sessions" },
+              {title: "Logged on users", url: "#logged-on-users" },
+              {title: "Services", url: "#services" },
+              {title: "Local users, groups and memberships", url: "#local-users-groups-and-memberships" },
+              {title: "Get listening services", url: "#get-listening-services" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../networking/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../networking/" class="btn btn-xs btn-link">
+        Networking
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../jit_csharp_compilation/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../jit_csharp_compilation/" class="btn btn-xs btn-link">
+        JIT CSharp Compilation
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="windows-local-recon">Windows - Local recon<a class="headerlink" href="#windows-local-recon" title="Permanent link">#</a></h1>
+<h2 id="system-information">System information<a class="headerlink" href="#system-information" title="Permanent link">#</a></h2>
+<pre><code>systeminfo
+</code></pre>
+
+<h2 id="all-hotfixes-applied">All hotfixes applied<a class="headerlink" href="#all-hotfixes-applied" title="Permanent link">#</a></h2>
+<pre><code>Get-WmiObject -Class Win32_QuickFixEngineering -ComputerName .
+</code></pre>
+
+<h2 id="os-information">OS Information<a class="headerlink" href="#os-information" title="Permanent link">#</a></h2>
+<pre><code>Get-WmiObject -Class Win32_OperatingSystem -ComputerName .
+</code></pre>
+
+<h2 id="logon-sessions">Logon Sessions<a class="headerlink" href="#logon-sessions" title="Permanent link">#</a></h2>
+<pre><code>Get-WmiObject -Class Win32_LogonSession -ComputerName .
+</code></pre>
+
+<h2 id="logged-on-users">Logged on users<a class="headerlink" href="#logged-on-users" title="Permanent link">#</a></h2>
+<pre><code>Get-WmiObject -Class Win32_ComputerSystem -ComputerName .
+</code></pre>
+
+<h2 id="services">Services<a class="headerlink" href="#services" title="Permanent link">#</a></h2>
+<pre><code>Get-WmiObject -Class Win32_service -ComputerName .
+
+Get-WmiObject -Class Win32_service -ComputerName . | Where-Object { $_.State -eq &quot;Running&quot; }
+
+# Returns Name, service account, a description and the path to the executable
+Get-WmiObject -Class Win32_service -ComputerName . | Select Name,StartName,Description,PathName
+</code></pre>
+
+<h2 id="local-users-groups-and-memberships">Local users, groups and memberships<a class="headerlink" href="#local-users-groups-and-memberships" title="Permanent link">#</a></h2>
+<pre><code>Get-LocalUser
+Get-LocalGroup
+Get-LocalGroupMembership &lt;groupname&gt;
+</code></pre>
+
+<h2 id="get-listening-services">Get listening services<a class="headerlink" href="#get-listening-services" title="Permanent link">#</a></h2>
+<pre><code>netstat -a -n -o
+</code></pre>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../networking/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../networking/" class="btn btn-xs btn-link">
+        Networking
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../jit_csharp_compilation/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../jit_csharp_compilation/" class="btn btn-xs btn-link">
+        JIT CSharp Compilation
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/xapax/edit/master/docs/attacking_active_directory_domain/powershell/local_machine_recon.md"><i class="fa fa-github"></i>
+Edit on GitHub</a>
+      </p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
