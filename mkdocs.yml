@@ -1,0 +1,215 @@
+# site_name: 'My notes'
+site_description: Stuff I don't feel like googeling again
+site_author: xapax
+
+repo_url: https://github.com/xapax
+
+site_name: Notes
+nav:
+- index.md
+- Basics of Linux:
+    - 'Linux': 'basics_of_linux/linux.md'
+    - 'Basics of Linux': 'basics_of_linux/basics_of_linux.md'
+    - 'Bash Scripting' : 'basics_of_linux/bash_scripting.md'
+    - 'Vim': 'basics_of_linux/vim.md'
+    - 'Common Devices and Components': 'basics_of_linux/common_devices_and_components.md'
+- Basics of Windows:
+    - 'Basics of Windows': 'basics_of_windows/basics_of_windows.md'
+    - 'Powershell': 'basics_of_windows/powershell.md'
+    - 'Powershell Scripting': 'basics_of_windows/powershell_scripting2.md'
+    - 'CMD': 'basics_of_windows/cmd.md'
+    - 'Default Windows Files': 'basics_of_windows/default_windows_files.md'
+- Python:
+    - 'Python Fundamentals': 'python/python_fundamentals.md'
+    - 'Useful Scripts': 'python/useful_python_commands.md'
+- Basic Hardening:
+    - 'Hardening Bios': 'basic_hardening/hardening_bios.md'
+    - 'Hardening Linux': 'basic_hardening/hardening_linux.md'
+- Recon:
+    - 'Google Hacking': 'recon/google_hacking.md'
+    - 'Passive Information Gathering': 'recon/passive_information_gathering.md'
+    - 'Port Scanning': 'recon/port_scanning.md'
+    - "Finding Subdomains": 'recon/finding_subdomains.md'
+- Initial Access:
+    - 'Setting Up Email-phishing-server': 'initial_access/phishing_server.md'
+    - 'Social Engineering and Phishing': 'initial_access/social_engineering_-_phishing.md'
+    - 'Initial Access': 'initial_access/initial_access.md'
+    - 'Initial Dropper': 'initial_access/initial_access_dropper.md'
+    - 'Generate Payload - Reverse shells': 'initial_access/reverse_shell.md'
+- Post Exploitation:
+    - 'Spawning Shells': 'post_exploitation/spawning_shells.md'
+    - 'Meterpreter for Post-exploitation': 'post_exploitation/getting_meterpreter_shell.md'
+    - 'Local Privilege Escalation - Linux': 'post_exploitation/privilege_escalation_-_linux.md'
+- Transferring Files:
+    - 'Transferring Files Linux': 'transferring_files/transfering_files.md'
+- Attacking Web Applications:
+    - 'OAuth Attacks': 'attacking_web_applications/oauth_attacks.md'
+    - 'BankID Attacks': 'attacking_web_applications/bankid_attacks.md'
+    - 'Cache Poisoning': 'attacking_web_applications/cache_poisoning.md'
+    - 'CSV Injection': 'attacking_web_applications/csv_injection.md'
+    - 'Cross-Site Web Socket Hijack (CSHSH)' : 'attacking_web_applications/cross_site_web_socket_hijack.md'
+    - 'Deserialization Attacks': 'attacking_web_applications/deserialization_attacks.md'
+    - 'DOM XSS': 'attacking_web_applications/dom_based_xss.md'
+    - 'Local File Inclusion': 'attacking_web_applications/local_file_inclusion.md'
+    - 'Static Analysis of JavaScript': 'attacking_web_applications/static_analysis_of_javascript.md'
+    - 'SQL Injections': 'attacking_web_applications/sql-injections.md'
+    - 'XML External Entity (XXE)': 'attacking_web_applications/xml_external_entity_attack.md'
+    - 'Subdomain Takerovers': 'attacking_web_applications/subdomain_takeover.md' 
+    - 'Session Fixation': 'attacking_web_applications/session-fixation.md'
+    - 'Remote File Inclusion': 'attacking_web_applications/remote_file_inclusion.md'
+    - 'NoSQL Injection': 'attacking_web_applications/nosql-injections.md'
+    - 'Host-header Attacks': 'attacking_web_applications/host-header-attack.md'
+    - 'Bypassing File Upload': 'attacking_web_applications/bypass_image_upload.md'
+    - 'Cross-site Request Forgery': 'attacking_web_applications/cross_site_request_forgery.md'
+    - 'Cross-site Scripting': 'attacking_web_applications/cross-site-scripting.md'
+    - 'Find Files': 'attacking_web_applications/web-scanning.md'
+- Attacking Internal Network:
+    - 'Network Attacks': 'attacking_internal_network/network_attacks.md'
+    - 'Zone Transfer Attack': 'attacking_internal_network/dns_zone_transfer_attack.md'
+    - 'Basics of Networking': 'attacking_internal_network/basics_of_networking.md'
+    - 'Active Information Gathering': 'attacking_internal_network/active_information_gathering.md'
+    - 'ARP Spoofing': 'attacking_internal_network/arp-spoofing.md'
+    - 'Scanning Networks': 'attacking_internal_network/infrastructure_pentest_scanning_networks.md'
+    - 'List of Common Ports': 'attacking_internal_network/list_of_common_ports.md'
+- Attacking External Network:
+    - 'Attacking External Networks': 'attacking_external_network/attacking_external_networks.md'
+    - 'List of Common Ports': 'attacking_internal_network/list_of_common_ports.md'
+- Attacking Active Directory:
+    - Active Directory - Good to Know:
+        - 'Helpful Commands and Scripts': 'attacking_active_directory_domain/good_to_know/active_directory_help_commands.md'
+        - 'Transferring Files': 'attacking_active_directory_domain/good_to_know/transferring_files.md'
+        - 'Tools': 'attacking_active_directory_domain/good_to_know/tools.md'
+        - 'Neo4J and Cypher': 'attacking_active_directory_domain/good_to_know/neo4j_and_cypher.md'
+        - 'LDAP Syntax': 'attacking_active_directory_domain/good_to_know/ldap_syntax.md'
+        - 'Windows Access Control': 'attacking_active_directory_domain/good_to_know/windows_access_control.md'
+    - Active Directory - Basics of Active Directory:
+        - 'About Active Directory': 'attacking_active_directory_domain/understanding_active_directory/about_active_directory.md'
+        - 'Domain Controller': 'attacking_active_directory_domain/understanding_active_directory/domain_controller.md'
+        - 'Kerberos': 'attacking_active_directory_domain/understanding_active_directory/kerberos.md'
+        - 'Group Policies': 'attacking_active_directory_domain/understanding_active_directory/group_policies.md'
+        - 'AD Physical topology': attacking_active_directory_domain/understanding_active_directory/ad_physical_topology.md
+        - 'Default Groups': attacking_active_directory_domain/understanding_active_directory/default_groups.md 
+    - Active Directory - Reconnaissance:
+        - 'Reconnaissance': 'attacking_active_directory_domain/recon/active_directory_recon.md'
+    - Active Directory - Initial Access:
+        - 'LLMNR and NBT-NS Poisoning': 'attacking_active_directory_domain/initial_access/llmnr_and_nbtns_poisoning.md'
+        - 'Password Spraying': 'attacking_active_directory_domain/initial_access/password_spraying.md'
+        - 'Mitm6': 'attacking_active_directory_domain/initial_access/mitm6.md'
+        - 'WPAD Spoofing': 'attacking_active_directory_domain/initial_access/wpad_spoofing.md'
+    - Active Directory - Local Privilege Escalation:
+        - 'Local Privilige Escalation': 'attacking_active_directory_domain/local_privilege_escalation/local_privilege_escalation.md'
+        - 'Disable Windows Defender': 'attacking_active_directory_domain/local_privilege_escalation/shutdown_windows_defender.md'
+    - Active Directory - Domain Privilege Escalation:
+        - 'Abusing Constrained Delegation': 'attacking_active_directory_domain/active_directory_privilege_escalation/abusing_constrained_delegation.md'
+        - 'Abusing Unconstrained Delegation': attacking_active_directory_domain/active_directory_privilege_escalation/abusing_unconstrained_delegation.md
+        - 'Check for Insecure Usage of High Privileged Accounts': attacking_active_directory_domain/active_directory_privilege_escalation/check_for_insecure_usage_of_high_privileged_accounts.md
+        - 'Check for Local Admin Privileges': attacking_active_directory_domain/active_directory_privilege_escalation/check_for_local_admin_privileges.md
+        - 'Check for Misconfgured Access Control of MSSQL': attacking_active_directory_domain/active_directory_privilege_escalation/check_for_misconfgured_access_control_of_mssql.md
+        - 'Check for Misconfigured GPO': attacking_active_directory_domain/active_directory_privilege_escalation/check_for_misconfigured_gpo.md
+        - 'Check for Reuse of Local Admin Password': attacking_active_directory_domain/active_directory_privilege_escalation/check_for_reuse_of_local_admin_password.md
+        - 'Check for Unsupported OS': attacking_active_directory_domain/active_directory_privilege_escalation/check_for_unsupported_os.md
+        - 'Kerberos TGS Service Ticket Cracking (Kerberoast)': 'attacking_active_directory_domain/active_directory_privilege_escalation/kerberoasting.md'
+        - 'Excessive Amount of Domain Admins': 'attacking_active_directory_domain/active_directory_privilege_escalation/execssive_amount_of_domain_admins.md'
+        - 'Incorrectly Configured Forest or Domain Trust': 'attacking_active_directory_domain/active_directory_privilege_escalation/incorrectly_configured_forest_or_domain_trust.md'
+        - 'Misconfigured Access Control Lists': 'attacking_active_directory_domain/active_directory_privilege_escalation/misconfigured_access_control_lists.md'
+        - 'Passwords in Active Directory Attributes': 'attacking_active_directory_domain/active_directory_privilege_escalation/passwords_in_active_directory_attributes.md'
+        - 'SMB Shares Mining': 'attacking_active_directory_domain/active_directory_privilege_escalation/smb_shares_mining.md'
+        - 'NTLM Relaying and Theft': 'attacking_active_directory_domain/active_directory_privilege_escalation/ntlm_relaying_and_theft.md'
+        - 'Credential Extraction (LSASS/SAM)': 'attacking_active_directory_domain/active_directory_privilege_escalation/credential_extraction.md'
+        - 'Check for Lockout Policy': 'attacking_active_directory_domain/active_directory_privilege_escalation/check_for_lockout_threshold.md'
+        - 'Check for Scripts in SYSVOL':  'attacking_active_directory_domain/active_directory_privilege_escalation/check_for_scripts_on_sysvol.md'
+        - 'Check for Writable Executables in Shares':  'attacking_active_directory_domain/active_directory_privilege_escalation/check_for_writable_executables_on_shares.md'
+        - 'AS-REP roasting': 'attacking_active_directory_domain/active_directory_privilege_escalation/aseproasting.md'
+        - 'Misconfigured LAPS': 'attacking_active_directory_domain/active_directory_privilege_escalation/check_for_misconfigured_laps.md'
+        - 'Misconfigured RODC': 'attacking_active_directory_domain/active_directory_privilege_escalation/misconfigured_read_only_domain_controller.md'
+        - 'Password in GPO': 'attacking_active_directory_domain/active_directory_privilege_escalation/passwords_in_group_policy_preferences.md'
+        - 'Attacking Domain Trust': 'attacking_active_directory_domain/attacking_windows_domain_domain_trust.md'
+        - 'Domain Privilege Escalation Checklist': attacking_active_directory_domain/domain_privilege_escalation_checklist.md
+        - 'Template': 'attacking_active_directory_domain/active_directory_privilege_escalation/template.md'
+    - Active Directory - Remote Access:
+        - 'Remote Access': 'attacking_active_directory_domain/remote_access/remote_access.md'
+    - Active Directory - Cracking Hashes:
+        - 'Cracking Hashes': 'attacking_active_directory_domain/cracking_hashes/cracking_hashes.md'
+        - 'Generate Password List': 'attacking_active_directory_domain/cracking_hashes/generate_password_list.md'
+    - Active Directory - Powershell:
+        - 'Basics of Powershell': attacking_active_directory_domain/powershell/basics_of_powershell.md
+        - 'Active Directory': 'attacking_active_directory_domain/powershell/activedirectory.md'
+        - 'JIT CSharp Compilation': 'attacking_active_directory_domain/powershell/jit_csharp_compilation.md'
+        - 'Local Machine Recon': 'attacking_active_directory_domain/powershell/local_machine_recon.md'
+        - 'Networking': 'attacking_active_directory_domain/powershell/networking.md'
+        - 'Running Program as User Without GUI Interaction': 'attacking_active_directory_domain/powershell/running_program_as_user_without_guiinteraction.md'
+        - 'AMSI Bypass': 'attacking_active_directory_domain/powershell/amsi_bypass.md'
+        - 'Local Privilige Escalation': 'attacking_active_directory_domain/attacking_windows_domain_local_privilege_escalation.md'
+- Attacking Mobile Application:
+    - Android:
+        - 'Android Testing Environment Setup': "attacking_mobile_applications/android/mobile_application_setup.md"
+        - 'Tools': "attacking_mobile_applications/android/android_tools.md"
+        - 'Vulnerabilities': "attacking_mobile_applications/android/mobile_application_vulnerabilities_android.md"
+        - 'Checklist': "attacking_mobile_applications/android/android_vuln_checklist.md"
+    - IOS:
+        - 'IOS Testing Environment Setup': 'attacking_mobile_applications/ios/ios_setup.md'
+        - 'Vulnerabilities': 'attacking_mobile_applications/ios/ios_application_vulnerabilities.md'
+        - 'Vulnerabilities Checklist': 'attacking_mobile_applications/ios/ios_vuln_checklist.md'
+
+- Attacking Wifi:
+    - 'Testing Network Segmentation': 'attacking_wifi/wifi_network_segmentation.md'
+    - 'Testing Wifi Security': 'attacking_wifi/wifi.md'
+- Attacking Thick Client:
+    - 'Attacking Thick Client': 'attacking_thick_client/attacking_thick_client.md'
+- Attacking Cloud Environment: 
+    - Azure:
+        - 'Abuse Application Administrator Role': 'attacking_cloud_environment/attacking_azure/abuse_application_administrator_role.md'
+        - 'Abuse Azure AD SSO': 'attacking_cloud_environment/attacking_azure/abuse_azure_ad_sso.md'
+        - 'Check for Blobs': 'attacking_cloud_environment/attacking_azure/check_for_blobs.md'
+        - 'Check for Misconfigured AzureAD groups': 'attacking_cloud_environment/attacking_azure/check_for_misconfigured_azuread_groups.md'
+        - 'Check for Passwords Azure': 'attacking_cloud_environment/attacking_azure/check_for_passwords_azure.md'
+        - 'Check for SSO Enabled Services': 'attacking_cloud_environment/attacking_azure/check_for_sso_enabled_services.md'
+        - 'Password Hash Syncronization': 'attacking_cloud_environment/attacking_azure/password_hash_syncronization.md'
+        - 'Password Spraying': 'attacking_cloud_environment/attacking_azure/password_spraying.md'
+        - 'Password in Active Directory Attribute': 'attacking_cloud_environment/attacking_azure/passwords_in_active_directory_attribute.md'
+        - 'Recon': 'attacking_cloud_environment/attacking_azure/recon.md' 
+- Attacking Kubernetes:
+    - 'Basics of Kubernetes': 'attacking_kubernetes/basics_of_kubernetes.md'
+    - 'Basics of Docker': 'attacking_kubernetes/basics_of_docker.md'
+    - 'Setting Up Tools': 'attacking_kubernetes/kubernetes_hacking_tools.md'
+    - 'Attacking Kubernetes': 'attacking_kubernetes/attacking_kubernetes.md'
+    - 'Attacking Kubernetes Checklist': 'attacking_kubernetes/attacking_kubernetes_checklist.md'
+- Attacking RFID Cards:
+    - 'Basics of RFID Hacking': 'attacking_rfid_cards/basics_of_rfid_hacking.md'
+- Physical Attacks:
+    - 'Pysical Attacks': 'physical_attacks/physical_access_to_machine.md'
+- Password Cracking:
+    - 'Offline Password Cracking': 'password_cracking/offline_password_cracking.md'
+    - 'Online Password Cracking (Brute force)': 'password_cracking/online_password_cracking.md'
+    - 'Generate Password List': 'password_cracking/generate_password_list.md'
+    - 'Generate Custom Password List': 'password_cracking/generate_custom_wordlist.md'
+- Cryptography:
+    - 'Client Certificate Tests': 'cryptography/client_certificate_tests.md'
+- Random Tips and Tricks:
+    - 'Tips and Tricks': 'random_tips_and_tricks/general_tips.md'
+    - 'Setuid With C': 'random_tips_and_tricks/setuid_c-code.md'
+    - 'Port Knocking': 'random_tips_and_tricks/port_knocking.md'
+    - 'Port Forwarding and Tunneling': 'random_tips_and_tricks/port_forwarding_and_tunneling.md'
+    - 'Pivoting': 'random_tips_and_tricks/pivoting.md'
+- Tools:
+    - 'Wireshark': 'tools/wireshark.md'
+    - 'Wget': 'tools/wget.md'
+    - 'Webshells': 'tools/webshell.md'
+    - 'GDB': 'tools/gdb.md'
+
+
+theme:
+  name: null
+  custom_dir: mkdocs_windmill
+  # Copy settings from mkdocs_theme.yml, which is ignored by custom_dir themes.
+  static_templates: [404.html]
+  search_index_only: true
+  include_search_page: true
+
+markdown_extensions:
+  - toc:
+      permalink: '#'
+
+extra:
+  history_buttons: true
+  version: v1.0.0
