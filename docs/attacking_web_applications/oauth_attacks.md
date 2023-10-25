@@ -23,7 +23,7 @@ In OAuth terminology one talks about different grant_types. There are four diffe
 3. Resource owner password credentials - This is the problem that I previously wrote that OAuth tries to solve.
 4. Client credentials
 
-## Authroization code - Code Flow
+## Authorization code - Code Flow
 Let's walk through the grant type Authorization code. This is usually called Code Flow. It is the most complex form, but probably also the most secure.
 
 It is divided into two parts: Authorization flow and Token Flow.
