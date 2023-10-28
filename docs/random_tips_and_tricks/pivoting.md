@@ -1,6 +1,6 @@
 # Pivoting
 
-Let's say that you have compromised one machine on a network and you want to keep going to another machine. You will use the first machine as a staging point/plant/foothold to break into machine 2. Thid technique of using one compromised machine to access another is called pivoting. Machine one is the `pivot` in the example. The `pivot` is just used as a way to channel/tunnel our attack. 
+Let's say that you have compromised one machine on a network and you want to keep going to another machine. You will use the first machine as a staging point/plant/foothold to break into machine 2. This technique of using one compromised machine to access another is called pivoting. Machine one is the `pivot` in the example. The `pivot` is just used as a way to channel/tunnel our attack. 
 
 #### Ipconfig
 
@@ -26,7 +26,7 @@ First we want to scan the network to see what devices we can target. In this exa
 ```
 meterpreter > run arp_scanner -r 192.168.1.0/24
 ```
-This command will output all the devices on the netowork.
+This command will output all the devices on the network.
 
 ### Scan each host
 
@@ -53,7 +53,7 @@ Now we add the second network as a new route in metasploit. First we background 
 route add 192.168.11.1 255.255.255.0 1
 ```
 
-Now we can run our portsanning module:
+Now we can run our portscanning module:
 
 ```
 use auxiliary/scanner/portscan/tcp
